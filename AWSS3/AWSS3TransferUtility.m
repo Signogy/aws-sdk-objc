@@ -629,7 +629,10 @@ static AWSS3TransferUtility *_defaultS3TransferUtility = nil;
     return transferUtilityDownloadTask;
 }
 
+#if TARGET_OS_IPHONE
+
 #pragma mark - UIApplicationDelegate interceptor
+
 
 + (void)interceptApplication:(UIApplication *)application
 handleEventsForBackgroundURLSession:(NSString *)identifier
@@ -647,6 +650,9 @@ handleEventsForBackgroundURLSession:(NSString *)identifier
         }
     }
 }
+
+#endif
+
 
 #pragma mark - NSURLSessionDelegate
 
