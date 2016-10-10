@@ -21,6 +21,7 @@
 #import "AWSCognitoIdentityProviderSrpHelper.h"
 #import "AWSJKBigInteger.h"
 #import "NSData+AWSCognitoIdentityProvider.h"
+#import "AWSDevice.h"
 #import <CommonCrypto/CommonDigest.h>
 
 @interface AWSCognitoIdentityUserPool()
@@ -294,7 +295,7 @@ static const NSString * AWSCognitoIdentityUserDeviceGroup = @"device.group";
             AWSCognitoIdentityProviderConfirmDeviceRequest * request = [AWSCognitoIdentityProviderConfirmDeviceRequest new];
             request.accessToken = authResult.accessToken;
             request.deviceKey = deviceKey;
-            request.deviceName = [[UIDevice currentDevice] name];
+            request.deviceName = [[AWSDevice currentDevice] name];
 
             AWSCognitoIdentityProviderSrpHelper * srpHelper = [[AWSCognitoIdentityProviderSrpHelper alloc] initWithPoolName:deviceGroup userName:deviceKey password:secret];
             request.deviceSecretVerifierConfig = [AWSCognitoIdentityProviderDeviceSecretVerifierConfigType new];

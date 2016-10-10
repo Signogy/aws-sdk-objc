@@ -19,6 +19,8 @@
 @property (nonatomic, readonly) NSString* systemName;
 @property (nonatomic, readonly) NSString* systemVersion;
 @property (nonatomic, readonly) NSString* model;
+@property (nonatomic, readonly) NSString* name;
+@property (nonatomic, readonly) NSUUID* identifierForVendor;
 
 @end
 

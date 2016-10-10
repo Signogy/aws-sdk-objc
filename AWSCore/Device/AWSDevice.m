@@ -7,6 +7,7 @@
 
 #import <AWSDevice.h>
 #include <sys/sysctl.h>
+#import <AWSUICKeychainStore.h>
 
 #if TARGET_OS_IPHONE
 #else
@@ -20,6 +21,10 @@
 		_sharedObject = [[self alloc] init];
 	});
 	return _sharedObject;
+}
+
+- (NSString*)name {
+	return [[NSHost currentHost] localizedName];
 }
 
 - (NSString*) systemName {
@@ -45,6 +50,20 @@
 
 - (NSString*) model {
 	return [self getSysInfo:"hw.model"];
+}
+
+- (NSUUID*)identifierForVendor {
+	NSString* service = [NSString stringWithFormat:@"%@.%@", [[NSBundle mainBundle] bundleIdentifier], @"AWSCognito.UDID"];
+	NSString* key = @"aws_udid_key";
+	NSString* uuidString = [AWSUICKeyChainStore stringForKey:key
+													 service:service accessGroup:nil];
+	if (uuidString) {
+		return [[NSUUID alloc] initWithUUIDString:uuidString];
+	}
+	
+	NSUUID* uuid = [[NSUUID alloc] init];
+	[AWSUICKeyChainStore setString:uuid.UUIDString forKey:key service:service accessGroup:nil];
+	return uuid;
 }
 
 @end
