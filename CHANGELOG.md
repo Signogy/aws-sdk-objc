@@ -1,10 +1,59 @@
 # AWS Mobile SDK for iOS CHANGELOG
 
+## 2.4.11
+### New Features
+* **SDK Core**
+	* Introducing new AWS `USEast2` (Ohio) region, endpoint `us-east-2`. 
+    
+### Resolved Issues
+
+* **Amazon API Gateway**
+    * Fixed a URL encoding bug. [Github Issue 491](https://github.com/aws/aws-sdk-ios/issues/491)
+
+
+## 2.4.10
+### New Features
+* **Amazon API Gateway**
+	* Added support for a custom API invoker method with configurable HTTP parameters.
+* **Amazon Cognito Identity Provider**
+    * Added support for end user to set password and required attributes during initial authentication if they were created using AdminCreateUser. 
+    
+### Resolved Issues
+
+* **Amazon Cognito Identity Provider**
+    * Fixed a bug causing AWSCognitoIdentityUserPool.clearAll to not clear the keychain. [Github Issue #476](https://github.com/aws/aws-sdk-ios/issues/476)
+
+* **Amazon S3**
+    * Fixed a bug which disabled creating an empty folder. [Github Issue #480](https://github.com/aws/aws-sdk-ios/issues/480)
+    * Fixed a bug which did not set error object when bucket name is empty in request. [Github Issue #469](https://github.com/aws/aws-sdk-ios/issues/469)
+
+## 2.4.9
+### New Features
+* **All Services**
+    * Added support for Custom Endpoints.
+
+### Resolved Issues
+* **Amazon S3**
+    * Fixed a bug which caused compilation errors when using SDK version 2.4.8 through CocoaPods.
+
+### Misc. Updates
+* **Amazon Mobile Analytics**
+    * Deprecated the `mobileAnalyticsForAppId:identityPoolId:` and `mobileAnalyticsForAppId:identityPoolId:completionBlock:` client initializers. 
+
+## 2.4.8
+### New Features
+* **Amazon Cognito Identity Provider**
+    * Added feature for custom authentication handlers.
+    * Added support for getDevice, forgetDevice and added convenience methods to perform operations on this device.
+
+### Misc Changes
+* **All Services**
+    * Updated all of the low-level clients with the latest models.
+
 ## 2.4.7
 ### Resolved Issues
 * **Amazon Cognito Identity Provider**
 	* Fixed integration between Cognito Identity Provider and Cognito Identity. [#438](https://github.com/aws/aws-sdk-ios/issues/438)
-
 
 ## 2.4.6
 ### New Features  
