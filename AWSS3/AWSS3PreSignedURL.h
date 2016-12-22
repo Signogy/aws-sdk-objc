@@ -40,6 +40,7 @@ typedef NS_ENUM(NSInteger, AWSS3PresignedURLErrorType) {
     AWSS3PreSignedURLErrorCredentialProviderIsNil,
     AWSS3PreSignedURLErrorInternalError,
     AWSS3PresignedURLErrorInvalidRequestParameters,
+    AWSS3PresignedURLErrorInvalidBucketName,
     AWSS3PresignedURLErrorInvalidBucketNameForAccelerateModeEnabled,
 };
 
@@ -189,7 +190,7 @@ typedef NS_ENUM(NSInteger, AWSS3PresignedURLErrorType) {
 /**
  Build a time-limited pre-signed URL to get object from S3, return nil if build process failed.
 
- @param preSignedURLRequest The AWSS3PreSignedURLRequest that defines the parameters of the operation.
+ @param getPreSignedURLRequest The AWSS3PreSignedURLRequest that defines the parameters of the operation.
  @return A pre-signed NSURL for the resource. return nil if any errors occured.
  @see AWSS3GetPreSignedURLRequest
  */

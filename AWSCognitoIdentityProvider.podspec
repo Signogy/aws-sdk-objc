@@ -1,12 +1,11 @@
 Pod::Spec.new do |s|
-
   s.name         = 'AWSCognitoIdentityProvider'
-  s.version      = '2.4.7'
-  s.summary      = 'Amazon Cognito Identity Provider SDK for iOS'
+  s.version      = '2.4.16'
+  s.summary      = 'Amazon Cognito Identity Provider SDK for iOS (Beta)'
 
   s.description  = 'Amazon Cognito Identity Provider enables sign up and authentication of your end users'
 
-  s.homepage     = 'http://aws.amazon.com/cognito'
+  s.homepage     = 'http://aws.amazon.com/mobile/sdk'
   s.license      = 'Amazon Software License'
   s.author       = { 'Amazon Web Services' => 'amazonwebservices' }
   s.ios.deployment_target = '8.0'
@@ -14,8 +13,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/bvjustin/aws-sdk-objc.git',
                      :tag => s.version}
   s.requires_arc = true
-  s.dependency 'AWSCore', '2.4.7'
-
+  s.dependency 'AWSCore', '2.4.16'
   s.source_files = 'AWSCognitoIdentityProvider/**/*.{h,m,c}'
   s.public_header_files = 'AWSCognitoIdentityProvider/*.h', 'AWSCognitoIdentityProvider/CognitoIdentityProvider/*.h'
   s.private_header_files = 'AWSCognitoIdentityProvider/Internal/*.h'
