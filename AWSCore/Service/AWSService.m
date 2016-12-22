@@ -15,7 +15,7 @@
 
 #import "AWSService.h"
 
-#import "AWSDevice.h"
+#import "AWSUIDevice.h"
 #import "AWSSynchronizedMutableDictionary.h"
 #import "AWSURLResponseSerialization.h"
 #import "AWSLogging.h"
@@ -131,11 +131,11 @@ static NSString *const AWSServiceConfigurationUnknown = @"Unknown";
     static NSString *_userAgent = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-		NSString *systemName = [[[AWSDevice currentDevice] systemName] stringByReplacingOccurrencesOfString:@" " withString:@"-"];
+		NSString *systemName = [[[AWSUIDevice currentDevice] systemName] stringByReplacingOccurrencesOfString:@" " withString:@"-"];
         if (!systemName) {
             systemName = AWSServiceConfigurationUnknown;
         }
-		NSString *systemVersion = [[AWSDevice currentDevice] systemVersion];
+		NSString *systemVersion = [[AWSUIDevice currentDevice] systemVersion];
         if (!systemVersion) {
             systemVersion = AWSServiceConfigurationUnknown;
         }

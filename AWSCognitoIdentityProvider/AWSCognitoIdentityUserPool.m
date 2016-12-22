@@ -22,7 +22,7 @@
 #import <CommonCrypto/CommonHMAC.h>
 #import "NSData+AWSCognitoIdentityProvider.h"
 #import "AWSCognitoIdentityProviderModel.h"
-#import "AWSDevice.h"
+#import "AWSUIDevice.h"
 
 static AWSUICKeyChainStore *keychain = nil;
 static const NSString * AWSCognitoIdentityUserPoolCurrentUser = @"currentUser";
@@ -233,7 +233,7 @@ AWSCognitoIdentityUserAttributeType* attribute(NSString *name, NSString *value) 
 }
 
 - (NSDictionary<NSString *,NSString *>*)cognitoValidationData {
-    AWSDevice *device = [AWSDevice currentDevice];
+    AWSUIDevice *device = [AWSUIDevice currentDevice];
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *bundleVersion = [bundle objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
     NSString *bundleShortVersion = [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];

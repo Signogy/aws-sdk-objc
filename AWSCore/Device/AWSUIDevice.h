@@ -1,5 +1,5 @@
 //
-//  AWSDevice
+//  AWSUIDevice
 //
 //  Created by Justin Greenfield on 8/23/16.
 //  Copyright © 2016 Weather Decision Technologies, Inc. All rights reserved.
@@ -9,10 +9,10 @@
 
 #if TARGET_OS_IPHONE 
 #import <UIKit/UIKit.h>
-#define AWSDevice UIDevice
+#define AWSUIDevice UIDevice
 #else
 
-@interface AWSDevice : NSObject
+@interface AWSUIDevice : NSObject
 
 + (instancetype) currentDevice;
 

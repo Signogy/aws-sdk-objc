@@ -18,7 +18,7 @@
 #import <sys/sysctl.h>
 #import "AWSUICKeyChainStore.h"
 #import "AWSLogging.h"
-#import "AWSDevice.h"
+#import "AWSUIDevice.h"
 
 // Public constants
 NSString *const AWSClientContextVersion = @"1.0";
@@ -66,7 +66,7 @@ static NSString *const AWSClientContextKeychainInstallationIdKey = @"com.amazona
         _appName = appName ? appName : AWSClientContextUnknown;
 
         //Device Details
-		AWSDevice* currentDevice = [AWSDevice currentDevice];
+		AWSUIDevice* currentDevice = [AWSUIDevice currentDevice];
         NSString *autoUpdatingLoaleIdentifier = [[NSLocale autoupdatingCurrentLocale] localeIdentifier];
 		_devicePlatform = [currentDevice systemName] ? [currentDevice systemName] : AWSClientContextUnknown;
 		_deviceModel = [currentDevice model] ? [currentDevice model] : AWSClientContextUnknown;

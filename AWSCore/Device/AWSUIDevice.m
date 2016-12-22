@@ -1,18 +1,18 @@
 //
-//  AWSDevice
+//  AWSUIDevice
 //
 //  Created by Justin Greenfield on 8/23/16.
 //  Copyright © 2016 Weather Decision Technologies, Inc. All rights reserved.
 //
 
-#import <AWSDevice.h>
+#import <AWSUIDevice.h>
 #include <sys/sysctl.h>
 #import <AWSUICKeychainStore.h>
 
 #if TARGET_OS_IPHONE
 #else
 
-@implementation AWSDevice
+@implementation AWSUIDevice
 
 + (instancetype) currentDevice {
 	static dispatch_once_t predicate = 0;
