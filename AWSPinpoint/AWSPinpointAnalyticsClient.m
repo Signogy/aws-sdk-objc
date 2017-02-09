@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -44,12 +44,11 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
 @property (nonatomic, strong) AWSPinpointEventRecorder *eventRecorder;
 @property (nonatomic, strong) AWSPinpointContext *context;
 
-
 @end
 
 @interface AWSPinpointEventRecorder ()
-
 - (instancetype)initWithContext:(AWSPinpointContext *) context;
+- (AWSTask*) updateSessionStartWithCampaignAttributes:(NSDictionary*) attributes;
 @end
 
 @implementation AWSPinpointAnalyticsClient
@@ -155,7 +154,7 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
     return monetizationEvent;
 }
 
--(AWSTask*) submitEvents {
+-(AWSTask *) submitEvents {
     return [self.eventRecorder submitAllEvents];
 }
 
@@ -169,7 +168,7 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
     }];
 }
 
--(AWSTask*) recordEvent:(AWSPinpointEvent *) theEvent {
+-(AWSTask *) recordEvent:(AWSPinpointEvent *) theEvent {
     if (theEvent == nil) {
         AWSLogError(@"Nil event provided to recordEvent");
         return [AWSTask taskWithError:[NSError errorWithDomain:AWSPinpointAnalyticsClientErrorDomain code:0 userInfo:@{@"InvalidParameter":@"Nil event provided to recordEvent"}]];
@@ -394,6 +393,7 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
 
 - (void) setCampaignAttributes:(NSDictionary*) campaign {
     _globalCampaignAttributes = campaign;
+    [self.eventRecorder updateSessionStartWithCampaignAttributes:campaign];
 }
 
 - (void) removeAllGlobalCampaignAttributes {

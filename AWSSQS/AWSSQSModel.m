@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -347,6 +347,7 @@ NSString *const AWSSQSErrorDomain = @"com.amazonaws.AWSSQSErrorDomain";
              @"maxNumberOfMessages" : @"MaxNumberOfMessages",
              @"messageAttributeNames" : @"MessageAttributeNames",
              @"queueUrl" : @"QueueUrl",
+             @"receiveRequestAttemptId" : @"ReceiveRequestAttemptId",
              @"visibilityTimeout" : @"VisibilityTimeout",
              @"waitTimeSeconds" : @"WaitTimeSeconds",
              };
@@ -402,6 +403,8 @@ NSString *const AWSSQSErrorDomain = @"com.amazonaws.AWSSQSErrorDomain";
              @"identifier" : @"Id",
              @"messageAttributes" : @"MessageAttributes",
              @"messageBody" : @"MessageBody",
+             @"messageDeduplicationId" : @"MessageDeduplicationId",
+             @"messageGroupId" : @"MessageGroupId",
              };
 }
 
@@ -442,6 +445,7 @@ NSString *const AWSSQSErrorDomain = @"com.amazonaws.AWSSQSErrorDomain";
              @"MD5OfMessageAttributes" : @"MD5OfMessageAttributes",
              @"MD5OfMessageBody" : @"MD5OfMessageBody",
              @"messageId" : @"MessageId",
+             @"sequenceNumber" : @"SequenceNumber",
              };
 }
 
@@ -454,6 +458,8 @@ NSString *const AWSSQSErrorDomain = @"com.amazonaws.AWSSQSErrorDomain";
              @"delaySeconds" : @"DelaySeconds",
              @"messageAttributes" : @"MessageAttributes",
              @"messageBody" : @"MessageBody",
+             @"messageDeduplicationId" : @"MessageDeduplicationId",
+             @"messageGroupId" : @"MessageGroupId",
              @"queueUrl" : @"QueueUrl",
              };
 }
@@ -475,6 +481,7 @@ NSString *const AWSSQSErrorDomain = @"com.amazonaws.AWSSQSErrorDomain";
              @"MD5OfMessageAttributes" : @"MD5OfMessageAttributes",
              @"MD5OfMessageBody" : @"MD5OfMessageBody",
              @"messageId" : @"MessageId",
+             @"sequenceNumber" : @"SequenceNumber",
              };
 }
 

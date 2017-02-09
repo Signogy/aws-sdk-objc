@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -93,10 +93,10 @@ typedef void (^AWSS3TransferUtilityProgressBlock) (AWSS3TransferUtilityTask *tas
 
  *Swift*
 
-     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
          let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
          let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
-         AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
+         AWSServiceManager.default().defaultServiceConfiguration = configuration
 
          return true
      }
@@ -117,7 +117,7 @@ typedef void (^AWSS3TransferUtilityProgressBlock) (AWSS3TransferUtilityTask *tas
 
  *Swift*
 
-     let S3TransferUtility = AWSS3TransferUtility.defaultS3TransferUtility()
+     let S3TransferUtility = AWSS3TransferUtility.default()
 
  *Objective-C*
 
@@ -134,10 +134,10 @@ typedef void (^AWSS3TransferUtilityProgressBlock) (AWSS3TransferUtilityTask *tas
 
  *Swift*
 
-     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
          let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
          let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
-         AWSS3TransferUtility.registerS3TransferUtilityWithConfiguration(configuration, forKey: "USWest2S3TransferUtility")
+         AWSS3TransferUtility.register(with: configuration!, forKey: "USWest2S3TransferUtility")
 
          return true
      }
@@ -180,10 +180,10 @@ typedef void (^AWSS3TransferUtilityProgressBlock) (AWSS3TransferUtilityTask *tas
 
  *Swift*
 
-     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
          let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
          let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
-         AWSS3TransferUtility.registerS3TransferUtilityWithConfiguration(configuration, transferUtilityConfiguration: nil, forKey: "USWest2S3TransferUtility")
+         AWSS3TransferUtility.register(with: configuration!, transferUtilityConfiguration: nil, forKey: "USWest2S3TransferUtility")
 
          return true
      }
@@ -287,7 +287,7 @@ handleEventsForBackgroundURLSession:(NSString *)identifier
                                                       key:(NSString *)key
                                               contentType:(NSString *)contentType
                                                expression:(nullable AWSS3TransferUtilityUploadExpression *)expression
-                                         completionHander:(nullable AWSS3TransferUtilityUploadCompletionHandlerBlock)completionHandler;
+                                        completionHandler:(nullable AWSS3TransferUtilityUploadCompletionHandlerBlock)completionHandler;
 
 #endif
 
@@ -308,7 +308,7 @@ handleEventsForBackgroundURLSession:(NSString *)identifier
                                                       key:(NSString *)key
                                               contentType:(NSString *)contentType
                                                expression:(nullable AWSS3TransferUtilityUploadExpression *)expression
-                                         completionHander:(nullable AWSS3TransferUtilityUploadCompletionHandlerBlock)completionHandler;
+                                        completionHandler:(nullable AWSS3TransferUtilityUploadCompletionHandlerBlock)completionHandler;
 
 /**
  Downloads the specified Amazon S3 object as `NSData`.
@@ -323,7 +323,7 @@ handleEventsForBackgroundURLSession:(NSString *)identifier
 - (AWSTask<AWSS3TransferUtilityDownloadTask *> *)downloadDataFromBucket:(NSString *)bucket
                                                                     key:(NSString *)key
                                                              expression:(nullable AWSS3TransferUtilityDownloadExpression *)expression
-                                                       completionHander:(nullable AWSS3TransferUtilityDownloadCompletionHandlerBlock)completionHandler;
+                                                      completionHandler:(nullable AWSS3TransferUtilityDownloadCompletionHandlerBlock)completionHandler;
 
 /**
  Downloads the specified Amazon S3 object to a file URL.
@@ -340,7 +340,7 @@ handleEventsForBackgroundURLSession:(NSString *)identifier
                                                         bucket:(NSString *)bucket
                                                            key:(NSString *)key
                                                     expression:(nullable AWSS3TransferUtilityDownloadExpression *)expression
-                                              completionHander:(nullable AWSS3TransferUtilityDownloadCompletionHandlerBlock)completionHandler;
+                                             completionHandler:(nullable AWSS3TransferUtilityDownloadCompletionHandlerBlock)completionHandler;
 
 /**
  Assigns progress feedback and completion handler blocks. This method should be called when the app was suspended while the transfer is still happening.

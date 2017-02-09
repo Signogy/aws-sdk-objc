@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -68,7 +68,7 @@ NSString *const KEY_SESSION_STOP_TIME = @"sessionStopTime";
 
     AWSMobileAnalyticsSession* session = [self createSessionFromSerializedDictionary:serializedSession];
     if(session == nil) {
-        AWSLogWarn( @"Can not obtain session details from the file. It is common if there is no previous paused session saved in the file.");
+        AWSLogVerbose( @"Can not obtain session details from the file. It is common if there is no previous paused session saved in the file.");
         return nil;
     }
 

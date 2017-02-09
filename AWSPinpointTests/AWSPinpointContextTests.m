@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -90,17 +90,22 @@ static NSString *const AWSMobileAnalyticsRoot = @"com.amazonaws.MobileAnalytics"
     //Remove uniqueId, new context should have new Id
     AWSUICKeyChainStore *keychain = [AWSUICKeyChainStore keyChainStoreWithService:AWSPinpointContextKeychainService];
     [keychain removeAllItems];
-    
-    AWSPinpointContext *thirdContext = [AWSPinpointContext contextWithConfiguration:self.configuration];
-    XCTAssertNotNil(thirdContext);
-    XCTAssertNotNil(thirdContext.clientContext);
-    XCTAssertNotNil(thirdContext.uniqueId);
-    XCTAssertNotNil(thirdContext.configuration);
-    XCTAssertEqual(thirdContext.configuration, self.configuration);
-    XCTAssertNil(thirdContext.analyticsService);
-    XCTAssertNil(thirdContext.targetingService);
-    XCTAssertFalse([thirdContext.uniqueId isEqualToString:context.uniqueId]);
-    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        //Remove from keychain as tests currently dont support the keychain
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:AWSPinpointContextKeychainUniqueIdKey];
+        [[NSUserDefaults standardUserDefaults] synchronize];
+        XCTAssertNil([[NSUserDefaults standardUserDefaults] stringForKey:AWSPinpointContextKeychainUniqueIdKey]);
+        
+        AWSPinpointContext *thirdContext = [AWSPinpointContext contextWithConfiguration:self.configuration];
+        XCTAssertNotNil(thirdContext);
+        XCTAssertNotNil(thirdContext.clientContext);
+        XCTAssertNotNil(thirdContext.uniqueId);
+        XCTAssertNotNil(thirdContext.configuration);
+        XCTAssertEqual(thirdContext.configuration, self.configuration);
+        XCTAssertNil(thirdContext.analyticsService);
+        XCTAssertNil(thirdContext.targetingService);
+        XCTAssertFalse([thirdContext.uniqueId isEqualToString:context.uniqueId]);
+    });
 }
 
 - (void)testUniqueIdLegacyMerge {
@@ -145,7 +150,11 @@ static NSString *const AWSMobileAnalyticsRoot = @"com.amazonaws.MobileAnalytics"
     XCTAssertTrue([[context retrieveUniqueId] isEqualToString:context.uniqueId]);
     
     //Check if saved to keychain successfully
-    XCTAssertTrue([[keychain stringForKey:AWSPinpointContextKeychainUniqueIdKey] isEqualToString:context.uniqueId]);
+    if ([keychain stringForKey:AWSPinpointContextKeychainUniqueIdKey]) {
+        XCTAssertTrue([[keychain stringForKey:AWSPinpointContextKeychainUniqueIdKey] isEqualToString:context.uniqueId]);
+    } else { //Check user defaults
+        XCTAssertTrue([[[NSUserDefaults standardUserDefaults] stringForKey:AWSPinpointContextKeychainUniqueIdKey] isEqualToString:context.uniqueId]);
+    }
     
     //Check if file got deleted
     XCTAssertFalse([[NSFileManager defaultManager] fileExistsAtPath:preferencesPath]);
