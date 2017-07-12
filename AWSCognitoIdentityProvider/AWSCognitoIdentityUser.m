@@ -63,10 +63,16 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
     request.secretHash = [self.pool calculateSecretHash:self.username];
     request.confirmationCode = confirmationCode;
     request.forceAliasCreation = (forceAliasCreation?@(YES):@(NO));
-    return [[self.pool.client confirmSignUp:request] continueWithSuccessBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderConfirmSignUpResponse *> * _Nonnull task) {
-        AWSCognitoIdentityUserConfirmSignUpResponse * response = [AWSCognitoIdentityUserConfirmSignUpResponse new];
-        [response aws_copyPropertiesFromObject:task.result];
-        return [AWSTask taskWithResult:response];
+    return [[self.pool.client confirmSignUp:request] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderConfirmSignUpResponse *> * _Nonnull task) {
+        if (task.error) {
+            self.confirmedStatus = AWSCognitoIdentityUserStatusUnconfirmed;
+            return task;
+        } else {
+            self.confirmedStatus = AWSCognitoIdentityUserStatusConfirmed;
+            AWSCognitoIdentityUserConfirmSignUpResponse * response = [AWSCognitoIdentityUserConfirmSignUpResponse new];
+            [response aws_copyPropertiesFromObject:task.result];
+            return [AWSTask taskWithResult:response];
+        }
     }];
 }
 
@@ -151,6 +157,10 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
         NSDate *expiration = [NSDate aws_dateFromString:expirationDate format:AWSDateISO8601DateFormat1];
         NSString * refreshTokenKey = [self keyChainKey:keyChainNamespace key:AWSCognitoIdentityUserRefreshToken];
         NSString * refreshToken = self.pool.keychain[refreshTokenKey];
+
+        // Token exists, the user is confirmed
+        self.confirmedStatus = AWSCognitoIdentityUserStatusConfirmed;
+
         //if the session expires > 5 minutes return it.
         if(expiration && [expiration compare:[NSDate dateWithTimeIntervalSinceNow:5 * 60]] == NSOrderedDescending){
             NSString * idTokenKey = [self keyChainKey:keyChainNamespace key:AWSCognitoIdentityUserIdToken];
@@ -194,17 +204,35 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
             }];
         }
     }
-    return [self interactiveAuth];
+    return [self setConfirmationStatus: [self interactiveAuth]];
 }
+
+
 
 /**
  * Explicitly get a session without using any cached tokens/refresh tokens.
  */
 - (AWSTask<AWSCognitoIdentityUserSession*>*) getSession:(NSString *)username password:(NSString *)password validationData:(NSArray<AWSCognitoIdentityUserAttributeType*>*)validationData {
     
-    return [[self srpAuthInternal:username password:password validationData:validationData lastChallenge:nil isInitialCustomChallenge:NO] continueWithSuccessBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> * _Nonnull task) {
+    return [self setConfirmationStatus: [[self srpAuthInternal:username password:password validationData:validationData lastChallenge:nil isInitialCustomChallenge:NO] continueWithSuccessBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> * _Nonnull task) {
         return [self getSessionInternal:task];
-    }];
+    }]];
+}
+
+- (AWSTask<AWSCognitoIdentityUserSession*>*) setConfirmationStatus: (AWSTask<AWSCognitoIdentityUserSession*>*) task {
+    
+    // If the user status is unknown
+    if (self.confirmedStatus == AWSCognitoIdentityUserStatusUnknown) {
+        if (task.error) {
+            if (task.error.code == AWSCognitoIdentityProviderErrorUserNotConfirmed) {
+                self.confirmedStatus = AWSCognitoIdentityUserStatusUnconfirmed;
+            }
+        } else {
+            self.confirmedStatus = AWSCognitoIdentityUserStatusConfirmed;
+        }
+    }
+    
+    return task;
 }
 
 
@@ -382,7 +410,7 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
 
 
                     }else {
-                        AWSLogWarn(@"startRememberDevice is not implemented by authentication delegate, defaulting to not remembered.");
+                        AWSDDLogWarn(@"startRememberDevice is not implemented by authentication delegate, defaulting to not remembered.");
                     }
                 }
                 return task;
@@ -815,10 +843,8 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
     AWSCognitoIdentityProviderDeleteUserAttributesRequest *request = [AWSCognitoIdentityProviderDeleteUserAttributesRequest new];
     return [[self getSession] continueWithSuccessBlock:^id _Nullable(AWSTask<AWSCognitoIdentityUserSession *> * _Nonnull task) {
         request.accessToken = task.result.accessToken.tokenString;
-        NSMutableArray *userAttributes = [NSMutableArray new];
-        request.userAttributeNames = userAttributes;
+        request.userAttributeNames = attributeNames;
         return [[self.pool.client deleteUserAttributes:request] continueWithSuccessBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderDeleteUserAttributesResponse *> * _Nonnull task) {
-            [self signOut];
             AWSCognitoIdentityUserDeleteAttributesResponse * response = [AWSCognitoIdentityUserDeleteAttributesResponse new];
             return [AWSTask taskWithResult:response];
         }];
