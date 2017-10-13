@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -34,6 +34,8 @@ static NSString * username = nil;
 static NSString * password = nil;
 
 static NSString * CIP_POOL_KEY = @"createUserPool";
+static NSString * PP_APP_ID = @"pinpointAppId";
+
 static AWSCognitoIdentityUserPool *pool;
 static BOOL passwordAuthError = NO;
 
@@ -159,9 +161,12 @@ static int testsInFlight = 7; //for knowing when to tear down the user pool
             }
             return nil;
         }] waitUntilFinished];
-        [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
         AWSServiceConfiguration *serviceConfiguration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
-        AWSCognitoIdentityUserPoolConfiguration *iDPConfiguration = [[AWSCognitoIdentityUserPoolConfiguration alloc] initWithClientId:clientId  clientSecret:clientSecret poolId:poolId];
+        AWSCognitoIdentityUserPoolConfiguration *iDPConfiguration = [[AWSCognitoIdentityUserPoolConfiguration alloc] initWithClientId:clientId
+                                                                                                                         clientSecret:clientSecret
+                                                                                                                               poolId:poolId
+                                                                                                   shouldProvideCognitoValidationData:YES
+                                                                                                                        pinpointAppId:PP_APP_ID];
         
         [AWSCognitoIdentityUserPool registerCognitoIdentityUserPoolWithConfiguration:serviceConfiguration userPoolConfiguration:iDPConfiguration forKey:@"UserPool"];
         
@@ -186,10 +191,13 @@ static int testsInFlight = 7; //for knowing when to tear down the user pool
     XCTestExpectation *expectation =
     [self expectationWithDescription:@"testSignInUser"];
     AWSCognitoIdentityUser* user = [pool getUser];
+    XCTAssertEqualObjects(PP_APP_ID, pool.userPoolConfiguration.pinpointAppId);
     [[user getSession] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityUserSession *> * _Nonnull task) {
         if(task.error || task.isCancelled){
             XCTFail(@"Unable to sign in user: %@", task.error);
         }
+        XCTAssertNotNil(task.result.accessToken);
+        XCTAssertTrue(user.isSignedIn);
         [expectation fulfill];
         return task;
     }];

@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -83,6 +83,7 @@
     XCTAssertTrue(pinpointConfiguration.enableAutoSessionRecording);
     XCTAssertEqual(pinpointConfiguration.maxStorageSize, 1024 * 1024 * 5);
     XCTAssertEqual(pinpointConfiguration.sessionTimeout, 5000);
+    XCTAssertFalse(pinpointConfiguration.debug);
     XCTAssertNotNil(pinpointConfiguration.attributes);
     XCTAssertNotNil(pinpointConfiguration.environment);
     XCTAssertNotNil(pinpointConfiguration.environment.appVersion);

@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -70,6 +70,11 @@ typedef NS_ENUM(NSInteger, AWSLexVoiceButtonErrorCode) {
  */
 @property (nonatomic, strong, readonly) NSString * _Nullable audioContentType;
 
+/**
+ Transcript of the voice input to the operation.
+ */
+@property (nonatomic, strong, readonly) NSString * _Nullable inputTranscript;
+
 @end
 
 @protocol AWSLexVoiceButtonDelegate <NSObject>
@@ -97,7 +102,20 @@ typedef NS_ENUM(NSInteger, AWSLexVoiceButtonErrorCode) {
 @interface AWSLexVoiceButton : UIView
 
 @property (nonatomic, weak) id<AWSLexVoiceButtonDelegate> delegate;
-@property (nonatomic, strong) UIColor *color;
+
+/**
+ Enable push transition animation when image switch between microphone and listen image. Default is NO.
+ */
+@property (nonatomic) BOOL animateOnImageSwitching;
+
+/**
+ Set color for microphone image. Default is nil.
+ */
+@property (nonatomic, strong) UIColor *microphoneImageColor;
+/**
+ Set color for inactive microphone image. Default is light grey.
+ */
+@property (nonatomic, strong) UIColor *lexImageColor;
 @property (nonatomic, strong) UIColor *errorColor;
 
 @end

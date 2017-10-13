@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -70,7 +70,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -118,7 +117,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -166,7 +164,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -215,7 +212,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -263,7 +259,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -312,7 +307,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -361,7 +355,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -410,7 +403,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -459,7 +451,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -495,6 +486,54 @@ static id mockNetworking = nil;
     [AWSIoT removeIoTForKey:key];
 }
 
+- (void)testCreateThingType {
+    NSString *key = @"testCreateThingType";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+    [[[[AWSIoT IoTForKey:key] createThingType:[AWSIoTCreateThingTypeRequest new]] continueWithBlock:^id(AWSTask *task) {
+        XCTAssertNotNil(task.error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
+        XCTAssertEqual(8848, task.error.code);
+        XCTAssertNil(task.result);
+        return nil;
+    }] waitUntilFinished];
+
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
+- (void)testCreateThingTypeCompletionHandler {
+    NSString *key = @"testCreateThingType";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
+	[[AWSIoT IoTForKey:key] createThingType:[AWSIoTCreateThingTypeRequest new] completionHandler:^(AWSIoTCreateThingTypeResponse* _Nullable response, NSError * _Nullable error) {
+        XCTAssertNotNil(error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", error.domain);
+        XCTAssertEqual(8848, error.code);
+        XCTAssertNil(response);
+        dispatch_semaphore_signal(semaphore);
+    }];
+	
+ 	dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int)(2.0 * NSEC_PER_SEC)));
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
 - (void)testCreateTopicRule {
     NSString *key = @"testCreateTopicRule";
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
@@ -508,7 +547,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -556,7 +594,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -605,7 +642,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -653,7 +689,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -701,7 +736,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -749,7 +783,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -798,7 +831,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -834,6 +866,54 @@ static id mockNetworking = nil;
     [AWSIoT removeIoTForKey:key];
 }
 
+- (void)testDeleteThingType {
+    NSString *key = @"testDeleteThingType";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+    [[[[AWSIoT IoTForKey:key] deleteThingType:[AWSIoTDeleteThingTypeRequest new]] continueWithBlock:^id(AWSTask *task) {
+        XCTAssertNotNil(task.error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
+        XCTAssertEqual(8848, task.error.code);
+        XCTAssertNil(task.result);
+        return nil;
+    }] waitUntilFinished];
+
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
+- (void)testDeleteThingTypeCompletionHandler {
+    NSString *key = @"testDeleteThingType";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
+	[[AWSIoT IoTForKey:key] deleteThingType:[AWSIoTDeleteThingTypeRequest new] completionHandler:^(AWSIoTDeleteThingTypeResponse* _Nullable response, NSError * _Nullable error) {
+        XCTAssertNotNil(error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", error.domain);
+        XCTAssertEqual(8848, error.code);
+        XCTAssertNil(response);
+        dispatch_semaphore_signal(semaphore);
+    }];
+	
+ 	dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int)(2.0 * NSEC_PER_SEC)));
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
 - (void)testDeleteTopicRule {
     NSString *key = @"testDeleteTopicRule";
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
@@ -847,7 +927,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -882,6 +961,54 @@ static id mockNetworking = nil;
     [AWSIoT removeIoTForKey:key];
 }
 
+- (void)testDeprecateThingType {
+    NSString *key = @"testDeprecateThingType";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+    [[[[AWSIoT IoTForKey:key] deprecateThingType:[AWSIoTDeprecateThingTypeRequest new]] continueWithBlock:^id(AWSTask *task) {
+        XCTAssertNotNil(task.error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
+        XCTAssertEqual(8848, task.error.code);
+        XCTAssertNil(task.result);
+        return nil;
+    }] waitUntilFinished];
+
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
+- (void)testDeprecateThingTypeCompletionHandler {
+    NSString *key = @"testDeprecateThingType";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
+	[[AWSIoT IoTForKey:key] deprecateThingType:[AWSIoTDeprecateThingTypeRequest new] completionHandler:^(AWSIoTDeprecateThingTypeResponse* _Nullable response, NSError * _Nullable error) {
+        XCTAssertNotNil(error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", error.domain);
+        XCTAssertEqual(8848, error.code);
+        XCTAssertNil(response);
+        dispatch_semaphore_signal(semaphore);
+    }];
+	
+ 	dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int)(2.0 * NSEC_PER_SEC)));
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
 - (void)testDescribeCACertificate {
     NSString *key = @"testDescribeCACertificate";
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
@@ -895,7 +1022,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -944,7 +1070,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -993,7 +1118,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1042,7 +1166,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1078,6 +1201,54 @@ static id mockNetworking = nil;
     [AWSIoT removeIoTForKey:key];
 }
 
+- (void)testDescribeThingType {
+    NSString *key = @"testDescribeThingType";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+    [[[[AWSIoT IoTForKey:key] describeThingType:[AWSIoTDescribeThingTypeRequest new]] continueWithBlock:^id(AWSTask *task) {
+        XCTAssertNotNil(task.error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
+        XCTAssertEqual(8848, task.error.code);
+        XCTAssertNil(task.result);
+        return nil;
+    }] waitUntilFinished];
+
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
+- (void)testDescribeThingTypeCompletionHandler {
+    NSString *key = @"testDescribeThingType";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
+	[[AWSIoT IoTForKey:key] describeThingType:[AWSIoTDescribeThingTypeRequest new] completionHandler:^(AWSIoTDescribeThingTypeResponse* _Nullable response, NSError * _Nullable error) {
+        XCTAssertNotNil(error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", error.domain);
+        XCTAssertEqual(8848, error.code);
+        XCTAssertNil(response);
+        dispatch_semaphore_signal(semaphore);
+    }];
+	
+ 	dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int)(2.0 * NSEC_PER_SEC)));
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
 - (void)testDetachPrincipalPolicy {
     NSString *key = @"testDetachPrincipalPolicy";
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
@@ -1091,7 +1262,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1139,7 +1309,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1188,7 +1357,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1236,7 +1404,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1284,7 +1451,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1333,7 +1499,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1382,7 +1547,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1431,7 +1595,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1480,7 +1643,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1529,7 +1691,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1578,7 +1739,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1627,7 +1787,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1663,6 +1822,54 @@ static id mockNetworking = nil;
     [AWSIoT removeIoTForKey:key];
 }
 
+- (void)testListOutgoingCertificates {
+    NSString *key = @"testListOutgoingCertificates";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+    [[[[AWSIoT IoTForKey:key] listOutgoingCertificates:[AWSIoTListOutgoingCertificatesRequest new]] continueWithBlock:^id(AWSTask *task) {
+        XCTAssertNotNil(task.error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
+        XCTAssertEqual(8848, task.error.code);
+        XCTAssertNil(task.result);
+        return nil;
+    }] waitUntilFinished];
+
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
+- (void)testListOutgoingCertificatesCompletionHandler {
+    NSString *key = @"testListOutgoingCertificates";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
+	[[AWSIoT IoTForKey:key] listOutgoingCertificates:[AWSIoTListOutgoingCertificatesRequest new] completionHandler:^(AWSIoTListOutgoingCertificatesResponse* _Nullable response, NSError * _Nullable error) {
+        XCTAssertNotNil(error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", error.domain);
+        XCTAssertEqual(8848, error.code);
+        XCTAssertNil(response);
+        dispatch_semaphore_signal(semaphore);
+    }];
+	
+ 	dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int)(2.0 * NSEC_PER_SEC)));
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
 - (void)testListPolicies {
     NSString *key = @"testListPolicies";
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
@@ -1676,7 +1883,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1712,6 +1918,54 @@ static id mockNetworking = nil;
     [AWSIoT removeIoTForKey:key];
 }
 
+- (void)testListPolicyPrincipals {
+    NSString *key = @"testListPolicyPrincipals";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+    [[[[AWSIoT IoTForKey:key] listPolicyPrincipals:[AWSIoTListPolicyPrincipalsRequest new]] continueWithBlock:^id(AWSTask *task) {
+        XCTAssertNotNil(task.error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
+        XCTAssertEqual(8848, task.error.code);
+        XCTAssertNil(task.result);
+        return nil;
+    }] waitUntilFinished];
+
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
+- (void)testListPolicyPrincipalsCompletionHandler {
+    NSString *key = @"testListPolicyPrincipals";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
+	[[AWSIoT IoTForKey:key] listPolicyPrincipals:[AWSIoTListPolicyPrincipalsRequest new] completionHandler:^(AWSIoTListPolicyPrincipalsResponse* _Nullable response, NSError * _Nullable error) {
+        XCTAssertNotNil(error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", error.domain);
+        XCTAssertEqual(8848, error.code);
+        XCTAssertNil(response);
+        dispatch_semaphore_signal(semaphore);
+    }];
+	
+ 	dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int)(2.0 * NSEC_PER_SEC)));
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
 - (void)testListPolicyVersions {
     NSString *key = @"testListPolicyVersions";
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
@@ -1725,7 +1979,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1774,7 +2027,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1823,7 +2075,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1872,7 +2123,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1908,6 +2158,54 @@ static id mockNetworking = nil;
     [AWSIoT removeIoTForKey:key];
 }
 
+- (void)testListThingTypes {
+    NSString *key = @"testListThingTypes";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+    [[[[AWSIoT IoTForKey:key] listThingTypes:[AWSIoTListThingTypesRequest new]] continueWithBlock:^id(AWSTask *task) {
+        XCTAssertNotNil(task.error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
+        XCTAssertEqual(8848, task.error.code);
+        XCTAssertNil(task.result);
+        return nil;
+    }] waitUntilFinished];
+
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
+- (void)testListThingTypesCompletionHandler {
+    NSString *key = @"testListThingTypes";
+    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
+    [AWSIoT registerIoTWithConfiguration:configuration forKey:key];
+
+    AWSIoT *awsClient = [AWSIoT IoTForKey:key];
+    XCTAssertNotNil(awsClient);
+    XCTAssertNotNil(mockNetworking);
+    [awsClient setValue:mockNetworking forKey:@"networking"];
+
+    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
+	[[AWSIoT IoTForKey:key] listThingTypes:[AWSIoTListThingTypesRequest new] completionHandler:^(AWSIoTListThingTypesResponse* _Nullable response, NSError * _Nullable error) {
+        XCTAssertNotNil(error);
+        XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", error.domain);
+        XCTAssertEqual(8848, error.code);
+        XCTAssertNil(response);
+        dispatch_semaphore_signal(semaphore);
+    }];
+	
+ 	dispatch_semaphore_wait(semaphore, dispatch_time(DISPATCH_TIME_NOW, (int)(2.0 * NSEC_PER_SEC)));
+    OCMVerify([mockNetworking sendRequest:[OCMArg isNotNil]]);
+
+    [AWSIoT removeIoTForKey:key];
+}
+
 - (void)testListThings {
     NSString *key = @"testListThings";
     AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:nil];
@@ -1921,7 +2219,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -1970,7 +2267,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -2019,7 +2315,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -2068,7 +2363,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -2117,7 +2411,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -2165,7 +2458,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -2213,7 +2505,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -2261,7 +2552,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -2309,7 +2599,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -2358,7 +2647,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -2406,7 +2694,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];
@@ -2454,7 +2741,6 @@ static id mockNetworking = nil;
         XCTAssertNotNil(task.error);
         XCTAssertEqualObjects(@"OCMockExpectedNetworkingError", task.error.domain);
         XCTAssertEqual(8848, task.error.code);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];

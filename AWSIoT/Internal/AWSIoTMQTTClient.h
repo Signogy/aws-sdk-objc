@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -34,6 +34,17 @@
 
 @interface AWSIoTMQTTClient <AWSSRWebSocketDelegate, NSStreamDelegate>: NSObject
 
+
+/**
+ Boolean flag to indicate whether auto-resubscribe feature is enabled. This flag may
+ be set through AWSIoTMQTTConfiguration in AWSIoTDataManager
+ */
+@property(nonatomic, assign) BOOL autoResubscribe;
+
+/**
+ The current MQTT connection status to AWS IoT
+ */
+@property(atomic, assign, readonly) AWSIoTMQTTStatus mqttStatus;
 /**
  These properties control the reconnect behavior of the MQTT Client.  If the MQTT
  client becomes disconnected, it will attempt to reconnect after a quiet period;
@@ -105,7 +116,9 @@
 /**
  Send MQTT message to specified topic
 
- @param message The message to be sent.
+ @param str The message to be sent.
+ 
+ @param data The data to be sent.
 
  @param qos The qos to use when sending (optional, default 0).
 
@@ -133,7 +146,7 @@
 
  @param qos Specifies the QoS Level of the subscription. Can be 0, 1, or 2.
 
- @param delegate Reference to AWSIOTMQTTNewMessageBlock. When new message is received the block will be invoked.
+ @param callback Delegate Reference to AWSIOTMQTTNewMessageBlock. When new message is received the callback will be invoked.
  */
 - (void)subscribeToTopic:(NSString *)topic qos:(UInt8)qos
          messageCallback:(AWSIoTMQTTNewMessageBlock)callback;
@@ -145,7 +158,7 @@
  
  @param qos Specifies the QoS Level of the subscription. Can be 0, 1, or 2.
  
- @param delegate Reference to AWSIOTMQTTExtendedNewMessageBlock. When new message is received the block will be invoked.
+ @param callback Delegate Reference to AWSIOTMQTTExtendedNewMessageBlock. When new message is received the block will be invoked.
  */
 - (void)subscribeToTopic:(NSString *)topic qos:(UInt8)qos
         extendedCallback:(AWSIoTMQTTExtendedNewMessageBlock)callback;

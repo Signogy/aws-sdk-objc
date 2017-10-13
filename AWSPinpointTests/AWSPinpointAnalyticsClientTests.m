@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -17,19 +17,27 @@
 #import "AWSTestUtility.h"
 #import "AWSPinpoint.h"
 #import "OCMock.h"
+#import "AWSPinpointContext.h"
 
 NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpointAnalyticsClientErrorDomain";
 
 @interface AWSPinpointAnalyticsClientTests : XCTestCase
 @property (nonatomic, strong) AWSPinpoint *pinpoint;
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
 
+@end
+
+
+@interface AWSPinpointConfiguration()
+@property (nonnull, strong) NSUserDefaults *userDefaults;
 @end
 
 @implementation AWSPinpointAnalyticsClientTests
 
 - (void)setUp {
     [super setUp];
-    [[AWSLogger defaultLogger] setLogLevel:AWSLogLevelVerbose];
+    [[NSUserDefaults standardUserDefaults] removeSuiteNamed:@"AWSPinpointAnalyticsClientTests"];
+    self.userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AWSPinpointAnalyticsClientTests"];
 
     [AWSTestUtility setupCognitoCredentialsProvider];
     
@@ -39,8 +47,10 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
                                                                     options:NSJSONReadingMutableContainers
                                                                       error:nil];
     AWSPinpointConfiguration *configuration = [[AWSPinpointConfiguration alloc] initWithAppId:credentialsJson[@"pinpointAppId"] launchOptions:@{}];
-
+    configuration.userDefaults = self.userDefaults;
+    
     self.pinpoint = [AWSPinpoint pinpointWithConfiguration:configuration];
+    
     [self.pinpoint.analyticsClient.eventRecorder removeAllEvents];
 }
 
@@ -119,13 +129,11 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
     XCTAssertTrue([[event metricForKey:@"Mettr1"] isEqualToNumber:@(1)]);
     
     [[self.pinpoint.analyticsClient recordEvent:event] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.error);
         return nil;
     }];
     
     [[self.pinpoint.analyticsClient.eventRecorder getEvents] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.error);
         XCTAssertNotNil(task.result);
         
@@ -163,7 +171,6 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
     
     XCTAssertNotNil(event);
     [[[self.pinpoint.analyticsClient recordEvent:event] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -184,8 +191,7 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
 }
 
 - (void) testSubmitEvents {
-    [[AWSLogger defaultLogger] setLogLevel:AWSLogLevelVerbose];
-
+    
     [[[self.pinpoint.analyticsClient.eventRecorder getEvents] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         XCTAssertNotNil(task.result);
         //Should be empty
@@ -199,7 +205,6 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
     
     XCTAssertNotNil(event);
     [[[self.pinpoint.analyticsClient recordEvent:event] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.error);
         return nil;
     }] waitUntilFinished];
@@ -219,7 +224,6 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
     }] waitUntilFinished];
     
     [[[self.pinpoint.analyticsClient submitEvents] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.error);
         XCTAssertNotNil(task.result);
         
@@ -251,13 +255,11 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
     
     XCTAssertNotNil(event);
     [[self.pinpoint.analyticsClient recordEvent:event] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.error);
         return nil;
     }];
     
     [[self.pinpoint.analyticsClient.eventRecorder getEvents] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.error);
         XCTAssertNotNil(task.result);
         
@@ -441,13 +443,11 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
     
     XCTAssertNotNil(event);
     [[self.pinpoint.analyticsClient recordEvent:event] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.error);
         return nil;
     }];
     
     [[self.pinpoint.analyticsClient.eventRecorder getEvents] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.error);
         XCTAssertNotNil(task.result);
         
@@ -636,13 +636,11 @@ NSString *const AWSPinpointAnalyticsClientErrorDomain = @"com.amazonaws.AWSPinpo
     
     XCTAssertNotNil(event);
     [[self.pinpoint.analyticsClient recordEvent:event] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.error);
         return nil;
     }];
     
     [[self.pinpoint.analyticsClient.eventRecorder getEvents] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.error);
         XCTAssertNotNil(task.result);
         

@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -39,13 +39,13 @@ NS_ASSUME_NONNULL_BEGIN
  
  *Swift*
 
-     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
-         let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
-         AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
-
-         return true
-     }
+     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
+        let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
+ 
+        return true
+    }
 
  *Objective-C*
 
@@ -63,7 +63,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  *Swift*
 
-     let Polly = AWSPolly.defaultPolly()
+     let Polly = AWSPolly.default()
 
  *Objective-C*
 
@@ -80,13 +80,13 @@ NS_ASSUME_NONNULL_BEGIN
 
  *Swift*
 
-     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
-         let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
-         AWSPolly.registerPollyWithConfiguration(configuration, forKey: "USWest2Polly")
-
-         return true
-     }
+     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
+        let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
+        AWSPolly.register(with: configuration!, forKey: "USWest2Polly")
+ 
+        return true
+    }
 
  *Objective-C*
 
@@ -125,13 +125,13 @@ NS_ASSUME_NONNULL_BEGIN
 
  *Swift*
 
-     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
-         let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
-         AWSPolly.registerPollyWithConfiguration(configuration, forKey: "USWest2Polly")
-
-         return true
-     }
+     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+        let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
+        let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
+        AWSPolly.register(with: configuration!, forKey: "USWest2Polly")
+ 
+        return true
+    }
 
  *Objective-C*
 
@@ -301,7 +301,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @param request A container for the necessary parameters to execute the SynthesizeSpeech service method.
 
- @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSPollySynthesizeSpeechOutput`. On failed execution, `task.error` may contain an `NSError` with `AWSPollyErrorDomain` domain and the following error code: `AWSPollyErrorTextLengthExceeded`, `AWSPollyErrorInvalidSampleRate`, `AWSPollyErrorInvalidSsml`, `AWSPollyErrorLexiconNotFound`, `AWSPollyErrorServiceFailure`.
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSPollySynthesizeSpeechOutput`. On failed execution, `task.error` may contain an `NSError` with `AWSPollyErrorDomain` domain and the following error code: `AWSPollyErrorTextLengthExceeded`, `AWSPollyErrorInvalidSampleRate`, `AWSPollyErrorInvalidSsml`, `AWSPollyErrorLexiconNotFound`, `AWSPollyErrorServiceFailure`, `AWSPollyErrorMarksNotSupportedForFormat`, `AWSPollyErrorSsmlMarksNotSupportedForTextType`.
  
  @see AWSPollySynthesizeSpeechInput
  @see AWSPollySynthesizeSpeechOutput
@@ -314,7 +314,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param request A container for the necessary parameters to execute the SynthesizeSpeech service method.
  @param completionHandler The completion handler to call when the load request is complete.
                           `response` - A response object, or `nil` if the request failed.
-                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSPollyErrorDomain` domain and the following error code: `AWSPollyErrorTextLengthExceeded`, `AWSPollyErrorInvalidSampleRate`, `AWSPollyErrorInvalidSsml`, `AWSPollyErrorLexiconNotFound`, `AWSPollyErrorServiceFailure`.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSPollyErrorDomain` domain and the following error code: `AWSPollyErrorTextLengthExceeded`, `AWSPollyErrorInvalidSampleRate`, `AWSPollyErrorInvalidSsml`, `AWSPollyErrorLexiconNotFound`, `AWSPollyErrorServiceFailure`, `AWSPollyErrorMarksNotSupportedForFormat`, `AWSPollyErrorSsmlMarksNotSupportedForTextType`.
  
  @see AWSPollySynthesizeSpeechInput
  @see AWSPollySynthesizeSpeechOutput

@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 #import "AWSPinpointAnalyticsResources.h"
 
 static NSString *const AWSInfoPinpointAnalytics = @"PinpointAnalytics";
-static NSString *const AWSPinpointAnalyticsSDKVersion = @"2.4.16";
+static NSString *const AWSPinpointAnalyticsSDKVersion = @"2.6.4";
 
 
 @interface AWSPinpointAnalyticsResponseSerializer : AWSJSONResponseSerializer
@@ -110,7 +110,7 @@ static NSDictionary *errorCodeDictionary = nil;
                 *error = [NSError errorWithDomain:AWSPinpointAnalyticsErrorDomain
                                              code:AWSPinpointAnalyticsErrorUnknown
                                          userInfo:responseObject];
-            }
+            } 
             return responseObject;
         }
         
@@ -129,6 +129,7 @@ static NSDictionary *errorCodeDictionary = nil;
                  @"responseDataSize" : @(data?[data length]:0),
                  };
     }
+	
     return responseObject;
 }
 
@@ -200,7 +201,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
         if (!serviceConfiguration) {
             @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                           reason:@"The service configuration is `nil`. You need to configure `Info.plist` or set `defaultServiceConfiguration` before using this method."
+                                           reason:@"The service configuration is `nil`. You need to configure `awsconfiguration.json`, `Info.plist` or set `defaultServiceConfiguration` before using this method."
                                          userInfo:nil];
         }
         _defaultPinpointAnalytics = [[AWSPinpointAnalytics alloc] initWithConfiguration:serviceConfiguration];
@@ -327,11 +328,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self putEvents:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(error);

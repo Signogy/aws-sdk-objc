@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 #import "AWSSNSResources.h"
 
 static NSString *const AWSInfoSNS = @"SNS";
-static NSString *const AWSSNSSDKVersion = @"2.4.16";
+static NSString *const AWSSNSSDKVersion = @"2.6.4";
 
 
 @interface AWSSNSResponseSerializer : AWSXMLResponseSerializer
@@ -66,23 +66,24 @@ static NSDictionary *errorCodeDictionary = nil;
                                                     data:data
                                                    error:error];
     if (!*error && [responseObject isKindOfClass:[NSDictionary class]]) {
-    	if (!*error && [responseObject isKindOfClass:[NSDictionary class]]) {
-	        if ([errorCodeDictionary objectForKey:[[[responseObject objectForKey:@"__type"] componentsSeparatedByString:@"#"] lastObject]]) {
-	            if (error) {
-	                *error = [NSError errorWithDomain:AWSSNSErrorDomain
-	                                             code:[[errorCodeDictionary objectForKey:[[[responseObject objectForKey:@"__type"] componentsSeparatedByString:@"#"] lastObject]] integerValue]
-	                                         userInfo:responseObject];
-	            }
-	            return responseObject;
-	        } else if ([[[responseObject objectForKey:@"__type"] componentsSeparatedByString:@"#"] lastObject]) {
-	            if (error) {
-	                *error = [NSError errorWithDomain:AWSCognitoIdentityErrorDomain
-	                                             code:AWSCognitoIdentityErrorUnknown
-	                                         userInfo:responseObject];
-	            }
-	            return responseObject;
-	        }
-    	}
+
+        NSDictionary *errorInfo = responseObject[@"Error"];
+        if (errorInfo[@"Code"] && errorCodeDictionary[errorInfo[@"Code"]]) {
+            if (error) {
+                *error = [NSError errorWithDomain:AWSSNSErrorDomain
+                                             code:[errorCodeDictionary[errorInfo[@"Code"]] integerValue]
+                                         userInfo:errorInfo
+                         ];
+                return responseObject;
+            }
+        } else if (errorInfo) {
+            if (error) {
+                *error = [NSError errorWithDomain:AWSSNSErrorDomain
+                                             code:AWSSNSErrorUnknown
+                                         userInfo:errorInfo];
+                return responseObject;
+            }
+        }
     }
 
     if (!*error && response.statusCode/100 != 2) {
@@ -98,7 +99,8 @@ static NSDictionary *errorCodeDictionary = nil;
                                                        error:error];
         }
     }
-	    return responseObject;
+
+    return responseObject;
 }
 
 @end
@@ -169,7 +171,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
         if (!serviceConfiguration) {
             @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                           reason:@"The service configuration is `nil`. You need to configure `Info.plist` or set `defaultServiceConfiguration` before using this method."
+                                           reason:@"The service configuration is `nil`. You need to configure `awsconfiguration.json`, `Info.plist` or set `defaultServiceConfiguration` before using this method."
                                          userInfo:nil];
         }
         _defaultSNS = [[AWSSNS alloc] initWithConfiguration:serviceConfiguration];
@@ -294,11 +296,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self addPermission:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(error);
         }
@@ -321,11 +318,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self checkIfPhoneNumberIsOptedOut:request] continueWithBlock:^id _Nullable(AWSTask<AWSSNSCheckIfPhoneNumberIsOptedOutResponse *> * _Nonnull task) {
         AWSSNSCheckIfPhoneNumberIsOptedOutResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -350,11 +342,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSNSConfirmSubscriptionResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -377,11 +364,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self createPlatformApplication:request] continueWithBlock:^id _Nullable(AWSTask<AWSSNSCreatePlatformApplicationResponse *> * _Nonnull task) {
         AWSSNSCreatePlatformApplicationResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -406,11 +388,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSNSCreateEndpointResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -434,11 +411,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSNSCreateTopicResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -460,11 +432,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self deleteEndpoint:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(error);
@@ -488,11 +455,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self deletePlatformApplication:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(error);
         }
@@ -514,11 +476,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self deleteTopic:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(error);
@@ -543,11 +500,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSNSGetEndpointAttributesResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -570,11 +522,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self getPlatformApplicationAttributes:request] continueWithBlock:^id _Nullable(AWSTask<AWSSNSGetPlatformApplicationAttributesResponse *> * _Nonnull task) {
         AWSSNSGetPlatformApplicationAttributesResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -599,11 +546,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSNSGetSMSAttributesResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -626,11 +568,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self getSubscriptionAttributes:request] continueWithBlock:^id _Nullable(AWSTask<AWSSNSGetSubscriptionAttributesResponse *> * _Nonnull task) {
         AWSSNSGetSubscriptionAttributesResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -655,11 +592,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSNSGetTopicAttributesResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -682,11 +614,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self listEndpointsByPlatformApplication:request] continueWithBlock:^id _Nullable(AWSTask<AWSSNSListEndpointsByPlatformApplicationResponse *> * _Nonnull task) {
         AWSSNSListEndpointsByPlatformApplicationResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -711,11 +638,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSNSListPhoneNumbersOptedOutResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -738,11 +660,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self listPlatformApplications:request] continueWithBlock:^id _Nullable(AWSTask<AWSSNSListPlatformApplicationsResponse *> * _Nonnull task) {
         AWSSNSListPlatformApplicationsResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -767,11 +684,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSNSListSubscriptionsResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -794,11 +706,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self listSubscriptionsByTopic:request] continueWithBlock:^id _Nullable(AWSTask<AWSSNSListSubscriptionsByTopicResponse *> * _Nonnull task) {
         AWSSNSListSubscriptionsByTopicResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -823,11 +730,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSNSListTopicsResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -850,11 +752,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self optInPhoneNumber:request] continueWithBlock:^id _Nullable(AWSTask<AWSSNSOptInPhoneNumberResponse *> * _Nonnull task) {
         AWSSNSOptInPhoneNumberResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -879,11 +776,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSNSPublishResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -905,11 +797,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self removePermission:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(error);
@@ -933,11 +820,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self setEndpointAttributes:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(error);
         }
@@ -959,11 +841,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self setPlatformApplicationAttributes:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(error);
@@ -988,11 +865,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSNSSetSMSAttributesResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -1015,11 +887,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self setSubscriptionAttributes:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(error);
         }
@@ -1041,11 +908,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self setTopicAttributes:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(error);
@@ -1070,11 +932,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSNSSubscribeResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -1096,11 +953,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self unsubscribe:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(error);

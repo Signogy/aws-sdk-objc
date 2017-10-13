@@ -1,5 +1,5 @@
 ////
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@
 #import "AWSMobileAnalyticsDefaultDeliveryClient.h"
 #import "AWSMobileAnalyticsConfiguration.h"
 #import "AWSClientContext.h"
-#import "AWSLogging.h"
+#import "AWSCocoaLumberjack.h"
 #import "AWSSynchronizedMutableDictionary.h"
 #import "AWSMobileAnalyticsContext.h"
 #import "AWSMobileAnalyticsERSService.h"
@@ -226,7 +226,7 @@ static AWSSynchronizedMutableDictionary *_mobileAnalyticsForAppNamespace = nil;
 
         [_sessionClient startSession];
 
-        AWSLogInfo(@"Mobile Analytics SDK(%@) Initialization successfully completed.", [_mobileAnalyticsContext sdkInfo].sdkVersion);
+        AWSDDLogInfo(@"Mobile Analytics SDK(%@) Initialization successfully completed.", [_mobileAnalyticsContext sdkInfo].sdkVersion);
     }
 
     return self;

@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -17,6 +17,17 @@
 #import <AWSCore/AWSCategory.h>
 
 NSString *const AWSRekognitionErrorDomain = @"com.amazonaws.AWSRekognitionErrorDomain";
+
+@implementation AWSRekognitionAgeRange
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"high" : @"High",
+             @"low" : @"Low",
+             };
+}
+
+@end
 
 @implementation AWSRekognitionBeard
 
@@ -311,6 +322,35 @@ NSString *const AWSRekognitionErrorDomain = @"com.amazonaws.AWSRekognitionErrorD
 
 @end
 
+@implementation AWSRekognitionDetectModerationLabelsRequest
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"image" : @"Image",
+             @"minConfidence" : @"MinConfidence",
+             };
+}
+
++ (NSValueTransformer *)imageJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSRekognitionImage class]];
+}
+
+@end
+
+@implementation AWSRekognitionDetectModerationLabelsResponse
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"moderationLabels" : @"ModerationLabels",
+             };
+}
+
++ (NSValueTransformer *)moderationLabelsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSRekognitionModerationLabel class]];
+}
+
+@end
+
 @implementation AWSRekognitionEmotion
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
@@ -417,6 +457,7 @@ NSString *const AWSRekognitionErrorDomain = @"com.amazonaws.AWSRekognitionErrorD
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"ageRange" : @"AgeRange",
              @"beard" : @"Beard",
              @"boundingBox" : @"BoundingBox",
              @"confidence" : @"Confidence",
@@ -432,6 +473,10 @@ NSString *const AWSRekognitionErrorDomain = @"com.amazonaws.AWSRekognitionErrorD
              @"smile" : @"Smile",
              @"sunglasses" : @"Sunglasses",
              };
+}
+
++ (NSValueTransformer *)ageRangeJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSRekognitionAgeRange class]];
 }
 
 + (NSValueTransformer *)beardJSONTransformer {
@@ -847,6 +892,18 @@ NSString *const AWSRekognitionErrorDomain = @"com.amazonaws.AWSRekognitionErrorD
 
 + (NSValueTransformer *)facesJSONTransformer {
     return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSRekognitionFace class]];
+}
+
+@end
+
+@implementation AWSRekognitionModerationLabel
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"confidence" : @"Confidence",
+             @"name" : @"Name",
+             @"parentName" : @"ParentName",
+             };
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 #import "AWSPollyResources.h"
 
 static NSString *const AWSInfoPolly = @"Polly";
-static NSString *const AWSPollySDKVersion = @"2.4.16";
+static NSString *const AWSPollySDKVersion = @"2.6.4";
 
 
 @interface AWSPollyResponseSerializer : AWSJSONResponseSerializer
@@ -46,9 +46,11 @@ static NSDictionary *errorCodeDictionary = nil;
                             @"InvalidSsmlException" : @(AWSPollyErrorInvalidSsml),
                             @"LexiconNotFoundException" : @(AWSPollyErrorLexiconNotFound),
                             @"LexiconSizeExceededException" : @(AWSPollyErrorLexiconSizeExceeded),
+                            @"MarksNotSupportedForFormatException" : @(AWSPollyErrorMarksNotSupportedForFormat),
                             @"MaxLexemeLengthExceededException" : @(AWSPollyErrorMaxLexemeLengthExceeded),
                             @"MaxLexiconsNumberExceededException" : @(AWSPollyErrorMaxLexiconsNumberExceeded),
                             @"ServiceFailureException" : @(AWSPollyErrorServiceFailure),
+                            @"SsmlMarksNotSupportedForTextTypeException" : @(AWSPollyErrorSsmlMarksNotSupportedForTextType),
                             @"TextLengthExceededException" : @(AWSPollyErrorTextLengthExceeded),
                             @"UnsupportedPlsAlphabetException" : @(AWSPollyErrorUnsupportedPlsAlphabet),
                             @"UnsupportedPlsLanguageException" : @(AWSPollyErrorUnsupportedPlsLanguage),
@@ -105,7 +107,8 @@ static NSDictionary *errorCodeDictionary = nil;
                                                        error:error];
         }
     }
-	    return responseObject;
+	
+    return responseObject;
 }
 
 @end
@@ -176,7 +179,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
         if (!serviceConfiguration) {
             @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                           reason:@"The service configuration is `nil`. You need to configure `Info.plist` or set `defaultServiceConfiguration` before using this method."
+                                           reason:@"The service configuration is `nil`. You need to configure `awsconfiguration.json`, `Info.plist` or set `defaultServiceConfiguration` before using this method."
                                          userInfo:nil];
         }
         _defaultPolly = [[AWSPolly alloc] initWithConfiguration:serviceConfiguration];
@@ -302,11 +305,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSPollyDeleteLexiconOutput *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -329,11 +327,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self describeVoices:request] continueWithBlock:^id _Nullable(AWSTask<AWSPollyDescribeVoicesOutput *> * _Nonnull task) {
         AWSPollyDescribeVoicesOutput *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -358,11 +351,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSPollyGetLexiconOutput *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -385,11 +373,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self listLexicons:request] continueWithBlock:^id _Nullable(AWSTask<AWSPollyListLexiconsOutput *> * _Nonnull task) {
         AWSPollyListLexiconsOutput *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -414,11 +397,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSPollyPutLexiconOutput *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -441,11 +419,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self synthesizeSpeech:request] continueWithBlock:^id _Nullable(AWSTask<AWSPollySynthesizeSpeechOutput *> * _Nonnull task) {
         AWSPollySynthesizeSpeechOutput *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);

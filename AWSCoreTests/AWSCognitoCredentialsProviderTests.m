@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -301,6 +301,7 @@ BOOL _identityChanged;
         XCTAssertNotNil(credentials.accessKey, @"Unable to get accessKey");
         
         identityProvider.loggedIn = YES;
+        [provider clearCredentials];
         return [provider credentials];
     }] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         if (task.error) {
@@ -433,6 +434,7 @@ BOOL _identityChanged;
         XCTAssertNotNil(credentials.accessKey, @"Unable to get accessKey");
 
         identityProvider.loggedIn = YES;
+        [provider clearCredentials];
         return [provider credentials];
     }] continueWithBlock:^id(AWSTask *task) {
         if (task.error) {
@@ -598,13 +600,15 @@ BOOL _identityChanged;
 
     // Get the FB APP access token
     NSString *raw_response = [NSString stringWithContentsOfURL:[NSURL URLWithString:accessURI] encoding:NSUTF8StringEncoding error:nil];
-    NSRange startOfToken = [raw_response rangeOfString:@"="];
+    NSDictionary *accessTokenDictionary = [NSJSONSerialization JSONObjectWithData:[raw_response dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingMutableLeaves error:nil];
+    NSString *accessToken = accessTokenDictionary[@"access_token"];
+    //NSRange startOfToken = [raw_response rangeOfString:@"="];
     // Strip the 'access_token=' so we can easily encode result
-    _facebookAppToken = [[raw_response substringFromIndex:startOfToken.location + 1] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-
+    //_facebookAppToken = [[raw_response substringFromIndex:startOfToken.location + 1] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
     // Add a new test user, the result contains an access key we can use to test assume role
-    NSString *addUserURI = [NSString stringWithFormat:@"https://graph.facebook.com/%@/accounts/test-users?installed=true&name=Foo%%20Bar&locale=en_US&permissions=read_stream&method=post&access_token=%@", AWSCognitoCredentialsProviderTestsFacebookAppID, _facebookAppToken];
-
+    NSString *addUserURI = [NSString stringWithFormat:@"https://graph.facebook.com/%@/accounts/test-users?installed=true&name=Foo%%20Bar&locale=en_US&permissions=read_stream&method=post&access_token=%@", AWSCognitoCredentialsProviderTestsFacebookAppID, [accessToken aws_stringWithURLEncodingPath]];
+    
     NSError *error = nil;
     NSString *newUser = [NSString stringWithContentsOfURL:[NSURL URLWithString:addUserURI]
                                                  encoding:NSASCIIStringEncoding
@@ -715,8 +719,8 @@ BOOL _identityChanged;
     NSString *oldId = dictionary[AWSCognitoNotificationNewId];
     NSString *newId = dictionary[AWSCognitoNotificationPreviousId];
     
-    AWSLogDebug(@"OLD ID: %@", oldId);
-    AWSLogDebug(@"NEW ID: %@", newId);
+    AWSDDLogDebug(@"OLD ID: %@", oldId);
+    AWSDDLogDebug(@"NEW ID: %@", newId);
     _identityChanged = YES;
 }
 

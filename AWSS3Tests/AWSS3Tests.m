@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -37,6 +37,8 @@ static NSString *testBucketNameGeneral = nil;
     [AWSTestUtility setupCognitoCredentialsProvider];
     //[AWSTestUtility setupCrdentialsViaFile];
     
+    
+    
     //Create bucketName
     NSTimeInterval timeIntervalSinceReferenceDate = [NSDate timeIntervalSinceReferenceDate];
     testBucketNameGeneral = [NSString stringWithFormat:@"%@%lld", AWSS3TestBucketNamePrefix, (int64_t)timeIntervalSinceReferenceDate];
@@ -48,12 +50,12 @@ static NSString *testBucketNameGeneral = nil;
     tempLargeURL = [NSURL fileURLWithPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-s3tmTestTempLarge",testBucketNameGeneral]]];
     NSError *error = nil;
     if (![[NSFileManager defaultManager] createFileAtPath:tempLargeURL.path contents:nil attributes:nil]) {
-        AWSLogError(@"Error: Can not create file with file path:%@",tempLargeURL.path);
+        AWSDDLogError(@"Error: Can not create file with file path:%@",tempLargeURL.path);
     }
     error = nil;
     NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingToURL:tempLargeURL error:&error];
     if (error) {
-        AWSLogError(@"Error: [%@]", error);
+        AWSDDLogError(@"Error: [%@]", error);
     }
     
     @autoreleasepool {
@@ -81,12 +83,12 @@ static NSString *testBucketNameGeneral = nil;
             tempSmallURL = [NSURL fileURLWithPath:[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0] stringByAppendingPathComponent:[NSString stringWithFormat:@"%@-s3tmTestTempSmall",testBucketNameGeneral]]];
             NSError *error = nil;
             if (![[NSFileManager defaultManager] createFileAtPath:tempSmallURL.path contents:nil attributes:nil]) {
-                AWSLogError(@"Error: Can not create file with file path:%@",tempSmallURL.path);
+                AWSDDLogError(@"Error: Can not create file with file path:%@",tempSmallURL.path);
             }
             error = nil;
             NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingToURL:tempSmallURL error:&error];
             if (error) {
-                AWSLogError(@"Error: [%@]", error);
+                AWSDDLogError(@"Error: [%@]", error);
             }
             
             [fileHandle writeData:[tempBaseString dataUsingEncoding:NSUTF8StringEncoding]]; //baseString 800000 = 4.68MB
@@ -99,9 +101,19 @@ static NSString *testBucketNameGeneral = nil;
 
 - (void)setUp {
     [super setUp];
+    
+    [AWSDDLog sharedInstance].logLevel = AWSDDLogLevelVerbose;
+    [AWSDDLog addLogger:[AWSDDTTYLogger sharedInstance]];//xcode console logger
+    
+    AWSDDLogVerbose(@"verbose logging");
+    
 }
 
 + (void)tearDown {
+    
+    // Delete all contents of the bucket
+    [AWSS3Tests deleteAllObjectsFromBucket:testBucketNameGeneral];
+    
     //Delete Bucket
     [AWSS3Tests deleteBucketWithName:testBucketNameGeneral];
     
@@ -118,6 +130,34 @@ static NSString *testBucketNameGeneral = nil;
 - (void)tearDown {
     // Put teardown code here; it will be run once, after the last test case.
     [super tearDown];
+}
+
++ (void)deleteAllObjectsFromBucket:(NSString *)bucketName {
+    AWSS3 *s3 = [AWSS3 defaultS3];
+    
+    AWSS3ListObjectsRequest *listObjectsRequest = [AWSS3ListObjectsRequest new];
+    listObjectsRequest.bucket = testBucketNameGeneral;
+    
+    [[[s3 listObjects:listObjectsRequest] continueWithBlock:^id(AWSTask *task) {
+        AWSS3ListObjectsOutput *output = task.result;
+        
+        for (AWSS3Object *object in output.contents) {
+            // Delete the object
+            AWSS3DeleteObjectRequest *deleteObjectRequest = [AWSS3DeleteObjectRequest new];
+            deleteObjectRequest.bucket = testBucketNameGeneral;
+            deleteObjectRequest.key = object.key;
+            
+            [[s3 deleteObject:deleteObjectRequest] continueWithBlock:^id(AWSTask *task) {
+                if (task.error) {
+                    NSLog(@"Failed to delete: %@", object.key);
+                } else {
+                    NSLog(@"Successfully deleted: %@", object.key);
+                }
+                return nil;
+            }];
+        }
+        return nil;
+    }] waitUntilFinished];
 }
 
 + (BOOL)createBucketWithName:(NSString *)bucketName {
@@ -257,7 +297,7 @@ static NSString *testBucketNameGeneral = nil;
         XCTAssertTrue([task.result isKindOfClass:[AWSS3ListBucketsOutput class]],@"The response object is not a class of [%@]", NSStringFromClass([AWSS3ListBucketsOutput class]));
 
         AWSS3ListBucketsOutput *listBucketOutput = task.result;
-        AWSLogDebug(@" testListBucket ========= responseObject is: ================  %@", [listBucketOutput description]);
+        AWSDDLogDebug(@" testListBucket ========= responseObject is: ================  %@", [listBucketOutput description]);
         return nil;
     }] waitUntilFinished];
 }
@@ -352,7 +392,6 @@ static NSString *testBucketNameGeneral = nil;
     putObjectRequest.body = nil;
     NSLog(@"testBucketNameGeneral %@",testBucketNameGeneral);
     
-    [AWSLogger defaultLogger].logLevel = AWSLogLevelVerbose;
     
     [[[[[[s3 putObject:putObjectRequest] continueWithBlock:^id(AWSTask *task)
       {
@@ -362,7 +401,6 @@ static NSString *testBucketNameGeneral = nil;
           return [s3 listObjects:list];
       }] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
           XCTAssertNil(task.error);
-          XCTAssertNil(task.exception);
           AWSS3ListObjectsOutput *listObjects = (AWSS3ListObjectsOutput *)task.result;
           XCTAssertTrue([[listObjects contents] count] == 1);
           NSArray<AWSS3Object *> *contents = [listObjects contents];
@@ -376,13 +414,11 @@ static NSString *testBucketNameGeneral = nil;
           return [s3 deleteObject:del];
       }] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
           XCTAssertNil(task.error);
-          XCTAssertNil(task.exception);
           AWSS3ListObjectsRequest *list = [AWSS3ListObjectsRequest new];
           list.bucket = testBucketNameGeneral;
           return [s3 listObjects:list];
       }] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
           XCTAssertNil(task.error);
-          XCTAssertNil(task.exception);
           AWSS3ListObjectsOutput *listObjects = (AWSS3ListObjectsOutput *)task.result;
           XCTAssertTrue([[listObjects contents] count] == 0);
           return nil;
@@ -433,6 +469,9 @@ static NSString *testBucketNameGeneral = nil;
     }] waitUntilFinished];
 
     [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:10]];
+    
+    // Delete all objects from the bucket
+    [AWSS3Tests deleteAllObjectsFromBucket:grantBucketName];
     
     XCTAssertTrue([AWSS3Tests deleteBucketWithName:grantBucketName]);
 }
@@ -946,7 +985,6 @@ static NSString *testBucketNameGeneral = nil;
 
     [[[s3 putBucketVersioning:versionRequest] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNil(task.error);
-        XCTAssertNil(task.exception);
         return nil;
     }] waitUntilFinished];
 
@@ -959,7 +997,6 @@ static NSString *testBucketNameGeneral = nil;
 
     [[[s3 putBucketVersioning:versionRequest] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNil(task.error);
-        XCTAssertNil(task.exception);
         return nil;
     }] waitUntilFinished];
 }
@@ -1402,7 +1439,6 @@ static NSString *testBucketNameGeneral = nil;
 
     [[[s3 headObject:headObjectRequest] continueWithBlock:^id _Nullable(AWSTask<AWSS3HeadObjectOutput *> * _Nonnull task) {
         XCTAssertNotNil(task.error);
-        XCTAssertNil(task.exception);
         XCTAssertNil(task.result);
         return nil;
     }] waitUntilFinished];

@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -98,7 +98,7 @@ static NSString *const AWSLexSignatureScope = @"lex";
                                                                        headers:request.allHTTPHeaderFields
                                                                  contentSha256:contentSha256];
     
-    AWSLogVerbose(@"AWS4 Canonical Request: [%@]", canonicalRequest);
+    AWSDDLogVerbose(@"AWS4 Canonical Request: [%@]", canonicalRequest);
     
     NSString *scope = [NSString stringWithFormat:@"%@/%@/%@/%@",
                        dateStamp,
@@ -114,7 +114,7 @@ static NSString *const AWSLexSignatureScope = @"lex";
                               scope,
                               [AWSSignatureSignerUtility hexEncode:[AWSSignatureSignerUtility hashString:canonicalRequest]]];
     
-    AWSLogVerbose(@"AWS4 String to Sign: [%@]", stringToSign);
+    AWSDDLogVerbose(@"AWS4 String to Sign: [%@]", stringToSign);
     
     NSData *kSigning  = [AWSSignatureV4Signer getV4DerivedKey:credentials.secretKey
                                                          date:dateStamp

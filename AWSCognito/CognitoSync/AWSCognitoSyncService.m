@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -26,7 +26,7 @@
 #import "AWSCognitoSyncResources.h"
 
 static NSString *const AWSInfoCognitoSync = @"CognitoSync";
-static NSString *const AWSCognitoSyncSDKVersion = @"2.4.16";
+static NSString *const AWSCognitoSyncSDKVersion = @"2.6.4";
 
 
 @interface AWSCognitoSyncResponseSerializer : AWSJSONResponseSerializer
@@ -106,7 +106,8 @@ static NSDictionary *errorCodeDictionary = nil;
                                                        error:error];
         }
     }
-	    return responseObject;
+	
+    return responseObject;
 }
 
 @end
@@ -168,7 +169,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
         if (!serviceConfiguration) {
             @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                           reason:@"The service configuration is `nil`. You need to configure `Info.plist` or set `defaultServiceConfiguration` before using this method."
+                                           reason:@"The service configuration is `nil`. You need to configure `awsconfiguration.json`, `Info.plist` or set `defaultServiceConfiguration` before using this method."
                                          userInfo:nil];
         }
         _defaultCognitoSync = [[AWSCognitoSync alloc] initWithConfiguration:serviceConfiguration];
@@ -294,11 +295,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSCognitoSyncBulkPublishResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -321,11 +317,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self deleteDataset:request] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoSyncDeleteDatasetResponse *> * _Nonnull task) {
         AWSCognitoSyncDeleteDatasetResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -350,11 +341,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSCognitoSyncDescribeDatasetResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -377,11 +363,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self describeIdentityPoolUsage:request] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoSyncDescribeIdentityPoolUsageResponse *> * _Nonnull task) {
         AWSCognitoSyncDescribeIdentityPoolUsageResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -406,11 +387,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSCognitoSyncDescribeIdentityUsageResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -433,11 +409,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self getBulkPublishDetails:request] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoSyncGetBulkPublishDetailsResponse *> * _Nonnull task) {
         AWSCognitoSyncGetBulkPublishDetailsResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -462,11 +433,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSCognitoSyncGetCognitoEventsResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -489,11 +455,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self getIdentityPoolConfiguration:request] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoSyncGetIdentityPoolConfigurationResponse *> * _Nonnull task) {
         AWSCognitoSyncGetIdentityPoolConfigurationResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -518,11 +479,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSCognitoSyncListDatasetsResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -545,11 +501,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self listIdentityPoolUsage:request] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoSyncListIdentityPoolUsageResponse *> * _Nonnull task) {
         AWSCognitoSyncListIdentityPoolUsageResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -574,11 +525,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSCognitoSyncListRecordsResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -602,11 +548,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSCognitoSyncRegisterDeviceResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -628,11 +569,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self setCognitoEvents:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(error);
@@ -657,11 +593,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSCognitoSyncSetIdentityPoolConfigurationResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -684,11 +615,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self subscribeToDataset:request] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoSyncSubscribeToDatasetResponse *> * _Nonnull task) {
         AWSCognitoSyncSubscribeToDatasetResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -713,11 +639,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSCognitoSyncUnsubscribeFromDatasetResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -740,11 +661,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self updateRecords:request] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoSyncUpdateRecordsResponse *> * _Nonnull task) {
         AWSCognitoSyncUpdateRecordsResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);

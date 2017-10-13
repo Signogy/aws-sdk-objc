@@ -14,8 +14,9 @@
 //   limitations under the License.
 //
 
-#import "AWSLogging.h"
+#import "AWSCocoaLumberjack.h"
 #import "AWSSRWebSocket.h"
+#import <errno.h>
 
 //
 // In Xcode 7 there seems to be an issue linking against libicucore;
@@ -268,8 +269,7 @@ static __strong NSData *CRLFCRLF;
 
 - (id)initWithURLRequest:(NSURLRequest *)request protocols:(NSArray *)protocols allowsUntrustedSSLCertificates:(BOOL)allowsUntrustedSSLCertificates;
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         assert(request.URL);
         _url = request.URL;
         _urlRequest = request;
@@ -327,8 +327,9 @@ static __strong NSData *CRLFCRLF;
     
     // Going to set a specific on the queue so we can validate we're on the work queue
     dispatch_queue_set_specific(_workQueue, (__bridge void *)self, maybe_bridge(_workQueue), NULL);
-    
-    _delegateDispatchQueue = dispatch_get_main_queue();
+
+    //Changing it to be dispatched on global queue. This triggers didReceiveMessage , which should be running in background thread.
+    _delegateDispatchQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT,0);
     sr_dispatch_retain(_delegateDispatchQueue);
     
     _readBuffer = [[NSMutableData alloc] init];
@@ -402,8 +403,10 @@ static __strong NSData *CRLFCRLF;
 - (void)_performDelegateBlock:(dispatch_block_t)block;
 {
     if (_delegateOperationQueue) {
+        SRFastLog(@"using _delegateOperationQueue.");
         [_delegateOperationQueue addOperationWithBlock:block];
     } else {
+        SRFastLog(@"using _delegateDispatchQueue.");
         assert(_delegateDispatchQueue);
         dispatch_async(_delegateDispatchQueue, block);
     }
@@ -503,7 +506,10 @@ static __strong NSData *CRLFCRLF;
     CFHTTPMessageSetHeaderFieldValue(request, CFSTR("Host"), (__bridge CFStringRef)(_url.port ? [NSString stringWithFormat:@"%@:%@", _url.host, _url.port] : _url.host));
         
     NSMutableData *keyBytes = [[NSMutableData alloc] initWithLength:16];
-    SecRandomCopyBytes(kSecRandomDefault, keyBytes.length, keyBytes.mutableBytes);
+    int functionExitCode = SecRandomCopyBytes(kSecRandomDefault, keyBytes.length, keyBytes.mutableBytes);
+    if (functionExitCode < 0) {
+        AWSDDLogError(@"SecRandomCopyBytes failed with error code %d: %s", errno, strerror(errno));
+    }
     
     if ([keyBytes respondsToSelector:@selector(base64EncodedStringWithOptions:)]) {
         _secKey = [keyBytes base64EncodedStringWithOptions:0];
@@ -636,7 +642,7 @@ static __strong NSData *CRLFCRLF;
             if (floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_8_3) {
                 static dispatch_once_t predicate;
                 dispatch_once(&predicate, ^{
-                    AWSLogInfo(@"SocketRocket: %@ - this service type is deprecated in favor of using PushKit for VoIP control", networkServiceType);
+                    AWSDDLogInfo(@"SocketRocket: %@ - this service type is deprecated in favor of using PushKit for VoIP control", networkServiceType);
                 });
             }
 #endif
@@ -650,6 +656,8 @@ static __strong NSData *CRLFCRLF;
             break;
         case NSURLNetworkServiceTypeVoice:
             networkServiceType = NSStreamNetworkServiceTypeVoice;
+            break;
+        case NSURLNetworkServiceTypeCallSignaling:
             break;
     }
     
@@ -1441,7 +1449,10 @@ static const size_t SRFrameHeaderOverhead = 32;
         }
     } else {
         uint8_t *mask_key = frame_buffer + frame_buffer_size;
-        SecRandomCopyBytes(kSecRandomDefault, sizeof(uint32_t), (uint8_t *)mask_key);
+        int functionExitCode = SecRandomCopyBytes(kSecRandomDefault, sizeof(uint32_t), (uint8_t *)mask_key);
+        if (functionExitCode < 0) {
+            AWSDDLogError(@"SecRandomCopyBytes failed with error code %d: %s", errno, strerror(errno));
+        }
         frame_buffer_size += sizeof(uint32_t);
         
         // TODO: could probably optimize this with SIMD
@@ -1624,8 +1635,7 @@ static const size_t SRFrameHeaderOverhead = 32;
 
 - (id)initWithBufferCapacity:(NSUInteger)poolSize;
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         _poolSize = poolSize;
         _bufferedConsumers = [[NSMutableArray alloc] initWithCapacity:poolSize];
     }
@@ -1721,7 +1731,7 @@ static inline void SRFastLog(NSString *format, ...)  {
     
     va_end(arg_list);
     
-    AWSLogInfo(@"[SR] %@", formattedString);
+    AWSDDLogVerbose(@"[SR] %@", formattedString);
 #endif
 }
 
@@ -1826,8 +1836,7 @@ static NSRunLoop *networkRunLoop = nil;
 
 - (id)init
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         _waitGroup = dispatch_group_create();
         dispatch_group_enter(_waitGroup);
     }

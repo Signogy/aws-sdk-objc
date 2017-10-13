@@ -1,5 +1,5 @@
 /*
- Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  
  Licensed under the Apache License, Version 2.0 (the "License").
  You may not use this file except in compliance with the License.
@@ -87,6 +87,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (instancetype) initWithApplicationId:(NSString*) applicationId
                             endpointId:(NSString*) endpointId;
+
+/**
+ An AWSPinpointEndpointProfile object with the specified context
+ @returns AWSPinpointEndpointProfile
+ */
+- (instancetype)initWithContext:(AWSPinpointContext *) context;
 
 /**
  Adds an attribute to this AWSPinpointEndpointProfile with the specified key. Only 40 attributes/metrics
