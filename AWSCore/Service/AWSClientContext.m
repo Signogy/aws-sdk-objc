@@ -14,11 +14,11 @@
 //
 
 #import "AWSClientContext.h"
-#import <UIKit/UIKit.h>
 #import <sys/types.h>
 #import <sys/sysctl.h>
 #import "AWSUICKeyChainStore.h"
 #import "AWSCocoaLumberjack.h"
+#import "AWSUIDevice.h"
 
 // Public constants
 NSString *const AWSClientContextVersion = @"1.0";
@@ -66,7 +66,7 @@ static NSString *const AWSClientContextKeychainInstallationIdKey = @"com.amazona
         _appName = appName ? appName : AWSClientContextUnknown;
 
         //Device Details
-        UIDevice* currentDevice = [UIDevice currentDevice];
+        AWSUIDevice* currentDevice = [AWSUIDevice currentDevice];
         NSString *autoUpdatingLoaleIdentifier = [[NSLocale autoupdatingCurrentLocale] localeIdentifier];
         _devicePlatform = [currentDevice systemName] ? [currentDevice systemName] : AWSClientContextUnknown;
         _deviceModel = [currentDevice model] ? [currentDevice model] : AWSClientContextUnknown;
