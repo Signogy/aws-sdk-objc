@@ -17,6 +17,7 @@
 #import "AWSTestUtility.h"
 #import "AWSPinpoint.h"
 #import "OCMock.h"
+#import "AWSPinpointContext.h"
 
 NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpointAnalyticsClientErrorDomain";
 
@@ -24,7 +25,16 @@ NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpo
 @property (nonatomic, strong) AWSPinpoint *pinpoint;
 @property (nonatomic, strong) AWSPinpointConfiguration *configuration;
 @property (nonatomic, strong) UIApplication *application;
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
 
+@end
+
+@interface AWSPinpointTargetingClient()
+- (AWSPinpointTargetingUpdateEndpointRequest*) updateEndpointRequestForEndpoint:(AWSPinpointEndpointProfile *) endpoint;
+@end
+
+@interface AWSPinpointConfiguration()
+@property (nonnull, strong) NSUserDefaults *userDefaults;
 @end
 
 @implementation AWSPinpointTargetingClientTests
@@ -33,9 +43,14 @@ NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpo
     [super setUp];
 
     [AWSTestUtility setupCognitoCredentialsProvider];
+    [[NSUserDefaults standardUserDefaults] removeSuiteNamed:@"AWSPinpointTargetingClientTests"];
+    self.userDefaults = [[NSUserDefaults alloc] initWithSuiteName:@"AWSPinpointTargetingClientTests"];
 
     [self initializeMockApplicationWithOptOut:YES];
     [self initializePinpointWithConfiguration:[self getDefaultAWSPinpointConfiguration] forceCreate:NO];
+    [self.userDefaults removeObjectForKey:@"AWSPinpointEndpointAttributesKey"];
+    [self.userDefaults removeObjectForKey:@"AWSPinpointEndpointMetricsKey"];
+    [self.userDefaults synchronize];
 }
 
 - (AWSPinpointConfiguration *)getDefaultAWSPinpointConfiguration {
@@ -73,6 +88,9 @@ NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpo
     if (forceCreate == YES) {
         self.configuration.appId = [[NSUUID UUID] UUIDString];
     }
+    
+    configuration.userDefaults = self.userDefaults;
+
     self.pinpoint = [AWSPinpoint pinpointWithConfiguration:configuration];
 }
 
@@ -118,7 +136,6 @@ NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpo
     [self setApplicationLevelOptOut:YES];
 
     AWSPinpointEndpointProfile *profile = [self.pinpoint.targetingClient currentEndpointProfile];
-
     XCTAssertTrue([profile.optOut isEqualToString:@"ALL"]);
 }
 
@@ -182,13 +199,27 @@ NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpo
 
     XCTAssertTrue([profile.optOut isEqualToString:@"NONE"]);
 }
-
 - (void)testCurrentProfile {
-    AWSPinpointEndpointProfile *profile = [self.pinpoint.targetingClient currentEndpointProfile];
+    [self validateCurrentProfile:NO forAppId:@"testCurrentProfileForAPNS"];
+    [self validateCurrentProfile:YES forAppId:@"testCurrentProfileForAPNSSandbox"];
+}
+
+- (void)validateCurrentProfile:(BOOL)debug forAppId:(NSString *)appId {
+    [[NSUserDefaults standardUserDefaults] removeSuiteNamed:@"AWSPinpointTargetingClientTests"];
+    AWSPinpointConfiguration *config = [[AWSPinpointConfiguration alloc] initWithAppId:appId launchOptions:nil];
+    config.debug = debug;
+    config.userDefaults = self.userDefaults;
+    AWSPinpoint *pinpoint = [AWSPinpoint pinpointWithConfiguration:config];
+    
+    AWSPinpointEndpointProfile *profile = [pinpoint.targetingClient currentEndpointProfile];
     XCTAssertNotNil(profile);
     XCTAssertNotNil(profile.endpointId);
-    XCTAssertTrue([profile.applicationId isEqualToString:self.configuration.appId]);
-    XCTAssertTrue([profile.channelType isEqualToString:@"APNS"]);
+    XCTAssertTrue([profile.applicationId isEqualToString:appId]);
+    if (debug) {
+        XCTAssertTrue([profile.channelType isEqualToString:@"APNS_SANDBOX"]);
+    } else {
+        XCTAssertTrue([profile.channelType isEqualToString:@"APNS"]);
+    }
     XCTAssertTrue([profile.optOut isEqualToString:@"ALL"]);
     XCTAssertNil(profile.address);
     XCTAssertTrue(profile.effectiveDate > 0);
@@ -219,6 +250,23 @@ NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpo
     
 }
 
+- (void)testUpdateEndpointRequest {
+    [self validateUpdateEndpointRequest:NO forAppId:@"testCurrentProfileForAPNS"];
+    [self validateUpdateEndpointRequest:YES forAppId:@"testCurrentProfileForAPNSSandbox"];
+}
+
+- (void)validateUpdateEndpointRequest:(BOOL)debug forAppId:(NSString *)appId {
+    [[NSUserDefaults standardUserDefaults] removeSuiteNamed:@"AWSPinpointTargetingClientTests"];
+    AWSPinpointConfiguration *config = [[AWSPinpointConfiguration alloc] initWithAppId:appId launchOptions:nil];
+    config.debug = debug;
+    config.userDefaults = self.userDefaults;
+    AWSPinpoint *pinpoint = [AWSPinpoint pinpointWithConfiguration:config];
+    AWSPinpointEndpointProfile *profile = [pinpoint.targetingClient currentEndpointProfile];
+    AWSPinpointTargetingUpdateEndpointRequest *updateEndpointRequest = [pinpoint.targetingClient updateEndpointRequestForEndpoint:profile];
+    AWSPinpointTargetingEndpointRequest *endpointRequest = [updateEndpointRequest endpointRequest];
+    XCTAssertEqual(endpointRequest.channelType, debug? AWSPinpointTargetingChannelTypeApnsSandbox:AWSPinpointTargetingChannelTypeApns);
+}
+
 - (void)testUpdateEndpointProfile {
     [[[self.pinpoint.targetingClient updateEndpointProfile] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         XCTAssertNil(task.error);
@@ -228,13 +276,18 @@ NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpo
 }
 
 - (void) testGlobalAttribute {
-    [self.pinpoint.targetingClient addAttribute:@[@"GlobalAttr1"] forKey:@"GlobalAttr1"];
+    [[NSUserDefaults standardUserDefaults] removeSuiteNamed:@"AWSPinpointTargetingClientTests"];
+    AWSPinpointConfiguration *config = [[AWSPinpointConfiguration alloc] initWithAppId:@"testGlobalAttribute" launchOptions:nil];
+    config.userDefaults = self.userDefaults;
+    AWSPinpoint *pinpoint = [AWSPinpoint pinpointWithConfiguration:config];
     
-    AWSPinpointEndpointProfile *profile = [self.pinpoint.targetingClient currentEndpointProfile];
+    [pinpoint.targetingClient addAttribute:@[@"GlobalAttr1"] forKey:@"GlobalAttr1"];
+    
+    AWSPinpointEndpointProfile *profile = [pinpoint.targetingClient currentEndpointProfile];
 
     XCTAssertNotNil(profile);
     XCTAssertNotNil(profile.endpointId);
-    XCTAssertTrue([profile.applicationId isEqualToString:self.configuration.appId]);
+    XCTAssertTrue([profile.applicationId isEqualToString:@"testGlobalAttribute"]);
     XCTAssertTrue([profile.channelType isEqualToString:@"APNS"]);
     XCTAssertTrue([profile.optOut isEqualToString:@"ALL"]);
     XCTAssertNil(profile.address);
@@ -261,12 +314,11 @@ NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpo
     XCTAssertTrue([profile.demographic.model isEqualToString:[currentDevice model]]);
     XCTAssertTrue([profile.demographic.timezone isEqualToString:[[NSTimeZone systemTimeZone] name]]);
     XCTAssertTrue([profile.demographic.locale isEqualToString:autoUpdatingLocaleIdentifier]);
-    //XCTAssertTrue([profile.demographic.appVersion isEqualToString:@"1.0"]);
     XCTAssertTrue([profile.demographic.platform isEqualToString:[currentDevice systemName]]);
     XCTAssertTrue([profile.demographic.platformVersion isEqualToString:[currentDevice systemVersion]]);
     
-    [self.pinpoint.targetingClient removeAttributeForKey:@"GlobalAttr1"];
-    profile = [self.pinpoint.targetingClient currentEndpointProfile];
+    [pinpoint.targetingClient removeAttributeForKey:@"GlobalAttr1"];
+    profile = [pinpoint.targetingClient currentEndpointProfile];
     XCTAssertEqual([profile.allAttributes count], 0);
     XCTAssertEqual([profile.allMetrics count], 0);
 }
@@ -323,13 +375,18 @@ NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpo
 
 
 - (void) testGlobalMetric {
-    [self.pinpoint.targetingClient addMetric:@(123) forKey:@"GlobalMetr1"];
+    [[NSUserDefaults standardUserDefaults] removeSuiteNamed:@"AWSPinpointTargetingClientTests"];
+    AWSPinpointConfiguration *config = [[AWSPinpointConfiguration alloc] initWithAppId:@"testGlobalMetric" launchOptions:nil];
+    config.userDefaults = self.userDefaults;
+    AWSPinpoint *pinpoint = [AWSPinpoint pinpointWithConfiguration:config];
     
-    AWSPinpointEndpointProfile *profile = [self.pinpoint.targetingClient currentEndpointProfile];
+    [pinpoint.targetingClient addMetric:@(123) forKey:@"GlobalMetr1"];
+    
+    AWSPinpointEndpointProfile *profile = [pinpoint.targetingClient currentEndpointProfile];
     
     XCTAssertNotNil(profile);
     XCTAssertNotNil(profile.endpointId);
-    XCTAssertTrue([profile.applicationId isEqualToString:self.configuration.appId]);
+    XCTAssertTrue([profile.applicationId isEqualToString:@"testGlobalMetric"]);
     XCTAssertTrue([profile.channelType isEqualToString:@"APNS"]);
     XCTAssertTrue([profile.optOut isEqualToString:@"ALL"]);
     XCTAssertNil(profile.address);
@@ -360,8 +417,8 @@ NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpo
     XCTAssertTrue([profile.demographic.platform isEqualToString:[currentDevice systemName]]);
     XCTAssertTrue([profile.demographic.platformVersion isEqualToString:[currentDevice systemVersion]]);
     
-    [self.pinpoint.targetingClient removeMetricForKey:@"GlobalMetr1"];
-    profile = [self.pinpoint.targetingClient currentEndpointProfile];
+    [pinpoint.targetingClient removeMetricForKey:@"GlobalMetr1"];
+    profile = [pinpoint.targetingClient currentEndpointProfile];
     XCTAssertEqual([profile.allAttributes count], 0);
     XCTAssertEqual([profile.allMetrics count], 0);
 }
@@ -417,14 +474,20 @@ NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpo
 }
 
 - (void) testGlobalAttributeAndMetric {
-    [self.pinpoint.targetingClient addAttribute:@[@"GlobalAttr1"] forKey:@"GlobalAttr1"];
-    [self.pinpoint.targetingClient addMetric:@(123) forKey:@"GlobalMetr1"];
+    NSString *appId = @"testGlobalAttributeAndMetric";
+    [[NSUserDefaults standardUserDefaults] removeSuiteNamed:@"AWSPinpointTargetingClientTests"];
+    AWSPinpointConfiguration *config = [[AWSPinpointConfiguration alloc] initWithAppId:appId launchOptions:nil];
+    config.userDefaults = self.userDefaults;
+    AWSPinpoint *pinpoint = [AWSPinpoint pinpointWithConfiguration:config];
     
-    AWSPinpointEndpointProfile *profile = [self.pinpoint.targetingClient currentEndpointProfile];
+    [pinpoint.targetingClient addAttribute:@[@"GlobalAttr1"] forKey:@"GlobalAttr1"];
+    [pinpoint.targetingClient addMetric:@(123) forKey:@"GlobalMetr1"];
+    
+    AWSPinpointEndpointProfile *profile = [pinpoint.targetingClient currentEndpointProfile];
     
     XCTAssertNotNil(profile);
     XCTAssertNotNil(profile.endpointId);
-    XCTAssertTrue([profile.applicationId isEqualToString:self.configuration.appId]);
+    XCTAssertTrue([profile.applicationId isEqualToString:appId]);
     XCTAssertTrue([profile.channelType isEqualToString:@"APNS"]);
     XCTAssertTrue([profile.optOut isEqualToString:@"ALL"]);
     XCTAssertNil(profile.address);
@@ -456,9 +519,9 @@ NSString *const AWSPinpointTargetingClientErrorDomain = @"com.amazonaws.AWSPinpo
     XCTAssertTrue([profile.demographic.platform isEqualToString:[currentDevice systemName]]);
     XCTAssertTrue([profile.demographic.platformVersion isEqualToString:[currentDevice systemVersion]]);
     
-    [self.pinpoint.targetingClient removeAttributeForKey:@"GlobalAttr1"];
-    [self.pinpoint.targetingClient removeMetricForKey:@"GlobalMetr1"];
-    profile = [self.pinpoint.targetingClient currentEndpointProfile];
+    [pinpoint.targetingClient removeAttributeForKey:@"GlobalAttr1"];
+    [pinpoint.targetingClient removeMetricForKey:@"GlobalMetr1"];
+    profile = [pinpoint.targetingClient currentEndpointProfile];
     XCTAssertEqual([profile.allAttributes count], 0);
     XCTAssertEqual([profile.allMetrics count], 0);
 }
