@@ -18,6 +18,7 @@
 #import <sys/sysctl.h>
 #import "AWSUICKeyChainStore.h"
 #import "AWSCocoaLumberjack.h"
+#import "AWSDevice.h"
 
 // Public constants
 NSString *const AWSClientContextVersion = @"1.0";
