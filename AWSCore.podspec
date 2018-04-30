@@ -11,6 +11,7 @@ Pod::Spec.new do |s|
   s.author       = { 'Amazon Web Services' => 'amazonwebservices' }
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target =  '10.10'
+  s.tvos.deployment_target = '11.3'
   s.source       = { :git => 'https://github.com/bvjustin/aws-sdk-objc.git',
                      :tag => s.version}
   s.frameworks   = 'Foundation', 'SystemConfiguration'
