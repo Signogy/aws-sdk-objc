@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -103,7 +103,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Adds the specified user to the specified group.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Adds the specified user to the specified group.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminConfirmSignUp\":{\
       \"name\":\"AdminConfirmSignUp\",\
@@ -126,7 +126,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Confirms user registration as an admin without using a confirmation code. Works on any user.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Confirms user registration as an admin without using a confirmation code. Works on any user.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminCreateUser\":{\
       \"name\":\"AdminCreateUser\",\
@@ -154,7 +154,7 @@
         {\"shape\":\"UnsupportedUserStateException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Creates a new user in the specified user pool and sends a welcome message via email or phone (SMS). This message is based on a template that you configured in your call to or . This template includes your custom sign-up instructions and placeholders for user name and temporary password.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Creates a new user in the specified user pool.</p> <p>If <code>MessageAction</code> is not set, the default is to send a welcome message via email or phone (SMS).</p> <note> <p>This message is based on a template that you configured in your call to or . This template includes your custom sign-up instructions and placeholders for user name and temporary password.</p> </note> <p>Alternatively, you can call AdminCreateUser with âSUPPRESSâ for the <code>MessageAction</code> parameter, and Amazon Cognito will not send any email. </p> <p>In either case, the user will be in the <code>FORCE_CHANGE_PASSWORD</code> state until they sign in and change their password.</p> <p>AdminCreateUser requires developer credentials.</p>\"\
     },\
     \"AdminDeleteUser\":{\
       \"name\":\"AdminDeleteUser\",\
@@ -171,7 +171,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Deletes a user as an administrator. Works on any user.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Deletes a user as an administrator. Works on any user.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminDeleteUserAttributes\":{\
       \"name\":\"AdminDeleteUserAttributes\",\
@@ -189,7 +189,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Deletes the user attributes in a user pool as an administrator. Works on any user.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Deletes the user attributes in a user pool as an administrator. Works on any user.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminDisableProviderForUser\":{\
       \"name\":\"AdminDisableProviderForUser\",\
@@ -226,7 +226,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Disables the specified user as an administrator. Works on any user.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Disables the specified user.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminEnableUser\":{\
       \"name\":\"AdminEnableUser\",\
@@ -244,7 +244,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Enables the specified user as an administrator. Works on any user.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Enables the specified user as an administrator. Works on any user.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminForgetDevice\":{\
       \"name\":\"AdminForgetDevice\",\
@@ -262,7 +262,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Forgets the device, as an administrator.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Forgets the device, as an administrator.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminGetDevice\":{\
       \"name\":\"AdminGetDevice\",\
@@ -280,7 +280,7 @@
         {\"shape\":\"InternalErrorException\"},\
         {\"shape\":\"NotAuthorizedException\"}\
       ],\
-      \"documentation\":\"<p>Gets the device, as an administrator.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Gets the device, as an administrator.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminGetUser\":{\
       \"name\":\"AdminGetUser\",\
@@ -298,7 +298,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Gets the specified user by user name in a user pool as an administrator. Works on any user.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Gets the specified user by user name in a user pool as an administrator. Works on any user.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminInitiateAuth\":{\
       \"name\":\"AdminInitiateAuth\",\
@@ -325,7 +325,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"UserNotConfirmedException\"}\
       ],\
-      \"documentation\":\"<p>Initiates the authentication flow, as an administrator.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Initiates the authentication flow, as an administrator.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminLinkProviderForUser\":{\
       \"name\":\"AdminLinkProviderForUser\",\
@@ -362,7 +362,7 @@
         {\"shape\":\"InternalErrorException\"},\
         {\"shape\":\"NotAuthorizedException\"}\
       ],\
-      \"documentation\":\"<p>Lists devices, as an administrator.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Lists devices, as an administrator.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminListGroupsForUser\":{\
       \"name\":\"AdminListGroupsForUser\",\
@@ -380,7 +380,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Lists the groups that the user belongs to.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Lists the groups that the user belongs to.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminListUserAuthEvents\":{\
       \"name\":\"AdminListUserAuthEvents\",\
@@ -398,7 +398,8 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"UserPoolAddOnNotEnabledException\"},\
         {\"shape\":\"InternalErrorException\"}\
-      ]\
+      ],\
+      \"documentation\":\"<p>Lists a history of user activity and any risks detected as part of Amazon Cognito advanced security.</p>\"\
     },\
     \"AdminRemoveUserFromGroup\":{\
       \"name\":\"AdminRemoveUserFromGroup\",\
@@ -415,7 +416,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Removes the specified user from the specified group.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Removes the specified user from the specified group.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminResetUserPassword\":{\
       \"name\":\"AdminResetUserPassword\",\
@@ -440,7 +441,7 @@
         {\"shape\":\"InvalidSmsRoleTrustRelationshipException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Resets the specified user's password in a user pool as an administrator. Works on any user.</p> <p>When a developer calls this API, the current password is invalidated, so it must be changed. If a user tries to sign in after the API is called, the app will get a PasswordResetRequiredException exception back and should direct the user down the flow to reset the password, which is the same as the forgot password flow. In addition, if the user pool has phone verification selected and a verified phone number exists for the user, or if email verification is selected and a verified email exists for the user, calling this API will also result in sending a message to the end user with the code to change their password.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Resets the specified user's password in a user pool as an administrator. Works on any user.</p> <p>When a developer calls this API, the current password is invalidated, so it must be changed. If a user tries to sign in after the API is called, the app will get a PasswordResetRequiredException exception back and should direct the user down the flow to reset the password, which is the same as the forgot password flow. In addition, if the user pool has phone verification selected and a verified phone number exists for the user, or if email verification is selected and a verified email exists for the user, calling this API will also result in sending a message to the end user with the code to change their password.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminRespondToAuthChallenge\":{\
       \"name\":\"AdminRespondToAuthChallenge\",\
@@ -472,7 +473,7 @@
         {\"shape\":\"UserNotConfirmedException\"},\
         {\"shape\":\"SoftwareTokenMFANotFoundException\"}\
       ],\
-      \"documentation\":\"<p>Responds to an authentication challenge, as an administrator.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Responds to an authentication challenge, as an administrator.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminSetUserMFAPreference\":{\
       \"name\":\"AdminSetUserMFAPreference\",\
@@ -490,7 +491,27 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"UserNotConfirmedException\"},\
         {\"shape\":\"InternalErrorException\"}\
-      ]\
+      ],\
+      \"documentation\":\"<p>Sets the user's multi-factor authentication (MFA) preference, including which MFA options are enabled and if any are preferred. Only one factor can be set as preferred. The preferred MFA factor will be used to authenticate a user if multiple factors are enabled. If multiple options are enabled and no preference is set, a challenge to choose an MFA option will be returned during sign in.</p>\"\
+    },\
+    \"AdminSetUserPassword\":{\
+      \"name\":\"AdminSetUserPassword\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"AdminSetUserPasswordRequest\"},\
+      \"output\":{\"shape\":\"AdminSetUserPasswordResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"NotAuthorizedException\"},\
+        {\"shape\":\"UserNotFoundException\"},\
+        {\"shape\":\"InternalErrorException\"},\
+        {\"shape\":\"TooManyRequestsException\"},\
+        {\"shape\":\"InvalidParameterException\"},\
+        {\"shape\":\"InvalidPasswordException\"}\
+      ],\
+      \"documentation\":\"<p>Sets the specified user's password in a user pool as an administrator. Works on any user. </p> <p>The password can be temporary or permanent. If it is temporary, the user status will be placed into the <code>FORCE_CHANGE_PASSWORD</code> state. When the user next tries to sign in, the InitiateAuth/AdminInitiateAuth response will contain the <code>NEW_PASSWORD_REQUIRED</code> challenge. If the user does not sign in before it expires, the user will not be able to sign in and their password will need to be reset by an administrator. </p> <p>Once the user has set a new password, or the password is permanent, the user status will be set to <code>Confirmed</code>.</p>\"\
     },\
     \"AdminSetUserSettings\":{\
       \"name\":\"AdminSetUserSettings\",\
@@ -507,7 +528,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Sets all the user settings for a specified user name. Works on any user.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p> <i>This action is no longer supported.</i> You can use it to configure only SMS MFA. You can't use it to configure TOTP software token MFA. To configure either type of MFA, use the <a>AdminSetUserMFAPreference</a> action instead.</p>\"\
     },\
     \"AdminUpdateAuthEventFeedback\":{\
       \"name\":\"AdminUpdateAuthEventFeedback\",\
@@ -525,7 +546,8 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"UserPoolAddOnNotEnabledException\"},\
         {\"shape\":\"InternalErrorException\"}\
-      ]\
+      ],\
+      \"documentation\":\"<p>Provides feedback for an authentication event as to whether it was from a valid user. This feedback is used for improving the risk evaluation decision for the user pool as part of Amazon Cognito advanced security.</p>\"\
     },\
     \"AdminUpdateDeviceStatus\":{\
       \"name\":\"AdminUpdateDeviceStatus\",\
@@ -544,7 +566,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Updates the device status as an administrator.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Updates the device status as an administrator.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminUpdateUserAttributes\":{\
       \"name\":\"AdminUpdateUserAttributes\",\
@@ -564,9 +586,12 @@
         {\"shape\":\"TooManyRequestsException\"},\
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"UserNotFoundException\"},\
-        {\"shape\":\"InternalErrorException\"}\
+        {\"shape\":\"InternalErrorException\"},\
+        {\"shape\":\"InvalidSmsRoleAccessPolicyException\"},\
+        {\"shape\":\"InvalidEmailRoleAccessPolicyException\"},\
+        {\"shape\":\"InvalidSmsRoleTrustRelationshipException\"}\
       ],\
-      \"documentation\":\"<p>Updates the specified user's attributes, including developer attributes, as an administrator. Works on any user.</p> <p>For custom attributes, you must prepend the <code>custom:</code> prefix to the attribute name.</p> <p>In addition to updating user attributes, this API can also be used to mark phone and email as verified.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Updates the specified user's attributes, including developer attributes, as an administrator. Works on any user.</p> <p>For custom attributes, you must prepend the <code>custom:</code> prefix to the attribute name.</p> <p>In addition to updating user attributes, this API can also be used to mark phone and email as verified.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AdminUserGlobalSignOut\":{\
       \"name\":\"AdminUserGlobalSignOut\",\
@@ -584,7 +609,7 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Signs out users from all devices, as an administrator.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Signs out users from all devices, as an administrator. It also invalidates all refresh tokens issued to a user. The user's current access and Id tokens remain valid until their expiry. Access and Id tokens expire one hour after they are issued.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"AssociateSoftwareToken\":{\
       \"name\":\"AssociateSoftwareToken\",\
@@ -600,7 +625,8 @@
         {\"shape\":\"ResourceNotFoundException\"},\
         {\"shape\":\"InternalErrorException\"},\
         {\"shape\":\"SoftwareTokenMFANotFoundException\"}\
-      ]\
+      ],\
+      \"documentation\":\"<p>Returns a unique generated shared secret key code for the user account. The request takes an access token or a session string, but not both.</p>\"\
     },\
     \"ChangePassword\":{\
       \"name\":\"ChangePassword\",\
@@ -721,7 +747,7 @@
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Creates a new group in the specified user pool.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Creates a new group in the specified user pool.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"CreateIdentityProvider\":{\
       \"name\":\"CreateIdentityProvider\",\
@@ -832,6 +858,7 @@
         {\"shape\":\"InvalidParameterException\"},\
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"LimitExceededException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
       \"documentation\":\"<p>Creates a new domain for a user pool.</p>\"\
@@ -850,7 +877,7 @@
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Deletes a group. Currently only groups with no members can be deleted.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Deletes a group. Currently only groups with no members can be deleted.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"DeleteIdentityProvider\":{\
       \"name\":\"DeleteIdentityProvider\",\
@@ -1024,7 +1051,8 @@
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"UserPoolAddOnNotEnabledException\"},\
         {\"shape\":\"InternalErrorException\"}\
-      ]\
+      ],\
+      \"documentation\":\"<p>Describes the risk configuration.</p>\"\
     },\
     \"DescribeUserImportJob\":{\
       \"name\":\"DescribeUserImportJob\",\
@@ -1076,7 +1104,7 @@
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Client method for returning the configuration information and metadata of the specified user pool client.</p>\"\
+      \"documentation\":\"<p>Client method for returning the configuration information and metadata of the specified user pool app client.</p>\"\
     },\
     \"DescribeUserPoolDomain\":{\
       \"name\":\"DescribeUserPoolDomain\",\
@@ -1195,7 +1223,7 @@
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Gets a group.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Gets a group.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"GetIdentityProviderByIdentifier\":{\
       \"name\":\"GetIdentityProviderByIdentifier\",\
@@ -1213,6 +1241,21 @@
         {\"shape\":\"InternalErrorException\"}\
       ],\
       \"documentation\":\"<p>Gets the specified identity provider.</p>\"\
+    },\
+    \"GetSigningCertificate\":{\
+      \"name\":\"GetSigningCertificate\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"GetSigningCertificateRequest\"},\
+      \"output\":{\"shape\":\"GetSigningCertificateResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"InternalErrorException\"},\
+        {\"shape\":\"InvalidParameterException\"},\
+        {\"shape\":\"ResourceNotFoundException\"}\
+      ],\
+      \"documentation\":\"<p>This method takes a user pool ID, and returns the signing certificate.</p>\"\
     },\
     \"GetUICustomization\":{\
       \"name\":\"GetUICustomization\",\
@@ -1295,7 +1338,8 @@
         {\"shape\":\"ResourceNotFoundException\"},\
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"InternalErrorException\"}\
-      ]\
+      ],\
+      \"documentation\":\"<p>Gets the user pool multi-factor authentication (MFA) configuration.</p>\"\
     },\
     \"GlobalSignOut\":{\
       \"name\":\"GlobalSignOut\",\
@@ -1314,7 +1358,7 @@
         {\"shape\":\"UserNotConfirmedException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Signs out users from all devices.</p>\"\
+      \"documentation\":\"<p>Signs out users from all devices. It also invalidates all refresh tokens issued to a user. The user's current access and Id tokens remain valid until their expiry. Access and Id tokens expire one hour after they are issued.</p>\"\
     },\
     \"InitiateAuth\":{\
       \"name\":\"InitiateAuth\",\
@@ -1336,7 +1380,9 @@
         {\"shape\":\"PasswordResetRequiredException\"},\
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"UserNotConfirmedException\"},\
-        {\"shape\":\"InternalErrorException\"}\
+        {\"shape\":\"InternalErrorException\"},\
+        {\"shape\":\"InvalidSmsRoleAccessPolicyException\"},\
+        {\"shape\":\"InvalidSmsRoleTrustRelationshipException\"}\
       ],\
       \"documentation\":\"<p>Initiates the authentication flow.</p>\"\
     },\
@@ -1376,7 +1422,7 @@
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Lists the groups associated with a user pool.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Lists the groups associated with a user pool.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"ListIdentityProviders\":{\
       \"name\":\"ListIdentityProviders\",\
@@ -1411,6 +1457,23 @@
         {\"shape\":\"InternalErrorException\"}\
       ],\
       \"documentation\":\"<p>Lists the resource servers for a user pool.</p>\"\
+    },\
+    \"ListTagsForResource\":{\
+      \"name\":\"ListTagsForResource\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"ListTagsForResourceRequest\"},\
+      \"output\":{\"shape\":\"ListTagsForResourceResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"NotAuthorizedException\"},\
+        {\"shape\":\"TooManyRequestsException\"},\
+        {\"shape\":\"InvalidParameterException\"},\
+        {\"shape\":\"InternalErrorException\"}\
+      ],\
+      \"documentation\":\"<p>Lists the tags that are assigned to an Amazon Cognito user pool.</p> <p>A tag is a label that you can apply to user pools to categorize and manage them in different ways, such as by purpose, owner, environment, or other criteria.</p> <p>You can use this action up to 10 times per second, per account.</p>\"\
     },\
     \"ListUserImportJobs\":{\
       \"name\":\"ListUserImportJobs\",\
@@ -1494,7 +1557,7 @@
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Lists the users in the specified group.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Lists the users in the specified group.</p> <p>Calling this action requires developer credentials.</p>\"\
     },\
     \"ResendConfirmationCode\":{\
       \"name\":\"ResendConfirmationCode\",\
@@ -1572,7 +1635,8 @@
         {\"shape\":\"CodeDeliveryFailureException\"},\
         {\"shape\":\"InvalidEmailRoleAccessPolicyException\"},\
         {\"shape\":\"InternalErrorException\"}\
-      ]\
+      ],\
+      \"documentation\":\"<p>Configures actions on detected risks. To delete the risk configuration for <code>UserPoolId</code> or <code>ClientId</code>, pass null values for all four configuration types.</p> <p>To enable Amazon Cognito advanced security features, update the user pool to include the <code>UserPoolAddOns</code> key<code>AdvancedSecurityMode</code>.</p> <p>See .</p>\"\
     },\
     \"SetUICustomization\":{\
       \"name\":\"SetUICustomization\",\
@@ -1607,7 +1671,8 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"UserNotConfirmedException\"},\
         {\"shape\":\"InternalErrorException\"}\
-      ]\
+      ],\
+      \"documentation\":\"<p>Set the user's multi-factor authentication (MFA) method preference, including which MFA factors are enabled and if any are preferred. Only one factor can be set as preferred. The preferred MFA factor will be used to authenticate a user if multiple factors are enabled. If multiple options are enabled and no preference is set, a challenge to choose an MFA option will be returned during sign in.</p>\"\
     },\
     \"SetUserPoolMfaConfig\":{\
       \"name\":\"SetUserPoolMfaConfig\",\
@@ -1625,7 +1690,8 @@
         {\"shape\":\"InvalidSmsRoleTrustRelationshipException\"},\
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"InternalErrorException\"}\
-      ]\
+      ],\
+      \"documentation\":\"<p>Set the user pool multi-factor authentication (MFA) configuration.</p>\"\
     },\
     \"SetUserSettings\":{\
       \"name\":\"SetUserSettings\",\
@@ -1644,7 +1710,7 @@
         {\"shape\":\"UserNotConfirmedException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Sets the user settings like multi-factor authentication (MFA). If MFA is to be removed for a particular attribute pass the attribute with code delivery as null. If null list is passed, all MFA options are removed.</p>\",\
+      \"documentation\":\"<p> <i>This action is no longer supported.</i> You can use it to configure only SMS MFA. You can't use it to configure TOTP software token MFA. To configure either type of MFA, use the <a>SetUserMFAPreference</a> action instead.</p>\",\
       \"authtype\":\"none\"\
     },\
     \"SignUp\":{\
@@ -1710,6 +1776,40 @@
       ],\
       \"documentation\":\"<p>Stops the user import job.</p>\"\
     },\
+    \"TagResource\":{\
+      \"name\":\"TagResource\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"TagResourceRequest\"},\
+      \"output\":{\"shape\":\"TagResourceResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"NotAuthorizedException\"},\
+        {\"shape\":\"TooManyRequestsException\"},\
+        {\"shape\":\"InvalidParameterException\"},\
+        {\"shape\":\"InternalErrorException\"}\
+      ],\
+      \"documentation\":\"<p>Assigns a set of tags to an Amazon Cognito user pool. A tag is a label that you can use to categorize and manage user pools in different ways, such as by purpose, owner, environment, or other criteria.</p> <p>Each tag consists of a key and value, both of which you define. A key is a general category for more specific values. For example, if you have two versions of a user pool, one for testing and another for production, you might assign an <code>Environment</code> tag key to both user pools. The value of this key might be <code>Test</code> for one user pool and <code>Production</code> for the other.</p> <p>Tags are useful for cost tracking and access control. You can activate your tags so that they appear on the Billing and Cost Management console, where you can track the costs associated with your user pools. In an IAM policy, you can constrain permissions for user pools based on specific tags or tag values.</p> <p>You can use this action up to 5 times per second, per account. A user pool can have as many as 50 tags.</p>\"\
+    },\
+    \"UntagResource\":{\
+      \"name\":\"UntagResource\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"UntagResourceRequest\"},\
+      \"output\":{\"shape\":\"UntagResourceResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"NotAuthorizedException\"},\
+        {\"shape\":\"TooManyRequestsException\"},\
+        {\"shape\":\"InvalidParameterException\"},\
+        {\"shape\":\"InternalErrorException\"}\
+      ],\
+      \"documentation\":\"<p>Removes the specified tags from an Amazon Cognito user pool. You can use this action up to 5 times per second, per account</p>\"\
+    },\
     \"UpdateAuthEventFeedback\":{\
       \"name\":\"UpdateAuthEventFeedback\",\
       \"http\":{\
@@ -1726,7 +1826,8 @@
         {\"shape\":\"UserNotFoundException\"},\
         {\"shape\":\"UserPoolAddOnNotEnabledException\"},\
         {\"shape\":\"InternalErrorException\"}\
-      ]\
+      ],\
+      \"documentation\":\"<p>Provides the feedback for an authentication event whether it was from a valid user or not. This feedback is used for improving the risk evaluation decision for the user pool as part of Amazon Cognito advanced security.</p>\"\
     },\
     \"UpdateDeviceStatus\":{\
       \"name\":\"UpdateDeviceStatus\",\
@@ -1764,7 +1865,7 @@
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Updates the specified group with the specified attributes.</p> <p>Requires developer credentials.</p>\"\
+      \"documentation\":\"<p>Updates the specified group with the specified attributes.</p> <p>Calling this action requires developer credentials.</p> <important> <p>If you don't provide a value for an attribute, it will be set to the default value.</p> </important>\"\
     },\
     \"UpdateIdentityProvider\":{\
       \"name\":\"UpdateIdentityProvider\",\
@@ -1799,7 +1900,7 @@
         {\"shape\":\"TooManyRequestsException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Updates the name and scopes of resource server. All other fields are read-only.</p>\"\
+      \"documentation\":\"<p>Updates the name and scopes of resource server. All other fields are read-only.</p> <important> <p>If you don't provide a value for an attribute, it will be set to the default value.</p> </important>\"\
     },\
     \"UpdateUserAttributes\":{\
       \"name\":\"UpdateUserAttributes\",\
@@ -1853,7 +1954,7 @@
         {\"shape\":\"UserPoolTaggingException\"},\
         {\"shape\":\"InvalidEmailRoleAccessPolicyException\"}\
       ],\
-      \"documentation\":\"<p>Updates the specified user pool with the specified attributes.</p>\"\
+      \"documentation\":\"<p>Updates the specified user pool with the specified attributes. You can get a list of the current user pool settings with .</p> <important> <p>If you don't provide a value for an attribute, it will be set to the default value.</p> </important>\"\
     },\
     \"UpdateUserPoolClient\":{\
       \"name\":\"UpdateUserPoolClient\",\
@@ -1873,7 +1974,24 @@
         {\"shape\":\"InvalidOAuthFlowException\"},\
         {\"shape\":\"InternalErrorException\"}\
       ],\
-      \"documentation\":\"<p>Allows the developer to update the specified user pool client and password policy.</p>\"\
+      \"documentation\":\"<p>Updates the specified user pool app client with the specified attributes. You can get a list of the current user pool app client settings with .</p> <important> <p>If you don't provide a value for an attribute, it will be set to the default value.</p> </important>\"\
+    },\
+    \"UpdateUserPoolDomain\":{\
+      \"name\":\"UpdateUserPoolDomain\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"UpdateUserPoolDomainRequest\"},\
+      \"output\":{\"shape\":\"UpdateUserPoolDomainResponse\"},\
+      \"errors\":[\
+        {\"shape\":\"InvalidParameterException\"},\
+        {\"shape\":\"NotAuthorizedException\"},\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"TooManyRequestsException\"},\
+        {\"shape\":\"InternalErrorException\"}\
+      ],\
+      \"documentation\":\"<p>Updates the Secure Sockets Layer (SSL) certificate for the custom domain for your user pool.</p> <p>You can use this operation to provide the Amazon Resource Name (ARN) of a new certificate to Amazon Cognito. You cannot use it to change the domain for a user pool.</p> <p>A custom domain is used to host the Amazon Cognito hosted UI, which provides sign-up and sign-in pages for your application. When you set up a custom domain, you provide a certificate that you manage with AWS Certificate Manager (ACM). When necessary, you can use this operation to change the certificate that you applied to your custom domain.</p> <p>Usually, this is unnecessary following routine certificate renewal with ACM. When you renew your existing certificate in ACM, the ARN for your certificate remains the same, and your custom domain uses the new certificate automatically.</p> <p>However, if you replace your existing certificate with a new one, ACM gives the new certificate a new ARN. To apply the new certificate to your custom domain, you must provide this ARN to Amazon Cognito.</p> <p>When you add your new certificate in ACM, you must choose US East (N. Virginia) as the AWS Region.</p> <p>After you submit your request, Amazon Cognito requires up to 1 hour to distribute your new certificate to your custom domain.</p> <p>For more information about adding a custom domain to your user pool, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-add-custom-domain.html\\\">Using Your Own Domain for the Hosted UI</a>.</p>\"\
     },\
     \"VerifySoftwareToken\":{\
       \"name\":\"VerifySoftwareToken\",\
@@ -1897,7 +2015,8 @@
         {\"shape\":\"NotAuthorizedException\"},\
         {\"shape\":\"SoftwareTokenMFANotFoundException\"},\
         {\"shape\":\"CodeMismatchException\"}\
-      ]\
+      ],\
+      \"documentation\":\"<p>Use this API to register a user's entered TOTP code and mark the user's software token MFA status as \\\"verified\\\" if successful. The request takes an access token or a session string, but not both.</p>\"\
     },\
     \"VerifyUserAttribute\":{\
       \"name\":\"VerifyUserAttribute\",\
@@ -1926,6 +2045,16 @@
   },\
   \"shapes\":{\
     \"AWSAccountIdType\":{\"type\":\"string\"},\
+    \"AccountRecoverySettingType\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"RecoveryMechanisms\":{\
+          \"shape\":\"RecoveryMechanismsType\",\
+          \"documentation\":\"<p>The list of <code>RecoveryOptionTypes</code>.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The data type for <code>AccountRecoverySetting</code>.</p>\"\
+    },\
     \"AccountTakeoverActionNotifyType\":{\"type\":\"boolean\"},\
     \"AccountTakeoverActionType\":{\
       \"type\":\"structure\",\
@@ -1934,17 +2063,34 @@
         \"EventAction\"\
       ],\
       \"members\":{\
-        \"Notify\":{\"shape\":\"AccountTakeoverActionNotifyType\"},\
-        \"EventAction\":{\"shape\":\"AccountTakeoverEventActionType\"}\
-      }\
+        \"Notify\":{\
+          \"shape\":\"AccountTakeoverActionNotifyType\",\
+          \"documentation\":\"<p>Flag specifying whether to send a notification.</p>\"\
+        },\
+        \"EventAction\":{\
+          \"shape\":\"AccountTakeoverEventActionType\",\
+          \"documentation\":\"<p>The event action.</p> <ul> <li> <p> <code>BLOCK</code> Choosing this action will block the request.</p> </li> <li> <p> <code>MFA_IF_CONFIGURED</code> Throw MFA challenge if user has configured it, else allow the request.</p> </li> <li> <p> <code>MFA_REQUIRED</code> Throw MFA challenge if user has configured it, else block the request.</p> </li> <li> <p> <code>NO_ACTION</code> Allow the user sign-in.</p> </li> </ul>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Account takeover action type.</p>\"\
     },\
     \"AccountTakeoverActionsType\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"LowAction\":{\"shape\":\"AccountTakeoverActionType\"},\
-        \"MediumAction\":{\"shape\":\"AccountTakeoverActionType\"},\
-        \"HighAction\":{\"shape\":\"AccountTakeoverActionType\"}\
-      }\
+        \"LowAction\":{\
+          \"shape\":\"AccountTakeoverActionType\",\
+          \"documentation\":\"<p>Action to take for a low risk.</p>\"\
+        },\
+        \"MediumAction\":{\
+          \"shape\":\"AccountTakeoverActionType\",\
+          \"documentation\":\"<p>Action to take for a medium risk.</p>\"\
+        },\
+        \"HighAction\":{\
+          \"shape\":\"AccountTakeoverActionType\",\
+          \"documentation\":\"<p>Action to take for a high risk.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Account takeover actions type.</p>\"\
     },\
     \"AccountTakeoverEventActionType\":{\
       \"type\":\"string\",\
@@ -1959,9 +2105,16 @@
       \"type\":\"structure\",\
       \"required\":[\"Actions\"],\
       \"members\":{\
-        \"NotifyConfiguration\":{\"shape\":\"NotifyConfigurationType\"},\
-        \"Actions\":{\"shape\":\"AccountTakeoverActionsType\"}\
-      }\
+        \"NotifyConfiguration\":{\
+          \"shape\":\"NotifyConfigurationType\",\
+          \"documentation\":\"<p>The notify configuration used to construct email notifications.</p>\"\
+        },\
+        \"Actions\":{\
+          \"shape\":\"AccountTakeoverActionsType\",\
+          \"documentation\":\"<p>Account takeover risk configuration actions</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Configuration for mitigation actions and notification for different levels of risk detected for a potential account takeover.</p>\"\
     },\
     \"AddCustomAttributesRequest\":{\
       \"type\":\"structure\",\
@@ -2023,6 +2176,10 @@
         \"Username\":{\
           \"shape\":\"UsernameType\",\
           \"documentation\":\"<p>The user name for which you want to confirm user registration.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>If your user pool configuration includes triggers, the AdminConfirmSignUp API action invokes the AWS Lambda function that is specified for the <i>post confirmation</i> trigger. When Amazon Cognito invokes this function, it passes a JSON payload, which the function receives as input. In this payload, the <code>clientMetadata</code> attribute provides the data that you assigned to the ClientMetadata parameter in your AdminConfirmSignUp request. In your function code in AWS Lambda, you can process the ClientMetadata value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the request to confirm user registration.</p>\"\
@@ -2042,11 +2199,11 @@
         },\
         \"UnusedAccountValidityDays\":{\
           \"shape\":\"AdminCreateUserUnusedAccountValidityDaysType\",\
-          \"documentation\":\"<p>The user account expiration limit, in days, after which the account is no longer usable. To reset the account after that time limit, you must call <code>AdminCreateUser</code> again, specifying <code>\\\"RESEND\\\"</code> for the <code>MessageAction</code> parameter. The default value for this parameter is 7.</p>\"\
+          \"documentation\":\"<p>The user account expiration limit, in days, after which the account is no longer usable. To reset the account after that time limit, you must call <code>AdminCreateUser</code> again, specifying <code>\\\"RESEND\\\"</code> for the <code>MessageAction</code> parameter. The default value for this parameter is 7. </p> <note> <p>If you set a value for <code>TemporaryPasswordValidityDays</code> in <code>PasswordPolicy</code>, that value will be used and <code>UnusedAccountValidityDays</code> will be deprecated for that user pool. </p> </note>\"\
         },\
         \"InviteMessageTemplate\":{\
           \"shape\":\"MessageTemplateType\",\
-          \"documentation\":\"<p>The message template to be used for the welcome message to new users.</p> <p>See also <a href=\\\"http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-message-customizations.html#cognito-user-pool-settings-user-invitation-message-customization\\\">Customizing User Invitation Messages</a>.</p>\"\
+          \"documentation\":\"<p>The message template to be used for the welcome message to new users.</p> <p>See also <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-message-customizations.html#cognito-user-pool-settings-user-invitation-message-customization\\\">Customizing User Invitation Messages</a>.</p>\"\
         }\
       },\
       \"documentation\":\"<p>The configuration for creating a new user profile.</p>\"\
@@ -2089,6 +2246,10 @@
         \"DesiredDeliveryMediums\":{\
           \"shape\":\"DeliveryMediumListType\",\
           \"documentation\":\"<p>Specify <code>\\\"EMAIL\\\"</code> if email will be used to send the welcome message. Specify <code>\\\"SMS\\\"</code> if the phone number will be used. The default value is <code>\\\"SMS\\\"</code>. More than one value can be specified.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the AdminCreateUser API action, Amazon Cognito invokes the function that is assigned to the <i>pre sign-up</i> trigger. When Amazon Cognito invokes this function, it passes a JSON payload, which the function receives as input. This payload contains a <code>clientMetadata</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your AdminCreateUser request. In your function code in AWS Lambda, you can process the <code>clientMetadata</code> value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the request to create a user in the specified user pool.</p>\"\
@@ -2326,14 +2487,20 @@
         },\
         \"UserStatus\":{\
           \"shape\":\"UserStatusType\",\
-          \"documentation\":\"<p>The user status. Can be one of the following:</p> <ul> <li> <p>UNCONFIRMED - User has been created but not confirmed.</p> </li> <li> <p>CONFIRMED - User has been confirmed.</p> </li> <li> <p>ARCHIVED - User is no longer active.</p> </li> <li> <p>COMPROMISED - User is disabled due to a potential security threat.</p> </li> <li> <p>UNKNOWN - User status is not known.</p> </li> </ul>\"\
+          \"documentation\":\"<p>The user status. Can be one of the following:</p> <ul> <li> <p>UNCONFIRMED - User has been created but not confirmed.</p> </li> <li> <p>CONFIRMED - User has been confirmed.</p> </li> <li> <p>ARCHIVED - User is no longer active.</p> </li> <li> <p>COMPROMISED - User is disabled due to a potential security threat.</p> </li> <li> <p>UNKNOWN - User status is not known.</p> </li> <li> <p>RESET_REQUIRED - User is confirmed, but the user must request a code and reset his or her password before he or she can sign in.</p> </li> <li> <p>FORCE_CHANGE_PASSWORD - The user is confirmed and the user can sign in using a temporary password, but on first sign-in, the user must change his or her password to a new value before doing anything else. </p> </li> </ul>\"\
         },\
         \"MFAOptions\":{\
           \"shape\":\"MFAOptionListType\",\
-          \"documentation\":\"<p>Specifies the options for MFA (e.g., email or phone number).</p>\"\
+          \"documentation\":\"<p> <i>This response parameter is no longer supported.</i> It provides information only about SMS MFA configurations. It doesn't provide information about TOTP software token MFA configurations. To look up information about either type of MFA configuration, use the <a>AdminGetUserResponse$UserMFASettingList</a> response instead.</p>\"\
         },\
-        \"PreferredMfaSetting\":{\"shape\":\"StringType\"},\
-        \"UserMFASettingList\":{\"shape\":\"UserMFASettingListType\"}\
+        \"PreferredMfaSetting\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The user's preferred MFA setting.</p>\"\
+        },\
+        \"UserMFASettingList\":{\
+          \"shape\":\"UserMFASettingListType\",\
+          \"documentation\":\"<p>The MFA options that are enabled for the user. The possible values in this list are <code>SMS_MFA</code> and <code>SOFTWARE_TOKEN_MFA</code>.</p>\"\
+        }\
       },\
       \"documentation\":\"<p>Represents the response from the server from the request to get the specified user as an administrator.</p>\"\
     },\
@@ -2355,21 +2522,24 @@
         },\
         \"AuthFlow\":{\
           \"shape\":\"AuthFlowType\",\
-          \"documentation\":\"<p>The authentication flow for this call to execute. The API action will depend on this value. For example:</p> <ul> <li> <p> <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh token and return new tokens.</p> </li> <li> <p> <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code> and <code>SRP_A</code> and return the SRP variables to be used for next challenge execution.</p> </li> </ul> <p>Valid values include:</p> <ul> <li> <p> <code>USER_SRP_AUTH</code>: Authentication flow for the Secure Remote Password (SRP) protocol.</p> </li> <li> <p> <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>: Authentication flow for refreshing the access token and ID token by supplying a valid refresh token.</p> </li> <li> <p> <code>CUSTOM_AUTH</code>: Custom authentication flow.</p> </li> <li> <p> <code>ADMIN_NO_SRP_AUTH</code>: Non-SRP authentication flow; you can pass in the USERNAME and PASSWORD directly if the flow is enabled for calling the app client.</p> </li> </ul>\"\
+          \"documentation\":\"<p>The authentication flow for this call to execute. The API action will depend on this value. For example:</p> <ul> <li> <p> <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh token and return new tokens.</p> </li> <li> <p> <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code> and <code>SRP_A</code> and return the SRP variables to be used for next challenge execution.</p> </li> <li> <p> <code>USER_PASSWORD_AUTH</code> will take in <code>USERNAME</code> and <code>PASSWORD</code> and return the next challenge or tokens.</p> </li> </ul> <p>Valid values include:</p> <ul> <li> <p> <code>USER_SRP_AUTH</code>: Authentication flow for the Secure Remote Password (SRP) protocol.</p> </li> <li> <p> <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>: Authentication flow for refreshing the access token and ID token by supplying a valid refresh token.</p> </li> <li> <p> <code>CUSTOM_AUTH</code>: Custom authentication flow.</p> </li> <li> <p> <code>ADMIN_NO_SRP_AUTH</code>: Non-SRP authentication flow; you can pass in the USERNAME and PASSWORD directly if the flow is enabled for calling the app client.</p> </li> <li> <p> <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow; USERNAME and PASSWORD are passed directly. If a user migration Lambda trigger is set, this flow will invoke the user migration Lambda if the USERNAME is not found in the user pool. </p> </li> <li> <p> <code>ADMIN_USER_PASSWORD_AUTH</code>: Admin-based user password authentication. This replaces the <code>ADMIN_NO_SRP_AUTH</code> authentication flow. In this flow, Cognito receives the password in the request instead of using the SRP process to verify passwords.</p> </li> </ul>\"\
         },\
         \"AuthParameters\":{\
           \"shape\":\"AuthParametersType\",\
-          \"documentation\":\"<p>The authentication parameters. These are inputs corresponding to the <code>AuthFlow</code> that you are invoking. The required values depend on the value of <code>AuthFlow</code>:</p> <ul> <li> <p>For <code>USER_SRP_AUTH</code>: <code>USERNAME</code> (required), <code>SRP_A</code> (required), <code>SECRET_HASH</code> (required if the app client is configured with a client secret), <code>DEVICE_KEY</code> </p> </li> <li> <p>For <code>REFRESH_TOKEN_AUTH/REFRESH_TOKEN</code>: <code>USERNAME</code> (required), <code>SECRET_HASH</code> (required if the app client is configured with a client secret), <code>REFRESH_TOKEN</code> (required), <code>DEVICE_KEY</code> </p> </li> <li> <p>For <code>ADMIN_NO_SRP_AUTH</code>: <code>USERNAME</code> (required), <code>SECRET_HASH</code> (if app client is configured with client secret), <code>PASSWORD</code> (required), <code>DEVICE_KEY</code> </p> </li> <li> <p>For <code>CUSTOM_AUTH</code>: <code>USERNAME</code> (required), <code>SECRET_HASH</code> (if app client is configured with client secret), <code>DEVICE_KEY</code> </p> </li> </ul>\"\
+          \"documentation\":\"<p>The authentication parameters. These are inputs corresponding to the <code>AuthFlow</code> that you are invoking. The required values depend on the value of <code>AuthFlow</code>:</p> <ul> <li> <p>For <code>USER_SRP_AUTH</code>: <code>USERNAME</code> (required), <code>SRP_A</code> (required), <code>SECRET_HASH</code> (required if the app client is configured with a client secret), <code>DEVICE_KEY</code> </p> </li> <li> <p>For <code>REFRESH_TOKEN_AUTH/REFRESH_TOKEN</code>: <code>REFRESH_TOKEN</code> (required), <code>SECRET_HASH</code> (required if the app client is configured with a client secret), <code>DEVICE_KEY</code> </p> </li> <li> <p>For <code>ADMIN_NO_SRP_AUTH</code>: <code>USERNAME</code> (required), <code>SECRET_HASH</code> (if app client is configured with client secret), <code>PASSWORD</code> (required), <code>DEVICE_KEY</code> </p> </li> <li> <p>For <code>CUSTOM_AUTH</code>: <code>USERNAME</code> (required), <code>SECRET_HASH</code> (if app client is configured with client secret), <code>DEVICE_KEY</code> </p> </li> </ul>\"\
         },\
         \"ClientMetadata\":{\
           \"shape\":\"ClientMetadataType\",\
-          \"documentation\":\"<p>This is a random key-value pair map which can contain any key and will be passed to your PreAuthentication Lambda trigger as-is. It can be used to implement additional validations around authentication.</p>\"\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for certain custom workflows that this action triggers.</p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the AdminInitiateAuth API action, Amazon Cognito invokes the AWS Lambda functions that are specified for various triggers. The ClientMetadata value is passed as input to the functions for only the following triggers:</p> <ul> <li> <p>Pre signup</p> </li> <li> <p>Pre authentication</p> </li> <li> <p>User migration</p> </li> </ul> <p>When Amazon Cognito invokes the functions for these triggers, it passes a JSON payload, which the function receives as input. This payload contains a <code>validationData</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your AdminInitiateAuth request. In your function code in AWS Lambda, you can process the <code>validationData</code> value to enhance your workflow for your specific needs.</p> <p>When you use the AdminInitiateAuth API action, Amazon Cognito also invokes the functions for the following triggers, but it does not provide the ClientMetadata value as input:</p> <ul> <li> <p>Post authentication</p> </li> <li> <p>Custom message</p> </li> <li> <p>Pre token generation</p> </li> <li> <p>Create auth challenge</p> </li> <li> <p>Define auth challenge</p> </li> <li> <p>Verify auth challenge</p> </li> </ul> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
         },\
         \"AnalyticsMetadata\":{\
           \"shape\":\"AnalyticsMetadataType\",\
           \"documentation\":\"<p>The analytics metadata for collecting Amazon Pinpoint metrics for <code>AdminInitiateAuth</code> calls.</p>\"\
         },\
-        \"ContextData\":{\"shape\":\"ContextDataType\"}\
+        \"ContextData\":{\
+          \"shape\":\"ContextDataType\",\
+          \"documentation\":\"<p>Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.</p>\"\
+        }\
       },\
       \"documentation\":\"<p>Initiates the authorization request, as an administrator.</p>\"\
     },\
@@ -2378,7 +2548,7 @@
       \"members\":{\
         \"ChallengeName\":{\
           \"shape\":\"ChallengeNameType\",\
-          \"documentation\":\"<p>The name of the challenge which you are responding to with this call. This is returned to you in the <code>AdminInitiateAuth</code> response if you need to pass another challenge.</p> <ul> <li> <p> <code>SMS_MFA</code>: Next challenge is to supply an <code>SMS_MFA_CODE</code>, delivered via SMS.</p> </li> <li> <p> <code>PASSWORD_VERIFIER</code>: Next challenge is to supply <code>PASSWORD_CLAIM_SIGNATURE</code>, <code>PASSWORD_CLAIM_SECRET_BLOCK</code>, and <code>TIMESTAMP</code> after the client-side SRP calculations.</p> </li> <li> <p> <code>CUSTOM_CHALLENGE</code>: This is returned if your custom authentication flow determines that the user should pass another challenge before tokens are issued.</p> </li> <li> <p> <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled on your user pool and the previous challenges were passed, this challenge is returned so that Amazon Cognito can start tracking this device.</p> </li> <li> <p> <code>DEVICE_PASSWORD_VERIFIER</code>: Similar to <code>PASSWORD_VERIFIER</code>, but for devices only.</p> </li> <li> <p> <code>ADMIN_NO_SRP_AUTH</code>: This is returned if you need to authenticate with <code>USERNAME</code> and <code>PASSWORD</code> directly. An app client must be enabled to use this flow.</p> </li> <li> <p> <code>NEW_PASSWORD_REQUIRED</code>: For users which are required to change their passwords after successful first login. This challenge should be passed with <code>NEW_PASSWORD</code> and any other required attributes.</p> </li> </ul>\"\
+          \"documentation\":\"<p>The name of the challenge which you are responding to with this call. This is returned to you in the <code>AdminInitiateAuth</code> response if you need to pass another challenge.</p> <ul> <li> <p> <code>MFA_SETUP</code>: If MFA is required, users who do not have at least one of the MFA methods set up are presented with an <code>MFA_SETUP</code> challenge. The user must set up at least one MFA type to continue to authenticate.</p> </li> <li> <p> <code>SELECT_MFA_TYPE</code>: Selects the MFA type. Valid MFA options are <code>SMS_MFA</code> for text SMS MFA, and <code>SOFTWARE_TOKEN_MFA</code> for TOTP software token MFA.</p> </li> <li> <p> <code>SMS_MFA</code>: Next challenge is to supply an <code>SMS_MFA_CODE</code>, delivered via SMS.</p> </li> <li> <p> <code>PASSWORD_VERIFIER</code>: Next challenge is to supply <code>PASSWORD_CLAIM_SIGNATURE</code>, <code>PASSWORD_CLAIM_SECRET_BLOCK</code>, and <code>TIMESTAMP</code> after the client-side SRP calculations.</p> </li> <li> <p> <code>CUSTOM_CHALLENGE</code>: This is returned if your custom authentication flow determines that the user should pass another challenge before tokens are issued.</p> </li> <li> <p> <code>DEVICE_SRP_AUTH</code>: If device tracking was enabled on your user pool and the previous challenges were passed, this challenge is returned so that Amazon Cognito can start tracking this device.</p> </li> <li> <p> <code>DEVICE_PASSWORD_VERIFIER</code>: Similar to <code>PASSWORD_VERIFIER</code>, but for devices only.</p> </li> <li> <p> <code>ADMIN_NO_SRP_AUTH</code>: This is returned if you need to authenticate with <code>USERNAME</code> and <code>PASSWORD</code> directly. An app client must be enabled to use this flow.</p> </li> <li> <p> <code>NEW_PASSWORD_REQUIRED</code>: For users which are required to change their passwords after successful first login. This challenge should be passed with <code>NEW_PASSWORD</code> and any other required attributes.</p> </li> </ul>\"\
         },\
         \"Session\":{\
           \"shape\":\"SessionType\",\
@@ -2386,7 +2556,7 @@
         },\
         \"ChallengeParameters\":{\
           \"shape\":\"ChallengeParametersType\",\
-          \"documentation\":\"<p>The challenge parameters. These are returned to you in the <code>AdminInitiateAuth</code> response if you need to pass another challenge. The responses in this parameter should be used to compute inputs to the next call (<code>AdminRespondToAuthChallenge</code>).</p> <p>All challenges require <code>USERNAME</code> and <code>SECRET_HASH</code> (if applicable).</p> <p>The value of the <code>USER_IF_FOR_SRP</code> attribute will be the user's actual username, not an alias (such as email address or phone number), even if you specified an alias in your call to <code>AdminInitiateAuth</code>. This is because, in the <code>AdminRespondToAuthChallenge</code> API <code>ChallengeResponses</code>, the <code>USERNAME</code> attribute cannot be an alias.</p>\"\
+          \"documentation\":\"<p>The challenge parameters. These are returned to you in the <code>AdminInitiateAuth</code> response if you need to pass another challenge. The responses in this parameter should be used to compute inputs to the next call (<code>AdminRespondToAuthChallenge</code>).</p> <p>All challenges require <code>USERNAME</code> and <code>SECRET_HASH</code> (if applicable).</p> <p>The value of the <code>USER_ID_FOR_SRP</code> attribute will be the user's actual username, not an alias (such as email address or phone number), even if you specified an alias in your call to <code>AdminInitiateAuth</code>. This is because, in the <code>AdminRespondToAuthChallenge</code> API <code>ChallengeResponses</code>, the <code>USERNAME</code> attribute cannot be an alias.</p>\"\
         },\
         \"AuthenticationResult\":{\
           \"shape\":\"AuthenticationResultType\",\
@@ -2507,17 +2677,35 @@
         \"Username\"\
       ],\
       \"members\":{\
-        \"UserPoolId\":{\"shape\":\"UserPoolIdType\"},\
-        \"Username\":{\"shape\":\"UsernameType\"},\
-        \"MaxResults\":{\"shape\":\"QueryLimitType\"},\
-        \"NextToken\":{\"shape\":\"PaginationKey\"}\
+        \"UserPoolId\":{\
+          \"shape\":\"UserPoolIdType\",\
+          \"documentation\":\"<p>The user pool ID.</p>\"\
+        },\
+        \"Username\":{\
+          \"shape\":\"UsernameType\",\
+          \"documentation\":\"<p>The user pool username or an alias.</p>\"\
+        },\
+        \"MaxResults\":{\
+          \"shape\":\"QueryLimitType\",\
+          \"documentation\":\"<p>The maximum number of authentication events to return.</p>\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"PaginationKey\",\
+          \"documentation\":\"<p>A pagination token.</p>\"\
+        }\
       }\
     },\
     \"AdminListUserAuthEventsResponse\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"AuthEvents\":{\"shape\":\"AuthEventsType\"},\
-        \"NextToken\":{\"shape\":\"PaginationKey\"}\
+        \"AuthEvents\":{\
+          \"shape\":\"AuthEventsType\",\
+          \"documentation\":\"<p>The response object. It includes the <code>EventID</code>, <code>EventType</code>, <code>CreationDate</code>, <code>EventRisk</code>, and <code>EventResponse</code>.</p>\"\
+        },\
+        \"NextToken\":{\
+          \"shape\":\"PaginationKey\",\
+          \"documentation\":\"<p>A pagination token.</p>\"\
+        }\
       }\
     },\
     \"AdminRemoveUserFromGroupRequest\":{\
@@ -2556,6 +2744,10 @@
         \"Username\":{\
           \"shape\":\"UsernameType\",\
           \"documentation\":\"<p>The user name of the user whose password you wish to reset.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the AdminResetUserPassword API action, Amazon Cognito invokes the function that is assigned to the <i>custom message</i> trigger. When Amazon Cognito invokes this function, it passes a JSON payload, which the function receives as input. This payload contains a <code>clientMetadata</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your AdminResetUserPassword request. In your function code in AWS Lambda, you can process the <code>clientMetadata</code> value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the request to reset a user's password as an administrator.</p>\"\
@@ -2598,7 +2790,14 @@
           \"shape\":\"AnalyticsMetadataType\",\
           \"documentation\":\"<p>The analytics metadata for collecting Amazon Pinpoint metrics for <code>AdminRespondToAuthChallenge</code> calls.</p>\"\
         },\
-        \"ContextData\":{\"shape\":\"ContextDataType\"}\
+        \"ContextData\":{\
+          \"shape\":\"ContextDataType\",\
+          \"documentation\":\"<p>Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the AdminRespondToAuthChallenge API action, Amazon Cognito invokes any functions that are assigned to the following triggers: <i>pre sign-up</i>, <i>custom message</i>, <i>post authentication</i>, <i>user migration</i>, <i>pre token generation</i>, <i>define auth challenge</i>, <i>create auth challenge</i>, and <i>verify auth challenge response</i>. When Amazon Cognito invokes any of these functions, it passes a JSON payload, which the function receives as input. This payload contains a <code>clientMetadata</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your AdminRespondToAuthChallenge request. In your function code in AWS Lambda, you can process the <code>clientMetadata</code> value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
+        }\
       },\
       \"documentation\":\"<p>The request to respond to the authentication challenge, as an administrator.</p>\"\
     },\
@@ -2631,13 +2830,56 @@
         \"UserPoolId\"\
       ],\
       \"members\":{\
-        \"SMSMfaSettings\":{\"shape\":\"SMSMfaSettingsType\"},\
-        \"SoftwareTokenMfaSettings\":{\"shape\":\"SoftwareTokenMfaSettingsType\"},\
-        \"Username\":{\"shape\":\"UsernameType\"},\
-        \"UserPoolId\":{\"shape\":\"UserPoolIdType\"}\
+        \"SMSMfaSettings\":{\
+          \"shape\":\"SMSMfaSettingsType\",\
+          \"documentation\":\"<p>The SMS text message MFA settings.</p>\"\
+        },\
+        \"SoftwareTokenMfaSettings\":{\
+          \"shape\":\"SoftwareTokenMfaSettingsType\",\
+          \"documentation\":\"<p>The time-based one-time password software token MFA settings.</p>\"\
+        },\
+        \"Username\":{\
+          \"shape\":\"UsernameType\",\
+          \"documentation\":\"<p>The user pool username or alias.</p>\"\
+        },\
+        \"UserPoolId\":{\
+          \"shape\":\"UserPoolIdType\",\
+          \"documentation\":\"<p>The user pool ID.</p>\"\
+        }\
       }\
     },\
     \"AdminSetUserMFAPreferenceResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+      }\
+    },\
+    \"AdminSetUserPasswordRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"UserPoolId\",\
+        \"Username\",\
+        \"Password\"\
+      ],\
+      \"members\":{\
+        \"UserPoolId\":{\
+          \"shape\":\"UserPoolIdType\",\
+          \"documentation\":\"<p>The user pool ID for the user pool where you want to set the user's password.</p>\"\
+        },\
+        \"Username\":{\
+          \"shape\":\"UsernameType\",\
+          \"documentation\":\"<p>The user name of the user whose password you wish to set.</p>\"\
+        },\
+        \"Password\":{\
+          \"shape\":\"PasswordType\",\
+          \"documentation\":\"<p>The password for the user.</p>\"\
+        },\
+        \"Permanent\":{\
+          \"shape\":\"BooleanType\",\
+          \"documentation\":\"<p> <code>True</code> if the password is permanent, <code>False</code> if it is temporary.</p>\"\
+        }\
+      }\
+    },\
+    \"AdminSetUserPasswordResponse\":{\
       \"type\":\"structure\",\
       \"members\":{\
       }\
@@ -2652,18 +2894,18 @@
       \"members\":{\
         \"UserPoolId\":{\
           \"shape\":\"UserPoolIdType\",\
-          \"documentation\":\"<p>The user pool ID for the user pool where you want to set the user's settings, such as MFA options.</p>\"\
+          \"documentation\":\"<p>The ID of the user pool that contains the user that you are setting options for.</p>\"\
         },\
         \"Username\":{\
           \"shape\":\"UsernameType\",\
-          \"documentation\":\"<p>The user name of the user for whom you wish to set user settings.</p>\"\
+          \"documentation\":\"<p>The user name of the user that you are setting options for.</p>\"\
         },\
         \"MFAOptions\":{\
           \"shape\":\"MFAOptionListType\",\
-          \"documentation\":\"<p>Specifies the options for MFA (e.g., email or phone number).</p>\"\
+          \"documentation\":\"<p>You can use this parameter only to set an SMS configuration that uses SMS for delivery.</p>\"\
         }\
       },\
-      \"documentation\":\"<p>Represents the request to set user settings as an administrator.</p>\"\
+      \"documentation\":\"<p>You can use this parameter to set an MFA configuration that uses the SMS delivery medium.</p>\"\
     },\
     \"AdminSetUserSettingsResponse\":{\
       \"type\":\"structure\",\
@@ -2680,10 +2922,22 @@
         \"FeedbackValue\"\
       ],\
       \"members\":{\
-        \"UserPoolId\":{\"shape\":\"UserPoolIdType\"},\
-        \"Username\":{\"shape\":\"UsernameType\"},\
-        \"EventId\":{\"shape\":\"EventIdType\"},\
-        \"FeedbackValue\":{\"shape\":\"FeedbackValueType\"}\
+        \"UserPoolId\":{\
+          \"shape\":\"UserPoolIdType\",\
+          \"documentation\":\"<p>The user pool ID.</p>\"\
+        },\
+        \"Username\":{\
+          \"shape\":\"UsernameType\",\
+          \"documentation\":\"<p>The user pool username.</p>\"\
+        },\
+        \"EventId\":{\
+          \"shape\":\"EventIdType\",\
+          \"documentation\":\"<p>The authentication event ID.</p>\"\
+        },\
+        \"FeedbackValue\":{\
+          \"shape\":\"FeedbackValueType\",\
+          \"documentation\":\"<p>The authentication event feedback value.</p>\"\
+        }\
       }\
     },\
     \"AdminUpdateAuthEventFeedbackResponse\":{\
@@ -2743,6 +2997,10 @@
         \"UserAttributes\":{\
           \"shape\":\"AttributeListType\",\
           \"documentation\":\"<p>An array of name-value pairs representing user attributes.</p> <p>For custom attributes, you must prepend the <code>custom:</code> prefix to the attribute name.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the AdminUpdateUserAttributes API action, Amazon Cognito invokes the function that is assigned to the <i>custom message</i> trigger. When Amazon Cognito invokes this function, it passes a JSON payload, which the function receives as input. This payload contains a <code>clientMetadata</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your AdminUpdateUserAttributes request. In your function code in AWS Lambda, you can process the <code>clientMetadata</code> value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the request to update the user's attributes as an administrator.</p>\"\
@@ -2854,15 +3112,27 @@
     \"AssociateSoftwareTokenRequest\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"AccessToken\":{\"shape\":\"TokenModelType\"},\
-        \"Session\":{\"shape\":\"SessionType\"}\
+        \"AccessToken\":{\
+          \"shape\":\"TokenModelType\",\
+          \"documentation\":\"<p>The access token.</p>\"\
+        },\
+        \"Session\":{\
+          \"shape\":\"SessionType\",\
+          \"documentation\":\"<p>The session which should be passed both ways in challenge-response calls to the service. This allows authentication of the user as part of the MFA setup process.</p>\"\
+        }\
       }\
     },\
     \"AssociateSoftwareTokenResponse\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"SecretCode\":{\"shape\":\"SecretCodeType\"},\
-        \"Session\":{\"shape\":\"SessionType\"}\
+        \"SecretCode\":{\
+          \"shape\":\"SecretCodeType\",\
+          \"documentation\":\"<p>A unique generated shared secret code that is used in the TOTP algorithm to generate a one time code.</p>\"\
+        },\
+        \"Session\":{\
+          \"shape\":\"SessionType\",\
+          \"documentation\":\"<p>The session which should be passed both ways in challenge-response calls to the service. This allows authentication of the user as part of the MFA setup process.</p>\"\
+        }\
       }\
     },\
     \"AttributeDataType\":{\
@@ -2921,15 +3191,40 @@
     \"AuthEventType\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"EventId\":{\"shape\":\"StringType\"},\
-        \"EventType\":{\"shape\":\"EventType\"},\
-        \"CreationDate\":{\"shape\":\"DateType\"},\
-        \"EventResponse\":{\"shape\":\"EventResponseType\"},\
-        \"EventRisk\":{\"shape\":\"EventRiskType\"},\
-        \"ChallengeResponses\":{\"shape\":\"ChallengeResponseListType\"},\
-        \"EventContextData\":{\"shape\":\"EventContextDataType\"},\
-        \"EventFeedback\":{\"shape\":\"EventFeedbackType\"}\
-      }\
+        \"EventId\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The event ID.</p>\"\
+        },\
+        \"EventType\":{\
+          \"shape\":\"EventType\",\
+          \"documentation\":\"<p>The event type.</p>\"\
+        },\
+        \"CreationDate\":{\
+          \"shape\":\"DateType\",\
+          \"documentation\":\"<p>The creation date</p>\"\
+        },\
+        \"EventResponse\":{\
+          \"shape\":\"EventResponseType\",\
+          \"documentation\":\"<p>The event response.</p>\"\
+        },\
+        \"EventRisk\":{\
+          \"shape\":\"EventRiskType\",\
+          \"documentation\":\"<p>The event risk.</p>\"\
+        },\
+        \"ChallengeResponses\":{\
+          \"shape\":\"ChallengeResponseListType\",\
+          \"documentation\":\"<p>The challenge responses.</p>\"\
+        },\
+        \"EventContextData\":{\
+          \"shape\":\"EventContextDataType\",\
+          \"documentation\":\"<p>The user context data captured at the time of an event request. It provides additional information about the client from which event the request is received.</p>\"\
+        },\
+        \"EventFeedback\":{\
+          \"shape\":\"EventFeedbackType\",\
+          \"documentation\":\"<p>A flag specifying the user feedback captured at the time of an event request is good or bad. </p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The authentication event type.</p>\"\
     },\
     \"AuthEventsType\":{\
       \"type\":\"list\",\
@@ -2942,13 +3237,19 @@
         \"REFRESH_TOKEN_AUTH\",\
         \"REFRESH_TOKEN\",\
         \"CUSTOM_AUTH\",\
-        \"ADMIN_NO_SRP_AUTH\"\
+        \"ADMIN_NO_SRP_AUTH\",\
+        \"USER_PASSWORD_AUTH\",\
+        \"ADMIN_USER_PASSWORD_AUTH\"\
       ]\
     },\
     \"AuthParametersType\":{\
       \"type\":\"map\",\
       \"key\":{\"shape\":\"StringType\"},\
-      \"value\":{\"shape\":\"StringType\"}\
+      \"value\":{\"shape\":\"AuthParametersValueType\"}\
+    },\
+    \"AuthParametersValueType\":{\
+      \"type\":\"string\",\
+      \"sensitive\":true\
     },\
     \"AuthenticationResultType\":{\
       \"type\":\"structure\",\
@@ -2959,7 +3260,7 @@
         },\
         \"ExpiresIn\":{\
           \"shape\":\"IntegerType\",\
-          \"documentation\":\"<p>The expiration period of the authentication result.</p>\"\
+          \"documentation\":\"<p>The expiration period of the authentication result in seconds.</p>\"\
         },\
         \"TokenType\":{\
           \"shape\":\"StringType\",\
@@ -3035,9 +3336,16 @@
     \"ChallengeResponseType\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"ChallengeName\":{\"shape\":\"ChallengeName\"},\
-        \"ChallengeResponse\":{\"shape\":\"ChallengeResponse\"}\
-      }\
+        \"ChallengeName\":{\
+          \"shape\":\"ChallengeName\",\
+          \"documentation\":\"<p>The challenge name</p>\"\
+        },\
+        \"ChallengeResponse\":{\
+          \"shape\":\"ChallengeResponse\",\
+          \"documentation\":\"<p>The challenge response.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The challenge response type.</p>\"\
     },\
     \"ChallengeResponsesType\":{\
       \"type\":\"map\",\
@@ -3161,8 +3469,12 @@
       \"type\":\"structure\",\
       \"required\":[\"EventAction\"],\
       \"members\":{\
-        \"EventAction\":{\"shape\":\"CompromisedCredentialsEventActionType\"}\
-      }\
+        \"EventAction\":{\
+          \"shape\":\"CompromisedCredentialsEventActionType\",\
+          \"documentation\":\"<p>The event action.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The compromised credentials actions type</p>\"\
     },\
     \"CompromisedCredentialsEventActionType\":{\
       \"type\":\"string\",\
@@ -3175,9 +3487,16 @@
       \"type\":\"structure\",\
       \"required\":[\"Actions\"],\
       \"members\":{\
-        \"EventFilter\":{\"shape\":\"EventFiltersType\"},\
-        \"Actions\":{\"shape\":\"CompromisedCredentialsActionsType\"}\
-      }\
+        \"EventFilter\":{\
+          \"shape\":\"EventFiltersType\",\
+          \"documentation\":\"<p>Perform the action for these events. The default is to perform all events if no event filter is specified.</p>\"\
+        },\
+        \"Actions\":{\
+          \"shape\":\"CompromisedCredentialsActionsType\",\
+          \"documentation\":\"<p>The compromised credentials risk configuration actions.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The compromised credentials risk configuration type.</p>\"\
     },\
     \"ConcurrentModificationException\":{\
       \"type\":\"structure\",\
@@ -3259,7 +3578,14 @@
           \"shape\":\"AnalyticsMetadataType\",\
           \"documentation\":\"<p>The Amazon Pinpoint analytics metadata for collecting metrics for <code>ConfirmForgotPassword</code> calls.</p>\"\
         },\
-        \"UserContextData\":{\"shape\":\"UserContextDataType\"}\
+        \"UserContextData\":{\
+          \"shape\":\"UserContextDataType\",\
+          \"documentation\":\"<p>Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the ConfirmForgotPassword API action, Amazon Cognito invokes the function that is assigned to the <i>post confirmation</i> trigger. When Amazon Cognito invokes this function, it passes a JSON payload, which the function receives as input. This payload contains a <code>clientMetadata</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your ConfirmForgotPassword request. In your function code in AWS Lambda, you can process the <code>clientMetadata</code> value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
+        }\
       },\
       \"documentation\":\"<p>The request representing the confirmation for a password reset.</p>\"\
     },\
@@ -3301,7 +3627,14 @@
           \"shape\":\"AnalyticsMetadataType\",\
           \"documentation\":\"<p>The Amazon Pinpoint analytics metadata for collecting metrics for <code>ConfirmSignUp</code> calls.</p>\"\
         },\
-        \"UserContextData\":{\"shape\":\"UserContextDataType\"}\
+        \"UserContextData\":{\
+          \"shape\":\"UserContextDataType\",\
+          \"documentation\":\"<p>Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the ConfirmSignUp API action, Amazon Cognito invokes the function that is assigned to the <i>post confirmation</i> trigger. When Amazon Cognito invokes this function, it passes a JSON payload, which the function receives as input. This payload contains a <code>clientMetadata</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your ConfirmSignUp request. In your function code in AWS Lambda, you can process the <code>clientMetadata</code> value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
+        }\
       },\
       \"documentation\":\"<p>Represents the request to confirm registration of a user.</p>\"\
     },\
@@ -3326,12 +3659,28 @@
         \"HttpHeaders\"\
       ],\
       \"members\":{\
-        \"IpAddress\":{\"shape\":\"StringType\"},\
-        \"ServerName\":{\"shape\":\"StringType\"},\
-        \"ServerPath\":{\"shape\":\"StringType\"},\
-        \"HttpHeaders\":{\"shape\":\"HttpHeaderList\"},\
-        \"EncodedData\":{\"shape\":\"StringType\"}\
-      }\
+        \"IpAddress\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>Source IP address of your user.</p>\"\
+        },\
+        \"ServerName\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>Your server endpoint where this API is invoked.</p>\"\
+        },\
+        \"ServerPath\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>Your server path where this API is invoked. </p>\"\
+        },\
+        \"HttpHeaders\":{\
+          \"shape\":\"HttpHeaderList\",\
+          \"documentation\":\"<p>HttpHeaders received on your server in same order.</p>\"\
+        },\
+        \"EncodedData\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>Encoded data containing device fingerprinting details, collected using the Amazon Cognito context data collection library.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Contextual user data type used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.</p>\"\
     },\
     \"CreateGroupRequest\":{\
       \"type\":\"structure\",\
@@ -3394,7 +3743,7 @@
         },\
         \"ProviderDetails\":{\
           \"shape\":\"ProviderDetailsType\",\
-          \"documentation\":\"<p>The identity provider details, such as <code>MetadataURL</code> and <code>MetadataFile</code>.</p>\"\
+          \"documentation\":\"<p>The identity provider details. The following list describes the provider detail keys for each identity provider type.</p> <ul> <li> <p>For Google, Facebook and Login with Amazon:</p> <ul> <li> <p>client_id</p> </li> <li> <p>client_secret</p> </li> <li> <p>authorize_scopes</p> </li> </ul> </li> <li> <p>For Sign in with Apple:</p> <ul> <li> <p>client_id</p> </li> <li> <p>team_id</p> </li> <li> <p>key_id</p> </li> <li> <p>private_key</p> </li> <li> <p>authorize_scopes</p> </li> </ul> </li> <li> <p>For OIDC providers:</p> <ul> <li> <p>client_id</p> </li> <li> <p>client_secret</p> </li> <li> <p>attributes_request_method</p> </li> <li> <p>oidc_issuer</p> </li> <li> <p>authorize_scopes</p> </li> <li> <p>authorize_url <i>if not available from discovery URL specified by oidc_issuer key</i> </p> </li> <li> <p>token_url <i>if not available from discovery URL specified by oidc_issuer key</i> </p> </li> <li> <p>attributes_url <i>if not available from discovery URL specified by oidc_issuer key</i> </p> </li> <li> <p>jwks_uri <i>if not available from discovery URL specified by oidc_issuer key</i> </p> </li> <li> <p>authorize_scopes</p> </li> </ul> </li> <li> <p>For SAML providers:</p> <ul> <li> <p>MetadataFile OR MetadataURL</p> </li> <li> <p>IDPSignOut <i>optional</i> </p> </li> </ul> </li> </ul>\"\
         },\
         \"AttributeMapping\":{\
           \"shape\":\"AttributeMappingType\",\
@@ -3514,19 +3863,19 @@
         },\
         \"WriteAttributes\":{\
           \"shape\":\"ClientPermissionListType\",\
-          \"documentation\":\"<p>The write attributes.</p>\"\
+          \"documentation\":\"<p>The user pool attributes that the app client can write to.</p> <p>If your app client allows users to sign in through an identity provider, this array must include all attributes that are mapped to identity provider attributes. Amazon Cognito updates mapped attributes when users sign in to your application through an identity provider. If your app client lacks write access to a mapped attribute, Amazon Cognito throws an error when it attempts to update the attribute. For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-specifying-attribute-mapping.html\\\">Specifying Identity Provider Attribute Mappings for Your User Pool</a>.</p>\"\
         },\
         \"ExplicitAuthFlows\":{\
           \"shape\":\"ExplicitAuthFlowsListType\",\
-          \"documentation\":\"<p>The explicit authentication flows.</p>\"\
+          \"documentation\":\"<p>The authentication flows that are supported by the user pool clients. Flow names without the <code>ALLOW_</code> prefix are deprecated in favor of new names with the <code>ALLOW_</code> prefix. Note that values with <code>ALLOW_</code> prefix cannot be used along with values without <code>ALLOW_</code> prefix.</p> <p>Valid values include:</p> <ul> <li> <p> <code>ALLOW_ADMIN_USER_PASSWORD_AUTH</code>: Enable admin based user password authentication flow <code>ADMIN_USER_PASSWORD_AUTH</code>. This setting replaces the <code>ADMIN_NO_SRP_AUTH</code> setting. With this authentication flow, Cognito receives the password in the request instead of using the SRP (Secure Remote Password protocol) protocol to verify passwords.</p> </li> <li> <p> <code>ALLOW_CUSTOM_AUTH</code>: Enable Lambda trigger based authentication.</p> </li> <li> <p> <code>ALLOW_USER_PASSWORD_AUTH</code>: Enable user password-based authentication. In this flow, Cognito receives the password in the request instead of using the SRP protocol to verify passwords.</p> </li> <li> <p> <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP based authentication.</p> </li> <li> <p> <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to refresh tokens.</p> </li> </ul>\"\
         },\
         \"SupportedIdentityProviders\":{\
           \"shape\":\"SupportedIdentityProvidersListType\",\
-          \"documentation\":\"<p>A list of provider names for the identity providers that are supported on this client.</p>\"\
+          \"documentation\":\"<p>A list of provider names for the identity providers that are supported on this client. The following are supported: <code>COGNITO</code>, <code>Facebook</code>, <code>Google</code> and <code>LoginWithAmazon</code>.</p>\"\
         },\
         \"CallbackURLs\":{\
           \"shape\":\"CallbackURLsListType\",\
-          \"documentation\":\"<p>A list of allowed callback URLs for the identity providers.</p>\"\
+          \"documentation\":\"<p>A list of allowed redirect (callback) URLs for the identity providers.</p> <p>A redirect URI must:</p> <ul> <li> <p>Be an absolute URI.</p> </li> <li> <p>Be registered with the authorization server.</p> </li> <li> <p>Not include a fragment component.</p> </li> </ul> <p>See <a href=\\\"https://tools.ietf.org/html/rfc6749#section-3.1.2\\\">OAuth 2.0 - Redirection Endpoint</a>.</p> <p>Amazon Cognito requires HTTPS over HTTP except for http://localhost for testing purposes only.</p> <p>App callback URLs such as myapp://example are also supported.</p>\"\
         },\
         \"LogoutURLs\":{\
           \"shape\":\"LogoutURLsListType\",\
@@ -3534,23 +3883,27 @@
         },\
         \"DefaultRedirectURI\":{\
           \"shape\":\"RedirectUrlType\",\
-          \"documentation\":\"<p>The default redirect URI. Must be in the <code>CallbackURLs</code> list.</p>\"\
+          \"documentation\":\"<p>The default redirect URI. Must be in the <code>CallbackURLs</code> list.</p> <p>A redirect URI must:</p> <ul> <li> <p>Be an absolute URI.</p> </li> <li> <p>Be registered with the authorization server.</p> </li> <li> <p>Not include a fragment component.</p> </li> </ul> <p>See <a href=\\\"https://tools.ietf.org/html/rfc6749#section-3.1.2\\\">OAuth 2.0 - Redirection Endpoint</a>.</p> <p>Amazon Cognito requires HTTPS over HTTP except for http://localhost for testing purposes only.</p> <p>App callback URLs such as myapp://example are also supported.</p>\"\
         },\
         \"AllowedOAuthFlows\":{\
           \"shape\":\"OAuthFlowsType\",\
-          \"documentation\":\"<p>Set to <code>code</code> to initiate a code grant flow, which provides an authorization code as the response. This code can be exchanged for access tokens with the token endpoint.</p> <p>Set to <code>token</code> to specify that the client should get the access token (and, optionally, ID token, based on scopes) directly.</p>\"\
+          \"documentation\":\"<p>The allowed OAuth flows.</p> <p>Set to <code>code</code> to initiate a code grant flow, which provides an authorization code as the response. This code can be exchanged for access tokens with the token endpoint.</p> <p>Set to <code>implicit</code> to specify that the client should get the access token (and, optionally, ID token, based on scopes) directly.</p> <p>Set to <code>client_credentials</code> to specify that the client should get the access token (and, optionally, ID token, based on scopes) from the token endpoint using a combination of client and client_secret.</p>\"\
         },\
         \"AllowedOAuthScopes\":{\
           \"shape\":\"ScopeListType\",\
-          \"documentation\":\"<p>A list of allowed <code>OAuth</code> scopes. Currently supported values are <code>\\\"phone\\\"</code>, <code>\\\"email\\\"</code>, <code>\\\"openid\\\"</code>, and <code>\\\"Cognito\\\"</code>.</p>\"\
+          \"documentation\":\"<p>The allowed OAuth scopes. Possible values provided by OAuth are: <code>phone</code>, <code>email</code>, <code>openid</code>, and <code>profile</code>. Possible values provided by AWS are: <code>aws.cognito.signin.user.admin</code>. Custom scopes created in Resource Servers are also supported.</p>\"\
         },\
         \"AllowedOAuthFlowsUserPoolClient\":{\
           \"shape\":\"BooleanType\",\
-          \"documentation\":\"<p>Set to <code>True</code> if the client is allowed to follow the OAuth protocol when interacting with Cognito user pools.</p>\"\
+          \"documentation\":\"<p>Set to true if the client is allowed to follow the OAuth protocol when interacting with Cognito user pools.</p>\"\
         },\
         \"AnalyticsConfiguration\":{\
           \"shape\":\"AnalyticsConfigurationType\",\
           \"documentation\":\"<p>The Amazon Pinpoint analytics configuration for collecting metrics for this user pool.</p>\"\
+        },\
+        \"PreventUserExistenceErrors\":{\
+          \"shape\":\"PreventUserExistenceErrorTypes\",\
+          \"documentation\":\"<p>Use this setting to choose which errors and responses are returned by Cognito APIs during authentication, account confirmation, and password recovery when the user does not exist in the user pool. When set to <code>ENABLED</code> and the user does not exist, authentication returns an error indicating either the username or password was incorrect, and account confirmation and password recovery return a response indicating a code was sent to a simulated destination. When set to <code>LEGACY</code>, those APIs will return a <code>UserNotFoundException</code> exception if the user does not exist in the user pool.</p> <p>Valid values include:</p> <ul> <li> <p> <code>ENABLED</code> - This prevents user existence-related errors.</p> </li> <li> <p> <code>LEGACY</code> - This represents the old behavior of Cognito where user existence related errors are not prevented.</p> </li> </ul> <p>This setting affects the behavior of following APIs:</p> <ul> <li> <p> <a>AdminInitiateAuth</a> </p> </li> <li> <p> <a>AdminRespondToAuthChallenge</a> </p> </li> <li> <p> <a>InitiateAuth</a> </p> </li> <li> <p> <a>RespondToAuthChallenge</a> </p> </li> <li> <p> <a>ForgotPassword</a> </p> </li> <li> <p> <a>ConfirmForgotPassword</a> </p> </li> <li> <p> <a>ConfirmSignUp</a> </p> </li> <li> <p> <a>ResendConfirmationCode</a> </p> </li> </ul> <note> <p>After February 15th 2020, the value of <code>PreventUserExistenceErrors</code> will default to <code>ENABLED</code> for newly created user pool clients if no value is provided.</p> </note>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the request to create a user pool client.</p>\"\
@@ -3579,12 +3932,20 @@
         \"UserPoolId\":{\
           \"shape\":\"UserPoolIdType\",\
           \"documentation\":\"<p>The user pool ID.</p>\"\
+        },\
+        \"CustomDomainConfig\":{\
+          \"shape\":\"CustomDomainConfigType\",\
+          \"documentation\":\"<p>The configuration for a custom domain that hosts the sign-up and sign-in webpages for your application.</p> <p>Provide this parameter only if you want to use a custom domain for your user pool. Otherwise, you can exclude this parameter and use the Amazon Cognito hosted domain instead.</p> <p>For more information about the hosted domain and custom domains, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-assign-domain.html\\\">Configuring a User Pool Domain</a>.</p>\"\
         }\
       }\
     },\
     \"CreateUserPoolDomainResponse\":{\
       \"type\":\"structure\",\
       \"members\":{\
+        \"CloudFrontDomain\":{\
+          \"shape\":\"DomainType\",\
+          \"documentation\":\"<p>The Amazon CloudFront endpoint that you use as the target of the alias that you set up with your Domain Name Service (DNS) provider.</p>\"\
+        }\
       }\
     },\
     \"CreateUserPoolRequest\":{\
@@ -3601,7 +3962,7 @@
         },\
         \"LambdaConfig\":{\
           \"shape\":\"LambdaConfigType\",\
-          \"documentation\":\"<p>The Lambda trigger configuration information for the new user pool.</p>\"\
+          \"documentation\":\"<p>The Lambda trigger configuration information for the new user pool.</p> <note> <p>In a push model, event sources (such as Amazon S3 and custom applications) need permission to invoke a function. So you will need to make an extra call to add permission for these event sources to invoke your Lambda function.</p> <p/> <p>For more information on using the Lambda API to add permission, see <a href=\\\"https://docs.aws.amazon.com/lambda/latest/dg/API_AddPermission.html\\\"> AddPermission </a>. </p> <p>For adding permission using the AWS CLI, see <a href=\\\"https://docs.aws.amazon.com/cli/latest/reference/lambda/add-permission.html\\\"> add-permission </a>.</p> </note>\"\
         },\
         \"AutoVerifiedAttributes\":{\
           \"shape\":\"VerifiedAttributesListType\",\
@@ -3653,7 +4014,7 @@
         },\
         \"UserPoolTags\":{\
           \"shape\":\"UserPoolTagsType\",\
-          \"documentation\":\"<p>The cost allocation tags for the user pool. For more information, see <a href=\\\"http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-cost-allocation-tagging.html\\\">Adding Cost Allocation Tags to Your User Pool</a> </p>\"\
+          \"documentation\":\"<p>The tag keys and values to assign to the user pool. A tag is a label that you can use to categorize and manage user pools in different ways, such as by purpose, owner, environment, or other criteria.</p>\"\
         },\
         \"AdminCreateUserConfig\":{\
           \"shape\":\"AdminCreateUserConfigType\",\
@@ -3663,7 +4024,18 @@
           \"shape\":\"SchemaAttributesListType\",\
           \"documentation\":\"<p>An array of schema attributes for the new user pool. These attributes can be standard or custom attributes.</p>\"\
         },\
-        \"UserPoolAddOns\":{\"shape\":\"UserPoolAddOnsType\"}\
+        \"UserPoolAddOns\":{\
+          \"shape\":\"UserPoolAddOnsType\",\
+          \"documentation\":\"<p>Used to enable advanced security risk detection. Set the key <code>AdvancedSecurityMode</code> to the value \\\"AUDIT\\\".</p>\"\
+        },\
+        \"UsernameConfiguration\":{\
+          \"shape\":\"UsernameConfigurationType\",\
+          \"documentation\":\"<p>You can choose to set case sensitivity on the username input for the selected sign-in option. For example, when this is set to <code>False</code>, users will be able to sign in using either \\\"username\\\" or \\\"Username\\\". This configuration is immutable once it has been set. For more information, see .</p>\"\
+        },\
+        \"AccountRecoverySetting\":{\
+          \"shape\":\"AccountRecoverySettingType\",\
+          \"documentation\":\"<p>Use this setting to define which verified available method a user can use to recover their password when they call <code>ForgotPassword</code>. It allows you to define a preferred method when a user has more than one method available. With this setting, SMS does not qualify for a valid password recovery mechanism if the user also has SMS MFA enabled. In the absence of this setting, Cognito uses the legacy behavior to determine the recovery method where SMS is preferred over email.</p> <note> <p>Starting February 1, 2020, the value of <code>AccountRecoverySetting</code> will default to <code>verified_email</code> first and <code>verified_phone_number</code> as the second option for newly created user pools if no value is provided.</p> </note>\"\
+        }\
       },\
       \"documentation\":\"<p>Represents the request to create a user pool.</p>\"\
     },\
@@ -3688,6 +4060,17 @@
       \"member\":{\"shape\":\"SchemaAttributeType\"},\
       \"max\":25,\
       \"min\":1\
+    },\
+    \"CustomDomainConfigType\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"CertificateArn\"],\
+      \"members\":{\
+        \"CertificateArn\":{\
+          \"shape\":\"ArnType\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) of an AWS Certificate Manager SSL certificate. You use this certificate for the subdomain of your custom domain.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The configuration for a custom domain that hosts the sign-up and sign-in webpages for your application.</p>\"\
     },\
     \"DateType\":{\"type\":\"timestamp\"},\
     \"DefaultEmailOptionType\":{\
@@ -3903,15 +4286,24 @@
       \"type\":\"structure\",\
       \"required\":[\"UserPoolId\"],\
       \"members\":{\
-        \"UserPoolId\":{\"shape\":\"UserPoolIdType\"},\
-        \"ClientId\":{\"shape\":\"ClientIdType\"}\
+        \"UserPoolId\":{\
+          \"shape\":\"UserPoolIdType\",\
+          \"documentation\":\"<p>The user pool ID.</p>\"\
+        },\
+        \"ClientId\":{\
+          \"shape\":\"ClientIdType\",\
+          \"documentation\":\"<p>The app client ID.</p>\"\
+        }\
       }\
     },\
     \"DescribeRiskConfigurationResponse\":{\
       \"type\":\"structure\",\
       \"required\":[\"RiskConfiguration\"],\
       \"members\":{\
-        \"RiskConfiguration\":{\"shape\":\"RiskConfigurationType\"}\
+        \"RiskConfiguration\":{\
+          \"shape\":\"RiskConfigurationType\",\
+          \"documentation\":\"<p>The risk configuration.</p>\"\
+        }\
       }\
     },\
     \"DescribeUserImportJobRequest\":{\
@@ -4110,7 +4502,7 @@
           \"documentation\":\"<p>The S3 bucket where the static files for this domain are stored.</p>\"\
         },\
         \"CloudFrontDistribution\":{\
-          \"shape\":\"ArnType\",\
+          \"shape\":\"StringType\",\
           \"documentation\":\"<p>The ARN of the CloudFront distribution.</p>\"\
         },\
         \"Version\":{\
@@ -4120,6 +4512,10 @@
         \"Status\":{\
           \"shape\":\"DomainStatusType\",\
           \"documentation\":\"<p>The domain status.</p>\"\
+        },\
+        \"CustomDomainConfig\":{\
+          \"shape\":\"CustomDomainConfigType\",\
+          \"documentation\":\"<p>The configuration for a custom domain that hosts the sign-up and sign-in webpages for your application.</p>\"\
         }\
       },\
       \"documentation\":\"<p>A container for information about a domain.</p>\"\
@@ -4162,11 +4558,23 @@
       \"members\":{\
         \"SourceArn\":{\
           \"shape\":\"ArnType\",\
-          \"documentation\":\"<p>The Amazon Resource Name (ARN) of the email source.</p>\"\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) of a verified email address in Amazon SES. This email address is used in one of the following ways, depending on the value that you specify for the <code>EmailSendingAccount</code> parameter:</p> <ul> <li> <p>If you specify <code>COGNITO_DEFAULT</code>, Amazon Cognito uses this address as the custom FROM address when it emails your users by using its built-in email account.</p> </li> <li> <p>If you specify <code>DEVELOPER</code>, Amazon Cognito emails your users with this address by calling Amazon SES on your behalf.</p> </li> </ul>\"\
         },\
         \"ReplyToEmailAddress\":{\
           \"shape\":\"EmailAddressType\",\
-          \"documentation\":\"<p>The REPLY-TO email address.</p>\"\
+          \"documentation\":\"<p>The destination to which the receiver of the email should reply to.</p>\"\
+        },\
+        \"EmailSendingAccount\":{\
+          \"shape\":\"EmailSendingAccountType\",\
+          \"documentation\":\"<p>Specifies whether Amazon Cognito emails your users by using its built-in email functionality or your Amazon SES email configuration. Specify one of the following values:</p> <dl> <dt>COGNITO_DEFAULT</dt> <dd> <p>When Amazon Cognito emails your users, it uses its built-in email functionality. When you use the default option, Amazon Cognito allows only a limited number of emails each day for your user pool. For typical production environments, the default email limit is below the required delivery volume. To achieve a higher delivery volume, specify DEVELOPER to use your Amazon SES email configuration.</p> <p>To look up the email delivery limit for the default option, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/limits.html\\\">Limits in Amazon Cognito</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <p>The default FROM address is no-reply@verificationemail.com. To customize the FROM address, provide the ARN of an Amazon SES verified email address for the <code>SourceArn</code> parameter.</p> </dd> <dt>DEVELOPER</dt> <dd> <p>When Amazon Cognito emails your users, it uses your Amazon SES configuration. Amazon Cognito calls Amazon SES on your behalf to send email from your verified email address. When you use this option, the email delivery limits are the same limits that apply to your Amazon SES verified email address in your AWS account.</p> <p>If you use this option, you must provide the ARN of an Amazon SES verified email address for the <code>SourceArn</code> parameter.</p> <p>Before Amazon Cognito can email your users, it requires additional permissions to call Amazon SES on your behalf. When you update your user pool with this option, Amazon Cognito creates a <i>service-linked role</i>, which is a type of IAM role, in your AWS account. This role contains the permissions that allow Amazon Cognito to access Amazon SES and send email messages with your address. For more information about the service-linked role that Amazon Cognito creates, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/using-service-linked-roles.html\\\">Using Service-Linked Roles for Amazon Cognito</a> in the <i>Amazon Cognito Developer Guide</i>.</p> </dd> </dl>\"\
+        },\
+        \"From\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>Identifies either the senderâs email address or the senderâs name with their email address. For example, <code>testuser@example.com</code> or <code>Test User &lt;testuser@example.com&gt;</code>. This address will appear before the body of the email.</p>\"\
+        },\
+        \"ConfigurationSet\":{\
+          \"shape\":\"SESConfigurationSet\",\
+          \"documentation\":\"<p>The set of configuration rules that can be applied to emails sent using Amazon SES. A configuration set is applied to an email by including a reference to the configuration set in the headers of the email. Once applied, all of the rules in that configuration set are applied to the email. Configuration sets can be used to apply the following types of rules to emails: </p> <ul> <li> <p>Event publishing â Amazon SES can track the number of send, delivery, open, click, bounce, and complaint events for each email sent. Use event publishing to send information about these events to other AWS services such as SNS and CloudWatch.</p> </li> <li> <p>IP pool management â When leasing dedicated IP addresses with Amazon SES, you can create groups of IP addresses, called dedicated IP pools. You can then associate the dedicated IP pools with configuration sets.</p> </li> </ul>\"\
         }\
       },\
       \"documentation\":\"<p>The email configuration type.</p>\"\
@@ -4182,6 +4590,13 @@
       \"max\":140,\
       \"min\":1,\
       \"pattern\":\"[\\\\p{L}\\\\p{M}\\\\p{S}\\\\p{N}\\\\p{P}\\\\s]+\"\
+    },\
+    \"EmailSendingAccountType\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"COGNITO_DEFAULT\",\
+        \"DEVELOPER\"\
+      ]\
     },\
     \"EmailVerificationMessageByLinkType\":{\
       \"type\":\"string\",\
@@ -4212,17 +4627,34 @@
       \"members\":{\
         \"message\":{\"shape\":\"MessageType\"}\
       },\
+      \"documentation\":\"<p>This exception is thrown when there is a code mismatch and the service fails to configure the software token TOTP multi-factor authentication (MFA).</p>\",\
       \"exception\":true\
     },\
     \"EventContextDataType\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"IpAddress\":{\"shape\":\"StringType\"},\
-        \"DeviceName\":{\"shape\":\"StringType\"},\
-        \"Timezone\":{\"shape\":\"StringType\"},\
-        \"City\":{\"shape\":\"StringType\"},\
-        \"Country\":{\"shape\":\"StringType\"}\
-      }\
+        \"IpAddress\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The user's IP address.</p>\"\
+        },\
+        \"DeviceName\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The user's device name.</p>\"\
+        },\
+        \"Timezone\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The user's time zone.</p>\"\
+        },\
+        \"City\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The user's city.</p>\"\
+        },\
+        \"Country\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The user's country.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Specifies the user context data captured at the time of an event request.</p>\"\
     },\
     \"EventFeedbackType\":{\
       \"type\":\"structure\",\
@@ -4231,10 +4663,20 @@
         \"Provider\"\
       ],\
       \"members\":{\
-        \"FeedbackValue\":{\"shape\":\"FeedbackValueType\"},\
-        \"Provider\":{\"shape\":\"StringType\"},\
-        \"FeedbackDate\":{\"shape\":\"DateType\"}\
-      }\
+        \"FeedbackValue\":{\
+          \"shape\":\"FeedbackValueType\",\
+          \"documentation\":\"<p>The event feedback value.</p>\"\
+        },\
+        \"Provider\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The provider.</p>\"\
+        },\
+        \"FeedbackDate\":{\
+          \"shape\":\"DateType\",\
+          \"documentation\":\"<p>The event feedback date.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Specifies the event feedback type.</p>\"\
     },\
     \"EventFilterType\":{\
       \"type\":\"string\",\
@@ -4264,9 +4706,16 @@
     \"EventRiskType\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"RiskDecision\":{\"shape\":\"RiskDecisionType\"},\
-        \"RiskLevel\":{\"shape\":\"RiskLevelType\"}\
-      }\
+        \"RiskDecision\":{\
+          \"shape\":\"RiskDecisionType\",\
+          \"documentation\":\"<p>The risk decision.</p>\"\
+        },\
+        \"RiskLevel\":{\
+          \"shape\":\"RiskLevelType\",\
+          \"documentation\":\"<p>The risk level.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The event risk type.</p>\"\
     },\
     \"EventType\":{\
       \"type\":\"string\",\
@@ -4295,7 +4744,13 @@
       \"type\":\"string\",\
       \"enum\":[\
         \"ADMIN_NO_SRP_AUTH\",\
-        \"CUSTOM_AUTH_FLOW_ONLY\"\
+        \"CUSTOM_AUTH_FLOW_ONLY\",\
+        \"USER_PASSWORD_AUTH\",\
+        \"ALLOW_ADMIN_USER_PASSWORD_AUTH\",\
+        \"ALLOW_CUSTOM_AUTH\",\
+        \"ALLOW_USER_PASSWORD_AUTH\",\
+        \"ALLOW_USER_SRP_AUTH\",\
+        \"ALLOW_REFRESH_TOKEN_AUTH\"\
       ]\
     },\
     \"FeedbackValueType\":{\
@@ -4336,7 +4791,10 @@
           \"shape\":\"SecretHashType\",\
           \"documentation\":\"<p>A keyed-hash message authentication code (HMAC) calculated using the secret key of a user pool client and username plus the client ID in the message.</p>\"\
         },\
-        \"UserContextData\":{\"shape\":\"UserContextDataType\"},\
+        \"UserContextData\":{\
+          \"shape\":\"UserContextDataType\",\
+          \"documentation\":\"<p>Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.</p>\"\
+        },\
         \"Username\":{\
           \"shape\":\"UsernameType\",\
           \"documentation\":\"<p>The user name of the user for whom you want to enter a code to reset a forgotten password.</p>\"\
@@ -4344,6 +4802,10 @@
         \"AnalyticsMetadata\":{\
           \"shape\":\"AnalyticsMetadataType\",\
           \"documentation\":\"<p>The Amazon Pinpoint analytics metadata for collecting metrics for <code>ForgotPassword</code> calls.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the ForgotPassword API action, Amazon Cognito invokes any functions that are assigned to the following triggers: <i>pre sign-up</i>, <i>custom message</i>, and <i>user migration</i>. When Amazon Cognito invokes any of these functions, it passes a JSON payload, which the function receives as input. This payload contains a <code>clientMetadata</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your ForgotPassword request. In your function code in AWS Lambda, you can process the <code>clientMetadata</code> value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the request to reset a user's password.</p>\"\
@@ -4463,6 +4925,27 @@
         }\
       }\
     },\
+    \"GetSigningCertificateRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"UserPoolId\"],\
+      \"members\":{\
+        \"UserPoolId\":{\
+          \"shape\":\"UserPoolIdType\",\
+          \"documentation\":\"<p>The user pool ID.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Request to get a signing certificate from Cognito.</p>\"\
+    },\
+    \"GetSigningCertificateResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Certificate\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The signing certificate.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Response from Cognito for a signing certificate request.</p>\"\
+    },\
     \"GetUICustomizationRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\"UserPoolId\"],\
@@ -4501,6 +4984,10 @@
         \"AttributeName\":{\
           \"shape\":\"AttributeNameType\",\
           \"documentation\":\"<p>The attribute name returned by the server response to get the user attribute verification code.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the GetUserAttributeVerificationCode API action, Amazon Cognito invokes the function that is assigned to the <i>custom message</i> trigger. When Amazon Cognito invokes this function, it passes a JSON payload, which the function receives as input. This payload contains a <code>clientMetadata</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your GetUserAttributeVerificationCode request. In your function code in AWS Lambda, you can process the <code>clientMetadata</code> value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the request to get user attribute verification.</p>\"\
@@ -4519,15 +5006,27 @@
       \"type\":\"structure\",\
       \"required\":[\"UserPoolId\"],\
       \"members\":{\
-        \"UserPoolId\":{\"shape\":\"UserPoolIdType\"}\
+        \"UserPoolId\":{\
+          \"shape\":\"UserPoolIdType\",\
+          \"documentation\":\"<p>The user pool ID.</p>\"\
+        }\
       }\
     },\
     \"GetUserPoolMfaConfigResponse\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"SmsMfaConfiguration\":{\"shape\":\"SmsMfaConfigType\"},\
-        \"SoftwareTokenMfaConfiguration\":{\"shape\":\"SoftwareTokenMfaConfigType\"},\
-        \"MfaConfiguration\":{\"shape\":\"UserPoolMfaType\"}\
+        \"SmsMfaConfiguration\":{\
+          \"shape\":\"SmsMfaConfigType\",\
+          \"documentation\":\"<p>The SMS text message multi-factor (MFA) configuration.</p>\"\
+        },\
+        \"SoftwareTokenMfaConfiguration\":{\
+          \"shape\":\"SoftwareTokenMfaConfigType\",\
+          \"documentation\":\"<p>The software token multi-factor (MFA) configuration.</p>\"\
+        },\
+        \"MfaConfiguration\":{\
+          \"shape\":\"UserPoolMfaType\",\
+          \"documentation\":\"<p>The multi-factor (MFA) configuration. Valid values include:</p> <ul> <li> <p> <code>OFF</code> MFA will not be used for any users.</p> </li> <li> <p> <code>ON</code> MFA is required for all users to sign in.</p> </li> <li> <p> <code>OPTIONAL</code> MFA will be required only for individual users who have an MFA factor enabled.</p> </li> </ul>\"\
+        }\
       }\
     },\
     \"GetUserRequest\":{\
@@ -4558,10 +5057,16 @@
         },\
         \"MFAOptions\":{\
           \"shape\":\"MFAOptionListType\",\
-          \"documentation\":\"<p>Specifies the options for MFA (e.g., email or phone number).</p>\"\
+          \"documentation\":\"<p> <i>This response parameter is no longer supported.</i> It provides information only about SMS MFA configurations. It doesn't provide information about TOTP software token MFA configurations. To look up information about either type of MFA configuration, use the use the <a>GetUserResponse$UserMFASettingList</a> response instead.</p>\"\
         },\
-        \"PreferredMfaSetting\":{\"shape\":\"StringType\"},\
-        \"UserMFASettingList\":{\"shape\":\"UserMFASettingListType\"}\
+        \"PreferredMfaSetting\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The user's preferred MFA setting.</p>\"\
+        },\
+        \"UserMFASettingList\":{\
+          \"shape\":\"UserMFASettingListType\",\
+          \"documentation\":\"<p>The MFA options that are enabled for the user. The possible values in this list are <code>SMS_MFA</code> and <code>SOFTWARE_TOKEN_MFA</code>.</p>\"\
+        }\
       },\
       \"documentation\":\"<p>Represents the response from the server from the request to get information about the user.</p>\"\
     },\
@@ -4641,9 +5146,16 @@
     \"HttpHeader\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"headerName\":{\"shape\":\"StringType\"},\
-        \"headerValue\":{\"shape\":\"StringType\"}\
-      }\
+        \"headerName\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The header name</p>\"\
+        },\
+        \"headerValue\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The header value.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The HTTP header.</p>\"\
     },\
     \"HttpHeaderList\":{\
       \"type\":\"list\",\
@@ -4666,7 +5178,7 @@
         },\
         \"ProviderDetails\":{\
           \"shape\":\"ProviderDetailsType\",\
-          \"documentation\":\"<p>The identity provider details, such as <code>MetadataURL</code> and <code>MetadataFile</code>.</p>\"\
+          \"documentation\":\"<p>The identity provider details. The following list describes the provider detail keys for each identity provider type.</p> <ul> <li> <p>For Google, Facebook and Login with Amazon:</p> <ul> <li> <p>client_id</p> </li> <li> <p>client_secret</p> </li> <li> <p>authorize_scopes</p> </li> </ul> </li> <li> <p>For Sign in with Apple:</p> <ul> <li> <p>client_id</p> </li> <li> <p>team_id</p> </li> <li> <p>key_id</p> </li> <li> <p>private_key</p> </li> <li> <p>authorize_scopes</p> </li> </ul> </li> <li> <p>For OIDC providers:</p> <ul> <li> <p>client_id</p> </li> <li> <p>client_secret</p> </li> <li> <p>attributes_request_method</p> </li> <li> <p>oidc_issuer</p> </li> <li> <p>authorize_scopes</p> </li> <li> <p>authorize_url <i>if not available from discovery URL specified by oidc_issuer key</i> </p> </li> <li> <p>token_url <i>if not available from discovery URL specified by oidc_issuer key</i> </p> </li> <li> <p>attributes_url <i>if not available from discovery URL specified by oidc_issuer key</i> </p> </li> <li> <p>jwks_uri <i>if not available from discovery URL specified by oidc_issuer key</i> </p> </li> <li> <p>authorize_scopes</p> </li> </ul> </li> <li> <p>For SAML providers:</p> <ul> <li> <p>MetadataFile OR MetadataURL</p> </li> <li> <p>IDPSignOut <i>optional</i> </p> </li> </ul> </li> </ul>\"\
         },\
         \"AttributeMapping\":{\
           \"shape\":\"AttributeMappingType\",\
@@ -4693,7 +5205,9 @@
         \"SAML\",\
         \"Facebook\",\
         \"Google\",\
-        \"LoginWithAmazon\"\
+        \"LoginWithAmazon\",\
+        \"SignInWithApple\",\
+        \"OIDC\"\
       ]\
     },\
     \"IdpIdentifierType\":{\
@@ -4719,15 +5233,15 @@
       \"members\":{\
         \"AuthFlow\":{\
           \"shape\":\"AuthFlowType\",\
-          \"documentation\":\"<p>The authentication flow for this call to execute. The API action will depend on this value. For example: </p> <ul> <li> <p> <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh token and return new tokens.</p> </li> <li> <p> <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code> and <code>SRP_A</code> and return the SRP variables to be used for next challenge execution.</p> </li> </ul> <p>Valid values include:</p> <ul> <li> <p> <code>USER_SRP_AUTH</code>: Authentication flow for the Secure Remote Password (SRP) protocol.</p> </li> <li> <p> <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>: Authentication flow for refreshing the access token and ID token by supplying a valid refresh token.</p> </li> <li> <p> <code>CUSTOM_AUTH</code>: Custom authentication flow.</p> </li> </ul> <p> <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.</p>\"\
+          \"documentation\":\"<p>The authentication flow for this call to execute. The API action will depend on this value. For example: </p> <ul> <li> <p> <code>REFRESH_TOKEN_AUTH</code> will take in a valid refresh token and return new tokens.</p> </li> <li> <p> <code>USER_SRP_AUTH</code> will take in <code>USERNAME</code> and <code>SRP_A</code> and return the SRP variables to be used for next challenge execution.</p> </li> <li> <p> <code>USER_PASSWORD_AUTH</code> will take in <code>USERNAME</code> and <code>PASSWORD</code> and return the next challenge or tokens.</p> </li> </ul> <p>Valid values include:</p> <ul> <li> <p> <code>USER_SRP_AUTH</code>: Authentication flow for the Secure Remote Password (SRP) protocol.</p> </li> <li> <p> <code>REFRESH_TOKEN_AUTH</code>/<code>REFRESH_TOKEN</code>: Authentication flow for refreshing the access token and ID token by supplying a valid refresh token.</p> </li> <li> <p> <code>CUSTOM_AUTH</code>: Custom authentication flow.</p> </li> <li> <p> <code>USER_PASSWORD_AUTH</code>: Non-SRP authentication flow; USERNAME and PASSWORD are passed directly. If a user migration Lambda trigger is set, this flow will invoke the user migration Lambda if the USERNAME is not found in the user pool. </p> </li> <li> <p> <code>ADMIN_USER_PASSWORD_AUTH</code>: Admin-based user password authentication. This replaces the <code>ADMIN_NO_SRP_AUTH</code> authentication flow. In this flow, Cognito receives the password in the request instead of using the SRP process to verify passwords.</p> </li> </ul> <p> <code>ADMIN_NO_SRP_AUTH</code> is not a valid value.</p>\"\
         },\
         \"AuthParameters\":{\
           \"shape\":\"AuthParametersType\",\
-          \"documentation\":\"<p>The authentication parameters. These are inputs corresponding to the <code>AuthFlow</code> that you are invoking. The required values depend on the value of <code>AuthFlow</code>:</p> <ul> <li> <p>For <code>USER_SRP_AUTH</code>: <code>USERNAME</code> (required), <code>SRP_A</code> (required), <code>SECRET_HASH</code> (required if the app client is configured with a client secret), <code>DEVICE_KEY</code> </p> </li> <li> <p>For <code>REFRESH_TOKEN_AUTH/REFRESH_TOKEN</code>: <code>USERNAME</code> (required), <code>SECRET_HASH</code> (required if the app client is configured with a client secret), <code>REFRESH_TOKEN</code> (required), <code>DEVICE_KEY</code> </p> </li> <li> <p>For <code>CUSTOM_AUTH</code>: <code>USERNAME</code> (required), <code>SECRET_HASH</code> (if app client is configured with client secret), <code>DEVICE_KEY</code> </p> </li> </ul>\"\
+          \"documentation\":\"<p>The authentication parameters. These are inputs corresponding to the <code>AuthFlow</code> that you are invoking. The required values depend on the value of <code>AuthFlow</code>:</p> <ul> <li> <p>For <code>USER_SRP_AUTH</code>: <code>USERNAME</code> (required), <code>SRP_A</code> (required), <code>SECRET_HASH</code> (required if the app client is configured with a client secret), <code>DEVICE_KEY</code> </p> </li> <li> <p>For <code>REFRESH_TOKEN_AUTH/REFRESH_TOKEN</code>: <code>REFRESH_TOKEN</code> (required), <code>SECRET_HASH</code> (required if the app client is configured with a client secret), <code>DEVICE_KEY</code> </p> </li> <li> <p>For <code>CUSTOM_AUTH</code>: <code>USERNAME</code> (required), <code>SECRET_HASH</code> (if app client is configured with client secret), <code>DEVICE_KEY</code> </p> </li> </ul>\"\
         },\
         \"ClientMetadata\":{\
           \"shape\":\"ClientMetadataType\",\
-          \"documentation\":\"<p>This is a random key-value pair map which can contain any key and will be passed to your PreAuthentication Lambda trigger as-is. It can be used to implement additional validations around authentication.</p>\"\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for certain custom workflows that this action triggers.</p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the InitiateAuth API action, Amazon Cognito invokes the AWS Lambda functions that are specified for various triggers. The ClientMetadata value is passed as input to the functions for only the following triggers:</p> <ul> <li> <p>Pre signup</p> </li> <li> <p>Pre authentication</p> </li> <li> <p>User migration</p> </li> </ul> <p>When Amazon Cognito invokes the functions for these triggers, it passes a JSON payload, which the function receives as input. This payload contains a <code>validationData</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your InitiateAuth request. In your function code in AWS Lambda, you can process the <code>validationData</code> value to enhance your workflow for your specific needs.</p> <p>When you use the InitiateAuth API action, Amazon Cognito also invokes the functions for the following triggers, but it does not provide the ClientMetadata value as input:</p> <ul> <li> <p>Post authentication</p> </li> <li> <p>Custom message</p> </li> <li> <p>Pre token generation</p> </li> <li> <p>Create auth challenge</p> </li> <li> <p>Define auth challenge</p> </li> <li> <p>Verify auth challenge</p> </li> </ul> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
         },\
         \"ClientId\":{\
           \"shape\":\"ClientIdType\",\
@@ -4737,7 +5251,10 @@
           \"shape\":\"AnalyticsMetadataType\",\
           \"documentation\":\"<p>The Amazon Pinpoint analytics metadata for collecting metrics for <code>InitiateAuth</code> calls.</p>\"\
         },\
-        \"UserContextData\":{\"shape\":\"UserContextDataType\"}\
+        \"UserContextData\":{\
+          \"shape\":\"UserContextDataType\",\
+          \"documentation\":\"<p>Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.</p>\"\
+        }\
       },\
       \"documentation\":\"<p>Initiates the authentication request.</p>\"\
     },\
@@ -4899,6 +5416,10 @@
         \"PreTokenGeneration\":{\
           \"shape\":\"ArnType\",\
           \"documentation\":\"<p>A Lambda trigger that is invoked before token generation.</p>\"\
+        },\
+        \"UserMigration\":{\
+          \"shape\":\"ArnType\",\
+          \"documentation\":\"<p>The user migration Lambda config type.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Specifies the configuration for AWS Lambda triggers.</p>\"\
@@ -5017,7 +5538,7 @@
     \"ListProvidersLimitType\":{\
       \"type\":\"integer\",\
       \"max\":60,\
-      \"min\":1\
+      \"min\":0\
     },\
     \"ListResourceServersLimitType\":{\
       \"type\":\"integer\",\
@@ -5053,6 +5574,25 @@
         \"NextToken\":{\
           \"shape\":\"PaginationKeyType\",\
           \"documentation\":\"<p>A pagination token.</p>\"\
+        }\
+      }\
+    },\
+    \"ListTagsForResourceRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"ResourceArn\"],\
+      \"members\":{\
+        \"ResourceArn\":{\
+          \"shape\":\"ArnType\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) of the user pool that the tags are assigned to.</p>\"\
+        }\
+      }\
+    },\
+    \"ListTagsForResourceResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Tags\":{\
+          \"shape\":\"UserPoolTagsType\",\
+          \"documentation\":\"<p>The tags that are assigned to the user pool.</p>\"\
         }\
       }\
     },\
@@ -5214,7 +5754,7 @@
         },\
         \"Filter\":{\
           \"shape\":\"UserFilterType\",\
-          \"documentation\":\"<p>A filter string of the form \\\"<i>AttributeName</i> <i>Filter-Type</i> \\\"<i>AttributeValue</i>\\\"\\\". Quotation marks within the filter string must be escaped using the backslash (\\\\) character. For example, \\\"<code>family_name</code> = \\\\\\\"Reddy\\\\\\\"\\\".</p> <ul> <li> <p> <i>AttributeName</i>: The name of the attribute to search for. You can only search for one attribute at a time.</p> </li> <li> <p> <i>Filter-Type</i>: For an exact match, use =, for example, \\\"<code>given_name</code> = \\\\\\\"Jon\\\\\\\"\\\". For a prefix (\\\"starts with\\\") match, use ^=, for example, \\\"<code>given_name</code> ^= \\\\\\\"Jon\\\\\\\"\\\". </p> </li> <li> <p> <i>AttributeValue</i>: The attribute value that must be matched for each user.</p> </li> </ul> <p>If the filter string is empty, <code>ListUsers</code> returns all users in the user pool.</p> <p>You can only search for the following standard attributes:</p> <ul> <li> <p> <code>username</code> (case-sensitive)</p> </li> <li> <p> <code>email</code> </p> </li> <li> <p> <code>phone_number</code> </p> </li> <li> <p> <code>name</code> </p> </li> <li> <p> <code>given_name</code> </p> </li> <li> <p> <code>family_name</code> </p> </li> <li> <p> <code>preferred_username</code> </p> </li> <li> <p> <code>cognito:user_status</code> (called <b>Enabled</b> in the Console) (case-sensitive)</p> </li> <li> <p> <code>status</code> (case-insensitive)</p> </li> <li> <p> <code>sub</code> </p> </li> </ul> <p>Custom attributes are not searchable.</p> <p>For more information, see <a href=\\\"http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api\\\">Searching for Users Using the ListUsers API</a> and <a href=\\\"http://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples\\\">Examples of Using the ListUsers API</a> in the <i>Amazon Cognito Developer Guide</i>.</p>\"\
+          \"documentation\":\"<p>A filter string of the form \\\"<i>AttributeName</i> <i>Filter-Type</i> \\\"<i>AttributeValue</i>\\\"\\\". Quotation marks within the filter string must be escaped using the backslash (\\\\) character. For example, \\\"<code>family_name</code> = \\\\\\\"Reddy\\\\\\\"\\\".</p> <ul> <li> <p> <i>AttributeName</i>: The name of the attribute to search for. You can only search for one attribute at a time.</p> </li> <li> <p> <i>Filter-Type</i>: For an exact match, use =, for example, \\\"<code>given_name</code> = \\\\\\\"Jon\\\\\\\"\\\". For a prefix (\\\"starts with\\\") match, use ^=, for example, \\\"<code>given_name</code> ^= \\\\\\\"Jon\\\\\\\"\\\". </p> </li> <li> <p> <i>AttributeValue</i>: The attribute value that must be matched for each user.</p> </li> </ul> <p>If the filter string is empty, <code>ListUsers</code> returns all users in the user pool.</p> <p>You can only search for the following standard attributes:</p> <ul> <li> <p> <code>username</code> (case-sensitive)</p> </li> <li> <p> <code>email</code> </p> </li> <li> <p> <code>phone_number</code> </p> </li> <li> <p> <code>name</code> </p> </li> <li> <p> <code>given_name</code> </p> </li> <li> <p> <code>family_name</code> </p> </li> <li> <p> <code>preferred_username</code> </p> </li> <li> <p> <code>cognito:user_status</code> (called <b>Status</b> in the Console) (case-insensitive)</p> </li> <li> <p> <code>status (called <b>Enabled</b> in the Console) (case-sensitive)</code> </p> </li> <li> <p> <code>sub</code> </p> </li> </ul> <p>Custom attributes are not searchable.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-using-listusers-api\\\">Searching for Users Using the ListUsers API</a> and <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/how-to-manage-user-accounts.html#cognito-user-pools-searching-for-users-listusers-api-examples\\\">Examples of Using the ListUsers API</a> in the <i>Amazon Cognito Developer Guide</i>.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the request to list users.</p>\"\
@@ -5260,14 +5800,14 @@
       \"members\":{\
         \"DeliveryMedium\":{\
           \"shape\":\"DeliveryMediumType\",\
-          \"documentation\":\"<p>The delivery medium (email message or SMS message) to send the MFA code.</p>\"\
+          \"documentation\":\"<p>The delivery medium to send the MFA code. You can use this parameter to set only the <code>SMS</code> delivery medium value.</p>\"\
         },\
         \"AttributeName\":{\
           \"shape\":\"AttributeNameType\",\
-          \"documentation\":\"<p>The attribute name of the MFA option type.</p>\"\
+          \"documentation\":\"<p>The attribute name of the MFA option type. The only valid value is <code>phone_number</code>.</p>\"\
         }\
       },\
-      \"documentation\":\"<p>Specifies the different settings for multi-factor authentication (MFA).</p>\"\
+      \"documentation\":\"<p> <i>This data type is no longer supported.</i> You can use it only for SMS MFA configurations. You can't use it for TOTP software token MFA configurations.</p> <p>To set either type of MFA configuration, use the <a>AdminSetUserMFAPreference</a> or <a>SetUserMFAPreference</a> actions.</p> <p>To look up information about either type of MFA configuration, use the <a>AdminGetUserResponse$UserMFASettingList</a> or <a>GetUserResponse$UserMFASettingList</a> responses.</p>\"\
     },\
     \"MessageActionType\":{\
       \"type\":\"string\",\
@@ -5324,22 +5864,51 @@
       \"type\":\"structure\",\
       \"required\":[\"SourceArn\"],\
       \"members\":{\
-        \"From\":{\"shape\":\"StringType\"},\
-        \"ReplyTo\":{\"shape\":\"StringType\"},\
-        \"SourceArn\":{\"shape\":\"ArnType\"},\
-        \"BlockEmail\":{\"shape\":\"NotifyEmailType\"},\
-        \"NoActionEmail\":{\"shape\":\"NotifyEmailType\"},\
-        \"MfaEmail\":{\"shape\":\"NotifyEmailType\"}\
-      }\
+        \"From\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The email address that is sending the email. It must be either individually verified with Amazon SES, or from a domain that has been verified with Amazon SES.</p>\"\
+        },\
+        \"ReplyTo\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The destination to which the receiver of an email should reply to.</p>\"\
+        },\
+        \"SourceArn\":{\
+          \"shape\":\"ArnType\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) of the identity that is associated with the sending authorization policy. It permits Amazon Cognito to send for the email address specified in the <code>From</code> parameter.</p>\"\
+        },\
+        \"BlockEmail\":{\
+          \"shape\":\"NotifyEmailType\",\
+          \"documentation\":\"<p>Email template used when a detected risk event is blocked.</p>\"\
+        },\
+        \"NoActionEmail\":{\
+          \"shape\":\"NotifyEmailType\",\
+          \"documentation\":\"<p>The email template used when a detected risk event is allowed.</p>\"\
+        },\
+        \"MfaEmail\":{\
+          \"shape\":\"NotifyEmailType\",\
+          \"documentation\":\"<p>The MFA email template used when MFA is challenged as part of a detected risk.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The notify configuration type.</p>\"\
     },\
     \"NotifyEmailType\":{\
       \"type\":\"structure\",\
       \"required\":[\"Subject\"],\
       \"members\":{\
-        \"Subject\":{\"shape\":\"EmailNotificationSubjectType\"},\
-        \"HtmlBody\":{\"shape\":\"EmailNotificationBodyType\"},\
-        \"TextBody\":{\"shape\":\"EmailNotificationBodyType\"}\
-      }\
+        \"Subject\":{\
+          \"shape\":\"EmailNotificationSubjectType\",\
+          \"documentation\":\"<p>The subject.</p>\"\
+        },\
+        \"HtmlBody\":{\
+          \"shape\":\"EmailNotificationBodyType\",\
+          \"documentation\":\"<p>The HTML body.</p>\"\
+        },\
+        \"TextBody\":{\
+          \"shape\":\"EmailNotificationBodyType\",\
+          \"documentation\":\"<p>The text body.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The notify email type.</p>\"\
     },\
     \"NumberAttributeConstraintsType\":{\
       \"type\":\"structure\",\
@@ -5406,6 +5975,10 @@
         \"RequireSymbols\":{\
           \"shape\":\"BooleanType\",\
           \"documentation\":\"<p>In the password policy that you have set, refers to whether you have required users to use at least one symbol in their password.</p>\"\
+        },\
+        \"TemporaryPasswordValidityDays\":{\
+          \"shape\":\"TemporaryPasswordValidityDaysType\",\
+          \"documentation\":\"<p>In the password policy you have set, refers to the number of days a temporary password is valid. If the user does not sign-in during this time, their password will need to be reset by an administrator.</p> <note> <p>When you set <code>TemporaryPasswordValidityDays</code> for a user pool, you will no longer be able to set the deprecated <code>UnusedAccountValidityDays</code> value for that user pool.</p> </note>\"\
         }\
       },\
       \"documentation\":\"<p>The password policy type.</p>\"\
@@ -5452,6 +6025,18 @@
       },\
       \"documentation\":\"<p>This exception is thrown when a precondition is not met.</p>\",\
       \"exception\":true\
+    },\
+    \"PreventUserExistenceErrorTypes\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"LEGACY\",\
+        \"ENABLED\"\
+      ]\
+    },\
+    \"PriorityType\":{\
+      \"type\":\"integer\",\
+      \"max\":2,\
+      \"min\":1\
     },\
     \"ProviderDescription\":{\
       \"type\":\"structure\",\
@@ -5526,6 +6111,38 @@
       \"max\":60,\
       \"min\":0\
     },\
+    \"RecoveryMechanismsType\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"RecoveryOptionType\"},\
+      \"max\":2,\
+      \"min\":1\
+    },\
+    \"RecoveryOptionNameType\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"verified_email\",\
+        \"verified_phone_number\",\
+        \"admin_only\"\
+      ]\
+    },\
+    \"RecoveryOptionType\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"Priority\",\
+        \"Name\"\
+      ],\
+      \"members\":{\
+        \"Priority\":{\
+          \"shape\":\"PriorityType\",\
+          \"documentation\":\"<p>A positive integer specifying priority of a method with 1 being the highest priority.</p>\"\
+        },\
+        \"Name\":{\
+          \"shape\":\"RecoveryOptionNameType\",\
+          \"documentation\":\"<p>Specifies the recovery method for a user.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>A map containing a priority as a key, and recovery method name as a value.</p>\"\
+    },\
     \"RedirectUrlType\":{\
       \"type\":\"string\",\
       \"max\":1024,\
@@ -5552,7 +6169,10 @@
           \"shape\":\"SecretHashType\",\
           \"documentation\":\"<p>A keyed-hash message authentication code (HMAC) calculated using the secret key of a user pool client and username plus the client ID in the message.</p>\"\
         },\
-        \"UserContextData\":{\"shape\":\"UserContextDataType\"},\
+        \"UserContextData\":{\
+          \"shape\":\"UserContextDataType\",\
+          \"documentation\":\"<p>Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.</p>\"\
+        },\
         \"Username\":{\
           \"shape\":\"UsernameType\",\
           \"documentation\":\"<p>The user name of the user to whom you wish to resend a confirmation code.</p>\"\
@@ -5560,6 +6180,10 @@
         \"AnalyticsMetadata\":{\
           \"shape\":\"AnalyticsMetadataType\",\
           \"documentation\":\"<p>The Amazon Pinpoint analytics metadata for collecting metrics for <code>ResendConfirmationCode</code> calls.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the ResendConfirmationCode API action, Amazon Cognito invokes the function that is assigned to the <i>custom message</i> trigger. When Amazon Cognito invokes this function, it passes a JSON payload, which the function receives as input. This payload contains a <code>clientMetadata</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your ResendConfirmationCode request. In your function code in AWS Lambda, you can process the <code>clientMetadata</code> value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the request to resend the confirmation code.</p>\"\
@@ -5605,7 +6229,7 @@
     \"ResourceServerScopeListType\":{\
       \"type\":\"list\",\
       \"member\":{\"shape\":\"ResourceServerScopeType\"},\
-      \"max\":25\
+      \"max\":100\
     },\
     \"ResourceServerScopeNameType\":{\
       \"type\":\"string\",\
@@ -5678,13 +6302,20 @@
         },\
         \"ChallengeResponses\":{\
           \"shape\":\"ChallengeResponsesType\",\
-          \"documentation\":\"<p>The challenge responses. These are inputs corresponding to the value of <code>ChallengeName</code>, for example:</p> <ul> <li> <p> <code>SMS_MFA</code>: <code>SMS_MFA_CODE</code>, <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is configured with client secret).</p> </li> <li> <p> <code>PASSWORD_VERIFIER</code>: <code>PASSWORD_CLAIM_SIGNATURE</code>, <code>PASSWORD_CLAIM_SECRET_BLOCK</code>, <code>TIMESTAMP</code>, <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is configured with client secret).</p> </li> <li> <p> <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>, any other required attributes, <code>USERNAME</code>, <code>SECRET_HASH</code> (if app client is configured with client secret). </p> </li> </ul>\"\
+          \"documentation\":\"<p>The challenge responses. These are inputs corresponding to the value of <code>ChallengeName</code>, for example:</p> <note> <p> <code>SECRET_HASH</code> (if app client is configured with client secret) applies to all inputs below (including <code>SOFTWARE_TOKEN_MFA</code>).</p> </note> <ul> <li> <p> <code>SMS_MFA</code>: <code>SMS_MFA_CODE</code>, <code>USERNAME</code>.</p> </li> <li> <p> <code>PASSWORD_VERIFIER</code>: <code>PASSWORD_CLAIM_SIGNATURE</code>, <code>PASSWORD_CLAIM_SECRET_BLOCK</code>, <code>TIMESTAMP</code>, <code>USERNAME</code>.</p> </li> <li> <p> <code>NEW_PASSWORD_REQUIRED</code>: <code>NEW_PASSWORD</code>, any other required attributes, <code>USERNAME</code>. </p> </li> <li> <p> <code>SOFTWARE_TOKEN_MFA</code>: <code>USERNAME</code> and <code>SOFTWARE_TOKEN_MFA_CODE</code> are required attributes.</p> </li> <li> <p> <code>DEVICE_SRP_AUTH</code> requires <code>USERNAME</code>, <code>DEVICE_KEY</code>, <code>SRP_A</code> (and <code>SECRET_HASH</code>).</p> </li> <li> <p> <code>DEVICE_PASSWORD_VERIFIER</code> requires everything that <code>PASSWORD_VERIFIER</code> requires plus <code>DEVICE_KEY</code>.</p> </li> </ul>\"\
         },\
         \"AnalyticsMetadata\":{\
           \"shape\":\"AnalyticsMetadataType\",\
           \"documentation\":\"<p>The Amazon Pinpoint analytics metadata for collecting metrics for <code>RespondToAuthChallenge</code> calls.</p>\"\
         },\
-        \"UserContextData\":{\"shape\":\"UserContextDataType\"}\
+        \"UserContextData\":{\
+          \"shape\":\"UserContextDataType\",\
+          \"documentation\":\"<p>Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the RespondToAuthChallenge API action, Amazon Cognito invokes any functions that are assigned to the following triggers: <i>post authentication</i>, <i>pre token generation</i>, <i>define auth challenge</i>, <i>create auth challenge</i>, and <i>verify auth challenge</i>. When Amazon Cognito invokes any of these functions, it passes a JSON payload, which the function receives as input. This payload contains a <code>clientMetadata</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your RespondToAuthChallenge request. In your function code in AWS Lambda, you can process the <code>clientMetadata</code> value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
+        }\
       },\
       \"documentation\":\"<p>The request to respond to an authentication challenge.</p>\"\
     },\
@@ -5713,13 +6344,32 @@
     \"RiskConfigurationType\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"UserPoolId\":{\"shape\":\"UserPoolIdType\"},\
-        \"ClientId\":{\"shape\":\"ClientIdType\"},\
-        \"CompromisedCredentialsRiskConfiguration\":{\"shape\":\"CompromisedCredentialsRiskConfigurationType\"},\
-        \"AccountTakeoverRiskConfiguration\":{\"shape\":\"AccountTakeoverRiskConfigurationType\"},\
-        \"RiskExceptionConfiguration\":{\"shape\":\"RiskExceptionConfigurationType\"},\
-        \"LastModifiedDate\":{\"shape\":\"DateType\"}\
-      }\
+        \"UserPoolId\":{\
+          \"shape\":\"UserPoolIdType\",\
+          \"documentation\":\"<p>The user pool ID.</p>\"\
+        },\
+        \"ClientId\":{\
+          \"shape\":\"ClientIdType\",\
+          \"documentation\":\"<p>The app client ID.</p>\"\
+        },\
+        \"CompromisedCredentialsRiskConfiguration\":{\
+          \"shape\":\"CompromisedCredentialsRiskConfigurationType\",\
+          \"documentation\":\"<p>The compromised credentials risk configuration object including the <code>EventFilter</code> and the <code>EventAction</code> </p>\"\
+        },\
+        \"AccountTakeoverRiskConfiguration\":{\
+          \"shape\":\"AccountTakeoverRiskConfigurationType\",\
+          \"documentation\":\"<p>The account takeover risk configuration object including the <code>NotifyConfiguration</code> object and <code>Actions</code> to take in the case of an account takeover.</p>\"\
+        },\
+        \"RiskExceptionConfiguration\":{\
+          \"shape\":\"RiskExceptionConfigurationType\",\
+          \"documentation\":\"<p>The configuration to override the risk decision.</p>\"\
+        },\
+        \"LastModifiedDate\":{\
+          \"shape\":\"DateType\",\
+          \"documentation\":\"<p>The last modified date.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The risk configuration type.</p>\"\
     },\
     \"RiskDecisionType\":{\
       \"type\":\"string\",\
@@ -5732,9 +6382,16 @@
     \"RiskExceptionConfigurationType\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"BlockedIPRangeList\":{\"shape\":\"BlockedIPRangeListType\"},\
-        \"SkippedIPRangeList\":{\"shape\":\"SkippedIPRangeListType\"}\
-      }\
+        \"BlockedIPRangeList\":{\
+          \"shape\":\"BlockedIPRangeListType\",\
+          \"documentation\":\"<p>Overrides the risk decision to always block the pre-authentication requests. The IP range is in CIDR notation: a compact representation of an IP address and its associated routing prefix.</p>\"\
+        },\
+        \"SkippedIPRangeList\":{\
+          \"shape\":\"SkippedIPRangeListType\",\
+          \"documentation\":\"<p>Risk detection is not performed on the IP addresses in the range list. The IP range is in CIDR notation.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The type of the configuration to override the risk decision.</p>\"\
     },\
     \"RiskLevelType\":{\
       \"type\":\"string\",\
@@ -5750,12 +6407,25 @@
       \"min\":3,\
       \"pattern\":\"^[0-9A-Za-z\\\\.\\\\-_]*(?<!\\\\.)$\"\
     },\
+    \"SESConfigurationSet\":{\
+      \"type\":\"string\",\
+      \"max\":64,\
+      \"min\":1,\
+      \"pattern\":\"^[a-zA-Z0-9_-]+$\"\
+    },\
     \"SMSMfaSettingsType\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"Enabled\":{\"shape\":\"BooleanType\"},\
-        \"PreferredMfa\":{\"shape\":\"BooleanType\"}\
-      }\
+        \"Enabled\":{\
+          \"shape\":\"BooleanType\",\
+          \"documentation\":\"<p>Specifies whether SMS text message MFA is enabled.</p>\"\
+        },\
+        \"PreferredMfa\":{\
+          \"shape\":\"BooleanType\",\
+          \"documentation\":\"<p>Specifies whether SMS is the preferred MFA method.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The type used for enabling SMS MFA at the user level.</p>\"\
     },\
     \"SchemaAttributeType\":{\
       \"type\":\"structure\",\
@@ -5770,12 +6440,12 @@
         },\
         \"DeveloperOnlyAttribute\":{\
           \"shape\":\"BooleanType\",\
-          \"documentation\":\"<p>Specifies whether the attribute type is developer only.</p>\",\
+          \"documentation\":\"<note> <p>We recommend that you use <a href=\\\"https://docs.aws.amazon.com/cognito-user-identity-pools/latest/APIReference/API_UserPoolClientType.html#CognitoUserPools-Type-UserPoolClientType-WriteAttributes\\\">WriteAttributes</a> in the user pool client to control how attributes can be mutated for new use cases instead of using <code>DeveloperOnlyAttribute</code>.</p> </note> <p>Specifies whether the attribute type is developer only. This attribute can only be modified by an administrator. Users will not be able to modify this attribute using their access token. For example, <code>DeveloperOnlyAttribute</code> can be modified using the API but cannot be updated using the API.</p>\",\
           \"box\":true\
         },\
         \"Mutable\":{\
           \"shape\":\"BooleanType\",\
-          \"documentation\":\"<p>Specifies whether the attribute can be changed once it has been created.</p>\",\
+          \"documentation\":\"<p>Specifies whether the value of the attribute can be changed.</p> <p>For any user pool attribute that's mapped to an identity provider attribute, you must set this parameter to <code>true</code>. Amazon Cognito updates mapped attributes when users sign in to your application through an identity provider. If an attribute is immutable, Amazon Cognito throws an error when it attempts to update the attribute. For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-specifying-attribute-mapping.html\\\">Specifying Identity Provider Attribute Mappings for Your User Pool</a>.</p>\",\
           \"box\":true\
         },\
         \"Required\":{\
@@ -5811,7 +6481,7 @@
     \"ScopeListType\":{\
       \"type\":\"list\",\
       \"member\":{\"shape\":\"ScopeType\"},\
-      \"max\":25\
+      \"max\":50\
     },\
     \"ScopeType\":{\
       \"type\":\"string\",\
@@ -5850,18 +6520,36 @@
       \"type\":\"structure\",\
       \"required\":[\"UserPoolId\"],\
       \"members\":{\
-        \"UserPoolId\":{\"shape\":\"UserPoolIdType\"},\
-        \"ClientId\":{\"shape\":\"ClientIdType\"},\
-        \"CompromisedCredentialsRiskConfiguration\":{\"shape\":\"CompromisedCredentialsRiskConfigurationType\"},\
-        \"AccountTakeoverRiskConfiguration\":{\"shape\":\"AccountTakeoverRiskConfigurationType\"},\
-        \"RiskExceptionConfiguration\":{\"shape\":\"RiskExceptionConfigurationType\"}\
+        \"UserPoolId\":{\
+          \"shape\":\"UserPoolIdType\",\
+          \"documentation\":\"<p>The user pool ID. </p>\"\
+        },\
+        \"ClientId\":{\
+          \"shape\":\"ClientIdType\",\
+          \"documentation\":\"<p>The app client ID. If <code>ClientId</code> is null, then the risk configuration is mapped to <code>userPoolId</code>. When the client ID is null, the same risk configuration is applied to all the clients in the userPool.</p> <p>Otherwise, <code>ClientId</code> is mapped to the client. When the client ID is not null, the user pool configuration is overridden and the risk configuration for the client is used instead.</p>\"\
+        },\
+        \"CompromisedCredentialsRiskConfiguration\":{\
+          \"shape\":\"CompromisedCredentialsRiskConfigurationType\",\
+          \"documentation\":\"<p>The compromised credentials risk configuration.</p>\"\
+        },\
+        \"AccountTakeoverRiskConfiguration\":{\
+          \"shape\":\"AccountTakeoverRiskConfigurationType\",\
+          \"documentation\":\"<p>The account takeover risk configuration.</p>\"\
+        },\
+        \"RiskExceptionConfiguration\":{\
+          \"shape\":\"RiskExceptionConfigurationType\",\
+          \"documentation\":\"<p>The configuration to override the risk decision.</p>\"\
+        }\
       }\
     },\
     \"SetRiskConfigurationResponse\":{\
       \"type\":\"structure\",\
       \"required\":[\"RiskConfiguration\"],\
       \"members\":{\
-        \"RiskConfiguration\":{\"shape\":\"RiskConfigurationType\"}\
+        \"RiskConfiguration\":{\
+          \"shape\":\"RiskConfigurationType\",\
+          \"documentation\":\"<p>The risk configuration.</p>\"\
+        }\
       }\
     },\
     \"SetUICustomizationRequest\":{\
@@ -5900,9 +6588,18 @@
       \"type\":\"structure\",\
       \"required\":[\"AccessToken\"],\
       \"members\":{\
-        \"SMSMfaSettings\":{\"shape\":\"SMSMfaSettingsType\"},\
-        \"SoftwareTokenMfaSettings\":{\"shape\":\"SoftwareTokenMfaSettingsType\"},\
-        \"AccessToken\":{\"shape\":\"TokenModelType\"}\
+        \"SMSMfaSettings\":{\
+          \"shape\":\"SMSMfaSettingsType\",\
+          \"documentation\":\"<p>The SMS text message multi-factor authentication (MFA) settings.</p>\"\
+        },\
+        \"SoftwareTokenMfaSettings\":{\
+          \"shape\":\"SoftwareTokenMfaSettingsType\",\
+          \"documentation\":\"<p>The time-based one-time password software token MFA settings.</p>\"\
+        },\
+        \"AccessToken\":{\
+          \"shape\":\"TokenModelType\",\
+          \"documentation\":\"<p>The access token for the user.</p>\"\
+        }\
       }\
     },\
     \"SetUserMFAPreferenceResponse\":{\
@@ -5914,18 +6611,39 @@
       \"type\":\"structure\",\
       \"required\":[\"UserPoolId\"],\
       \"members\":{\
-        \"UserPoolId\":{\"shape\":\"UserPoolIdType\"},\
-        \"SmsMfaConfiguration\":{\"shape\":\"SmsMfaConfigType\"},\
-        \"SoftwareTokenMfaConfiguration\":{\"shape\":\"SoftwareTokenMfaConfigType\"},\
-        \"MfaConfiguration\":{\"shape\":\"UserPoolMfaType\"}\
+        \"UserPoolId\":{\
+          \"shape\":\"UserPoolIdType\",\
+          \"documentation\":\"<p>The user pool ID.</p>\"\
+        },\
+        \"SmsMfaConfiguration\":{\
+          \"shape\":\"SmsMfaConfigType\",\
+          \"documentation\":\"<p>The SMS text message MFA configuration.</p>\"\
+        },\
+        \"SoftwareTokenMfaConfiguration\":{\
+          \"shape\":\"SoftwareTokenMfaConfigType\",\
+          \"documentation\":\"<p>The software token MFA configuration.</p>\"\
+        },\
+        \"MfaConfiguration\":{\
+          \"shape\":\"UserPoolMfaType\",\
+          \"documentation\":\"<p>The MFA configuration. Valid values include:</p> <ul> <li> <p> <code>OFF</code> MFA will not be used for any users.</p> </li> <li> <p> <code>ON</code> MFA is required for all users to sign in.</p> </li> <li> <p> <code>OPTIONAL</code> MFA will be required only for individual users who have an MFA factor enabled.</p> </li> </ul>\"\
+        }\
       }\
     },\
     \"SetUserPoolMfaConfigResponse\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"SmsMfaConfiguration\":{\"shape\":\"SmsMfaConfigType\"},\
-        \"SoftwareTokenMfaConfiguration\":{\"shape\":\"SoftwareTokenMfaConfigType\"},\
-        \"MfaConfiguration\":{\"shape\":\"UserPoolMfaType\"}\
+        \"SmsMfaConfiguration\":{\
+          \"shape\":\"SmsMfaConfigType\",\
+          \"documentation\":\"<p>The SMS text message MFA configuration.</p>\"\
+        },\
+        \"SoftwareTokenMfaConfiguration\":{\
+          \"shape\":\"SoftwareTokenMfaConfigType\",\
+          \"documentation\":\"<p>The software token MFA configuration.</p>\"\
+        },\
+        \"MfaConfiguration\":{\
+          \"shape\":\"UserPoolMfaType\",\
+          \"documentation\":\"<p>The MFA configuration. Valid values include:</p> <ul> <li> <p> <code>OFF</code> MFA will not be used for any users.</p> </li> <li> <p> <code>ON</code> MFA is required for all users to sign in.</p> </li> <li> <p> <code>OPTIONAL</code> MFA will be required only for individual users who have an MFA factor enabled.</p> </li> </ul>\"\
+        }\
       }\
     },\
     \"SetUserSettingsRequest\":{\
@@ -5941,7 +6659,7 @@
         },\
         \"MFAOptions\":{\
           \"shape\":\"MFAOptionListType\",\
-          \"documentation\":\"<p>Specifies the options for MFA (e.g., email or phone number).</p>\"\
+          \"documentation\":\"<p>You can use this parameter only to set an SMS configuration that uses SMS for delivery.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the request to set user settings.</p>\"\
@@ -5988,7 +6706,14 @@
           \"shape\":\"AnalyticsMetadataType\",\
           \"documentation\":\"<p>The Amazon Pinpoint analytics metadata for collecting metrics for <code>SignUp</code> calls.</p>\"\
         },\
-        \"UserContextData\":{\"shape\":\"UserContextDataType\"}\
+        \"UserContextData\":{\
+          \"shape\":\"UserContextDataType\",\
+          \"documentation\":\"<p>Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the SignUp API action, Amazon Cognito invokes any functions that are assigned to the following triggers: <i>pre sign-up</i>, <i>custom message</i>, and <i>post confirmation</i>. When Amazon Cognito invokes any of these functions, it passes a JSON payload, which the function receives as input. This payload contains a <code>clientMetadata</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your SignUp request. In your function code in AWS Lambda, you can process the <code>clientMetadata</code> value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
+        }\
       },\
       \"documentation\":\"<p>Represents the request to register a user.</p>\"\
     },\
@@ -6025,21 +6750,28 @@
       \"members\":{\
         \"SnsCallerArn\":{\
           \"shape\":\"ArnType\",\
-          \"documentation\":\"<p>The Amazon Resource Name (ARN) of the Amazon Simple Notification Service (SNS) caller.</p>\"\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) of the Amazon Simple Notification Service (SNS) caller. This is the ARN of the IAM role in your AWS account which Cognito will use to send SMS messages.</p>\"\
         },\
         \"ExternalId\":{\
           \"shape\":\"StringType\",\
-          \"documentation\":\"<p>The external ID.</p>\"\
+          \"documentation\":\"<p>The external ID is a value that we recommend you use to add security to your IAM role which is used to call Amazon SNS to send SMS messages for your user pool. If you provide an <code>ExternalId</code>, the Cognito User Pool will include it when attempting to assume your IAM role, so that you can set your roles trust policy to require the <code>ExternalID</code>. If you use the Cognito Management Console to create a role for SMS MFA, Cognito will create a role with the required permissions and a trust policy that demonstrates use of the <code>ExternalId</code>.</p>\"\
         }\
       },\
-      \"documentation\":\"<p>The SMS configuration type.</p>\"\
+      \"documentation\":\"<p>The SMS configuration type that includes the settings the Cognito User Pool needs to call for the Amazon SNS service to send an SMS message from your AWS account. The Cognito User Pool makes the request to the Amazon SNS Service by using an AWS IAM role that you provide for your AWS account.</p>\"\
     },\
     \"SmsMfaConfigType\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"SmsAuthenticationMessage\":{\"shape\":\"SmsVerificationMessageType\"},\
-        \"SmsConfiguration\":{\"shape\":\"SmsConfigurationType\"}\
-      }\
+        \"SmsAuthenticationMessage\":{\
+          \"shape\":\"SmsVerificationMessageType\",\
+          \"documentation\":\"<p>The SMS authentication message that will be sent to users with the code they need to sign in. The message must contain the â{####}â placeholder, which will be replaced with the code. If the message is not included, and default message will be used.</p>\"\
+        },\
+        \"SmsConfiguration\":{\
+          \"shape\":\"SmsConfigurationType\",\
+          \"documentation\":\"<p>The SMS configuration.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The SMS text message multi-factor authentication (MFA) configuration type.</p>\"\
     },\
     \"SmsVerificationMessageType\":{\
       \"type\":\"string\",\
@@ -6052,6 +6784,7 @@
       \"members\":{\
         \"message\":{\"shape\":\"MessageType\"}\
       },\
+      \"documentation\":\"<p>This exception is thrown when the software token TOTP multi-factor authentication (MFA) is not enabled for the user pool.</p>\",\
       \"exception\":true\
     },\
     \"SoftwareTokenMFAUserCodeType\":{\
@@ -6063,15 +6796,26 @@
     \"SoftwareTokenMfaConfigType\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"Enabled\":{\"shape\":\"BooleanType\"}\
-      }\
+        \"Enabled\":{\
+          \"shape\":\"BooleanType\",\
+          \"documentation\":\"<p>Specifies whether software token MFA is enabled.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The type used for enabling software token MFA at the user pool level.</p>\"\
     },\
     \"SoftwareTokenMfaSettingsType\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"Enabled\":{\"shape\":\"BooleanType\"},\
-        \"PreferredMfa\":{\"shape\":\"BooleanType\"}\
-      }\
+        \"Enabled\":{\
+          \"shape\":\"BooleanType\",\
+          \"documentation\":\"<p>Specifies whether software token MFA is enabled.</p>\"\
+        },\
+        \"PreferredMfa\":{\
+          \"shape\":\"BooleanType\",\
+          \"documentation\":\"<p>Specifies whether software token MFA is the preferred MFA method.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The type used for enabling software token MFA at the user level.</p>\"\
     },\
     \"StartUserImportJobRequest\":{\
       \"type\":\"structure\",\
@@ -6154,6 +6898,43 @@
     \"SupportedIdentityProvidersListType\":{\
       \"type\":\"list\",\
       \"member\":{\"shape\":\"ProviderNameType\"}\
+    },\
+    \"TagKeysType\":{\
+      \"type\":\"string\",\
+      \"max\":128,\
+      \"min\":1\
+    },\
+    \"TagResourceRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"ResourceArn\",\
+        \"Tags\"\
+      ],\
+      \"members\":{\
+        \"ResourceArn\":{\
+          \"shape\":\"ArnType\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) of the user pool to assign the tags to.</p>\"\
+        },\
+        \"Tags\":{\
+          \"shape\":\"UserPoolTagsType\",\
+          \"documentation\":\"<p>The tags to assign to the user pool.</p>\"\
+        }\
+      }\
+    },\
+    \"TagResourceResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+      }\
+    },\
+    \"TagValueType\":{\
+      \"type\":\"string\",\
+      \"max\":256,\
+      \"min\":0\
+    },\
+    \"TemporaryPasswordValidityDaysType\":{\
+      \"type\":\"integer\",\
+      \"max\":365,\
+      \"min\":0\
     },\
     \"TokenModelType\":{\
       \"type\":\"string\",\
@@ -6246,6 +7027,28 @@
       \"documentation\":\"<p>The request failed because the user is in an unsupported state.</p>\",\
       \"exception\":true\
     },\
+    \"UntagResourceRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"ResourceArn\",\
+        \"TagKeys\"\
+      ],\
+      \"members\":{\
+        \"ResourceArn\":{\
+          \"shape\":\"ArnType\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) of the user pool that the tags are assigned to.</p>\"\
+        },\
+        \"TagKeys\":{\
+          \"shape\":\"UserPoolTagsListType\",\
+          \"documentation\":\"<p>The keys of the tags to remove from the user pool.</p>\"\
+        }\
+      }\
+    },\
+    \"UntagResourceResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+      }\
+    },\
     \"UpdateAuthEventFeedbackRequest\":{\
       \"type\":\"structure\",\
       \"required\":[\
@@ -6256,11 +7059,26 @@
         \"FeedbackValue\"\
       ],\
       \"members\":{\
-        \"UserPoolId\":{\"shape\":\"UserPoolIdType\"},\
-        \"Username\":{\"shape\":\"UsernameType\"},\
-        \"EventId\":{\"shape\":\"EventIdType\"},\
-        \"FeedbackToken\":{\"shape\":\"TokenModelType\"},\
-        \"FeedbackValue\":{\"shape\":\"FeedbackValueType\"}\
+        \"UserPoolId\":{\
+          \"shape\":\"UserPoolIdType\",\
+          \"documentation\":\"<p>The user pool ID.</p>\"\
+        },\
+        \"Username\":{\
+          \"shape\":\"UsernameType\",\
+          \"documentation\":\"<p>The user pool username.</p>\"\
+        },\
+        \"EventId\":{\
+          \"shape\":\"EventIdType\",\
+          \"documentation\":\"<p>The event ID.</p>\"\
+        },\
+        \"FeedbackToken\":{\
+          \"shape\":\"TokenModelType\",\
+          \"documentation\":\"<p>The feedback token.</p>\"\
+        },\
+        \"FeedbackValue\":{\
+          \"shape\":\"FeedbackValueType\",\
+          \"documentation\":\"<p>The authentication event feedback value.</p>\"\
+        }\
       }\
     },\
     \"UpdateAuthEventFeedbackResponse\":{\
@@ -6423,6 +7241,10 @@
         \"AccessToken\":{\
           \"shape\":\"TokenModelType\",\
           \"documentation\":\"<p>The access token for the request to update user attributes.</p>\"\
+        },\
+        \"ClientMetadata\":{\
+          \"shape\":\"ClientMetadataType\",\
+          \"documentation\":\"<p>A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers. </p> <p>You create custom workflows by assigning AWS Lambda functions to user pool triggers. When you use the UpdateUserAttributes API action, Amazon Cognito invokes the function that is assigned to the <i>custom message</i> trigger. When Amazon Cognito invokes this function, it passes a JSON payload, which the function receives as input. This payload contains a <code>clientMetadata</code> attribute, which provides the data that you assigned to the ClientMetadata parameter in your UpdateUserAttributes request. In your function code in AWS Lambda, you can process the <code>clientMetadata</code> value to enhance your workflow for your specific needs.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-identity-pools-working-with-aws-lambda-triggers.html\\\">Customizing User Pool Workflows with Lambda Triggers</a> in the <i>Amazon Cognito Developer Guide</i>.</p> <note> <p>Take the following limitations into consideration when you use the ClientMetadata parameter:</p> <ul> <li> <p>Amazon Cognito does not store the ClientMetadata value. This data is available only to AWS Lambda triggers that are assigned to a user pool to support custom workflows. If your user pool configuration does not include triggers, the ClientMetadata parameter serves no purpose.</p> </li> <li> <p>Amazon Cognito does not validate the ClientMetadata value.</p> </li> <li> <p>Amazon Cognito does not encrypt the the ClientMetadata value, so don't use it to provide sensitive information.</p> </li> </ul> </note>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the request to update user attributes.</p>\"\
@@ -6470,7 +7292,7 @@
         },\
         \"ExplicitAuthFlows\":{\
           \"shape\":\"ExplicitAuthFlowsListType\",\
-          \"documentation\":\"<p>Explicit authentication flows.</p>\"\
+          \"documentation\":\"<p>The authentication flows that are supported by the user pool clients. Flow names without the <code>ALLOW_</code> prefix are deprecated in favor of new names with the <code>ALLOW_</code> prefix. Note that values with <code>ALLOW_</code> prefix cannot be used along with values without <code>ALLOW_</code> prefix.</p> <p>Valid values include:</p> <ul> <li> <p> <code>ALLOW_ADMIN_USER_PASSWORD_AUTH</code>: Enable admin based user password authentication flow <code>ADMIN_USER_PASSWORD_AUTH</code>. This setting replaces the <code>ADMIN_NO_SRP_AUTH</code> setting. With this authentication flow, Cognito receives the password in the request instead of using the SRP (Secure Remote Password protocol) protocol to verify passwords.</p> </li> <li> <p> <code>ALLOW_CUSTOM_AUTH</code>: Enable Lambda trigger based authentication.</p> </li> <li> <p> <code>ALLOW_USER_PASSWORD_AUTH</code>: Enable user password-based authentication. In this flow, Cognito receives the password in the request instead of using the SRP protocol to verify passwords.</p> </li> <li> <p> <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP based authentication.</p> </li> <li> <p> <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to refresh tokens.</p> </li> </ul>\"\
         },\
         \"SupportedIdentityProviders\":{\
           \"shape\":\"SupportedIdentityProvidersListType\",\
@@ -6478,7 +7300,7 @@
         },\
         \"CallbackURLs\":{\
           \"shape\":\"CallbackURLsListType\",\
-          \"documentation\":\"<p>A list of allowed callback URLs for the identity providers.</p>\"\
+          \"documentation\":\"<p>A list of allowed redirect (callback) URLs for the identity providers.</p> <p>A redirect URI must:</p> <ul> <li> <p>Be an absolute URI.</p> </li> <li> <p>Be registered with the authorization server.</p> </li> <li> <p>Not include a fragment component.</p> </li> </ul> <p>See <a href=\\\"https://tools.ietf.org/html/rfc6749#section-3.1.2\\\">OAuth 2.0 - Redirection Endpoint</a>.</p> <p>Amazon Cognito requires HTTPS over HTTP except for http://localhost for testing purposes only.</p> <p>App callback URLs such as myapp://example are also supported.</p>\"\
         },\
         \"LogoutURLs\":{\
           \"shape\":\"LogoutURLsListType\",\
@@ -6486,23 +7308,27 @@
         },\
         \"DefaultRedirectURI\":{\
           \"shape\":\"RedirectUrlType\",\
-          \"documentation\":\"<p>The default redirect URI. Must be in the <code>CallbackURLs</code> list.</p>\"\
+          \"documentation\":\"<p>The default redirect URI. Must be in the <code>CallbackURLs</code> list.</p> <p>A redirect URI must:</p> <ul> <li> <p>Be an absolute URI.</p> </li> <li> <p>Be registered with the authorization server.</p> </li> <li> <p>Not include a fragment component.</p> </li> </ul> <p>See <a href=\\\"https://tools.ietf.org/html/rfc6749#section-3.1.2\\\">OAuth 2.0 - Redirection Endpoint</a>.</p> <p>Amazon Cognito requires HTTPS over HTTP except for http://localhost for testing purposes only.</p> <p>App callback URLs such as myapp://example are also supported.</p>\"\
         },\
         \"AllowedOAuthFlows\":{\
           \"shape\":\"OAuthFlowsType\",\
-          \"documentation\":\"<p>Set to <code>code</code> to initiate a code grant flow, which provides an authorization code as the response. This code can be exchanged for access tokens with the token endpoint.</p> <p>Set to <code>token</code> to specify that the client should get the access token (and, optionally, ID token, based on scopes) directly.</p>\"\
+          \"documentation\":\"<p>The allowed OAuth flows.</p> <p>Set to <code>code</code> to initiate a code grant flow, which provides an authorization code as the response. This code can be exchanged for access tokens with the token endpoint.</p> <p>Set to <code>implicit</code> to specify that the client should get the access token (and, optionally, ID token, based on scopes) directly.</p> <p>Set to <code>client_credentials</code> to specify that the client should get the access token (and, optionally, ID token, based on scopes) from the token endpoint using a combination of client and client_secret.</p>\"\
         },\
         \"AllowedOAuthScopes\":{\
           \"shape\":\"ScopeListType\",\
-          \"documentation\":\"<p>A list of allowed <code>OAuth</code> scopes. Currently supported values are <code>\\\"phone\\\"</code>, <code>\\\"email\\\"</code>, <code>\\\"openid\\\"</code>, and <code>\\\"Cognito\\\"</code>.</p>\"\
+          \"documentation\":\"<p>The allowed OAuth scopes. Possible values provided by OAuth are: <code>phone</code>, <code>email</code>, <code>openid</code>, and <code>profile</code>. Possible values provided by AWS are: <code>aws.cognito.signin.user.admin</code>. Custom scopes created in Resource Servers are also supported.</p>\"\
         },\
         \"AllowedOAuthFlowsUserPoolClient\":{\
           \"shape\":\"BooleanType\",\
-          \"documentation\":\"<p>Set to TRUE if the client is allowed to follow the OAuth protocol when interacting with Cognito user pools.</p>\"\
+          \"documentation\":\"<p>Set to true if the client is allowed to follow the OAuth protocol when interacting with Cognito user pools.</p>\"\
         },\
         \"AnalyticsConfiguration\":{\
           \"shape\":\"AnalyticsConfigurationType\",\
           \"documentation\":\"<p>The Amazon Pinpoint analytics configuration for collecting metrics for this user pool.</p>\"\
+        },\
+        \"PreventUserExistenceErrors\":{\
+          \"shape\":\"PreventUserExistenceErrorTypes\",\
+          \"documentation\":\"<p>Use this setting to choose which errors and responses are returned by Cognito APIs during authentication, account confirmation, and password recovery when the user does not exist in the user pool. When set to <code>ENABLED</code> and the user does not exist, authentication returns an error indicating either the username or password was incorrect, and account confirmation and password recovery return a response indicating a code was sent to a simulated destination. When set to <code>LEGACY</code>, those APIs will return a <code>UserNotFoundException</code> exception if the user does not exist in the user pool.</p> <p>Valid values include:</p> <ul> <li> <p> <code>ENABLED</code> - This prevents user existence-related errors.</p> </li> <li> <p> <code>LEGACY</code> - This represents the old behavior of Cognito where user existence related errors are not prevented.</p> </li> </ul> <p>This setting affects the behavior of following APIs:</p> <ul> <li> <p> <a>AdminInitiateAuth</a> </p> </li> <li> <p> <a>AdminRespondToAuthChallenge</a> </p> </li> <li> <p> <a>InitiateAuth</a> </p> </li> <li> <p> <a>RespondToAuthChallenge</a> </p> </li> <li> <p> <a>ForgotPassword</a> </p> </li> <li> <p> <a>ConfirmForgotPassword</a> </p> </li> <li> <p> <a>ConfirmSignUp</a> </p> </li> <li> <p> <a>ResendConfirmationCode</a> </p> </li> </ul> <note> <p>After February 15th 2020, the value of <code>PreventUserExistenceErrors</code> will default to <code>ENABLED</code> for newly created user pool clients if no value is provided.</p> </note>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the request to update the user pool client.</p>\"\
@@ -6516,6 +7342,39 @@
         }\
       },\
       \"documentation\":\"<p>Represents the response from the server to the request to update the user pool client.</p>\"\
+    },\
+    \"UpdateUserPoolDomainRequest\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"Domain\",\
+        \"UserPoolId\",\
+        \"CustomDomainConfig\"\
+      ],\
+      \"members\":{\
+        \"Domain\":{\
+          \"shape\":\"DomainType\",\
+          \"documentation\":\"<p>The domain name for the custom domain that hosts the sign-up and sign-in pages for your application. For example: <code>auth.example.com</code>. </p> <p>This string can include only lowercase letters, numbers, and hyphens. Do not use a hyphen for the first or last character. Use periods to separate subdomain names.</p>\"\
+        },\
+        \"UserPoolId\":{\
+          \"shape\":\"UserPoolIdType\",\
+          \"documentation\":\"<p>The ID of the user pool that is associated with the custom domain that you are updating the certificate for.</p>\"\
+        },\
+        \"CustomDomainConfig\":{\
+          \"shape\":\"CustomDomainConfigType\",\
+          \"documentation\":\"<p>The configuration for a custom domain that hosts the sign-up and sign-in pages for your application. Use this object to specify an SSL certificate that is managed by ACM.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The UpdateUserPoolDomain request input.</p>\"\
+    },\
+    \"UpdateUserPoolDomainResponse\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"CloudFrontDomain\":{\
+          \"shape\":\"DomainType\",\
+          \"documentation\":\"<p>The Amazon CloudFront endpoint that Amazon Cognito set up when you added the custom domain to your user pool.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The UpdateUserPoolDomain response output.</p>\"\
     },\
     \"UpdateUserPoolRequest\":{\
       \"type\":\"structure\",\
@@ -6575,13 +7434,20 @@
         },\
         \"UserPoolTags\":{\
           \"shape\":\"UserPoolTagsType\",\
-          \"documentation\":\"<p>The cost allocation tags for the user pool. For more information, see <a href=\\\"http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-cost-allocation-tagging.html\\\">Adding Cost Allocation Tags to Your User Pool</a> </p>\"\
+          \"documentation\":\"<p>The tag keys and values to assign to the user pool. A tag is a label that you can use to categorize and manage user pools in different ways, such as by purpose, owner, environment, or other criteria.</p>\"\
         },\
         \"AdminCreateUserConfig\":{\
           \"shape\":\"AdminCreateUserConfigType\",\
           \"documentation\":\"<p>The configuration for <code>AdminCreateUser</code> requests.</p>\"\
         },\
-        \"UserPoolAddOns\":{\"shape\":\"UserPoolAddOnsType\"}\
+        \"UserPoolAddOns\":{\
+          \"shape\":\"UserPoolAddOnsType\",\
+          \"documentation\":\"<p>Used to enable advanced security risk detection. Set the key <code>AdvancedSecurityMode</code> to the value \\\"AUDIT\\\".</p>\"\
+        },\
+        \"AccountRecoverySetting\":{\
+          \"shape\":\"AccountRecoverySettingType\",\
+          \"documentation\":\"<p>Use this setting to define which verified available method a user can use to recover their password when they call <code>ForgotPassword</code>. It allows you to define a preferred method when a user has more than one method available. With this setting, SMS does not qualify for a valid password recovery mechanism if the user also has SMS MFA enabled. In the absence of this setting, Cognito uses the legacy behavior to determine the recovery method where SMS is preferred over email.</p>\"\
+        }\
       },\
       \"documentation\":\"<p>Represents the request to update the user pool.</p>\"\
     },\
@@ -6594,8 +7460,12 @@
     \"UserContextDataType\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"EncodedData\":{\"shape\":\"StringType\"}\
-      }\
+        \"EncodedData\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.</p>\"\
     },\
     \"UserFilterType\":{\
       \"type\":\"string\",\
@@ -6743,14 +7613,19 @@
       \"members\":{\
         \"message\":{\"shape\":\"MessageType\"}\
       },\
+      \"documentation\":\"<p>This exception is thrown when user pool add-ons are not enabled.</p>\",\
       \"exception\":true\
     },\
     \"UserPoolAddOnsType\":{\
       \"type\":\"structure\",\
       \"required\":[\"AdvancedSecurityMode\"],\
       \"members\":{\
-        \"AdvancedSecurityMode\":{\"shape\":\"AdvancedSecurityModeType\"}\
-      }\
+        \"AdvancedSecurityMode\":{\
+          \"shape\":\"AdvancedSecurityModeType\",\
+          \"documentation\":\"<p>The advanced security mode.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The user pool add-ons type.</p>\"\
     },\
     \"UserPoolClientDescription\":{\
       \"type\":\"structure\",\
@@ -6815,7 +7690,7 @@
         },\
         \"ExplicitAuthFlows\":{\
           \"shape\":\"ExplicitAuthFlowsListType\",\
-          \"documentation\":\"<p>The explicit authentication flows.</p>\"\
+          \"documentation\":\"<p>The authentication flows that are supported by the user pool clients. Flow names without the <code>ALLOW_</code> prefix are deprecated in favor of new names with the <code>ALLOW_</code> prefix. Note that values with <code>ALLOW_</code> prefix cannot be used along with values without <code>ALLOW_</code> prefix.</p> <p>Valid values include:</p> <ul> <li> <p> <code>ALLOW_ADMIN_USER_PASSWORD_AUTH</code>: Enable admin based user password authentication flow <code>ADMIN_USER_PASSWORD_AUTH</code>. This setting replaces the <code>ADMIN_NO_SRP_AUTH</code> setting. With this authentication flow, Cognito receives the password in the request instead of using the SRP (Secure Remote Password protocol) protocol to verify passwords.</p> </li> <li> <p> <code>ALLOW_CUSTOM_AUTH</code>: Enable Lambda trigger based authentication.</p> </li> <li> <p> <code>ALLOW_USER_PASSWORD_AUTH</code>: Enable user password-based authentication. In this flow, Cognito receives the password in the request instead of using the SRP protocol to verify passwords.</p> </li> <li> <p> <code>ALLOW_USER_SRP_AUTH</code>: Enable SRP based authentication.</p> </li> <li> <p> <code>ALLOW_REFRESH_TOKEN_AUTH</code>: Enable authflow to refresh tokens.</p> </li> </ul>\"\
         },\
         \"SupportedIdentityProviders\":{\
           \"shape\":\"SupportedIdentityProvidersListType\",\
@@ -6823,7 +7698,7 @@
         },\
         \"CallbackURLs\":{\
           \"shape\":\"CallbackURLsListType\",\
-          \"documentation\":\"<p>A list of allowed callback URLs for the identity providers.</p>\"\
+          \"documentation\":\"<p>A list of allowed redirect (callback) URLs for the identity providers.</p> <p>A redirect URI must:</p> <ul> <li> <p>Be an absolute URI.</p> </li> <li> <p>Be registered with the authorization server.</p> </li> <li> <p>Not include a fragment component.</p> </li> </ul> <p>See <a href=\\\"https://tools.ietf.org/html/rfc6749#section-3.1.2\\\">OAuth 2.0 - Redirection Endpoint</a>.</p> <p>Amazon Cognito requires HTTPS over HTTP except for http://localhost for testing purposes only.</p> <p>App callback URLs such as myapp://example are also supported.</p>\"\
         },\
         \"LogoutURLs\":{\
           \"shape\":\"LogoutURLsListType\",\
@@ -6831,24 +7706,28 @@
         },\
         \"DefaultRedirectURI\":{\
           \"shape\":\"RedirectUrlType\",\
-          \"documentation\":\"<p>The default redirect URI. Must be in the <code>CallbackURLs</code> list.</p>\"\
+          \"documentation\":\"<p>The default redirect URI. Must be in the <code>CallbackURLs</code> list.</p> <p>A redirect URI must:</p> <ul> <li> <p>Be an absolute URI.</p> </li> <li> <p>Be registered with the authorization server.</p> </li> <li> <p>Not include a fragment component.</p> </li> </ul> <p>See <a href=\\\"https://tools.ietf.org/html/rfc6749#section-3.1.2\\\">OAuth 2.0 - Redirection Endpoint</a>.</p> <p>Amazon Cognito requires HTTPS over HTTP except for http://localhost for testing purposes only.</p> <p>App callback URLs such as myapp://example are also supported.</p>\"\
         },\
         \"AllowedOAuthFlows\":{\
           \"shape\":\"OAuthFlowsType\",\
-          \"documentation\":\"<p>Set to <code>code</code> to initiate a code grant flow, which provides an authorization code as the response. This code can be exchanged for access tokens with the token endpoint.</p> <p>Set to <code>token</code> to specify that the client should get the access token (and, optionally, ID token, based on scopes) directly.</p>\"\
+          \"documentation\":\"<p>The allowed OAuth flows.</p> <p>Set to <code>code</code> to initiate a code grant flow, which provides an authorization code as the response. This code can be exchanged for access tokens with the token endpoint.</p> <p>Set to <code>implicit</code> to specify that the client should get the access token (and, optionally, ID token, based on scopes) directly.</p> <p>Set to <code>client_credentials</code> to specify that the client should get the access token (and, optionally, ID token, based on scopes) from the token endpoint using a combination of client and client_secret.</p>\"\
         },\
         \"AllowedOAuthScopes\":{\
           \"shape\":\"ScopeListType\",\
-          \"documentation\":\"<p>A list of allowed <code>OAuth</code> scopes. Currently supported values are <code>\\\"phone\\\"</code>, <code>\\\"email\\\"</code>, <code>\\\"openid\\\"</code>, and <code>\\\"Cognito\\\"</code>.</p>\"\
+          \"documentation\":\"<p>The allowed OAuth scopes. Possible values provided by OAuth are: <code>phone</code>, <code>email</code>, <code>openid</code>, and <code>profile</code>. Possible values provided by AWS are: <code>aws.cognito.signin.user.admin</code>. Custom scopes created in Resource Servers are also supported.</p>\"\
         },\
         \"AllowedOAuthFlowsUserPoolClient\":{\
           \"shape\":\"BooleanType\",\
-          \"documentation\":\"<p>Set to TRUE if the client is allowed to follow the OAuth protocol when interacting with Cognito user pools.</p>\",\
+          \"documentation\":\"<p>Set to true if the client is allowed to follow the OAuth protocol when interacting with Cognito user pools.</p>\",\
           \"box\":true\
         },\
         \"AnalyticsConfiguration\":{\
           \"shape\":\"AnalyticsConfigurationType\",\
           \"documentation\":\"<p>The Amazon Pinpoint analytics configuration for the user pool client.</p>\"\
+        },\
+        \"PreventUserExistenceErrors\":{\
+          \"shape\":\"PreventUserExistenceErrorTypes\",\
+          \"documentation\":\"<p>Use this setting to choose which errors and responses are returned by Cognito APIs during authentication, account confirmation, and password recovery when the user does not exist in the user pool. When set to <code>ENABLED</code> and the user does not exist, authentication returns an error indicating either the username or password was incorrect, and account confirmation and password recovery return a response indicating a code was sent to a simulated destination. When set to <code>LEGACY</code>, those APIs will return a <code>UserNotFoundException</code> exception if the user does not exist in the user pool.</p> <p>Valid values include:</p> <ul> <li> <p> <code>ENABLED</code> - This prevents user existence-related errors.</p> </li> <li> <p> <code>LEGACY</code> - This represents the old behavior of Cognito where user existence related errors are not prevented.</p> </li> </ul> <p>This setting affects the behavior of following APIs:</p> <ul> <li> <p> <a>AdminInitiateAuth</a> </p> </li> <li> <p> <a>AdminRespondToAuthChallenge</a> </p> </li> <li> <p> <a>InitiateAuth</a> </p> </li> <li> <p> <a>RespondToAuthChallenge</a> </p> </li> <li> <p> <a>ForgotPassword</a> </p> </li> <li> <p> <a>ConfirmForgotPassword</a> </p> </li> <li> <p> <a>ConfirmSignUp</a> </p> </li> <li> <p> <a>ResendConfirmationCode</a> </p> </li> </ul> <note> <p>After February 15th 2020, the value of <code>PreventUserExistenceErrors</code> will default to <code>ENABLED</code> for newly created user pool clients if no value is provided.</p> </note>\"\
         }\
       },\
       \"documentation\":\"<p>Contains information about a user pool client.</p>\"\
@@ -6925,10 +7804,14 @@
       \"documentation\":\"<p>This exception is thrown when a user pool tag cannot be set or updated.</p>\",\
       \"exception\":true\
     },\
+    \"UserPoolTagsListType\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"TagKeysType\"}\
+    },\
     \"UserPoolTagsType\":{\
       \"type\":\"map\",\
-      \"key\":{\"shape\":\"StringType\"},\
-      \"value\":{\"shape\":\"StringType\"}\
+      \"key\":{\"shape\":\"TagKeysType\"},\
+      \"value\":{\"shape\":\"TagValueType\"}\
     },\
     \"UserPoolType\":{\
       \"type\":\"structure\",\
@@ -6947,7 +7830,7 @@
         },\
         \"LambdaConfig\":{\
           \"shape\":\"LambdaConfigType\",\
-          \"documentation\":\"<p>The AWS Lambda triggers associated with tue user pool.</p>\"\
+          \"documentation\":\"<p>The AWS Lambda triggers associated with the user pool.</p>\"\
         },\
         \"Status\":{\
           \"shape\":\"StatusType\",\
@@ -7019,7 +7902,7 @@
         },\
         \"UserPoolTags\":{\
           \"shape\":\"UserPoolTagsType\",\
-          \"documentation\":\"<p>The cost allocation tags for the user pool. For more information, see <a href=\\\"http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-cost-allocation-tagging.html\\\">Adding Cost Allocation Tags to Your User Pool</a> </p>\"\
+          \"documentation\":\"<p>The tags that are assigned to the user pool. A tag is a label that you can apply to user pools to categorize and manage them in different ways, such as by purpose, owner, environment, or other criteria.</p>\"\
         },\
         \"SmsConfigurationFailure\":{\
           \"shape\":\"StringType\",\
@@ -7029,11 +7912,34 @@
           \"shape\":\"StringType\",\
           \"documentation\":\"<p>The reason why the email configuration cannot send the messages to your users.</p>\"\
         },\
+        \"Domain\":{\
+          \"shape\":\"DomainType\",\
+          \"documentation\":\"<p>Holds the domain prefix if the user pool has a domain associated with it.</p>\"\
+        },\
+        \"CustomDomain\":{\
+          \"shape\":\"DomainType\",\
+          \"documentation\":\"<p>A custom domain name that you provide to Amazon Cognito. This parameter applies only if you use a custom domain to host the sign-up and sign-in pages for your application. For example: <code>auth.example.com</code>.</p> <p>For more information about adding a custom domain to your user pool, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pools-add-custom-domain.html\\\">Using Your Own Domain for the Hosted UI</a>.</p>\"\
+        },\
         \"AdminCreateUserConfig\":{\
           \"shape\":\"AdminCreateUserConfigType\",\
           \"documentation\":\"<p>The configuration for <code>AdminCreateUser</code> requests.</p>\"\
         },\
-        \"UserPoolAddOns\":{\"shape\":\"UserPoolAddOnsType\"}\
+        \"UserPoolAddOns\":{\
+          \"shape\":\"UserPoolAddOnsType\",\
+          \"documentation\":\"<p>The user pool add-ons.</p>\"\
+        },\
+        \"UsernameConfiguration\":{\
+          \"shape\":\"UsernameConfigurationType\",\
+          \"documentation\":\"<p>You can choose to enable case sensitivity on the username input for the selected sign-in option. For example, when this is set to <code>False</code>, users will be able to sign in using either \\\"username\\\" or \\\"Username\\\". This configuration is immutable once it has been set. For more information, see .</p>\"\
+        },\
+        \"Arn\":{\
+          \"shape\":\"ArnType\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) for the user pool.</p>\"\
+        },\
+        \"AccountRecoverySetting\":{\
+          \"shape\":\"AccountRecoverySettingType\",\
+          \"documentation\":\"<p>Use this setting to define which verified available method a user can use to recover their password when they call <code>ForgotPassword</code>. It allows you to define a preferred method when a user has more than one method available. With this setting, SMS does not qualify for a valid password recovery mechanism if the user also has SMS MFA enabled. In the absence of this setting, Cognito uses the legacy behavior to determine the recovery method where SMS is preferred over email.</p>\"\
+        }\
       },\
       \"documentation\":\"<p>A container for information about the user pool.</p>\"\
     },\
@@ -7074,7 +7980,7 @@
         },\
         \"UserStatus\":{\
           \"shape\":\"UserStatusType\",\
-          \"documentation\":\"<p>The user status. Can be one of the following:</p> <ul> <li> <p>UNCONFIRMED - User has been created but not confirmed.</p> </li> <li> <p>CONFIRMED - User has been confirmed.</p> </li> <li> <p>ARCHIVED - User is no longer active.</p> </li> <li> <p>COMPROMISED - User is disabled due to a potential security threat.</p> </li> <li> <p>UNKNOWN - User status is not known.</p> </li> </ul>\"\
+          \"documentation\":\"<p>The user status. Can be one of the following:</p> <ul> <li> <p>UNCONFIRMED - User has been created but not confirmed.</p> </li> <li> <p>CONFIRMED - User has been confirmed.</p> </li> <li> <p>ARCHIVED - User is no longer active.</p> </li> <li> <p>COMPROMISED - User is disabled due to a potential security threat.</p> </li> <li> <p>UNKNOWN - User status is not known.</p> </li> <li> <p>RESET_REQUIRED - User is confirmed, but the user must request a code and reset his or her password before he or she can sign in.</p> </li> <li> <p>FORCE_CHANGE_PASSWORD - The user is confirmed and the user can sign in using a temporary password, but on first sign-in, the user must change his or her password to a new value before doing anything else. </p> </li> </ul>\"\
         },\
         \"MFAOptions\":{\
           \"shape\":\"MFAOptionListType\",\
@@ -7093,6 +7999,17 @@
     \"UsernameAttributesListType\":{\
       \"type\":\"list\",\
       \"member\":{\"shape\":\"UsernameAttributeType\"}\
+    },\
+    \"UsernameConfigurationType\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"CaseSensitive\"],\
+      \"members\":{\
+        \"CaseSensitive\":{\
+          \"shape\":\"WrappedBooleanType\",\
+          \"documentation\":\"<p>Specifies whether username case sensitivity will be applied for all users in the user pool through Cognito APIs.</p> <p>Valid values include:</p> <ul> <li> <p> <b> <code>True</code> </b>: Enables case sensitivity for all username input. When this option is set to <code>True</code>, users must sign in using the exact capitalization of their given username. For example, âUserNameâ. This is the default value.</p> </li> <li> <p> <b> <code>False</code> </b>: Enables case insensitivity for all username input. For example, when this option is set to <code>False</code>, users will be able to sign in using either \\\"username\\\" or \\\"Username\\\". This option also enables both <code>preferred_username</code> and <code>email</code> alias to be case insensitive, in addition to the <code>username</code> attribute.</p> </li> </ul>\"\
+        }\
+      },\
+      \"documentation\":\"<p>The username configuration type. </p>\"\
     },\
     \"UsernameExistsException\":{\
       \"type\":\"structure\",\
@@ -7161,17 +8078,35 @@
       \"type\":\"structure\",\
       \"required\":[\"UserCode\"],\
       \"members\":{\
-        \"AccessToken\":{\"shape\":\"TokenModelType\"},\
-        \"Session\":{\"shape\":\"SessionType\"},\
-        \"UserCode\":{\"shape\":\"SoftwareTokenMFAUserCodeType\"},\
-        \"FriendlyDeviceName\":{\"shape\":\"StringType\"}\
+        \"AccessToken\":{\
+          \"shape\":\"TokenModelType\",\
+          \"documentation\":\"<p>The access token.</p>\"\
+        },\
+        \"Session\":{\
+          \"shape\":\"SessionType\",\
+          \"documentation\":\"<p>The session which should be passed both ways in challenge-response calls to the service.</p>\"\
+        },\
+        \"UserCode\":{\
+          \"shape\":\"SoftwareTokenMFAUserCodeType\",\
+          \"documentation\":\"<p>The one time password computed using the secret code returned by </p>\"\
+        },\
+        \"FriendlyDeviceName\":{\
+          \"shape\":\"StringType\",\
+          \"documentation\":\"<p>The friendly device name.</p>\"\
+        }\
       }\
     },\
     \"VerifySoftwareTokenResponse\":{\
       \"type\":\"structure\",\
       \"members\":{\
-        \"Status\":{\"shape\":\"VerifySoftwareTokenResponseType\"},\
-        \"Session\":{\"shape\":\"SessionType\"}\
+        \"Status\":{\
+          \"shape\":\"VerifySoftwareTokenResponseType\",\
+          \"documentation\":\"<p>The status of the verify software token.</p>\"\
+        },\
+        \"Session\":{\
+          \"shape\":\"SessionType\",\
+          \"documentation\":\"<p>The session which should be passed both ways in challenge-response calls to the service.</p>\"\
+        }\
       }\
     },\
     \"VerifySoftwareTokenResponseType\":{\
@@ -7209,7 +8144,8 @@
       \"members\":{\
       },\
       \"documentation\":\"<p>A container representing the response from the server from the request to verify user attributes.</p>\"\
-    }\
+    },\
+    \"WrappedBooleanType\":{\"type\":\"boolean\"}\
   },\
   \"documentation\":\"<p>Using the Amazon Cognito User Pools API, you can create a user pool to manage directories and users. You can authenticate a user to obtain tokens related to user identity and access policies.</p> <p>This API reference provides information about user pools in Amazon Cognito User Pools.</p> <p>For more information, see the Amazon Cognito Documentation.</p>\"\
 }\

@@ -219,11 +219,27 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     
     [AWSIoTManager readPk12:pkcs12Data passPhrase:passPhrase certRef:&certRef privateKeyRef:&privateKey publicKeyRef:&publicKey];
     
+    if (!certRef || !privateKey || !publicKey) {
+        if (certRef) {
+            CFRelease(certRef);
+        }
+        if (privateKey) {
+            CFRelease(privateKey);
+        }
+        if (publicKey) {
+            CFRelease(publicKey);
+        }
+        AWSDDLogError(@"Unable to extract PKCS12 data. Ensure the passPhrase is correct.");
+        return NO;
+    }
+
     NSString *publicTag = [AWSIoTKeychain.publicKeyTag stringByAppendingString:certificateId];
     NSString *privateTag = [AWSIoTKeychain.privateKeyTag stringByAppendingString:certificateId];
 
     if (![AWSIoTKeychain addPrivateKeyRef:privateKey tag:privateTag])
     {
+        if (publicKey)
+            CFRelease(publicKey);
         AWSDDLogError(@"Unable to add private key");
         return NO;
     }
@@ -255,8 +271,8 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     SecTrustRef trust = NULL;
     
     // cleanup stuff in a block so we don't need to do this over and over again.
-    static BOOL (^cleanup)();
-    static BOOL (^errorCleanup)();
+    static BOOL (^cleanup)(void);
+    static BOOL (^errorCleanup)(void);
     static dispatch_once_t once;
     dispatch_once(&once, ^{
         cleanup = ^BOOL {

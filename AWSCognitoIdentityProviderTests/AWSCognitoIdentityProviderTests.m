@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -37,9 +37,10 @@ static NSString * CIP_POOL_KEY = @"createUserPool";
 static NSString * PP_APP_ID = @"pinpointAppId";
 
 static AWSCognitoIdentityUserPool *pool;
+static AWSCognitoIdentityUserPool *migrationPool;
 static BOOL passwordAuthError = NO;
 
-static int testsInFlight = 7; //for knowing when to tear down the user pool
+static int testsInFlight = 8; //for knowing when to tear down the user pool
 
 #pragma mark interactive auth delegate
 -(id<AWSCognitoIdentityPasswordAuthentication>) startPasswordAuthentication {
@@ -167,12 +168,24 @@ static int testsInFlight = 7; //for knowing when to tear down the user pool
                                                                                                                                poolId:poolId
                                                                                                    shouldProvideCognitoValidationData:YES
                                                                                                                         pinpointAppId:PP_APP_ID];
+        AWSCognitoIdentityUserPoolConfiguration *migrationConfiguration = [[AWSCognitoIdentityUserPoolConfiguration alloc] initWithClientId:clientId
+                                                                                                                         clientSecret:clientSecret
+                                                                                                                               poolId:poolId
+                                                                                                   shouldProvideCognitoValidationData:YES
+                                                                                                                        pinpointAppId:PP_APP_ID
+                                                                                                                     migrationEnabled:YES];
         
         [AWSCognitoIdentityUserPool registerCognitoIdentityUserPoolWithConfiguration:serviceConfiguration userPoolConfiguration:iDPConfiguration forKey:@"UserPool"];
+        
+        [AWSCognitoIdentityUserPool registerCognitoIdentityUserPoolWithConfiguration:serviceConfiguration userPoolConfiguration:migrationConfiguration forKey:@"MigrationUserPool"];
         
         pool = [AWSCognitoIdentityUserPool CognitoIdentityUserPoolForKey:@"UserPool"];
         
         pool.delegate = self;
+        
+        migrationPool = [AWSCognitoIdentityUserPool CognitoIdentityUserPoolForKey:@"MigrationUserPool"];
+        
+        migrationPool.delegate = self;
     });
     passwordAuthError = NO;
 }
@@ -208,6 +221,29 @@ static int testsInFlight = 7; //for knowing when to tear down the user pool
         }
     }];
 
+}
+
+- (void)testUserMigrationFlowInvoked {
+    XCTestExpectation *expectation =
+    [self expectationWithDescription:@"testMigrationSignInUser"];
+    AWSCognitoIdentityUser* user = [migrationPool getUser:@"unknown"];
+    XCTAssertEqual(YES, migrationPool.userPoolConfiguration.migrationEnabled);
+    [[user getSession:@"unknown" password:@"willfail" validationData:nil] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityUserSession *> * _Nonnull task) {
+        if(task.error || task.isCancelled){
+            XCTAssertEqualObjects(@"USER_PASSWORD_AUTH flow not enabled for this client",task.error.userInfo[@"message"]);
+            [expectation fulfill];
+        }else {
+            XCTFail(@"Pool doesn't have migration enabled. %@", task.error);
+        }
+        return task;
+    }];
+    
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *error) {
+        if (error) {
+            NSLog(@"Timeout Error: %@", error);
+        }
+    }];
+    
 }
 
 - (void)testSignOutUser {
@@ -266,7 +302,7 @@ static int testsInFlight = 7; //for knowing when to tear down the user pool
 
 - (void)testUpdateAttribute {
     XCTestExpectation *expectation =
-    [self expectationWithDescription:@"testRegisterUser"];
+    [self expectationWithDescription:@"testUpdateAttribute"];
     AWSCognitoIdentityUserAttributeType * name = [AWSCognitoIdentityUserAttributeType new];
     name.name = @"name";
     name.value = @"Joe Test";
@@ -283,6 +319,22 @@ static int testsInFlight = 7; //for knowing when to tear down the user pool
             NSLog(@"Timeout Error: %@", error);
         }
     }];
+    expectation =
+    [self expectationWithDescription:@"testSessionNowHasUpdatedAttribute"];
+    [[user getSession] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityUserSession *> * _Nonnull task) {
+        if(task.isCancelled || task.error){
+            XCTFail(@"Request returned an error %@",task.error);
+        }
+        XCTAssertTrue([name.value isEqualToString:task.result.idToken.tokenClaims[@"name"]]);
+        [expectation fulfill];
+        return task;
+    }];
+    [self waitForExpectationsWithTimeout:5.0 handler:^(NSError *error) {
+        if (error) {
+            NSLog(@"Timeout Error: %@", error);
+        }
+    }];
+    
 }
 
 

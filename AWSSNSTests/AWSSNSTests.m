@@ -93,7 +93,8 @@
     
     [[[sns getEndpointAttributes:input] continueWithBlock:^id(AWSTask *task) {
         XCTAssertNotNil(task.error, @"expected InvalidParameters Error but got nil");
-        XCTAssertEqual(task.error.code, 4);
+        XCTAssertEqualObjects(task.error.domain, AWSSNSErrorDomain);
+        XCTAssertEqual(task.error.code, AWSSNSErrorInvalidParameter);
         XCTAssertTrue([@"InvalidParameter" isEqualToString:task.error.userInfo[@"Code"]]);
         XCTAssertTrue([@"Invalid parameter: EndpointArn Reason: An ARN must have at least 6 elements, not 1" isEqualToString:task.error.userInfo[@"Message"]]);
         return nil;

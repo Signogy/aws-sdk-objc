@@ -1,18 +1,8 @@
 //
-// Copyright 2014-2017 Amazon.com,
+// Copyright 2014-2018 Amazon.com,
 // Inc. or its affiliates. All Rights Reserved.
 //
-// Licensed under the Amazon Software License (the "License").
-// You may not use this file except in compliance with the
-// License. A copy of the License is located at
-//
-//     http://aws.amazon.com/asl/
-//
-// or in the "license" file accompanying this file. This file is
-// distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-// CONDITIONS OF ANY KIND, express or implied. See the License
-// for the specific language governing permissions and
-// limitations under the License.
+// SPDX-License-Identifier: Apache-2.0
 //
 
 #import "AWSCognitoIdentityProvider.h"
@@ -27,6 +17,7 @@
 @interface AWSCognitoIdentityUserPool()
 
 @property (nonatomic, strong) AWSCognitoIdentityProvider *client;
+@property (nonatomic, assign) BOOL isCustomAuth;
 
 @end
 
@@ -168,17 +159,17 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
     
     if(expirationDate){
         NSDate *expiration = [NSDate aws_dateFromString:expirationDate format:AWSDateISO8601DateFormat1];
-        NSString * refreshTokenKey = [self keyChainKey:keyChainNamespace key:AWSCognitoIdentityUserRefreshToken];
-        NSString * refreshToken = self.pool.keychain[refreshTokenKey];
+        NSString * refreshToken = [self refreshTokenFromKeyChain:keyChainNamespace];
 
         // Token exists, the user is confirmed
         self.confirmedStatus = AWSCognitoIdentityUserStatusConfirmed;
 
-        //if the session expires > 5 minutes return it.
-        if(expiration && [expiration compare:[NSDate dateWithTimeIntervalSinceNow:5 * 60]] == NSOrderedDescending){
+        NSString * accessTokenKey = [self keyChainKey:keyChainNamespace key:AWSCognitoIdentityUserAccessToken];
+        NSString * accessToken = self.pool.keychain[accessTokenKey];
+        //if the session expires > 5 minutes return it and there is at least an accessToken.
+        if(expiration && [expiration compare:[NSDate dateWithTimeIntervalSinceNow:5 * 60]] == NSOrderedDescending && accessToken){
             NSString * idTokenKey = [self keyChainKey:keyChainNamespace key:AWSCognitoIdentityUserIdToken];
-            NSString * accessTokenKey = [self keyChainKey:keyChainNamespace key:AWSCognitoIdentityUserAccessToken];
-            AWSCognitoIdentityUserSession * session = [[AWSCognitoIdentityUserSession alloc] initWithIdToken:self.pool.keychain[idTokenKey] accessToken:self.pool.keychain[accessTokenKey] refreshToken:refreshToken expirationTime:expiration];
+            AWSCognitoIdentityUserSession * session = [[AWSCognitoIdentityUserSession alloc] initWithIdToken:self.pool.keychain[idTokenKey] accessToken:accessToken refreshToken:refreshToken expirationTime:expiration];
         
             session.expirationTime = expiration;
             return [AWSTask taskWithResult:session];
@@ -213,7 +204,15 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
                 
                 AWSCognitoIdentityProviderInitiateAuthResponse *response = task.result;
                 AWSCognitoIdentityProviderAuthenticationResultType *authResult = response.authenticationResult;
-                AWSCognitoIdentityUserSession * session = [[AWSCognitoIdentityUserSession alloc] initWithIdToken: authResult.idToken accessToken:authResult.accessToken refreshToken:authResult.refreshToken expiresIn:authResult.expiresIn];
+                /** Check to see if refreshToken is received in the response.
+                 If not, load it from the keychain.
+                 */
+                NSString * refreshToken = authResult.refreshToken;
+                if (refreshToken == nil){
+                    NSString * keyChainNamespace = [self keyChainNamespaceClientId];
+                    refreshToken = [self refreshTokenFromKeyChain:keyChainNamespace];
+                }
+                AWSCognitoIdentityUserSession * session = [[AWSCognitoIdentityUserSession alloc] initWithIdToken: authResult.idToken accessToken:authResult.accessToken refreshToken:refreshToken expiresIn:authResult.expiresIn];
                 [self updateUsernameAndPersistTokens:session];
                 return [AWSTask taskWithResult:session];
             }];
@@ -223,15 +222,41 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
 }
 
 
+- (AWSTask<AWSCognitoIdentityUserSession*>*) getSession:(NSString *) username
+                                               password:(NSString *) password
+                                         validationData:(NSArray<AWSCognitoIdentityUserAttributeType*>*) validationData
+                               isInitialCustomChallenge:(BOOL) isInitialCustomChallenge {
+    AWSTask *authenticationTask = nil;
+    if (self.pool.userPoolConfiguration.migrationEnabled) {
+        authenticationTask = [self migrationAuth:username
+                                        password:password
+                                  validationData:validationData
+                                   lastChallenge:nil];
+    } else {
+        authenticationTask = [self srpAuthInternal:username
+                                          password:password
+                                    validationData:validationData
+                                     lastChallenge:nil
+                          isInitialCustomChallenge:isInitialCustomChallenge];
+    }
+    
+    return [self setConfirmationStatus: [authenticationTask continueWithSuccessBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> * _Nonnull task) {
+        
+        return [self getSessionInternal:task];
+        
+    }]];
+}
 
 /**
  * Explicitly get a session without using any cached tokens/refresh tokens.
  */
-- (AWSTask<AWSCognitoIdentityUserSession*>*) getSession:(NSString *)username password:(NSString *)password validationData:(NSArray<AWSCognitoIdentityUserAttributeType*>*)validationData {
-    
-    return [self setConfirmationStatus: [[self srpAuthInternal:username password:password validationData:validationData lastChallenge:nil isInitialCustomChallenge:NO] continueWithSuccessBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> * _Nonnull task) {
-        return [self getSessionInternal:task];
-    }]];
+- (AWSTask<AWSCognitoIdentityUserSession*>*) getSession:(NSString *) username
+                                               password:(NSString *) password
+                                         validationData:(NSArray<AWSCognitoIdentityUserAttributeType*>*) validationData {
+    return [self getSession:username
+                   password:password
+             validationData:validationData
+   isInitialCustomChallenge:NO];
 }
 
 - (AWSTask<AWSCognitoIdentityUserSession*>*) setConfirmationStatus: (AWSTask<AWSCognitoIdentityUserSession*>*) task {
@@ -246,7 +271,6 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
             self.confirmedStatus = AWSCognitoIdentityUserStatusConfirmed;
         }
     }
-    
     return task;
 }
 
@@ -292,21 +316,29 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
             [self updateUsernameAndPersistTokens:session];
             return [AWSTask taskWithResult:session];
         }else { //this is a custom challenge
-            if ([self.pool.delegate respondsToSelector:@selector(startCustomAuthentication)]) {
-                id<AWSCognitoIdentityCustomAuthentication> authenticationDelegate = [self.pool.delegate startCustomAuthentication];
+            id<AWSCognitoIdentityCustomAuthentication> authenticationDelegate = nil;
+            // The below condition is added to support AWSMobileClient.
+            if (self.pool.isCustomAuth && [self.pool.delegate respondsToSelector:@selector(startCustomAuthentication_v2)]) {
+                authenticationDelegate = [self.pool.delegate performSelector:@selector(startCustomAuthentication_v2)];
+            } else if ([self.pool.delegate respondsToSelector:@selector(startCustomAuthentication)]) {
+                authenticationDelegate = [self.pool.delegate startCustomAuthentication];
+            }
+            if (authenticationDelegate != nil) {
                 AWSCognitoIdentityCustomAuthenticationInput *input = [AWSCognitoIdentityCustomAuthenticationInput new];
                 input.challengeParameters = authenticateResult.challengeParameters;
                 AWSTaskCompletionSource<AWSCognitoIdentityCustomChallengeDetails *> *challengeDetails = [AWSTaskCompletionSource<AWSCognitoIdentityCustomChallengeDetails *> new];
                 [authenticationDelegate getCustomChallengeDetails:input customAuthCompletionSource:challengeDetails];
                 return [challengeDetails.task continueWithSuccessBlock:^id _Nullable(AWSTask<AWSCognitoIdentityCustomChallengeDetails *> * _Nonnull task) {
+                    
                     return [[self performRespondCustomAuthChallenge:task.result session:authenticateResult.session] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> * _Nonnull task) {
+                        
                         [authenticationDelegate didCompleteCustomAuthenticationStepWithError:task.error];
                         return [self getSessionInternal: task];
                     }];
                     
                 }];
                 
-            }else {
+            } else {
                 return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoIdentityProviderErrorDomain code:AWSCognitoIdentityProviderClientErrorInvalidAuthenticationDelegate userInfo:@{NSLocalizedDescriptionKey: @"startCustomAuthentication not implemented by authentication delegate"}]];
             }
         }
@@ -327,12 +359,9 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
         id<AWSCognitoIdentityNewPasswordRequired> newPasswordRequiredDelegate = [self.pool.delegate startNewPasswordRequired];
         NSString * userAttributes = lastChallenge.challengeParameters[@"userAttributes"];
         NSString * requiredAttributes = lastChallenge.challengeParameters[@"requiredAttributes"];
-        NSMutableDictionary<NSString*, NSString *> *userAttributesDict = [NSMutableDictionary new];
+        NSDictionary<NSString*, NSString *> *userAttributesDict = [NSMutableDictionary new];
         NSMutableSet<NSString*> *requiredAttributesSet = [NSMutableSet new];
         
-        if(userAttributes){
-            [userAttributesDict addEntriesFromDictionary:[NSJSONSerialization JSONObjectWithData:[userAttributes dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil]];
-        }
         if(requiredAttributes) {
             NSArray * requiredAttributesArray = [NSJSONSerialization JSONObjectWithData:[requiredAttributes dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:nil];
             for (NSString * requiredAttribute in requiredAttributesArray) {
@@ -532,51 +561,143 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
  * Kick off interactive auth to prompt developer to challenge end user for credentials
  */
 - (AWSTask<AWSCognitoIdentityUserSession*>*) interactiveAuth {
-    if(self.pool.delegate != nil){
-        if([self.pool.delegate respondsToSelector:@selector(startCustomAuthentication)]) {
+    if (self.pool.delegate != nil) {
+        // The below condition is added to support AWSMobileClient. 
+        if (self.pool.isCustomAuth &&
+            [self.pool.delegate respondsToSelector:@selector(startCustomAuthentication_v2)]) {
+            id<AWSCognitoIdentityCustomAuthentication> authenticationDelegate = [self.pool.delegate performSelector:@selector(startCustomAuthentication_v2)];
+            return [self customAuthInternal:authenticationDelegate];
+        }
+
+        if ([self.pool.delegate respondsToSelector:@selector(startCustomAuthentication)] && !self.pool.userPoolConfiguration.migrationEnabled) {
             id<AWSCognitoIdentityCustomAuthentication> authenticationDelegate = [self.pool.delegate startCustomAuthentication];
             return [self customAuthInternal:authenticationDelegate];
-        }else if([self.pool.delegate respondsToSelector:@selector(startPasswordAuthentication)]){
+        }
+
+        if ([self.pool.delegate respondsToSelector:@selector(startPasswordAuthentication)]) {
             id<AWSCognitoIdentityPasswordAuthentication> authenticationDelegate = [self.pool.delegate startPasswordAuthentication];
             return [self passwordAuthInternal:authenticationDelegate lastChallenge:nil isInitialCustomChallenge:NO];
-        }else {
-            return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoIdentityProviderErrorDomain code:AWSCognitoIdentityProviderClientErrorInvalidAuthenticationDelegate userInfo:@{NSLocalizedDescriptionKey: @"Either startCustomAuthentication or startPasswordAuthentication must be implemented on your AWSCognitoIdentityInteractiveAuthenticationDelegate"}]];
         }
+
+        return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoIdentityProviderErrorDomain
+                                                          code:AWSCognitoIdentityProviderClientErrorInvalidAuthenticationDelegate userInfo:@{NSLocalizedDescriptionKey: @"Either startCustomAuthentication or startPasswordAuthentication must be implemented on your AWSCognitoIdentityInteractiveAuthenticationDelegate"}]];
+        
     } else {
-        return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoIdentityProviderErrorDomain code:AWSCognitoIdentityProviderClientErrorInvalidAuthenticationDelegate userInfo:@{NSLocalizedDescriptionKey: @"Authentication delegate not set"}]];
+        return [AWSTask taskWithError:[NSError errorWithDomain:AWSCognitoIdentityProviderErrorDomain
+                                                          code:AWSCognitoIdentityProviderClientErrorInvalidAuthenticationDelegate userInfo:@{NSLocalizedDescriptionKey: @"Authentication delegate not set"}]];
     };
 }
 
 /**
  * Prompt developer to obtain username/password and do SRP auth
  */
-- (AWSTask<AWSCognitoIdentityUserSession*>*) passwordAuthInternal: (id<AWSCognitoIdentityPasswordAuthentication>) authenticationDelegate lastChallenge:(AWSCognitoIdentityProviderRespondToAuthChallengeResponse*) lastChallenge isInitialCustomChallenge:(BOOL) isInitialCustomChallenge {
+- (AWSTask<AWSCognitoIdentityUserSession*>*) passwordAuthInternal: (id<AWSCognitoIdentityPasswordAuthentication>) authenticationDelegate
+                                                    lastChallenge:(AWSCognitoIdentityProviderRespondToAuthChallengeResponse*) lastChallenge
+                                         isInitialCustomChallenge:(BOOL) isInitialCustomChallenge {
+    
     AWSCognitoIdentityPasswordAuthenticationInput * input = [[AWSCognitoIdentityPasswordAuthenticationInput alloc] initWithLastKnownUsername:[self.pool currentUsername]];
     AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails*>*passwordAuthenticationDetails = [AWSTaskCompletionSource<AWSCognitoIdentityPasswordAuthenticationDetails*> new];
-    [authenticationDelegate getPasswordAuthenticationDetails:input passwordAuthenticationCompletionSource:passwordAuthenticationDetails];
+    [authenticationDelegate getPasswordAuthenticationDetails:input
+                      passwordAuthenticationCompletionSource:passwordAuthenticationDetails];
+    
     return [passwordAuthenticationDetails.task continueWithSuccessBlock:^id _Nullable(AWSTask<AWSCognitoIdentityPasswordAuthenticationDetails *> * _Nonnull task) {
         AWSCognitoIdentityPasswordAuthenticationDetails * authDetails = task.result;
-        return [[self srpAuthInternal:authDetails.username password:authDetails.password validationData:authDetails.validationData lastChallenge:lastChallenge isInitialCustomChallenge:isInitialCustomChallenge] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> * _Nonnull task) {
-            [authenticationDelegate didCompletePasswordAuthenticationStepWithError:task.error];
-            if(task.isCancelled){
-                return task;
-            }
-            if(task.error){
-                //retry password auth on error
-                return [self passwordAuthInternal:authenticationDelegate lastChallenge:lastChallenge isInitialCustomChallenge:isInitialCustomChallenge];
-            }else {
-                return [self getSessionInternal:task];
-            }
-        }];
+        
+        if (self.pool.userPoolConfiguration.migrationEnabled) {
+            return [[self migrationAuth:authDetails.username
+                               password:authDetails.password
+                         validationData:authDetails.validationData
+                          lastChallenge:lastChallenge]
+                    continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> * _Nonnull task) {
+                        
+                        [authenticationDelegate didCompletePasswordAuthenticationStepWithError:task.error];
+                        if (task.isCancelled) {
+                            return task;
+                        }
+                        if (task.error) {
+                            //retry password auth on error
+                            return [self passwordAuthInternal:authenticationDelegate
+                                                lastChallenge:lastChallenge
+                                     isInitialCustomChallenge:NO];
+                        } else {
+                            //morph this initiate auth response into a respond to auth challenge response so it works as input to getSessionInternal
+                            AWSCognitoIdentityProviderRespondToAuthChallengeResponse * response = [AWSCognitoIdentityProviderRespondToAuthChallengeResponse new];
+                            [response aws_copyPropertiesFromObject:task.result];
+                            return [self getSessionInternal:[AWSTask taskWithResult:response]];
+                        }
+                    }];
+        } else {
+            return [[self srpAuthInternal:authDetails.username
+                                 password:authDetails.password
+                           validationData:authDetails.validationData
+                            lastChallenge:lastChallenge
+                 isInitialCustomChallenge:isInitialCustomChallenge]
+                    continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> * _Nonnull task) {
+                        
+                        [authenticationDelegate didCompletePasswordAuthenticationStepWithError:task.error];
+                        if (task.isCancelled) {
+                            return task;
+                        }
+                        if (task.error) {
+                            //retry password auth on error
+                            return [self passwordAuthInternal:authenticationDelegate
+                                                lastChallenge:lastChallenge
+                                     isInitialCustomChallenge:isInitialCustomChallenge];
+                        } else {
+                            return [self getSessionInternal:task];
+                        }
+                    }];
+        }
     }];
 }
 
+/**
+ * Pass username and password in plaintext so developer can validate login and migrate as appropriate.
+ **/
+- (AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse*>*) migrationAuth:(NSString *)username password:(NSString *)password validationData:(NSArray<AWSCognitoIdentityUserAttributeType*>*)validationData lastChallenge:(AWSCognitoIdentityProviderRespondToAuthChallengeResponse*) lastChallenge {
+    self.username = username;
+    NSMutableDictionary *challengeResponses = [NSMutableDictionary new];
+    [self addSecretHashDeviceKeyAndUsername:challengeResponses];
+    [challengeResponses setObject:password forKey:@"PASSWORD"];
+
+    if(lastChallenge){
+        AWSCognitoIdentityProviderRespondToAuthChallengeRequest *input = [AWSCognitoIdentityProviderRespondToAuthChallengeRequest new];
+        input.challengeName = lastChallenge.challengeName;
+        input.challengeResponses = challengeResponses;
+        input.session = lastChallenge.session;
+        input.analyticsMetadata = [self.pool analyticsMetadata];
+        input.userContextData = [self.pool userContextData:self.username deviceId: [self asfDeviceId]];
+        
+        return [[self.pool.client respondToAuthChallenge:input] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> * _Nonnull task) {
+            return [self forgetDeviceOnRespondDeviceNotFoundError:task retryContinuation:^AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> *{
+                return [self migrationAuth:username password:password validationData:validationData lastChallenge:lastChallenge];
+            }];
+        }];
+    }
+    else{
+        AWSCognitoIdentityProviderInitiateAuthRequest *input = [AWSCognitoIdentityProviderInitiateAuthRequest new];
+        input.clientId = self.pool.userPoolConfiguration.clientId;
+        input.clientMetadata = [self.pool getValidationData:validationData];
+        input.analyticsMetadata = [self.pool analyticsMetadata];
+        input.userContextData = [self.pool userContextData:self.username deviceId: [self asfDeviceId]];
+        input.authFlow = AWSCognitoIdentityProviderAuthFlowTypeUserPasswordAuth;
+        input.authParameters = challengeResponses;
+        
+        return [[self.pool.client initiateAuth:input] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderInitiateAuthResponse *> * _Nonnull task) {
+            //if there was an error, it may be due to the device being forgotten, reset the device and retry if that is the case
+            return [self forgetDeviceOnInitiateDeviceNotFoundError:task retryContinuation:^AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> *{
+                return [self migrationAuth:username password:password validationData:validationData lastChallenge:lastChallenge];
+            }];
+        }];
+    }
+}
 
 
 /**
  * Prompt developer to obtain custom challenge details
  */
 - (AWSTask<AWSCognitoIdentityUserSession*>*) customAuthInternal: (id<AWSCognitoIdentityCustomAuthentication>) authenticationDelegate {
+
     AWSTaskCompletionSource<AWSCognitoIdentityCustomChallengeDetails *> *customAuthenticationDetails = [AWSTaskCompletionSource<AWSCognitoIdentityCustomChallengeDetails *> new];
     AWSCognitoIdentityCustomAuthenticationInput *input = [[AWSCognitoIdentityCustomAuthenticationInput alloc] initWithChallengeParameters: [NSDictionary new]];
     [authenticationDelegate getCustomChallengeDetails:input customAuthCompletionSource:customAuthenticationDetails];
@@ -658,7 +779,10 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
     if([challengeResponses objectForKey:@"USERNAME"] != nil){
         self.username = [challengeResponses objectForKey:@"USERNAME"];
     }
-    return [[self performRespondToAuthChallenge:challengeResponses challengeName:AWSCognitoIdentityProviderChallengeNameTypeCustomChallenge session:session] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> * _Nonnull task) {
+    return [[self performRespondToAuthChallenge: challengeResponses
+                                  challengeName: AWSCognitoIdentityProviderChallengeNameTypeCustomChallenge
+                                 clientMetaData: challengeDetails.clientMetaData
+                                        session: session] continueWithBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse *> * _Nonnull task) {
         //if there was an error, it may be due to the device being forgotten, reset the device and retry if that is the case
         return [self forgetDeviceOnRespondDeviceNotFoundError:task retryContinuation:^AWSTask *{
             return [self performRespondCustomAuthChallenge:challengeDetails session:session];
@@ -678,7 +802,10 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
         [challengeResponses setObject:userAttribute.value forKey: [NSString stringWithFormat:@"%@%@", AWSCognitoIdentityUserUserAttributePrefix, userAttribute.name]];
     }
     
-    return [self performRespondToAuthChallenge:challengeResponses challengeName:AWSCognitoIdentityProviderChallengeNameTypeNewPasswordRequired session:session];
+    return [self performRespondToAuthChallenge:challengeResponses
+                                 challengeName:AWSCognitoIdentityProviderChallengeNameTypeNewPasswordRequired
+                                clientMetaData: details.clientMetaData
+                                       session:session];
 }
 
 
@@ -695,20 +822,35 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
 /**
  * Run respond to auth challenges
  */
-- (AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse*>*) performRespondToAuthChallenge: (NSMutableDictionary *) challengeResponses challengeName: (AWSCognitoIdentityProviderChallengeNameType) challengeName session: (NSString *) session{
+- (AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse*>*) performRespondToAuthChallenge: (NSMutableDictionary *) challengeResponses
+                                                                                        challengeName: (AWSCognitoIdentityProviderChallengeNameType) challengeName
+                                                                                              session: (NSString *) session {
+    return [self performRespondToAuthChallenge:challengeResponses
+                                 challengeName:challengeName
+                                clientMetaData: nil
+                                       session:session];
+}
+
+/**
+ * Run respond to auth challenges
+ */
+- (AWSTask<AWSCognitoIdentityProviderRespondToAuthChallengeResponse*>*) performRespondToAuthChallenge:(NSMutableDictionary *) challengeResponses
+                                                                                        challengeName:(AWSCognitoIdentityProviderChallengeNameType) challengeName
+                                                                                       clientMetaData:(NSDictionary *) clientMetaData
+                                                                                              session:(NSString *) session {
     AWSCognitoIdentityProviderRespondToAuthChallengeRequest *request = [AWSCognitoIdentityProviderRespondToAuthChallengeRequest new];
     request.session = session;
     request.clientId = self.pool.userPoolConfiguration.clientId;
     request.challengeName = challengeName;
+    request.clientMetadata = clientMetaData;
     request.analyticsMetadata = [self.pool analyticsMetadata];
     request.userContextData = [self.pool userContextData:self.username deviceId: [self asfDeviceId]];
-    
+
     [self addSecretHashDeviceKeyAndUsername:challengeResponses];
     request.challengeResponses = challengeResponses;
-    
+
     return [self.pool.client respondToAuthChallenge:request];
 }
-
 /**
  * Perform SRP based authentication (initiateAuth(SRP_AUTH) and respondToAuthChallenge) given a username and password. If lastChallenge is supplied it starts with respondToAuthChallenge instead of initiate.
  */
@@ -766,8 +908,14 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
                 //morph this initiate auth response into a respond to auth challenge response so it works as input to getSessionInternal
                 AWSCognitoIdentityProviderRespondToAuthChallengeResponse * response = [AWSCognitoIdentityProviderRespondToAuthChallengeResponse new];
                 [response aws_copyPropertiesFromObject:task.result];
-                //continue with second step of SRP auth
-                return [self srpAuthInternalStep2:[AWSTask taskWithResult:response] srpHelper:srpHelper];
+                
+                if (response.challengeName == AWSCognitoIdentityProviderChallengeNameTypeCustomChallenge) {
+                    return [AWSTask taskWithResult:response];
+                } else {
+                    //continue with second step of SRP auth
+                    return [self srpAuthInternalStep2:[AWSTask taskWithResult:response] srpHelper:srpHelper];
+                }
+                
             }];
         }];
     }
@@ -981,6 +1129,8 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
         return [[self.pool.client updateUserAttributes:request] continueWithSuccessBlock:^id _Nullable(AWSTask<AWSCognitoIdentityProviderUpdateUserAttributesResponse *> * _Nonnull task) {
             AWSCognitoIdentityUserUpdateAttributesResponse * response = [AWSCognitoIdentityUserUpdateAttributesResponse new];
             [response aws_copyPropertiesFromObject:task.result];
+            // drop id and access token to force a refresh
+            [self clearSession];
             return [AWSTask taskWithResult:response];
         }];
     }];
@@ -1151,14 +1301,30 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
     [self.pool clearLastKnownUser];
 }
 
+-(void) clearSession{
+    if(self.username){
+        NSString * keyChainNamespace = [self keyChainNamespaceClientId];
+        NSString * idTokenKey = [self keyChainKey:keyChainNamespace key:AWSCognitoIdentityUserIdToken];
+        NSString * accessTokenKey = [self keyChainKey:keyChainNamespace key:AWSCognitoIdentityUserAccessToken];
+        [self.pool.keychain removeItemForKey:idTokenKey];
+        [self.pool.keychain removeItemForKey:accessTokenKey];
+    }
+}
+
+- (NSString *) refreshTokenFromKeyChain: (NSString *) keyChainNamespace {
+    NSString * refreshTokenKey = [self keyChainKey:keyChainNamespace key:AWSCognitoIdentityUserRefreshToken];
+    NSString * refreshToken = self.pool.keychain[refreshTokenKey];
+    return refreshToken;
+}
+
 -(BOOL) isSignedIn {
     if(self.username == nil){
         return NO;
     }
     
     NSString * keyChainNamespace = [self keyChainNamespaceClientId];
-    NSString * refreshTokenKey = [self keyChainKey:keyChainNamespace key:AWSCognitoIdentityUserRefreshToken];
-    return self.pool.keychain[refreshTokenKey] != nil;
+    NSString * refreshToken = [self refreshTokenFromKeyChain:keyChainNamespace];
+    return refreshToken != nil;
 }
 
 - (AWSTask<AWSCognitoIdentityUserGlobalSignOutResponse *> *) globalSignOut {
@@ -1392,6 +1558,34 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
     }
     return self;
 }
+
+-(NSDictionary<NSString *, NSString*> *) claims {
+    return [self tokenClaims];
+}
+
+-(NSDictionary<NSString *, id> *) tokenClaims {
+    NSDictionary * result = nil;
+    NSArray *pieces = [self.tokenString componentsSeparatedByString:@"."];
+    if(pieces.count > 2){
+        NSString * claims = pieces[1];
+        //JWT is not padded with =, pad it if necessary
+        NSUInteger paddedLength = claims.length + (4 - (claims.length % 4)) % 4;;
+        claims = [claims stringByPaddingToLength:paddedLength withString:@"=" startingAtIndex:0];
+        
+        NSData * claimsData = [[NSData alloc] initWithBase64EncodedString:claims options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        NSError *error = nil;
+        if(claimsData != nil){
+            result = [NSJSONSerialization JSONObjectWithData:claimsData options:kNilOptions error:&error];
+            if(error) {
+                AWSDDLogError(@"Unable to deserialize token claims: %@", error);
+            }
+        } else {
+            AWSDDLogError(@"Token is not valid base64");
+        }
+    }
+    return result;
+}
+
 @end
 
 @implementation AWSCognitoIdentityUserSettings

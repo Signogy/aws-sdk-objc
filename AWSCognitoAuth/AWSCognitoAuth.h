@@ -18,6 +18,9 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+//! SDK version for AWSCognitoAuth
+FOUNDATION_EXPORT NSString *const AWSCognitoAuthSDKVersion;
+
 @class AWSCognitoAuthUserSession;
 @class AWSCognitoAuthUserSessionToken;
 @class AWSCognitoAuthConfiguration;
@@ -34,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
  <li>AWSCognitoAuthClientErrorSecurityReason - The security of this request could not be guaranteed.</li>
  <li>AWSCognitoAuthClientInvalidAuthenticationDelegate - The AWSCognitoAuthDelegate delegate is not setup or returned an invalid value.</li>
  <li>AWSCognitoAuthClientNoIdTokenIssued - If no id token was issued. For future use. </li>
+ <li>AWSCognitoAuthClientErrorExpiredRefreshToken - If the refresh token is expired. </li>
  </ul>
  */
 FOUNDATION_EXPORT NSString *const AWSCognitoAuthErrorDomain;
@@ -45,7 +49,8 @@ typedef NS_ENUM(NSInteger, AWSCognitoAuthClientErrorType) {
     AWSCognitoAuthClientErrorBadRequest = -3000,
     AWSCognitoAuthClientErrorSecurityFailed = -4000,
     AWSCognitoAuthClientInvalidAuthenticationDelegate = -5000,
-    AWSCognitoAuthClientNoIdTokenIssued = -6000
+    AWSCognitoAuthClientNoIdTokenIssued = -6000,
+    AWSCognitoAuthClientErrorExpiredRefreshToken = -7000
 };
 
 typedef void (^AWSCognitoAuthGetSessionBlock)(AWSCognitoAuthUserSession * _Nullable session, NSError * _Nullable error);
@@ -60,7 +65,7 @@ typedef void (^AWSCognitoAuthSignOutBlock)(NSError * _Nullable error);
 /**
  Set this delegate to obtain the current view controller to interact with the end user
  */
-@property (nonatomic, strong) id <AWSCognitoAuthDelegate> delegate;
+@property (nonatomic, weak) id <AWSCognitoAuthDelegate> delegate;
 
 /**
  The auth configuration
@@ -112,7 +117,6 @@ typedef void (^AWSCognitoAuthSignOutBlock)(NSError * _Nullable error);
  */
 - (void)getSession: (nullable AWSCognitoAuthGetSessionBlock) completion;
 
-
 /**
  Sign out locally and from the server.
  @param vc viewController to display the UI on during sign out.
@@ -125,6 +129,16 @@ typedef void (^AWSCognitoAuthSignOutBlock)(NSError * _Nullable error);
  @param completion completion block to invoke on completion
  */
 - (void) signOut: (nullable AWSCognitoAuthSignOutBlock) completion;
+
+/**
+ Remove user session from keychain
+ */
+-(void) signOutLocally;
+
+/**
+ Remove user session from keychain and clear last known username.
+ */
+-(void) signOutLocallyAndClearLastKnownUser;
 
 
 /**
@@ -190,7 +204,12 @@ typedef void (^AWSCognitoAuthSignOutBlock)(NSError * _Nullable error);
 /**
  Whether user context information to drive the advanced security feature is emitted.
  */
-@property (nonatomic, assign, readonly,getter=isASFEnabled) BOOL asfEnabled;
+@property (nonatomic, assign, readonly, getter=isASFEnabled) BOOL asfEnabled;
+
+/**
+ If using iOS 11 or above, the SDK will use `SFAuthenticationSession` for signIn and signOut operations if this flag is set. Below iOS 11, the SDK will use SFSafariViewController regardless of this setting.
+ */
+@property (nonatomic, assign, readonly) BOOL isSFAuthenticationSessionEnabled;
 
 
 /**
@@ -229,7 +248,32 @@ typedef void (^AWSCognitoAuthSignOutBlock)(NSError * _Nullable error);
                           webDomain:(NSString *) webDomain
                    identityProvider:(nullable NSString *) identityProvider
                       idpIdentifier:(nullable NSString *) idpIdentifier
-                         userPoolIdForEnablingASF:(nullable NSString *) userPoolIdForEnablingASF;
+           userPoolIdForEnablingASF:(nullable NSString *) userPoolIdForEnablingASF;
+
+/**
+ Configuration object for CognitoAuth
+ @param appClientId The app client id
+ @param appClientSecret The optional app client secret
+ @param scopes Set of scopes to obtain
+ @param signInRedirectUri uri to redirect on sign in.  Must be configured as a uri scheme in your info.plist
+ @param signOutRedirectUri uri to redirect on sign out.  Must be configured as a uri scheme in your info.plist
+ @param webDomain The FQDN of your Cognito endpoint, something like https://mydomain.region.auth.amazoncognito.com
+ @param identityProvider Optional provider name to authenticate with directly
+ @param idpIdentifier Optional provider identifier to authenticate with directly
+ @param userPoolIdForEnablingASF Optional user pool id for enabling advanced security features
+ @param enableSFAuthSession If true, will use `SFAuthenticationSession` if available. Below iOS 11, the SDK will use SFSafariViewController regardless of this setting
+ */
+- (instancetype)initWithAppClientId:(NSString *) appClientId
+                    appClientSecret:(nullable NSString *) appClientSecret
+                             scopes:(NSSet<NSString *> *) scopes
+                  signInRedirectUri:(NSString *) signInRedirectUri
+                 signOutRedirectUri:(NSString *) signOutRedirectUri
+                          webDomain:(NSString *) webDomain
+                   identityProvider:(nullable NSString *) identityProvider
+                      idpIdentifier:(nullable NSString *) idpIdentifier
+           userPoolIdForEnablingASF:(nullable NSString *) userPoolIdForEnablingASF
+     enableSFAuthSessionIfAvailable:(BOOL) enableSFAuthSession;
+
 @end
 
 
@@ -291,6 +335,12 @@ typedef void (^AWSCognitoAuthSignOutBlock)(NSError * _Nullable error);
  Get view controller to display user authentication on top of.
  */
 - (UIViewController *) getViewController;
+
+@optional
+/**
+ If refresh token is expired, let the user decide if the signInVC should be presented or an error should be returned.
+ */
+- (BOOL) shouldLaunchSignInVCIfRefreshTokenIsExpired;
 @end
 
 

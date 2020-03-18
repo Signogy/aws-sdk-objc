@@ -15,7 +15,6 @@
 
 #import "AWSKinesisRecorder.h"
 #import "AWSKinesis.h"
-#import "AWSSynchronizedMutableDictionary.h"
 
 // Constants
 NSString *const AWSFirehoseRecorderErrorDomain = @"com.amazonaws.AWSFirehoseRecorderErrorDomain";
@@ -156,9 +155,9 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
 - (AWSTask *)submitRecordsForStream:(NSString *)streamName
                             records:(NSArray *)temporaryRecords
-                      partitionKeys:(NSArray *)partitionKeys
-                   putPartitionKeys:(NSMutableArray *)putPartitionKeys
-                 retryPartitionKeys:(NSMutableArray *)retryPartitionKeys
+                             rowIds:(NSArray *)rowIds
+                          putRowIds:(NSMutableArray *)putRowIds
+                        retryRowIds:(NSMutableArray *)retryRowIds
                                stop:(BOOL *)stop {
     NSMutableArray *records = [NSMutableArray new];
 
@@ -181,8 +180,8 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
             if (task.error && [stopErrorDomains containsObject:task.error.domain]) {
                 *stop = YES;
-                return [AWSTask taskWithError:task.error];
             }
+            return [AWSTask taskWithError:task.error];
         }
         if (task.result) {
             AWSFirehosePutRecordBatchOutput *putRecordBatchOutput = task.result;
@@ -196,9 +195,9 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
                 // we should retry. So, don't delete the row from the database.
                 if (![resultEntry.errorCode isEqualToString:@"Throttling"]
                     && ![resultEntry.errorCode isEqualToString:@"ServiceUnavailable"]) {
-                    [putPartitionKeys addObject:partitionKeys[i]];
+                    [putRowIds addObject:rowIds[i]];
                 } else {
-                    [retryPartitionKeys addObject:partitionKeys[i]];
+                    [retryRowIds addObject:rowIds[i]];
                 }
             }
         }

@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2018 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
 //
 
 #import "AWSSQSService.h"
-#import <AWSCore/AWSNetworking.h>
 #import <AWSCore/AWSCategory.h>
 #import <AWSCore/AWSNetworking.h>
 #import <AWSCore/AWSSignature.h>
@@ -26,7 +25,7 @@
 #import "AWSSQSResources.h"
 
 static NSString *const AWSInfoSQS = @"SQS";
-static NSString *const AWSSQSSDKVersion = @"2.6.11";
+NSString *const AWSSQSSDKVersion = @"2.13.0";
 
 
 @interface AWSSQSResponseSerializer : AWSXMLResponseSerializer
@@ -514,6 +513,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSSQSListQueueTagsResult *> *)listQueueTags:(AWSSQSListQueueTagsRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@""
+                 operationName:@"ListQueueTags"
+                   outputClass:[AWSSQSListQueueTagsResult class]];
+}
+
+- (void)listQueueTags:(AWSSQSListQueueTagsRequest *)request
+     completionHandler:(void (^)(AWSSQSListQueueTagsResult *response, NSError *error))completionHandler {
+    [[self listQueueTags:request] continueWithBlock:^id _Nullable(AWSTask<AWSSQSListQueueTagsResult *> * _Nonnull task) {
+        AWSSQSListQueueTagsResult *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSSQSListQueuesResult *> *)listQueues:(AWSSQSListQueuesRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
@@ -662,6 +684,50 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 - (void)setQueueAttributes:(AWSSQSSetQueueAttributesRequest *)request
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self setQueueAttributes:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask *)tagQueue:(AWSSQSTagQueueRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@""
+                 operationName:@"TagQueue"
+                   outputClass:nil];
+}
+
+- (void)tagQueue:(AWSSQSTagQueueRequest *)request
+     completionHandler:(void (^)(NSError *error))completionHandler {
+    [[self tagQueue:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask *)untagQueue:(AWSSQSUntagQueueRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@""
+                 operationName:@"UntagQueue"
+                   outputClass:nil];
+}
+
+- (void)untagQueue:(AWSSQSUntagQueueRequest *)request
+     completionHandler:(void (^)(NSError *error))completionHandler {
+    [[self untagQueue:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
 
         if (completionHandler) {
