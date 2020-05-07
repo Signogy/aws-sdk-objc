@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.source       = { :git => 'https://github.com/pkirchner/aws-sdk-objc.git',
                      :tag => s.version}
 
-  s.frameworks   = 'CoreGraphics', 'UIKit', 'Foundation', 'SystemConfiguration', 'Security'
+  s.frameworks   = 'CoreGraphics', 'Foundation', 'SystemConfiguration', 'Security'
   s.libraries    = 'z', 'sqlite3'
   s.requires_arc = true
 
