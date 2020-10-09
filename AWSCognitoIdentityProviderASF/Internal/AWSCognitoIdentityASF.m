@@ -1,7 +1,7 @@
 #import "AWSCognitoIdentityASF.h"
-#import <UIKit/UIKit.h>
-#import <CoreTelephony/CTTelephonyNetworkInfo.h>
-#import <CoreTelephony/CTCarrier.h>
+#import <AWSCore/AWSUIDevice.h>
+//#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+//#import <CoreTelephony/CTCarrier.h>
 #import <sys/utsname.h>
 #import <CommonCrypto/CommonHMAC.h>
 
@@ -41,12 +41,13 @@ static NSString *const AWSCognitoIdentitySimOperator = @"SimOperator"; //N/A
 static NSString *const AWSCognitoIdentityASFVersion= @"IOS20171114";
 
 + (NSString *) userContextData: (int) minTarget build: (NSString *) build userPoolId: (NSString*) userPoolId username: (NSString *) username deviceId: (NSString * _Nullable) deviceId userPoolClientId: (NSString *) userPoolClientId {
-    UIDevice *device = [UIDevice currentDevice];
+    AWSUIDevice *device = [AWSUIDevice currentDevice];
+	AWSCTTelephony *telephony = [[AWSCTTelephony alloc] init];
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *bundleIdentifier = [bundle bundleIdentifier];
     NSString *buildVersion = [bundle objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
     NSString *bundleVersion = [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
-    CGRect bounds = [[UIScreen mainScreen] nativeBounds];
+    CGRect bounds = [[AWSUIScreen mainScreen] nativeBounds];
     CGFloat screenWidth = bounds.size.width;
     CGFloat screenHeight = bounds.size.height;
     
@@ -59,12 +60,12 @@ static NSString *const AWSCognitoIdentityASFVersion= @"IOS20171114";
     NSString *minuteOffset = [localTimeZoneOffset substringFromIndex:[localTimeZoneOffset length] - 2];
     NSString *timezoneOffset = [NSString stringWithFormat:@"%@:%@",hourOffset,minuteOffset];
     NSString * locale = [[NSLocale preferredLanguages] objectAtIndex:0];
-    CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
-    NSString * networkType = [networkInfo currentRadioAccessTechnology];
-    CTCarrier *cellularProvider = [networkInfo subscriberCellularProvider];
-    NSString *countryCode = cellularProvider.isoCountryCode;
+//    CTTelephonyNetworkInfo *networkInfo = [[CTTelephonyNetworkInfo alloc] init];
+	NSString * networkType = [telephony networkType]; // [networkInfo currentRadioAccessTechnology];
+//    CTCarrier *cellularProvider = [networkInfo subscriberCellularProvider];
+	NSString *countryCode = [telephony countryCode];//cellularProvider.isoCountryCode;
     BOOL hasSimCard = countryCode != nil;
-    NSString *carrier = [cellularProvider carrierName];
+	NSString *carrier = [telephony carrierName]; //[cellularProvider carrierName];
     NSString *fingerprint = [NSString stringWithFormat:@"Apple/%@/%@/-:%@/-/-:-/%@",
                                                         [AWSCognitoIdentityASF dashIfNil:[device model]],
                                                         [AWSCognitoIdentityASF dashIfNil:[AWSCognitoIdentityASF deviceName]],

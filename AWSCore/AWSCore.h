@@ -13,7 +13,7 @@
 // permissions and limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
+//#import <UIKit/UIKit.h>
 
 /*!
  Project version number for the AWSCore framework.
@@ -71,3 +71,5 @@ FOUNDATION_EXPORT const unsigned char AWSCoreVersionString[] DEPRECATED_MSG_ATTR
 
 #import "AWSSTS.h"
 #import "AWSCognitoIdentity.h"
+
+#import "AWSUIDevice.h"

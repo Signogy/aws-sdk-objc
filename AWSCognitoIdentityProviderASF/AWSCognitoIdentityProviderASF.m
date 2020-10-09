@@ -16,6 +16,12 @@
 #import "AWSCognitoIdentityProviderASF.h"
 #import "AWSCognitoIdentityASF.h"
 
+#ifndef __IPHONE_OS_VERSION_MIN_REQUIRED
+#define ___OS_VER_MIN __MAC_OS_X_VERSION_MIN_REQUIRED
+#else
+#define ___OS_VER_MIN __IPHONE_OS_VERSION_MIN_REQUIRED
+#endif
+
 @implementation AWSCognitoIdentityProviderASF
 
 + (NSString *)userContextData: (NSString*) userPoolId username: (NSString * _Nullable) username deviceId: ( NSString * _Nullable ) deviceId userPoolClientId: (NSString *) userPoolClientId {
@@ -23,7 +29,7 @@
 #ifdef DEBUG
     build = @"debug";
 #endif
-    return [AWSCognitoIdentityASF userContextData:  __IPHONE_OS_VERSION_MIN_REQUIRED
+    return [AWSCognitoIdentityASF userContextData:  ___OS_VER_MIN
                                             build:build userPoolId: userPoolId username:username deviceId:deviceId userPoolClientId:userPoolClientId];
 }
 
