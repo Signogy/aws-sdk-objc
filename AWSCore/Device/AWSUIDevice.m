@@ -101,7 +101,7 @@
 
 @implementation AWSCTTelephony
 
-#if TARGET_OS_IPHONE
+#ifdef __AWS_HAS_CORE_TELEPHONY__
 
 - (NSString*) countryCode {
 	return [[[[CTTelephonyNetworkInfo alloc] init] subscriberCellularProvider] isoCountryCode];

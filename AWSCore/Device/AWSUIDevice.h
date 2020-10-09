@@ -7,10 +7,17 @@
 
 #import <Foundation/Foundation.h>
 
-#if TARGET_OS_IPHONE 
-#import <UIKit/UIKit.h>
+#if __has_include(<CoreTelephony/CTTelephonyNetworkInfo.h>) && TARGET_OS_IPHONE
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
+#define __AWS_HAS_CORE_TELEPHONY__
+#endif
+
+
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+//#import <CoreTelephony/CTTelephonyNetworkInfo.h>
+//#import <CoreTelephony/CTCarrier.h>
 #import <sys/utsname.h>
 #define AWSUIDevice UIDevice
 #define AWSUIScreen UIScreen
