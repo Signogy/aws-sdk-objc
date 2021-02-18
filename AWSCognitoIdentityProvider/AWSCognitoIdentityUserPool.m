@@ -328,7 +328,7 @@ AWSCognitoIdentityUserAttributeType* attribute(NSString *name, NSString *value) 
 }
 
 - (NSDictionary<NSString *,NSString *>*)cognitoValidationData {
-    UIDevice *device = [UIDevice currentDevice];
+    AWSDevice *device = [AWSDevice currentDevice];
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *bundleVersion = [bundle objectForInfoDictionaryKey:(NSString*)kCFBundleVersionKey];
     NSString *bundleShortVersion = [bundle objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
