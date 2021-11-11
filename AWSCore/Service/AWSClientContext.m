@@ -67,7 +67,7 @@ static NSString *const AWSClientContextKeychainInstallationIdKey = @"com.amazona
 
         //Device Details
 		AWSDevice* currentDevice = [AWSDevice currentDevice];
-        NSString *autoUpdatingLoaleIdentifier = [[NSLocale autoupdatingCurrentLocale] localeIdentifier];
+        NSString *autoUpdatingLocaleIdentifier = [[NSLocale autoupdatingCurrentLocale] localeIdentifier];
 		_devicePlatform = [currentDevice systemName] ? [currentDevice systemName] : AWSClientContextUnknown;
 		_deviceModel = [currentDevice model] ? [currentDevice model] : AWSClientContextUnknown;
         _deviceModelVersion = [self deviceModelVersionCode] ? [self deviceModelVersionCode] : AWSClientContextUnknown;
