@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -208,6 +208,8 @@
 - (void) test_AWSCognitoIdentityProviderResourceServerType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderRespondToAuthChallengeRequest API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderRespondToAuthChallengeResponse API_AVAILABLE(ios(11));
+- (void) test_AWSCognitoIdentityProviderRevokeTokenRequest API_AVAILABLE(ios(11));
+- (void) test_AWSCognitoIdentityProviderRevokeTokenResponse API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderRiskConfigurationType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderRiskExceptionConfigurationType API_AVAILABLE(ios(11));
 - (void) test_AWSCognitoIdentityProviderSMSMfaSettingsType API_AVAILABLE(ios(11));
@@ -1031,6 +1033,14 @@
 
 - (void) test_AWSCognitoIdentityProviderRespondToAuthChallengeResponse {
     [self validateSecureCodingForClass:[AWSCognitoIdentityProviderRespondToAuthChallengeResponse class]];
+}
+
+- (void) test_AWSCognitoIdentityProviderRevokeTokenRequest {
+    [self validateSecureCodingForClass:[AWSCognitoIdentityProviderRevokeTokenRequest class]];
+}
+
+- (void) test_AWSCognitoIdentityProviderRevokeTokenResponse {
+    [self validateSecureCodingForClass:[AWSCognitoIdentityProviderRevokeTokenResponse class]];
 }
 
 - (void) test_AWSCognitoIdentityProviderRiskConfigurationType {

@@ -21,7 +21,23 @@ class AWSMobileClientTestBase: XCTestCase {
     static var identityPoolId: String!
     static var sharedPassword: String!
     
+    // Access token with just the "sub" claim
+    static var testAccessTokenWithSub: String = """
+        eyJraWQiOiJzU01EYmZyQ21pb3FrbEVRZFprNXl6UmszekxSTlo4aGlGMnlxdVFZbVM0PSIsImFsZyI6IlJTMjU2In0.\
+        eyJzdWIiOiI3YTQyNTFmMS04MmEyLTQxNzgtOWZhOS1mNmE3MTc1RCJ9.\
+        a
+        """
+    
+    // Access token with just the "origin_jti" claim
+    static var testAccessTokenWithOriginJTI: String = """
+        eyJraWQiOiIwTmxhQUhzbmtwQW5zbHBzUFhHWkJKcVJoR3E5WTkwckwweXpaWUV1OTJZPSIsImFsZyI6IlJTMjU2In0.\
+        eyJvcmlnaW5fanRpIjoiMzM2MWFkZDMtMDIwNS00NTY1LTk0MjQtMDQ3YWQ2N2Y0MjhmZWwifQ.\
+        a
+        """
+    
     override class func setUp() {
+        AWSDDLog.sharedInstance.logLevel = .verbose
+        AWSDDLog.add(AWSDDTTYLogger.sharedInstance)
         sharedEmail = AWSTestConfiguration.getIntegrationTestConfigurationValue(forPackageId: "mobileclient",
                                                                                 configKey: "email_address")
         sharedPassword = AWSTestConfiguration.getIntegrationTestConfigurationValue(forPackageId: "mobileclient",
@@ -63,6 +79,12 @@ class AWSMobileClientTestBase: XCTestCase {
     
     static func loadTestConfigurationFromFile() -> [String: Any] {
         return AWSTestConfiguration.getTestConfiguration() as! [String: Any]
+    }
+
+    static func getAWSConfiguration() -> [String: Any] {
+        let mobileClientConfig = AWSTestConfiguration.getIntegrationTestConfiguration(forPackageId: "mobileclient")
+        let awsconfiguration = mobileClientConfig["awsconfiguration"] as! [String: Any]
+        return awsconfiguration
     }
     
     static func initializeMobileClient() {
@@ -218,19 +240,43 @@ class AWSMobileClientTestBase: XCTestCase {
             return nil
         }.waitUntilFinished()
     }
-    
-    func invalidateSession(username: String) {
-        let bundleID = Bundle.main.bundleIdentifier
-        let keychain = AWSUICKeyChainStore(service: "\(bundleID!).\(AWSCognitoIdentityUserPool.self)")
-        let namespace = "\(AWSMobileClient.default().userPoolClient!.userPoolConfiguration.clientId).\(username)"
-        let key = "\(namespace).tokenExpiration"
-        keychain.removeItem(forKey: key)
+
+    /// Removes the access token's expiration key from the keychain, which forces the SDK into the
+    /// "refresh token expired" flow
+    /// - Parameter username: the username for which to invalidate the token
+    func invalidateRefreshToken(username: String) {
+        let key = getTokenKeychainKey(for: username)
+        getKeychain().removeItem(forKey: key)
+    }
+
+    /// Sets access token's expiration date in the keychain to a past date, which forces the SDK into the
+    /// "access token expired" flow
+    /// - Parameter username: the username for which to invalidate the token
+    func invalidateAccessToken(username: String) {
+        let key = getTokenKeychainKey(for: username)
+        let pastDate = Date(timeIntervalSinceNow: -1)
+        let formattedDate = ISO8601DateFormatter().string(from: pastDate)
+        let dateData = formattedDate.data(using: .utf8)
+        getKeychain().setData(dateData, forKey: key)
     }
     
-    static func getAWSConfiguration() -> [String: Any] {
-        let mobileClientConfig = AWSTestConfiguration.getIntegrationTestConfiguration(forPackageId: "mobileclient")
-        let awsconfiguration = mobileClientConfig["awsconfiguration"] as! [String: Any]
-        return awsconfiguration
+    func setAccessToken(for username: String,  using accessToken: String) {
+        let namespace = "\(AWSMobileClient.default().userPoolClient!.userPoolConfiguration.clientId).\(username)"
+        let key = "\(namespace).accessToken"
+        let data = accessToken.data(using: .utf8)
+        getKeychain().setData(data, forKey: key)
+    }
+
+    private func getTokenKeychainKey(for username: String) -> String {
+        let namespace = "\(AWSMobileClient.default().userPoolClient!.userPoolConfiguration.clientId).\(username)"
+        let key = "\(namespace).tokenExpiration"
+        return key
+    }
+
+    private func getKeychain() -> AWSUICKeyChainStore {
+        let bundleID = Bundle.main.bundleIdentifier
+        let keychain = AWSUICKeyChainStore(service: "\(bundleID!).\(AWSCognitoIdentityUserPool.self)")
+        return keychain
     }
 }
 

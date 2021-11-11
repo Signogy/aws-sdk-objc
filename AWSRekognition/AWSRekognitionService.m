@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@
 #import "AWSRekognitionResources.h"
 
 static NSString *const AWSInfoRekognition = @"Rekognition";
-NSString *const AWSRekognitionSDKVersion = @"2.22.3";
+NSString *const AWSRekognitionSDKVersion = @"2.26.3";
 
 
 @interface AWSRekognitionResponseSerializer : AWSJSONResponseSerializer
@@ -337,6 +337,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSRekognitionCreateDatasetResponse *> *)createDataset:(AWSRekognitionCreateDatasetRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"RekognitionService"
+                 operationName:@"CreateDataset"
+                   outputClass:[AWSRekognitionCreateDatasetResponse class]];
+}
+
+- (void)createDataset:(AWSRekognitionCreateDatasetRequest *)request
+     completionHandler:(void (^)(AWSRekognitionCreateDatasetResponse *response, NSError *error))completionHandler {
+    [[self createDataset:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionCreateDatasetResponse *> * _Nonnull task) {
+        AWSRekognitionCreateDatasetResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSRekognitionCreateProjectResponse *> *)createProject:(AWSRekognitionCreateProjectRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
@@ -419,6 +442,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSRekognitionDeleteCollectionResponse *response, NSError *error))completionHandler {
     [[self deleteCollection:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionDeleteCollectionResponse *> * _Nonnull task) {
         AWSRekognitionDeleteCollectionResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSRekognitionDeleteDatasetResponse *> *)deleteDataset:(AWSRekognitionDeleteDatasetRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"RekognitionService"
+                 operationName:@"DeleteDataset"
+                   outputClass:[AWSRekognitionDeleteDatasetResponse class]];
+}
+
+- (void)deleteDataset:(AWSRekognitionDeleteDatasetRequest *)request
+     completionHandler:(void (^)(AWSRekognitionDeleteDatasetResponse *response, NSError *error))completionHandler {
+    [[self deleteDataset:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionDeleteDatasetResponse *> * _Nonnull task) {
+        AWSRekognitionDeleteDatasetResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -534,6 +580,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSRekognitionDescribeCollectionResponse *response, NSError *error))completionHandler {
     [[self describeCollection:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionDescribeCollectionResponse *> * _Nonnull task) {
         AWSRekognitionDescribeCollectionResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSRekognitionDescribeDatasetResponse *> *)describeDataset:(AWSRekognitionDescribeDatasetRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"RekognitionService"
+                 operationName:@"DescribeDataset"
+                   outputClass:[AWSRekognitionDescribeDatasetResponse class]];
+}
+
+- (void)describeDataset:(AWSRekognitionDescribeDatasetRequest *)request
+     completionHandler:(void (^)(AWSRekognitionDescribeDatasetResponse *response, NSError *error))completionHandler {
+    [[self describeDataset:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionDescribeDatasetResponse *> * _Nonnull task) {
+        AWSRekognitionDescribeDatasetResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -741,6 +810,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSRekognitionDetectTextResponse *response, NSError *error))completionHandler {
     [[self detectText:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionDetectTextResponse *> * _Nonnull task) {
         AWSRekognitionDetectTextResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSRekognitionDistributeDatasetEntriesResponse *> *)distributeDatasetEntries:(AWSRekognitionDistributeDatasetEntriesRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"RekognitionService"
+                 operationName:@"DistributeDatasetEntries"
+                   outputClass:[AWSRekognitionDistributeDatasetEntriesResponse class]];
+}
+
+- (void)distributeDatasetEntries:(AWSRekognitionDistributeDatasetEntriesRequest *)request
+     completionHandler:(void (^)(AWSRekognitionDistributeDatasetEntriesResponse *response, NSError *error))completionHandler {
+    [[self distributeDatasetEntries:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionDistributeDatasetEntriesResponse *> * _Nonnull task) {
+        AWSRekognitionDistributeDatasetEntriesResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -1004,6 +1096,52 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSRekognitionListDatasetEntriesResponse *> *)listDatasetEntries:(AWSRekognitionListDatasetEntriesRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"RekognitionService"
+                 operationName:@"ListDatasetEntries"
+                   outputClass:[AWSRekognitionListDatasetEntriesResponse class]];
+}
+
+- (void)listDatasetEntries:(AWSRekognitionListDatasetEntriesRequest *)request
+     completionHandler:(void (^)(AWSRekognitionListDatasetEntriesResponse *response, NSError *error))completionHandler {
+    [[self listDatasetEntries:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionListDatasetEntriesResponse *> * _Nonnull task) {
+        AWSRekognitionListDatasetEntriesResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSRekognitionListDatasetLabelsResponse *> *)listDatasetLabels:(AWSRekognitionListDatasetLabelsRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"RekognitionService"
+                 operationName:@"ListDatasetLabels"
+                   outputClass:[AWSRekognitionListDatasetLabelsResponse class]];
+}
+
+- (void)listDatasetLabels:(AWSRekognitionListDatasetLabelsRequest *)request
+     completionHandler:(void (^)(AWSRekognitionListDatasetLabelsResponse *response, NSError *error))completionHandler {
+    [[self listDatasetLabels:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionListDatasetLabelsResponse *> * _Nonnull task) {
+        AWSRekognitionListDatasetLabelsResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSRekognitionListFacesResponse *> *)listFaces:(AWSRekognitionListFacesRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
@@ -1040,6 +1178,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSRekognitionListStreamProcessorsResponse *response, NSError *error))completionHandler {
     [[self listStreamProcessors:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionListStreamProcessorsResponse *> * _Nonnull task) {
         AWSRekognitionListStreamProcessorsResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSRekognitionListTagsForResourceResponse *> *)listTagsForResource:(AWSRekognitionListTagsForResourceRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"RekognitionService"
+                 operationName:@"ListTagsForResource"
+                   outputClass:[AWSRekognitionListTagsForResourceResponse class]];
+}
+
+- (void)listTagsForResource:(AWSRekognitionListTagsForResourceRequest *)request
+     completionHandler:(void (^)(AWSRekognitionListTagsForResourceResponse *response, NSError *error))completionHandler {
+    [[self listTagsForResource:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionListTagsForResourceResponse *> * _Nonnull task) {
+        AWSRekognitionListTagsForResourceResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -1385,6 +1546,75 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSRekognitionStopStreamProcessorResponse *response, NSError *error))completionHandler {
     [[self stopStreamProcessor:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionStopStreamProcessorResponse *> * _Nonnull task) {
         AWSRekognitionStopStreamProcessorResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSRekognitionTagResourceResponse *> *)tagResource:(AWSRekognitionTagResourceRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"RekognitionService"
+                 operationName:@"TagResource"
+                   outputClass:[AWSRekognitionTagResourceResponse class]];
+}
+
+- (void)tagResource:(AWSRekognitionTagResourceRequest *)request
+     completionHandler:(void (^)(AWSRekognitionTagResourceResponse *response, NSError *error))completionHandler {
+    [[self tagResource:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionTagResourceResponse *> * _Nonnull task) {
+        AWSRekognitionTagResourceResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSRekognitionUntagResourceResponse *> *)untagResource:(AWSRekognitionUntagResourceRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"RekognitionService"
+                 operationName:@"UntagResource"
+                   outputClass:[AWSRekognitionUntagResourceResponse class]];
+}
+
+- (void)untagResource:(AWSRekognitionUntagResourceRequest *)request
+     completionHandler:(void (^)(AWSRekognitionUntagResourceResponse *response, NSError *error))completionHandler {
+    [[self untagResource:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionUntagResourceResponse *> * _Nonnull task) {
+        AWSRekognitionUntagResourceResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSRekognitionUpdateDatasetEntriesResponse *> *)updateDatasetEntries:(AWSRekognitionUpdateDatasetEntriesRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"RekognitionService"
+                 operationName:@"UpdateDatasetEntries"
+                   outputClass:[AWSRekognitionUpdateDatasetEntriesResponse class]];
+}
+
+- (void)updateDatasetEntries:(AWSRekognitionUpdateDatasetEntriesRequest *)request
+     completionHandler:(void (^)(AWSRekognitionUpdateDatasetEntriesResponse *response, NSError *error))completionHandler {
+    [[self updateDatasetEntries:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionUpdateDatasetEntriesResponse *> * _Nonnull task) {
+        AWSRekognitionUpdateDatasetEntriesResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {

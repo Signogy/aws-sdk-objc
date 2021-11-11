@@ -73,7 +73,7 @@ static NSString *const AWSClientContextKeychainInstallationIdKey = @"com.amazona
         _deviceModelVersion = [self deviceModelVersionCode] ? [self deviceModelVersionCode] : AWSClientContextUnknown;
 		_devicePlatformVersion = [currentDevice systemVersion] ? [currentDevice systemVersion] : AWSClientContextUnknown;
         _deviceManufacturer = @"apple";
-        _deviceLocale = autoUpdatingLoaleIdentifier ? autoUpdatingLoaleIdentifier : AWSClientContextUnknown;
+        _deviceLocale = autoUpdatingLocaleIdentifier ? autoUpdatingLocaleIdentifier : AWSClientContextUnknown;
 
         _customAttributes = @{};
         _serviceDetails = [NSMutableDictionary new];

@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -18,6 +18,41 @@
 
 NSString *const AWSSageMakerRuntimeErrorDomain = @"com.amazonaws.AWSSageMakerRuntimeErrorDomain";
 
+@implementation AWSSageMakerRuntimeInvokeEndpointAsyncInput
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"accept" : @"Accept",
+             @"contentType" : @"ContentType",
+             @"customAttributes" : @"CustomAttributes",
+             @"endpointName" : @"EndpointName",
+             @"inferenceId" : @"InferenceId",
+             @"inputLocation" : @"InputLocation",
+             @"requestTTLSeconds" : @"RequestTTLSeconds",
+             };
+}
+
+@end
+
+@implementation AWSSageMakerRuntimeInvokeEndpointAsyncOutput
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"inferenceId" : @"InferenceId",
+             @"outputLocation" : @"OutputLocation",
+             };
+}
+
+@end
+
 @implementation AWSSageMakerRuntimeInvokeEndpointInput
 
 + (BOOL)supportsSecureCoding {
@@ -32,6 +67,7 @@ NSString *const AWSSageMakerRuntimeErrorDomain = @"com.amazonaws.AWSSageMakerRun
              @"customAttributes" : @"CustomAttributes",
              @"endpointName" : @"EndpointName",
              @"inferenceId" : @"InferenceId",
+             @"targetContainerHostname" : @"TargetContainerHostname",
              @"targetModel" : @"TargetModel",
              @"targetVariant" : @"TargetVariant",
              };

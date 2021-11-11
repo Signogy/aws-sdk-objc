@@ -25,7 +25,7 @@
 #import "AWSLocationResources.h"
 
 static NSString *const AWSInfoLocation = @"Location";
-NSString *const AWSLocationSDKVersion = @"2.22.3";
+NSString *const AWSLocationSDKVersion = @"2.26.3";
 
 
 @interface AWSLocationResponseSerializer : AWSJSONResponseSerializer
@@ -43,6 +43,7 @@ static NSDictionary *errorCodeDictionary = nil;
                             @"ConflictException" : @(AWSLocationErrorConflict),
                             @"InternalServerException" : @(AWSLocationErrorInternalServer),
                             @"ResourceNotFoundException" : @(AWSLocationErrorResourceNotFound),
+                            @"ServiceQuotaExceededException" : @(AWSLocationErrorServiceQuotaExceeded),
                             @"ThrottlingException" : @(AWSLocationErrorThrottling),
                             @"ValidationException" : @(AWSLocationErrorValidation),
                             };
@@ -304,6 +305,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSLocationBatchDeleteDevicePositionHistoryResponse *> *)batchDeleteDevicePositionHistory:(AWSLocationBatchDeleteDevicePositionHistoryRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/tracking/v0/trackers/{TrackerName}/delete-positions"
+                  targetPrefix:@""
+                 operationName:@"BatchDeleteDevicePositionHistory"
+                   outputClass:[AWSLocationBatchDeleteDevicePositionHistoryResponse class]];
+}
+
+- (void)batchDeleteDevicePositionHistory:(AWSLocationBatchDeleteDevicePositionHistoryRequest *)request
+     completionHandler:(void (^)(AWSLocationBatchDeleteDevicePositionHistoryResponse *response, NSError *error))completionHandler {
+    [[self batchDeleteDevicePositionHistory:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationBatchDeleteDevicePositionHistoryResponse *> * _Nonnull task) {
+        AWSLocationBatchDeleteDevicePositionHistoryResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSLocationBatchDeleteGeofenceResponse *> *)batchDeleteGeofence:(AWSLocationBatchDeleteGeofenceRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
@@ -419,6 +443,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSLocationCalculateRouteResponse *> *)calculateRoute:(AWSLocationCalculateRouteRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/routes/v0/calculators/{CalculatorName}/calculate/route"
+                  targetPrefix:@""
+                 operationName:@"CalculateRoute"
+                   outputClass:[AWSLocationCalculateRouteResponse class]];
+}
+
+- (void)calculateRoute:(AWSLocationCalculateRouteRequest *)request
+     completionHandler:(void (^)(AWSLocationCalculateRouteResponse *response, NSError *error))completionHandler {
+    [[self calculateRoute:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationCalculateRouteResponse *> * _Nonnull task) {
+        AWSLocationCalculateRouteResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSLocationCreateGeofenceCollectionResponse *> *)createGeofenceCollection:(AWSLocationCreateGeofenceCollectionRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
@@ -478,6 +525,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSLocationCreatePlaceIndexResponse *response, NSError *error))completionHandler {
     [[self createPlaceIndex:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationCreatePlaceIndexResponse *> * _Nonnull task) {
         AWSLocationCreatePlaceIndexResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSLocationCreateRouteCalculatorResponse *> *)createRouteCalculator:(AWSLocationCreateRouteCalculatorRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/routes/v0/calculators"
+                  targetPrefix:@""
+                 operationName:@"CreateRouteCalculator"
+                   outputClass:[AWSLocationCreateRouteCalculatorResponse class]];
+}
+
+- (void)createRouteCalculator:(AWSLocationCreateRouteCalculatorRequest *)request
+     completionHandler:(void (^)(AWSLocationCreateRouteCalculatorResponse *response, NSError *error))completionHandler {
+    [[self createRouteCalculator:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationCreateRouteCalculatorResponse *> * _Nonnull task) {
+        AWSLocationCreateRouteCalculatorResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -580,6 +650,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSLocationDeleteRouteCalculatorResponse *> *)deleteRouteCalculator:(AWSLocationDeleteRouteCalculatorRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodDELETE
+                     URLString:@"/routes/v0/calculators/{CalculatorName}"
+                  targetPrefix:@""
+                 operationName:@"DeleteRouteCalculator"
+                   outputClass:[AWSLocationDeleteRouteCalculatorResponse class]];
+}
+
+- (void)deleteRouteCalculator:(AWSLocationDeleteRouteCalculatorRequest *)request
+     completionHandler:(void (^)(AWSLocationDeleteRouteCalculatorResponse *response, NSError *error))completionHandler {
+    [[self deleteRouteCalculator:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationDeleteRouteCalculatorResponse *> * _Nonnull task) {
+        AWSLocationDeleteRouteCalculatorResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSLocationDeleteTrackerResponse *> *)deleteTracker:(AWSLocationDeleteTrackerRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodDELETE
@@ -662,6 +755,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSLocationDescribePlaceIndexResponse *response, NSError *error))completionHandler {
     [[self describePlaceIndex:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationDescribePlaceIndexResponse *> * _Nonnull task) {
         AWSLocationDescribePlaceIndexResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSLocationDescribeRouteCalculatorResponse *> *)describeRouteCalculator:(AWSLocationDescribeRouteCalculatorRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodGET
+                     URLString:@"/routes/v0/calculators/{CalculatorName}"
+                  targetPrefix:@""
+                 operationName:@"DescribeRouteCalculator"
+                   outputClass:[AWSLocationDescribeRouteCalculatorResponse class]];
+}
+
+- (void)describeRouteCalculator:(AWSLocationDescribeRouteCalculatorRequest *)request
+     completionHandler:(void (^)(AWSLocationDescribeRouteCalculatorResponse *response, NSError *error))completionHandler {
+    [[self describeRouteCalculator:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationDescribeRouteCalculatorResponse *> * _Nonnull task) {
+        AWSLocationDescribeRouteCalculatorResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -879,6 +995,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSLocationListDevicePositionsResponse *> *)listDevicePositions:(AWSLocationListDevicePositionsRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/tracking/v0/trackers/{TrackerName}/list-positions"
+                  targetPrefix:@""
+                 operationName:@"ListDevicePositions"
+                   outputClass:[AWSLocationListDevicePositionsResponse class]];
+}
+
+- (void)listDevicePositions:(AWSLocationListDevicePositionsRequest *)request
+     completionHandler:(void (^)(AWSLocationListDevicePositionsResponse *response, NSError *error))completionHandler {
+    [[self listDevicePositions:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationListDevicePositionsResponse *> * _Nonnull task) {
+        AWSLocationListDevicePositionsResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSLocationListGeofenceCollectionsResponse *> *)listGeofenceCollections:(AWSLocationListGeofenceCollectionsRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
@@ -961,6 +1100,52 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSLocationListPlaceIndexesResponse *response, NSError *error))completionHandler {
     [[self listPlaceIndexes:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationListPlaceIndexesResponse *> * _Nonnull task) {
         AWSLocationListPlaceIndexesResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSLocationListRouteCalculatorsResponse *> *)listRouteCalculators:(AWSLocationListRouteCalculatorsRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/routes/v0/list-calculators"
+                  targetPrefix:@""
+                 operationName:@"ListRouteCalculators"
+                   outputClass:[AWSLocationListRouteCalculatorsResponse class]];
+}
+
+- (void)listRouteCalculators:(AWSLocationListRouteCalculatorsRequest *)request
+     completionHandler:(void (^)(AWSLocationListRouteCalculatorsResponse *response, NSError *error))completionHandler {
+    [[self listRouteCalculators:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationListRouteCalculatorsResponse *> * _Nonnull task) {
+        AWSLocationListRouteCalculatorsResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSLocationListTagsForResourceResponse *> *)listTagsForResource:(AWSLocationListTagsForResourceRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodGET
+                     URLString:@"/tags/{ResourceArn}"
+                  targetPrefix:@""
+                 operationName:@"ListTagsForResource"
+                   outputClass:[AWSLocationListTagsForResourceResponse class]];
+}
+
+- (void)listTagsForResource:(AWSLocationListTagsForResourceRequest *)request
+     completionHandler:(void (^)(AWSLocationListTagsForResourceResponse *response, NSError *error))completionHandler {
+    [[self listTagsForResource:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationListTagsForResourceResponse *> * _Nonnull task) {
+        AWSLocationListTagsForResourceResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -1076,6 +1261,167 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSLocationSearchPlaceIndexForTextResponse *response, NSError *error))completionHandler {
     [[self searchPlaceIndexForText:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationSearchPlaceIndexForTextResponse *> * _Nonnull task) {
         AWSLocationSearchPlaceIndexForTextResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSLocationTagResourceResponse *> *)tagResource:(AWSLocationTagResourceRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/tags/{ResourceArn}"
+                  targetPrefix:@""
+                 operationName:@"TagResource"
+                   outputClass:[AWSLocationTagResourceResponse class]];
+}
+
+- (void)tagResource:(AWSLocationTagResourceRequest *)request
+     completionHandler:(void (^)(AWSLocationTagResourceResponse *response, NSError *error))completionHandler {
+    [[self tagResource:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationTagResourceResponse *> * _Nonnull task) {
+        AWSLocationTagResourceResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSLocationUntagResourceResponse *> *)untagResource:(AWSLocationUntagResourceRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodDELETE
+                     URLString:@"/tags/{ResourceArn}"
+                  targetPrefix:@""
+                 operationName:@"UntagResource"
+                   outputClass:[AWSLocationUntagResourceResponse class]];
+}
+
+- (void)untagResource:(AWSLocationUntagResourceRequest *)request
+     completionHandler:(void (^)(AWSLocationUntagResourceResponse *response, NSError *error))completionHandler {
+    [[self untagResource:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationUntagResourceResponse *> * _Nonnull task) {
+        AWSLocationUntagResourceResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSLocationUpdateGeofenceCollectionResponse *> *)updateGeofenceCollection:(AWSLocationUpdateGeofenceCollectionRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPATCH
+                     URLString:@"/geofencing/v0/collections/{CollectionName}"
+                  targetPrefix:@""
+                 operationName:@"UpdateGeofenceCollection"
+                   outputClass:[AWSLocationUpdateGeofenceCollectionResponse class]];
+}
+
+- (void)updateGeofenceCollection:(AWSLocationUpdateGeofenceCollectionRequest *)request
+     completionHandler:(void (^)(AWSLocationUpdateGeofenceCollectionResponse *response, NSError *error))completionHandler {
+    [[self updateGeofenceCollection:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationUpdateGeofenceCollectionResponse *> * _Nonnull task) {
+        AWSLocationUpdateGeofenceCollectionResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSLocationUpdateMapResponse *> *)updateMap:(AWSLocationUpdateMapRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPATCH
+                     URLString:@"/maps/v0/maps/{MapName}"
+                  targetPrefix:@""
+                 operationName:@"UpdateMap"
+                   outputClass:[AWSLocationUpdateMapResponse class]];
+}
+
+- (void)updateMap:(AWSLocationUpdateMapRequest *)request
+     completionHandler:(void (^)(AWSLocationUpdateMapResponse *response, NSError *error))completionHandler {
+    [[self updateMap:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationUpdateMapResponse *> * _Nonnull task) {
+        AWSLocationUpdateMapResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSLocationUpdatePlaceIndexResponse *> *)updatePlaceIndex:(AWSLocationUpdatePlaceIndexRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPATCH
+                     URLString:@"/places/v0/indexes/{IndexName}"
+                  targetPrefix:@""
+                 operationName:@"UpdatePlaceIndex"
+                   outputClass:[AWSLocationUpdatePlaceIndexResponse class]];
+}
+
+- (void)updatePlaceIndex:(AWSLocationUpdatePlaceIndexRequest *)request
+     completionHandler:(void (^)(AWSLocationUpdatePlaceIndexResponse *response, NSError *error))completionHandler {
+    [[self updatePlaceIndex:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationUpdatePlaceIndexResponse *> * _Nonnull task) {
+        AWSLocationUpdatePlaceIndexResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSLocationUpdateRouteCalculatorResponse *> *)updateRouteCalculator:(AWSLocationUpdateRouteCalculatorRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPATCH
+                     URLString:@"/routes/v0/calculators/{CalculatorName}"
+                  targetPrefix:@""
+                 operationName:@"UpdateRouteCalculator"
+                   outputClass:[AWSLocationUpdateRouteCalculatorResponse class]];
+}
+
+- (void)updateRouteCalculator:(AWSLocationUpdateRouteCalculatorRequest *)request
+     completionHandler:(void (^)(AWSLocationUpdateRouteCalculatorResponse *response, NSError *error))completionHandler {
+    [[self updateRouteCalculator:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationUpdateRouteCalculatorResponse *> * _Nonnull task) {
+        AWSLocationUpdateRouteCalculatorResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSLocationUpdateTrackerResponse *> *)updateTracker:(AWSLocationUpdateTrackerRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPATCH
+                     URLString:@"/tracking/v0/trackers/{TrackerName}"
+                  targetPrefix:@""
+                 operationName:@"UpdateTracker"
+                   outputClass:[AWSLocationUpdateTrackerResponse class]];
+}
+
+- (void)updateTracker:(AWSLocationUpdateTrackerRequest *)request
+     completionHandler:(void (^)(AWSLocationUpdateTrackerResponse *response, NSError *error))completionHandler {
+    [[self updateTracker:request] continueWithBlock:^id _Nullable(AWSTask<AWSLocationUpdateTrackerResponse *> * _Nonnull task) {
+        AWSLocationUpdateTrackerResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {

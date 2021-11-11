@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -23,6 +23,7 @@
 - (void) test_AWSRekognitionAsset API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionAudioMetadata API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionBeard API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionBlackFrame API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionBoundingBox API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionCelebrity API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionCelebrityDetail API_AVAILABLE(ios(11));
@@ -36,6 +37,8 @@
 - (void) test_AWSRekognitionCoversBodyPart API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionCreateCollectionRequest API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionCreateCollectionResponse API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionCreateDatasetRequest API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionCreateDatasetResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionCreateProjectRequest API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionCreateProjectResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionCreateProjectVersionRequest API_AVAILABLE(ios(11));
@@ -43,8 +46,17 @@
 - (void) test_AWSRekognitionCreateStreamProcessorRequest API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionCreateStreamProcessorResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionCustomLabel API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDatasetChanges API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDatasetDescription API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDatasetLabelDescription API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDatasetLabelStats API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDatasetMetadata API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDatasetSource API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDatasetStats API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionDeleteCollectionRequest API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionDeleteCollectionResponse API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDeleteDatasetRequest API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDeleteDatasetResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionDeleteFacesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionDeleteFacesResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionDeleteProjectRequest API_AVAILABLE(ios(11));
@@ -55,6 +67,8 @@
 - (void) test_AWSRekognitionDeleteStreamProcessorResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionDescribeCollectionRequest API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionDescribeCollectionResponse API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDescribeDatasetRequest API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDescribeDatasetResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionDescribeProjectVersionsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionDescribeProjectVersionsResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionDescribeProjectsRequest API_AVAILABLE(ios(11));
@@ -75,6 +89,9 @@
 - (void) test_AWSRekognitionDetectTextRequest API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionDetectTextResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionDetectionFilter API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDistributeDataset API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDistributeDatasetEntriesRequest API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionDistributeDatasetEntriesResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionEmotion API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionEquipmentDetection API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionEvaluationResult API_AVAILABLE(ios(11));
@@ -117,15 +134,22 @@
 - (void) test_AWSRekognitionInstance API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionKinesisDataStream API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionKinesisVideoStream API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionKnownGender API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionLabel API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionLabelDetection API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionLandmark API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionListCollectionsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionListCollectionsResponse API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionListDatasetEntriesRequest API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionListDatasetEntriesResponse API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionListDatasetLabelsRequest API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionListDatasetLabelsResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionListFacesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionListFacesResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionListStreamProcessorsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionListStreamProcessorsResponse API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionListTagsForResourceRequest API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionListTagsForResourceResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionModerationLabel API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionMouthOpen API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionMustache API_AVAILABLE(ios(11));
@@ -189,6 +213,8 @@
 - (void) test_AWSRekognitionStreamProcessorSettings API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionSummary API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionSunglasses API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionTagResourceRequest API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionTagResourceResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionTechnicalCueSegment API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionTestingData API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionTestingDataResult API_AVAILABLE(ios(11));
@@ -197,6 +223,10 @@
 - (void) test_AWSRekognitionTrainingData API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionTrainingDataResult API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionUnindexedFace API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionUntagResourceRequest API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionUntagResourceResponse API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionUpdateDatasetEntriesRequest API_AVAILABLE(ios(11));
+- (void) test_AWSRekognitionUpdateDatasetEntriesResponse API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionValidationData API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionVideo API_AVAILABLE(ios(11));
 - (void) test_AWSRekognitionVideoMetadata API_AVAILABLE(ios(11));
@@ -219,6 +249,10 @@
 
 - (void) test_AWSRekognitionBeard {
     [self validateSecureCodingForClass:[AWSRekognitionBeard class]];
+}
+
+- (void) test_AWSRekognitionBlackFrame {
+    [self validateSecureCodingForClass:[AWSRekognitionBlackFrame class]];
 }
 
 - (void) test_AWSRekognitionBoundingBox {
@@ -273,6 +307,14 @@
     [self validateSecureCodingForClass:[AWSRekognitionCreateCollectionResponse class]];
 }
 
+- (void) test_AWSRekognitionCreateDatasetRequest {
+    [self validateSecureCodingForClass:[AWSRekognitionCreateDatasetRequest class]];
+}
+
+- (void) test_AWSRekognitionCreateDatasetResponse {
+    [self validateSecureCodingForClass:[AWSRekognitionCreateDatasetResponse class]];
+}
+
 - (void) test_AWSRekognitionCreateProjectRequest {
     [self validateSecureCodingForClass:[AWSRekognitionCreateProjectRequest class]];
 }
@@ -301,12 +343,48 @@
     [self validateSecureCodingForClass:[AWSRekognitionCustomLabel class]];
 }
 
+- (void) test_AWSRekognitionDatasetChanges {
+    [self validateSecureCodingForClass:[AWSRekognitionDatasetChanges class]];
+}
+
+- (void) test_AWSRekognitionDatasetDescription {
+    [self validateSecureCodingForClass:[AWSRekognitionDatasetDescription class]];
+}
+
+- (void) test_AWSRekognitionDatasetLabelDescription {
+    [self validateSecureCodingForClass:[AWSRekognitionDatasetLabelDescription class]];
+}
+
+- (void) test_AWSRekognitionDatasetLabelStats {
+    [self validateSecureCodingForClass:[AWSRekognitionDatasetLabelStats class]];
+}
+
+- (void) test_AWSRekognitionDatasetMetadata {
+    [self validateSecureCodingForClass:[AWSRekognitionDatasetMetadata class]];
+}
+
+- (void) test_AWSRekognitionDatasetSource {
+    [self validateSecureCodingForClass:[AWSRekognitionDatasetSource class]];
+}
+
+- (void) test_AWSRekognitionDatasetStats {
+    [self validateSecureCodingForClass:[AWSRekognitionDatasetStats class]];
+}
+
 - (void) test_AWSRekognitionDeleteCollectionRequest {
     [self validateSecureCodingForClass:[AWSRekognitionDeleteCollectionRequest class]];
 }
 
 - (void) test_AWSRekognitionDeleteCollectionResponse {
     [self validateSecureCodingForClass:[AWSRekognitionDeleteCollectionResponse class]];
+}
+
+- (void) test_AWSRekognitionDeleteDatasetRequest {
+    [self validateSecureCodingForClass:[AWSRekognitionDeleteDatasetRequest class]];
+}
+
+- (void) test_AWSRekognitionDeleteDatasetResponse {
+    [self validateSecureCodingForClass:[AWSRekognitionDeleteDatasetResponse class]];
 }
 
 - (void) test_AWSRekognitionDeleteFacesRequest {
@@ -347,6 +425,14 @@
 
 - (void) test_AWSRekognitionDescribeCollectionResponse {
     [self validateSecureCodingForClass:[AWSRekognitionDescribeCollectionResponse class]];
+}
+
+- (void) test_AWSRekognitionDescribeDatasetRequest {
+    [self validateSecureCodingForClass:[AWSRekognitionDescribeDatasetRequest class]];
+}
+
+- (void) test_AWSRekognitionDescribeDatasetResponse {
+    [self validateSecureCodingForClass:[AWSRekognitionDescribeDatasetResponse class]];
 }
 
 - (void) test_AWSRekognitionDescribeProjectVersionsRequest {
@@ -427,6 +513,18 @@
 
 - (void) test_AWSRekognitionDetectionFilter {
     [self validateSecureCodingForClass:[AWSRekognitionDetectionFilter class]];
+}
+
+- (void) test_AWSRekognitionDistributeDataset {
+    [self validateSecureCodingForClass:[AWSRekognitionDistributeDataset class]];
+}
+
+- (void) test_AWSRekognitionDistributeDatasetEntriesRequest {
+    [self validateSecureCodingForClass:[AWSRekognitionDistributeDatasetEntriesRequest class]];
+}
+
+- (void) test_AWSRekognitionDistributeDatasetEntriesResponse {
+    [self validateSecureCodingForClass:[AWSRekognitionDistributeDatasetEntriesResponse class]];
 }
 
 - (void) test_AWSRekognitionEmotion {
@@ -597,6 +695,10 @@
     [self validateSecureCodingForClass:[AWSRekognitionKinesisVideoStream class]];
 }
 
+- (void) test_AWSRekognitionKnownGender {
+    [self validateSecureCodingForClass:[AWSRekognitionKnownGender class]];
+}
+
 - (void) test_AWSRekognitionLabel {
     [self validateSecureCodingForClass:[AWSRekognitionLabel class]];
 }
@@ -617,6 +719,22 @@
     [self validateSecureCodingForClass:[AWSRekognitionListCollectionsResponse class]];
 }
 
+- (void) test_AWSRekognitionListDatasetEntriesRequest {
+    [self validateSecureCodingForClass:[AWSRekognitionListDatasetEntriesRequest class]];
+}
+
+- (void) test_AWSRekognitionListDatasetEntriesResponse {
+    [self validateSecureCodingForClass:[AWSRekognitionListDatasetEntriesResponse class]];
+}
+
+- (void) test_AWSRekognitionListDatasetLabelsRequest {
+    [self validateSecureCodingForClass:[AWSRekognitionListDatasetLabelsRequest class]];
+}
+
+- (void) test_AWSRekognitionListDatasetLabelsResponse {
+    [self validateSecureCodingForClass:[AWSRekognitionListDatasetLabelsResponse class]];
+}
+
 - (void) test_AWSRekognitionListFacesRequest {
     [self validateSecureCodingForClass:[AWSRekognitionListFacesRequest class]];
 }
@@ -631,6 +749,14 @@
 
 - (void) test_AWSRekognitionListStreamProcessorsResponse {
     [self validateSecureCodingForClass:[AWSRekognitionListStreamProcessorsResponse class]];
+}
+
+- (void) test_AWSRekognitionListTagsForResourceRequest {
+    [self validateSecureCodingForClass:[AWSRekognitionListTagsForResourceRequest class]];
+}
+
+- (void) test_AWSRekognitionListTagsForResourceResponse {
+    [self validateSecureCodingForClass:[AWSRekognitionListTagsForResourceResponse class]];
 }
 
 - (void) test_AWSRekognitionModerationLabel {
@@ -885,6 +1011,14 @@
     [self validateSecureCodingForClass:[AWSRekognitionSunglasses class]];
 }
 
+- (void) test_AWSRekognitionTagResourceRequest {
+    [self validateSecureCodingForClass:[AWSRekognitionTagResourceRequest class]];
+}
+
+- (void) test_AWSRekognitionTagResourceResponse {
+    [self validateSecureCodingForClass:[AWSRekognitionTagResourceResponse class]];
+}
+
 - (void) test_AWSRekognitionTechnicalCueSegment {
     [self validateSecureCodingForClass:[AWSRekognitionTechnicalCueSegment class]];
 }
@@ -915,6 +1049,22 @@
 
 - (void) test_AWSRekognitionUnindexedFace {
     [self validateSecureCodingForClass:[AWSRekognitionUnindexedFace class]];
+}
+
+- (void) test_AWSRekognitionUntagResourceRequest {
+    [self validateSecureCodingForClass:[AWSRekognitionUntagResourceRequest class]];
+}
+
+- (void) test_AWSRekognitionUntagResourceResponse {
+    [self validateSecureCodingForClass:[AWSRekognitionUntagResourceResponse class]];
+}
+
+- (void) test_AWSRekognitionUpdateDatasetEntriesRequest {
+    [self validateSecureCodingForClass:[AWSRekognitionUpdateDatasetEntriesRequest class]];
+}
+
+- (void) test_AWSRekognitionUpdateDatasetEntriesResponse {
+    [self validateSecureCodingForClass:[AWSRekognitionUpdateDatasetEntriesResponse class]];
 }
 
 - (void) test_AWSRekognitionValidationData {

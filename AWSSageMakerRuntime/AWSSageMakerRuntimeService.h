@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -198,6 +198,31 @@ FOUNDATION_EXPORT NSString *const AWSSageMakerRuntimeSDKVersion;
  @see AWSSageMakerRuntimeInvokeEndpointOutput
  */
 - (void)invokeEndpoint:(AWSSageMakerRuntimeInvokeEndpointInput *)request completionHandler:(void (^ _Nullable)(AWSSageMakerRuntimeInvokeEndpointOutput * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>After you deploy a model into production using Amazon SageMaker hosting services, your client applications use this API to get inferences from the model hosted at the specified endpoint in an asynchronous manner.</p><p>Inference requests sent to this API are enqueued for asynchronous processing. The processing of the inference request may or may not complete before the you receive a response from this API. The response from this API will not contain the result of the inference request but contain information about where you can locate it.</p><p>Amazon SageMaker strips all <code>POST</code> headers except those supported by the API. Amazon SageMaker might add additional headers. You should not rely on the behavior of headers outside those enumerated in the request syntax.</p><p>Calls to <code>InvokeEndpointAsync</code> are authenticated by using AWS Signature Version 4. For information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html">Authenticating Requests (AWS Signature Version 4)</a> in the <i>Amazon S3 API Reference</i>.</p>
+ 
+ @param request A container for the necessary parameters to execute the InvokeEndpointAsync service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSSageMakerRuntimeInvokeEndpointAsyncOutput`. On failed execution, `task.error` may contain an `NSError` with `AWSSageMakerRuntimeErrorDomain` domain and the following error code: `AWSSageMakerRuntimeErrorInternalFailure`, `AWSSageMakerRuntimeErrorServiceUnavailable`, `AWSSageMakerRuntimeErrorValidation`.
+ 
+ @see AWSSageMakerRuntimeInvokeEndpointAsyncInput
+ @see AWSSageMakerRuntimeInvokeEndpointAsyncOutput
+ */
+- (AWSTask<AWSSageMakerRuntimeInvokeEndpointAsyncOutput *> *)invokeEndpointAsync:(AWSSageMakerRuntimeInvokeEndpointAsyncInput *)request;
+
+/**
+ <p>After you deploy a model into production using Amazon SageMaker hosting services, your client applications use this API to get inferences from the model hosted at the specified endpoint in an asynchronous manner.</p><p>Inference requests sent to this API are enqueued for asynchronous processing. The processing of the inference request may or may not complete before the you receive a response from this API. The response from this API will not contain the result of the inference request but contain information about where you can locate it.</p><p>Amazon SageMaker strips all <code>POST</code> headers except those supported by the API. Amazon SageMaker might add additional headers. You should not rely on the behavior of headers outside those enumerated in the request syntax.</p><p>Calls to <code>InvokeEndpointAsync</code> are authenticated by using AWS Signature Version 4. For information, see <a href="https://docs.aws.amazon.com/AmazonS3/latest/API/sig-v4-authenticating-requests.html">Authenticating Requests (AWS Signature Version 4)</a> in the <i>Amazon S3 API Reference</i>.</p>
+ 
+ @param request A container for the necessary parameters to execute the InvokeEndpointAsync service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful. On failed execution, `error` may contain an `NSError` with `AWSSageMakerRuntimeErrorDomain` domain and the following error code: `AWSSageMakerRuntimeErrorInternalFailure`, `AWSSageMakerRuntimeErrorServiceUnavailable`, `AWSSageMakerRuntimeErrorValidation`.
+ 
+ @see AWSSageMakerRuntimeInvokeEndpointAsyncInput
+ @see AWSSageMakerRuntimeInvokeEndpointAsyncOutput
+ */
+- (void)invokeEndpointAsync:(AWSSageMakerRuntimeInvokeEndpointAsyncInput *)request completionHandler:(void (^ _Nullable)(AWSSageMakerRuntimeInvokeEndpointAsyncOutput * _Nullable response, NSError * _Nullable error))completionHandler;
 
 @end
 
