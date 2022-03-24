@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -111,6 +111,7 @@
 - (void) test_AWSAutoScalingInstanceRefreshProgressDetails API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingInstanceRefreshWarmPoolProgress API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingInstanceRequirements API_AVAILABLE(ios(11));
+- (void) test_AWSAutoScalingInstanceReusePolicy API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingInstancesDistribution API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingLaunchConfiguration API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingLaunchConfigurationNameType API_AVAILABLE(ios(11));
@@ -126,9 +127,12 @@
 - (void) test_AWSAutoScalingLoadForecast API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingMemoryGiBPerVCpuRequest API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingMemoryMiBRequest API_AVAILABLE(ios(11));
+- (void) test_AWSAutoScalingMetric API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingMetricCollectionType API_AVAILABLE(ios(11));
+- (void) test_AWSAutoScalingMetricDataQuery API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingMetricDimension API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingMetricGranularityType API_AVAILABLE(ios(11));
+- (void) test_AWSAutoScalingMetricStat API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingMixedInstancesPolicy API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingNetworkInterfaceCountRequest API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingNotificationConfiguration API_AVAILABLE(ios(11));
@@ -136,6 +140,9 @@
 - (void) test_AWSAutoScalingPolicyARNType API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingPredefinedMetricSpecification API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingPredictiveScalingConfiguration API_AVAILABLE(ios(11));
+- (void) test_AWSAutoScalingPredictiveScalingCustomizedCapacityMetric API_AVAILABLE(ios(11));
+- (void) test_AWSAutoScalingPredictiveScalingCustomizedLoadMetric API_AVAILABLE(ios(11));
+- (void) test_AWSAutoScalingPredictiveScalingCustomizedScalingMetric API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingPredictiveScalingMetricSpecification API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingPredictiveScalingPredefinedLoadMetric API_AVAILABLE(ios(11));
 - (void) test_AWSAutoScalingPredictiveScalingPredefinedMetricPair API_AVAILABLE(ios(11));
@@ -547,6 +554,10 @@
     [self validateSecureCodingForClass:[AWSAutoScalingInstanceRequirements class]];
 }
 
+- (void) test_AWSAutoScalingInstanceReusePolicy {
+    [self validateSecureCodingForClass:[AWSAutoScalingInstanceReusePolicy class]];
+}
+
 - (void) test_AWSAutoScalingInstancesDistribution {
     [self validateSecureCodingForClass:[AWSAutoScalingInstancesDistribution class]];
 }
@@ -607,8 +618,16 @@
     [self validateSecureCodingForClass:[AWSAutoScalingMemoryMiBRequest class]];
 }
 
+- (void) test_AWSAutoScalingMetric {
+    [self validateSecureCodingForClass:[AWSAutoScalingMetric class]];
+}
+
 - (void) test_AWSAutoScalingMetricCollectionType {
     [self validateSecureCodingForClass:[AWSAutoScalingMetricCollectionType class]];
+}
+
+- (void) test_AWSAutoScalingMetricDataQuery {
+    [self validateSecureCodingForClass:[AWSAutoScalingMetricDataQuery class]];
 }
 
 - (void) test_AWSAutoScalingMetricDimension {
@@ -617,6 +636,10 @@
 
 - (void) test_AWSAutoScalingMetricGranularityType {
     [self validateSecureCodingForClass:[AWSAutoScalingMetricGranularityType class]];
+}
+
+- (void) test_AWSAutoScalingMetricStat {
+    [self validateSecureCodingForClass:[AWSAutoScalingMetricStat class]];
 }
 
 - (void) test_AWSAutoScalingMixedInstancesPolicy {
@@ -645,6 +668,18 @@
 
 - (void) test_AWSAutoScalingPredictiveScalingConfiguration {
     [self validateSecureCodingForClass:[AWSAutoScalingPredictiveScalingConfiguration class]];
+}
+
+- (void) test_AWSAutoScalingPredictiveScalingCustomizedCapacityMetric {
+    [self validateSecureCodingForClass:[AWSAutoScalingPredictiveScalingCustomizedCapacityMetric class]];
+}
+
+- (void) test_AWSAutoScalingPredictiveScalingCustomizedLoadMetric {
+    [self validateSecureCodingForClass:[AWSAutoScalingPredictiveScalingCustomizedLoadMetric class]];
+}
+
+- (void) test_AWSAutoScalingPredictiveScalingCustomizedScalingMetric {
+    [self validateSecureCodingForClass:[AWSAutoScalingPredictiveScalingCustomizedScalingMetric class]];
 }
 
 - (void) test_AWSAutoScalingPredictiveScalingMetricSpecification {

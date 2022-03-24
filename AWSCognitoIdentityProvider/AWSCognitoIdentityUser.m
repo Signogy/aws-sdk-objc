@@ -1702,7 +1702,12 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
 
 - (NSString*) deviceId {
     AWSCognitoIdentityUserDeviceCredentials *deviceCredentials = [self getDeviceCredentials];
-    return deviceCredentials?deviceCredentials.deviceId:nil;
+    return deviceCredentials ? deviceCredentials.deviceId : nil;
+}
+
+- (NSString*) deviceIdentifier {
+    AWSCognitoIdentityUserDeviceCredentials *deviceCredentials = [self getDeviceCredentials];
+    return deviceCredentials ? deviceCredentials.deviceId : nil;
 }
 
 @end
@@ -1744,7 +1749,7 @@ static const NSString * AWSCognitoIdentityUserUserAttributePrefix = @"userAttrib
 }
 
 -(NSDictionary<NSString *, id> *) tokenClaims {
-    NSDictionary * result = nil;
+    NSDictionary * result = @{};
     NSArray *pieces = [self.tokenString componentsSeparatedByString:@"."];
     if(pieces.count > 2){
         NSString * claims = pieces[1];

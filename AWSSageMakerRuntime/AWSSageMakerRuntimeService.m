@@ -25,7 +25,7 @@
 #import "AWSSageMakerRuntimeResources.h"
 
 static NSString *const AWSInfoSageMakerRuntime = @"SageMakerRuntime";
-NSString *const AWSSageMakerRuntimeSDKVersion = @"2.26.3";
+NSString *const AWSSageMakerRuntimeSDKVersion = @"2.27.4";
 
 
 @interface AWSSageMakerRuntimeResponseSerializer : AWSJSONResponseSerializer
@@ -39,8 +39,10 @@ NSString *const AWSSageMakerRuntimeSDKVersion = @"2.26.3";
 static NSDictionary *errorCodeDictionary = nil;
 + (void)initialize {
     errorCodeDictionary = @{
+                            @"InternalDependencyException" : @(AWSSageMakerRuntimeErrorInternalDependency),
                             @"InternalFailure" : @(AWSSageMakerRuntimeErrorInternalFailure),
                             @"ModelError" : @(AWSSageMakerRuntimeErrorModel),
+                            @"ModelNotReadyException" : @(AWSSageMakerRuntimeErrorModelNotReady),
                             @"ServiceUnavailable" : @(AWSSageMakerRuntimeErrorServiceUnavailable),
                             @"ValidationError" : @(AWSSageMakerRuntimeErrorValidation),
                             };

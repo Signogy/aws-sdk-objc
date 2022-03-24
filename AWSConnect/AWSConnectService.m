@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@
 #import "AWSConnectResources.h"
 
 static NSString *const AWSInfoConnect = @"Connect";
-NSString *const AWSConnectSDKVersion = @"2.26.3";
+NSString *const AWSConnectSDKVersion = @"2.27.4";
 
 
 @interface AWSConnectResponseSerializer : AWSJSONResponseSerializer
@@ -44,8 +44,10 @@ static NSDictionary *errorCodeDictionary = nil;
                             @"ContactNotFoundException" : @(AWSConnectErrorContactNotFound),
                             @"DestinationNotAllowedException" : @(AWSConnectErrorDestinationNotAllowed),
                             @"DuplicateResourceException" : @(AWSConnectErrorDuplicateResource),
+                            @"IdempotencyException" : @(AWSConnectErrorIdempotency),
                             @"InternalServiceException" : @(AWSConnectErrorInternalService),
                             @"InvalidContactFlowException" : @(AWSConnectErrorInvalidContactFlow),
+                            @"InvalidContactFlowModuleException" : @(AWSConnectErrorInvalidContactFlowModule),
                             @"InvalidParameterException" : @(AWSConnectErrorInvalidParameter),
                             @"InvalidRequestException" : @(AWSConnectErrorInvalidRequest),
                             @"LimitExceededException" : @(AWSConnectErrorLimitExceeded),
@@ -336,6 +338,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSConnectAssociateDefaultVocabularyResponse *> *)associateDefaultVocabulary:(AWSConnectAssociateDefaultVocabularyRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPUT
+                     URLString:@"/default-vocabulary/{InstanceId}/{LanguageCode}"
+                  targetPrefix:@""
+                 operationName:@"AssociateDefaultVocabulary"
+                   outputClass:[AWSConnectAssociateDefaultVocabularyResponse class]];
+}
+
+- (void)associateDefaultVocabulary:(AWSConnectAssociateDefaultVocabularyRequest *)request
+     completionHandler:(void (^)(AWSConnectAssociateDefaultVocabularyResponse *response, NSError *error))completionHandler {
+    [[self associateDefaultVocabulary:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectAssociateDefaultVocabularyResponse *> * _Nonnull task) {
+        AWSConnectAssociateDefaultVocabularyResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSConnectAssociateInstanceStorageConfigResponse *> *)associateInstanceStorageConfig:(AWSConnectAssociateInstanceStorageConfigRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPUT
@@ -506,6 +531,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSConnectCreateContactFlowResponse *response, NSError *error))completionHandler {
     [[self createContactFlow:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectCreateContactFlowResponse *> * _Nonnull task) {
         AWSConnectCreateContactFlowResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSConnectCreateContactFlowModuleResponse *> *)createContactFlowModule:(AWSConnectCreateContactFlowModuleRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPUT
+                     URLString:@"/contact-flow-modules/{InstanceId}"
+                  targetPrefix:@""
+                 operationName:@"CreateContactFlowModule"
+                   outputClass:[AWSConnectCreateContactFlowModuleResponse class]];
+}
+
+- (void)createContactFlowModule:(AWSConnectCreateContactFlowModuleRequest *)request
+     completionHandler:(void (^)(AWSConnectCreateContactFlowModuleResponse *response, NSError *error))completionHandler {
+    [[self createContactFlowModule:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectCreateContactFlowModuleResponse *> * _Nonnull task) {
+        AWSConnectCreateContactFlowModuleResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -746,6 +794,74 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSConnectCreateVocabularyResponse *> *)createVocabulary:(AWSConnectCreateVocabularyRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/vocabulary/{InstanceId}"
+                  targetPrefix:@""
+                 operationName:@"CreateVocabulary"
+                   outputClass:[AWSConnectCreateVocabularyResponse class]];
+}
+
+- (void)createVocabulary:(AWSConnectCreateVocabularyRequest *)request
+     completionHandler:(void (^)(AWSConnectCreateVocabularyResponse *response, NSError *error))completionHandler {
+    [[self createVocabulary:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectCreateVocabularyResponse *> * _Nonnull task) {
+        AWSConnectCreateVocabularyResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask *)deleteContactFlow:(AWSConnectDeleteContactFlowRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodDELETE
+                     URLString:@"/contact-flows/{InstanceId}/{ContactFlowId}"
+                  targetPrefix:@""
+                 operationName:@"DeleteContactFlow"
+                   outputClass:nil];
+}
+
+- (void)deleteContactFlow:(AWSConnectDeleteContactFlowRequest *)request
+     completionHandler:(void (^)(NSError *error))completionHandler {
+    [[self deleteContactFlow:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSConnectDeleteContactFlowModuleResponse *> *)deleteContactFlowModule:(AWSConnectDeleteContactFlowModuleRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodDELETE
+                     URLString:@"/contact-flow-modules/{InstanceId}/{ContactFlowModuleId}"
+                  targetPrefix:@""
+                 operationName:@"DeleteContactFlowModule"
+                   outputClass:[AWSConnectDeleteContactFlowModuleResponse class]];
+}
+
+- (void)deleteContactFlowModule:(AWSConnectDeleteContactFlowModuleRequest *)request
+     completionHandler:(void (^)(AWSConnectDeleteContactFlowModuleResponse *response, NSError *error))completionHandler {
+    [[self deleteContactFlowModule:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectDeleteContactFlowModuleResponse *> * _Nonnull task) {
+        AWSConnectDeleteContactFlowModuleResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask *)deleteHoursOfOperation:(AWSConnectDeleteHoursOfOperationRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodDELETE
@@ -922,6 +1038,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSConnectDeleteVocabularyResponse *> *)deleteVocabulary:(AWSConnectDeleteVocabularyRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/vocabulary-remove/{InstanceId}/{VocabularyId}"
+                  targetPrefix:@""
+                 operationName:@"DeleteVocabulary"
+                   outputClass:[AWSConnectDeleteVocabularyResponse class]];
+}
+
+- (void)deleteVocabulary:(AWSConnectDeleteVocabularyRequest *)request
+     completionHandler:(void (^)(AWSConnectDeleteVocabularyResponse *response, NSError *error))completionHandler {
+    [[self deleteVocabulary:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectDeleteVocabularyResponse *> * _Nonnull task) {
+        AWSConnectDeleteVocabularyResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSConnectDescribeAgentStatusResponse *> *)describeAgentStatus:(AWSConnectDescribeAgentStatusRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodGET
@@ -945,6 +1084,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSConnectDescribeContactResponse *> *)describeContact:(AWSConnectDescribeContactRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodGET
+                     URLString:@"/contacts/{InstanceId}/{ContactId}"
+                  targetPrefix:@""
+                 operationName:@"DescribeContact"
+                   outputClass:[AWSConnectDescribeContactResponse class]];
+}
+
+- (void)describeContact:(AWSConnectDescribeContactRequest *)request
+     completionHandler:(void (^)(AWSConnectDescribeContactResponse *response, NSError *error))completionHandler {
+    [[self describeContact:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectDescribeContactResponse *> * _Nonnull task) {
+        AWSConnectDescribeContactResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSConnectDescribeContactFlowResponse *> *)describeContactFlow:(AWSConnectDescribeContactFlowRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodGET
@@ -958,6 +1120,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSConnectDescribeContactFlowResponse *response, NSError *error))completionHandler {
     [[self describeContactFlow:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectDescribeContactFlowResponse *> * _Nonnull task) {
         AWSConnectDescribeContactFlowResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSConnectDescribeContactFlowModuleResponse *> *)describeContactFlowModule:(AWSConnectDescribeContactFlowModuleRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodGET
+                     URLString:@"/contact-flow-modules/{InstanceId}/{ContactFlowModuleId}"
+                  targetPrefix:@""
+                 operationName:@"DescribeContactFlowModule"
+                   outputClass:[AWSConnectDescribeContactFlowModuleResponse class]];
+}
+
+- (void)describeContactFlowModule:(AWSConnectDescribeContactFlowModuleRequest *)request
+     completionHandler:(void (^)(AWSConnectDescribeContactFlowModuleResponse *response, NSError *error))completionHandler {
+    [[self describeContactFlowModule:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectDescribeContactFlowModuleResponse *> * _Nonnull task) {
+        AWSConnectDescribeContactFlowModuleResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -1211,6 +1396,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSConnectDescribeUserHierarchyStructureResponse *response, NSError *error))completionHandler {
     [[self describeUserHierarchyStructure:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectDescribeUserHierarchyStructureResponse *> * _Nonnull task) {
         AWSConnectDescribeUserHierarchyStructureResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSConnectDescribeVocabularyResponse *> *)describeVocabulary:(AWSConnectDescribeVocabularyRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodGET
+                     URLString:@"/vocabulary/{InstanceId}/{VocabularyId}"
+                  targetPrefix:@""
+                 operationName:@"DescribeVocabulary"
+                   outputClass:[AWSConnectDescribeVocabularyResponse class]];
+}
+
+- (void)describeVocabulary:(AWSConnectDescribeVocabularyRequest *)request
+     completionHandler:(void (^)(AWSConnectDescribeVocabularyResponse *response, NSError *error))completionHandler {
+    [[self describeVocabulary:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectDescribeVocabularyResponse *> * _Nonnull task) {
+        AWSConnectDescribeVocabularyResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -1558,6 +1766,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSConnectListContactFlowModulesResponse *> *)listContactFlowModules:(AWSConnectListContactFlowModulesRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodGET
+                     URLString:@"/contact-flow-modules-summary/{InstanceId}"
+                  targetPrefix:@""
+                 operationName:@"ListContactFlowModules"
+                   outputClass:[AWSConnectListContactFlowModulesResponse class]];
+}
+
+- (void)listContactFlowModules:(AWSConnectListContactFlowModulesRequest *)request
+     completionHandler:(void (^)(AWSConnectListContactFlowModulesResponse *response, NSError *error))completionHandler {
+    [[self listContactFlowModules:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectListContactFlowModulesResponse *> * _Nonnull task) {
+        AWSConnectListContactFlowModulesResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSConnectListContactFlowsResponse *> *)listContactFlows:(AWSConnectListContactFlowsRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodGET
@@ -1571,6 +1802,52 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSConnectListContactFlowsResponse *response, NSError *error))completionHandler {
     [[self listContactFlows:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectListContactFlowsResponse *> * _Nonnull task) {
         AWSConnectListContactFlowsResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSConnectListContactReferencesResponse *> *)listContactReferences:(AWSConnectListContactReferencesRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodGET
+                     URLString:@"/contact/references/{InstanceId}/{ContactId}"
+                  targetPrefix:@""
+                 operationName:@"ListContactReferences"
+                   outputClass:[AWSConnectListContactReferencesResponse class]];
+}
+
+- (void)listContactReferences:(AWSConnectListContactReferencesRequest *)request
+     completionHandler:(void (^)(AWSConnectListContactReferencesResponse *response, NSError *error))completionHandler {
+    [[self listContactReferences:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectListContactReferencesResponse *> * _Nonnull task) {
+        AWSConnectListContactReferencesResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSConnectListDefaultVocabulariesResponse *> *)listDefaultVocabularies:(AWSConnectListDefaultVocabulariesRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/default-vocabulary-summary/{InstanceId}"
+                  targetPrefix:@""
+                 operationName:@"ListDefaultVocabularies"
+                   outputClass:[AWSConnectListDefaultVocabulariesResponse class]];
+}
+
+- (void)listDefaultVocabularies:(AWSConnectListDefaultVocabulariesRequest *)request
+     completionHandler:(void (^)(AWSConnectListDefaultVocabulariesResponse *response, NSError *error))completionHandler {
+    [[self listDefaultVocabularies:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectListDefaultVocabulariesResponse *> * _Nonnull task) {
+        AWSConnectListDefaultVocabulariesResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -2087,6 +2364,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSConnectSearchVocabulariesResponse *> *)searchVocabularies:(AWSConnectSearchVocabulariesRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/vocabulary-summary/{InstanceId}"
+                  targetPrefix:@""
+                 operationName:@"SearchVocabularies"
+                   outputClass:[AWSConnectSearchVocabulariesResponse class]];
+}
+
+- (void)searchVocabularies:(AWSConnectSearchVocabulariesRequest *)request
+     completionHandler:(void (^)(AWSConnectSearchVocabulariesResponse *response, NSError *error))completionHandler {
+    [[self searchVocabularies:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectSearchVocabulariesResponse *> * _Nonnull task) {
+        AWSConnectSearchVocabulariesResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSConnectStartChatContactResponse *> *)startChatContact:(AWSConnectStartChatContactRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPUT
@@ -2360,6 +2660,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSConnectUpdateContactResponse *> *)updateContact:(AWSConnectUpdateContactRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/contacts/{InstanceId}/{ContactId}"
+                  targetPrefix:@""
+                 operationName:@"UpdateContact"
+                   outputClass:[AWSConnectUpdateContactResponse class]];
+}
+
+- (void)updateContact:(AWSConnectUpdateContactRequest *)request
+     completionHandler:(void (^)(AWSConnectUpdateContactResponse *response, NSError *error))completionHandler {
+    [[self updateContact:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectUpdateContactResponse *> * _Nonnull task) {
+        AWSConnectUpdateContactResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSConnectUpdateContactAttributesResponse *> *)updateContactAttributes:(AWSConnectUpdateContactAttributesRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
@@ -2405,6 +2728,74 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask *)updateContactFlowMetadata:(AWSConnectUpdateContactFlowMetadataRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/contact-flows/{InstanceId}/{ContactFlowId}/metadata"
+                  targetPrefix:@""
+                 operationName:@"UpdateContactFlowMetadata"
+                   outputClass:nil];
+}
+
+- (void)updateContactFlowMetadata:(AWSConnectUpdateContactFlowMetadataRequest *)request
+     completionHandler:(void (^)(NSError *error))completionHandler {
+    [[self updateContactFlowMetadata:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSConnectUpdateContactFlowModuleContentResponse *> *)updateContactFlowModuleContent:(AWSConnectUpdateContactFlowModuleContentRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/contact-flow-modules/{InstanceId}/{ContactFlowModuleId}/content"
+                  targetPrefix:@""
+                 operationName:@"UpdateContactFlowModuleContent"
+                   outputClass:[AWSConnectUpdateContactFlowModuleContentResponse class]];
+}
+
+- (void)updateContactFlowModuleContent:(AWSConnectUpdateContactFlowModuleContentRequest *)request
+     completionHandler:(void (^)(AWSConnectUpdateContactFlowModuleContentResponse *response, NSError *error))completionHandler {
+    [[self updateContactFlowModuleContent:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectUpdateContactFlowModuleContentResponse *> * _Nonnull task) {
+        AWSConnectUpdateContactFlowModuleContentResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSConnectUpdateContactFlowModuleMetadataResponse *> *)updateContactFlowModuleMetadata:(AWSConnectUpdateContactFlowModuleMetadataRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/contact-flow-modules/{InstanceId}/{ContactFlowModuleId}/metadata"
+                  targetPrefix:@""
+                 operationName:@"UpdateContactFlowModuleMetadata"
+                   outputClass:[AWSConnectUpdateContactFlowModuleMetadataResponse class]];
+}
+
+- (void)updateContactFlowModuleMetadata:(AWSConnectUpdateContactFlowModuleMetadataRequest *)request
+     completionHandler:(void (^)(AWSConnectUpdateContactFlowModuleMetadataResponse *response, NSError *error))completionHandler {
+    [[self updateContactFlowModuleMetadata:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectUpdateContactFlowModuleMetadataResponse *> * _Nonnull task) {
+        AWSConnectUpdateContactFlowModuleMetadataResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask *)updateContactFlowName:(AWSConnectUpdateContactFlowNameRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
@@ -2421,6 +2812,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
         if (completionHandler) {
             completionHandler(error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSConnectUpdateContactScheduleResponse *> *)updateContactSchedule:(AWSConnectUpdateContactScheduleRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/contact/schedule"
+                  targetPrefix:@""
+                 operationName:@"UpdateContactSchedule"
+                   outputClass:[AWSConnectUpdateContactScheduleResponse class]];
+}
+
+- (void)updateContactSchedule:(AWSConnectUpdateContactScheduleRequest *)request
+     completionHandler:(void (^)(AWSConnectUpdateContactScheduleResponse *response, NSError *error))completionHandler {
+    [[self updateContactSchedule:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectUpdateContactScheduleResponse *> * _Nonnull task) {
+        AWSConnectUpdateContactScheduleResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
         }
 
         return nil;

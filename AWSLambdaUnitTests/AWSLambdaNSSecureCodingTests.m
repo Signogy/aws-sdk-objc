@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -53,6 +53,8 @@
 - (void) test_AWSLambdaEnvironmentResponse API_AVAILABLE(ios(11));
 - (void) test_AWSLambdaEventSourceMappingConfiguration API_AVAILABLE(ios(11));
 - (void) test_AWSLambdaFileSystemConfig API_AVAILABLE(ios(11));
+- (void) test_AWSLambdaFilter API_AVAILABLE(ios(11));
+- (void) test_AWSLambdaFilterCriteria API_AVAILABLE(ios(11));
 - (void) test_AWSLambdaFunctionCode API_AVAILABLE(ios(11));
 - (void) test_AWSLambdaFunctionCodeLocation API_AVAILABLE(ios(11));
 - (void) test_AWSLambdaFunctionConfiguration API_AVAILABLE(ios(11));
@@ -282,6 +284,14 @@
 
 - (void) test_AWSLambdaFileSystemConfig {
     [self validateSecureCodingForClass:[AWSLambdaFileSystemConfig class]];
+}
+
+- (void) test_AWSLambdaFilter {
+    [self validateSecureCodingForClass:[AWSLambdaFilter class]];
+}
+
+- (void) test_AWSLambdaFilterCriteria {
+    [self validateSecureCodingForClass:[AWSLambdaFilterCriteria class]];
 }
 
 - (void) test_AWSLambdaFunctionCode {

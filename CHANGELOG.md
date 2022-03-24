@@ -2,7 +2,150 @@
 
 ## Unreleased
 
-### Features for next release
+
+-Features for next release
+
+## 2.27.4
+
+### Misc. Updates
+
+- **AWSMobileClient**
+  - chore: Modified getToken flow for userpool signIn (See [PR #4022](https://github.com/aws-amplify/aws-sdk-ios/pull/4022))
+
+- Model updates for the following services
+  - AWSConnect
+  - AWSLambda
+  - AWSLocation
+  - AWSCognitoIdentityProvider
+
+## 2.27.3
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSSTS
+  - AWSConnect
+  - AWSEC2
+  - AWSComprehend
+  - AWSTranscribe
+
+## 2.27.2
+
+### Bug Fixes
+
+- **AWSMobileClient**
+  - Clears old keychain if the configuration changes (See [PR #3853](https://github.com/aws-amplify/aws-sdk-ios/pull/3853))
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSSNS
+  - AWSPinpoint
+  - AWSComprehend
+  - AWSDynamoDB
+  - AWSCognitoIdentityProvider
+  - AWSLambda
+  - AWSTextract
+  - AWSTranslate
+  - AWSAutoScaling
+
+
+## 2.27.1
+
+### Misc. Updates
+
+- **AWSCognito**
+  - Removed unused values from AWSCognitoIdentityProviderASF calculation. (See [PR #3985](https://github.com/aws-amplify/aws-sdk-ios/pull/3985))
+  
+- Model updates for the following services
+  - AWSTranscribe
+  - AWSConnect
+
+## 2.27.0
+
+### Breaking Changes
+
+- **AWSMobileClient**
+  - **Breaking Change** Remove the option to not signout when deleting a user.
+
+### Bug Fixes
+
+- **AWSMobileClient**
+  - Prevent user from cancelling signout after account deletion with hosted UI. (See [PR #3965](https://github.com/aws-amplify/aws-sdk-ios/pull/3965))
+  - Fix issue that caused access token to be revoked when user canceled hosted UI signout. (See [PR #3964](https://github.com/aws-amplify/aws-sdk-ios/pull/3964))
+
+- **AWSCognitoAuth**
+  - Fixes memory leak in hostedUI. (See [PR #3969](https://github.com/aws-amplify/aws-sdk-ios/pull/3969))
+
+- **CI/CD**
+  - Fixes CocoaPods release step which reports `pod repo update` to run after AWSCore is pushed (See [PR #3961](https://github.com/aws-amplify/aws-sdk-ios/pull/3961))
+
+- **AWSS3**
+  - Fixed an issue with Multi Part uploads when uploading from a file URL that contains a space (See [PR #3956](https://github.com/aws-amplify/aws-sdk-ios/pull/3956))
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSLocation
+  - AWSPinpoint
+  - AWSTranscribe
+  - AWSRekognition
+  - **Breaking Change** AWSConnect
+
+## 2.26.7
+
+### New features
+
+- **AWSMobileClient**
+  - Add DeleteUser API to AWSMobileClient (See [PR #3948](https://github.com/aws-amplify/aws-sdk-ios/pull/3948))
+
+### Bug Fixes
+
+- **AWSMobileClient**
+  - Reset completion sources in AWSMobileClient (See [PR #3732](https://github.com/aws-amplify/aws-sdk-ios/pull/3732))
+  - Crash fix in AWSMobileClient for call to leave DispatchGroup (See [PR #3951](https://github.com/aws-amplify/aws-sdk-ios/pull/3951))
+
+- **AWSIoT**
+  - Adds leeway in unit tests (See [PR #3952](https://github.com/aws-amplify/aws-sdk-ios/pull/3952))
+
+## 2.26.6
+
+### Bug Fixes
+- Return Swift optionals from Objective C methods that can return nil ([PR #3912)](https://github.com/aws-amplify/aws-sdk-ios/pull/3912))
+- **AWSMobileClient**
+  - fix(AWSMobileClient): eliminates thread blocking in operations ([PR #3872](https://github.com/aws-amplify/aws-sdk-ios/pull/3872))
+
+### Misc. Updates
+- Model updates for the following services
+  - AWSRekognition
+  - AWSSageMakerRuntime
+  - AWSDynamoDB
+  - AWSTextract
+  - AWSPinpoint
+  - AWSAutoScaling
+  - AWSLambda
+  - AWSTranslate
+  - AWSSQS
+  - AWSElasticLoadBalancingv2
+
+## 2.26.5
+
+### New features
+- **AWSCore**
+  - Support for `ap-southeast-3` - Asia Pacific (Jakarta) (see [AWS Regional Services List](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) for a list of services supported in the region)
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSLocation
+  - AWSDynamoDB
+  - AWSTranslate
+  - AWSLambda
+  - AWSSNS
+  
+## 2.26.4
+
+### Bug Fixes
 
 - **AWSIoT**
   - fix(AWSIoT): adds back Message type ([PR #3852](https://github.com/aws-amplify/aws-sdk-ios/pull/3852))

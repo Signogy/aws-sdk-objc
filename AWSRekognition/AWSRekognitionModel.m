@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -2063,6 +2063,7 @@ NSString *const AWSRekognitionErrorDomain = @"com.amazonaws.AWSRekognitionErrorD
              @"externalImageId" : @"ExternalImageId",
              @"faceId" : @"FaceId",
              @"imageId" : @"ImageId",
+             @"indexFacesModelVersion" : @"IndexFacesModelVersion",
              };
 }
 
@@ -3276,6 +3277,12 @@ NSString *const AWSRekognitionErrorDomain = @"com.amazonaws.AWSRekognitionErrorD
         if ([value caseInsensitiveCompare:@"Female"] == NSOrderedSame) {
             return @(AWSRekognitionKnownGenderTypeFemale);
         }
+        if ([value caseInsensitiveCompare:@"Nonbinary"] == NSOrderedSame) {
+            return @(AWSRekognitionKnownGenderTypeNonbinary);
+        }
+        if ([value caseInsensitiveCompare:@"Unlisted"] == NSOrderedSame) {
+            return @(AWSRekognitionKnownGenderTypeUnlisted);
+        }
         return @(AWSRekognitionKnownGenderTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -3283,6 +3290,10 @@ NSString *const AWSRekognitionErrorDomain = @"com.amazonaws.AWSRekognitionErrorD
                 return @"Male";
             case AWSRekognitionKnownGenderTypeFemale:
                 return @"Female";
+            case AWSRekognitionKnownGenderTypeNonbinary:
+                return @"Nonbinary";
+            case AWSRekognitionKnownGenderTypeUnlisted:
+                return @"Unlisted";
             default:
                 return nil;
         }

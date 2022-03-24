@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@
 #import "AWSSNSResources.h"
 
 static NSString *const AWSInfoSNS = @"SNS";
-NSString *const AWSSNSSDKVersion = @"2.26.3";
+NSString *const AWSSNSSDKVersion = @"2.27.4";
 
 
 @interface AWSSNSResponseSerializer : AWSXMLResponseSerializer
@@ -40,10 +40,14 @@ static NSDictionary *errorCodeDictionary = nil;
 + (void)initialize {
     errorCodeDictionary = @{
                             @"AuthorizationError" : @(AWSSNSErrorAuthorizationError),
+                            @"BatchEntryIdsNotDistinct" : @(AWSSNSErrorBatchEntryIdsNotDistinct),
+                            @"BatchRequestTooLong" : @(AWSSNSErrorBatchRequestTooLong),
                             @"ConcurrentAccess" : @(AWSSNSErrorConcurrentAccess),
+                            @"EmptyBatchRequest" : @(AWSSNSErrorEmptyBatchRequest),
                             @"EndpointDisabled" : @(AWSSNSErrorEndpointDisabled),
                             @"FilterPolicyLimitExceeded" : @(AWSSNSErrorFilterPolicyLimitExceeded),
                             @"InternalError" : @(AWSSNSErrorInternalError),
+                            @"InvalidBatchEntryId" : @(AWSSNSErrorInvalidBatchEntryId),
                             @"InvalidParameter" : @(AWSSNSErrorInvalidParameter),
                             @"ParameterValueInvalid" : @(AWSSNSErrorInvalidParameterValue),
                             @"InvalidSecurity" : @(AWSSNSErrorInvalidSecurity),
@@ -62,6 +66,7 @@ static NSDictionary *errorCodeDictionary = nil;
                             @"TagLimitExceeded" : @(AWSSNSErrorTagLimitExceeded),
                             @"TagPolicy" : @(AWSSNSErrorTagPolicy),
                             @"Throttled" : @(AWSSNSErrorThrottled),
+                            @"TooManyEntriesInBatchRequest" : @(AWSSNSErrorTooManyEntriesInBatchRequest),
                             @"TopicLimitExceeded" : @(AWSSNSErrorTopicLimitExceeded),
                             @"UserError" : @(AWSSNSErrorUserError),
                             @"ValidationException" : @(AWSSNSErrorValidation),
@@ -928,6 +933,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSSNSPublishResponse *response, NSError *error))completionHandler {
     [[self publish:request] continueWithBlock:^id _Nullable(AWSTask<AWSSNSPublishResponse *> * _Nonnull task) {
         AWSSNSPublishResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSSNSPublishBatchResponse *> *)publishBatch:(AWSSNSPublishBatchInput *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@""
+                 operationName:@"PublishBatch"
+                   outputClass:[AWSSNSPublishBatchResponse class]];
+}
+
+- (void)publishBatch:(AWSSNSPublishBatchInput *)request
+     completionHandler:(void (^)(AWSSNSPublishBatchResponse *response, NSError *error))completionHandler {
+    [[self publishBatch:request] continueWithBlock:^id _Nullable(AWSTask<AWSSNSPublishBatchResponse *> * _Nonnull task) {
+        AWSSNSPublishBatchResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
