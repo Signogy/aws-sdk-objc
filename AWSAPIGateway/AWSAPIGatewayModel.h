@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -60,7 +60,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  *  The Raw NSURLResponse received on an API invocation.
  */
-@property (nonatomic, readonly) NSURLResponse *rawReponse;
+@property (nonatomic, readonly) NSURLResponse *rawResponse;
 
 /**
  *  The status code received in NSURLResponse on invocation of an API.

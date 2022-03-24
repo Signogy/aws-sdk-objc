@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -25,19 +25,7 @@
 
 + (void)setUp {
     [super setUp];
-    [AWSTestUtility setupCognitoCredentialsProvider];
-}
-
-- (void)setUp
-{
-    [super setUp];
-    // Put setup code here; it will be run once, before the first test case.
-}
-
-- (void)tearDown
-{
-    // Put teardown code here; it will be run once, after the last test case.
-    [super tearDown];
+    [AWSTestUtility setupSessionCredentialsProvider];
 }
 
 -(void)testClockSkewSQS {
@@ -54,13 +42,6 @@
         if (task.error) {
             XCTFail(@"Error: [%@]", task.error);
         }
-
-        if (task.result) {
-            AWSSQSListQueuesResult *listQueuesResult = task.result;
-            AWSLogDebug(@"[%@]", listQueuesResult);
-            XCTAssertNotNil(listQueuesResult.queueUrls);
-        }
-
         return nil;
     }] waitUntilFinished];
 
@@ -78,7 +59,7 @@
 
         if (task.result) {
             AWSSQSListQueuesResult *listQueuesResult = task.result;
-            AWSLogDebug(@"[%@]", listQueuesResult);
+            AWSDDLogDebug(@"[%@]", listQueuesResult);
             XCTAssertNotNil(listQueuesResult.queueUrls);
         }
 
@@ -86,14 +67,18 @@
     }] waitUntilFinished];
 }
 
-- (void)testGetQueueAttributesRequest {
+- (void)testGetQueueAttributesRequestFailure {
     AWSSQS *sqs = [AWSSQS defaultSQS];
     
     AWSSQSGetQueueAttributesRequest *attributesRequest = [AWSSQSGetQueueAttributesRequest new];
     attributesRequest.queueUrl = @""; //queueURL is empty
     
     [[[sqs getQueueAttributes:attributesRequest] continueWithBlock:^id(AWSTask *task) {
-        XCTAssertNotNil(task.error, @"expected WrongQueueURL Error but got nil");
+        XCTAssertNotNil(task.error, @"expected AWSSQSErrorQueueDoesNotExist Error but got nil");
+        XCTAssertEqualObjects(task.error.domain, AWSSQSErrorDomain);
+        XCTAssertEqual(task.error.code, AWSSQSErrorQueueDoesNotExist);
+        XCTAssertTrue([@"AWS.SimpleQueueService.NonExistentQueue" isEqualToString:task.error.userInfo[@"Code"]]);
+        XCTAssertTrue([@"The specified queue does not exist for this wsdl version." isEqualToString:task.error.userInfo[@"Message"]]);
         return nil;
     }] waitUntilFinished];
 }

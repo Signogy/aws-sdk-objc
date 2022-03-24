@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
 //
 
 #import "AWSIoTDataService.h"
-#import <AWSCore/AWSNetworking.h>
 #import <AWSCore/AWSCategory.h>
 #import <AWSCore/AWSNetworking.h>
 #import <AWSCore/AWSSignature.h>
@@ -26,7 +25,7 @@
 #import "AWSIoTDataResources.h"
 
 static NSString *const AWSInfoIoTData = @"IoTData";
-static NSString *const AWSIoTDataSDKVersion = @"2.4.16";
+NSString *const AWSIoTDataSDKVersion = @"2.27.4";
 
 
 @interface AWSIoTDataResponseSerializer : AWSJSONResponseSerializer
@@ -103,7 +102,8 @@ static NSDictionary *errorCodeDictionary = nil;
                                                        error:error];
         }
     }
-	    return responseObject;
+	
+    return responseObject;
 }
 
 @end
@@ -174,7 +174,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
         if (!serviceConfiguration) {
             @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                           reason:@"The service configuration is `nil`. You need to configure `Info.plist` or set `defaultServiceConfiguration` before using this method."
+                                           reason:@"The service configuration is `nil`. You need to configure `awsconfiguration.json`, `Info.plist` or set `defaultServiceConfiguration` before using this method."
                                          userInfo:nil];
         }
         _defaultIoTData = [[AWSIoTData alloc] initWithConfiguration:serviceConfiguration];
@@ -300,10 +300,28 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSIoTDataDeleteThingShadowResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
+        if (completionHandler) {
+            completionHandler(result, error);
         }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSIoTDataGetRetainedMessageResponse *> *)getRetainedMessage:(AWSIoTDataGetRetainedMessageRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodGET
+                     URLString:@"/retainedMessage/{topic}"
+                  targetPrefix:@""
+                 operationName:@"GetRetainedMessage"
+                   outputClass:[AWSIoTDataGetRetainedMessageResponse class]];
+}
+
+- (void)getRetainedMessage:(AWSIoTDataGetRetainedMessageRequest *)request
+     completionHandler:(void (^)(AWSIoTDataGetRetainedMessageResponse *response, NSError *error))completionHandler {
+    [[self getRetainedMessage:request] continueWithBlock:^id _Nullable(AWSTask<AWSIoTDataGetRetainedMessageResponse *> * _Nonnull task) {
+        AWSIoTDataGetRetainedMessageResponse *result = task.result;
+        NSError *error = task.error;
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -328,10 +346,51 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSIoTDataGetThingShadowResponse *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
+        if (completionHandler) {
+            completionHandler(result, error);
         }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSIoTDataListNamedShadowsForThingResponse *> *)listNamedShadowsForThing:(AWSIoTDataListNamedShadowsForThingRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodGET
+                     URLString:@"/api/things/shadow/ListNamedShadowsForThing/{thingName}"
+                  targetPrefix:@""
+                 operationName:@"ListNamedShadowsForThing"
+                   outputClass:[AWSIoTDataListNamedShadowsForThingResponse class]];
+}
+
+- (void)listNamedShadowsForThing:(AWSIoTDataListNamedShadowsForThingRequest *)request
+     completionHandler:(void (^)(AWSIoTDataListNamedShadowsForThingResponse *response, NSError *error))completionHandler {
+    [[self listNamedShadowsForThing:request] continueWithBlock:^id _Nullable(AWSTask<AWSIoTDataListNamedShadowsForThingResponse *> * _Nonnull task) {
+        AWSIoTDataListNamedShadowsForThingResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSIoTDataListRetainedMessagesResponse *> *)listRetainedMessages:(AWSIoTDataListRetainedMessagesRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodGET
+                     URLString:@"/retainedMessage"
+                  targetPrefix:@""
+                 operationName:@"ListRetainedMessages"
+                   outputClass:[AWSIoTDataListRetainedMessagesResponse class]];
+}
+
+- (void)listRetainedMessages:(AWSIoTDataListRetainedMessagesRequest *)request
+     completionHandler:(void (^)(AWSIoTDataListRetainedMessagesResponse *response, NSError *error))completionHandler {
+    [[self listRetainedMessages:request] continueWithBlock:^id _Nullable(AWSTask<AWSIoTDataListRetainedMessagesResponse *> * _Nonnull task) {
+        AWSIoTDataListRetainedMessagesResponse *result = task.result;
+        NSError *error = task.error;
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -355,11 +414,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self publish:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(error);
         }
@@ -382,11 +436,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self updateThingShadow:request] continueWithBlock:^id _Nullable(AWSTask<AWSIoTDataUpdateThingShadowResponse *> * _Nonnull task) {
         AWSIoTDataUpdateThingShadowResponse *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);

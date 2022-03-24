@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -20,7 +20,6 @@
 #import "AWSSimpleDB.h"
 #import "AWSTestUtility.h"
 
-NSString *const AWSSimpleDBTestDomainNamePrefix = @"ios-v2-test-";
 static NSString *_testDomainName = nil;
 
 @interface AWSSimpleDBTests : XCTestCase
@@ -31,11 +30,13 @@ static NSString *_testDomainName = nil;
 
 + (void)setUp {
     [super setUp];
-    [AWSTestUtility setupCognitoCredentialsProvider];
-    //[AWSTestUtility setupCrdentialsViaFile];
+    [AWSTestUtility setupSessionCredentialsProvider];
 
+    NSString *domainPrefix = [AWSTestUtility getIntegrationTestConfigurationValueForPackageId:@"sdb"
+                                                                                    configKey:@"domain_prefix"];
+    
     NSTimeInterval timeIntervalSinceReferenceDate = [NSDate timeIntervalSinceReferenceDate];
-    _testDomainName = [NSString stringWithFormat:@"%@%lld", AWSSimpleDBTestDomainNamePrefix, (int64_t)timeIntervalSinceReferenceDate];
+    _testDomainName = [NSString stringWithFormat:@"%@%lld", domainPrefix, (int64_t)timeIntervalSinceReferenceDate];
 
     [[self createTestDomain] waitUntilFinished];
 }
@@ -96,7 +97,7 @@ static NSString *_testDomainName = nil;
         if (task.result) {
             AWSSimpleDBListDomainsResult *listDomainsResult = task.result;
             XCTAssertNotNil(listDomainsResult.domainNames, @" doemainNames Array should not be nil.");
-            AWSLogDebug(@"[%@]", listDomainsResult);
+            AWSDDLogDebug(@"[%@]", listDomainsResult);
         }
 
         return nil;
@@ -322,7 +323,11 @@ static NSString *_testDomainName = nil;
     metaDataRequest.domainName = @""; //domainName is empty
 
     [[[sdb domainMetadata:metaDataRequest] continueWithBlock:^id(AWSTask *task) {
-        XCTAssertNotNil(task.error, @"expected InvalidDomainName error but got nil");
+        XCTAssertNotNil(task.error, @"expected InvalidParameterValue error but got nil");
+        XCTAssertEqualObjects(task.error.domain, AWSSimpleDBErrorDomain);
+        XCTAssertEqual(task.error.code, AWSSimpleDBErrorInvalidParameterValue);
+        XCTAssertTrue([@"InvalidParameterValue" isEqualToString:task.error.userInfo[@"Code"]]);
+        XCTAssertTrue([@"Value () for parameter DomainName is invalid. " isEqualToString: (NSString *)task.error.userInfo[@"Message"]]);
         return nil;
     }]waitUntilFinished];
 }

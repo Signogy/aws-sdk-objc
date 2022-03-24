@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
 //
 
 #import "AWSSimpleDBService.h"
-#import <AWSCore/AWSNetworking.h>
 #import <AWSCore/AWSCategory.h>
 #import <AWSCore/AWSNetworking.h>
 #import <AWSCore/AWSSignature.h>
@@ -26,7 +25,7 @@
 #import "AWSSimpleDBResources.h"
 
 static NSString *const AWSInfoSimpleDB = @"SimpleDB";
-static NSString *const AWSSimpleDBSDKVersion = @"2.4.16";
+NSString *const AWSSimpleDBSDKVersion = @"2.27.4";
 
 
 @interface AWSSimpleDBResponseSerializer : AWSXMLResponseSerializer
@@ -73,23 +72,24 @@ static NSDictionary *errorCodeDictionary = nil;
                                                     data:data
                                                    error:error];
     if (!*error && [responseObject isKindOfClass:[NSDictionary class]]) {
-    	if (!*error && [responseObject isKindOfClass:[NSDictionary class]]) {
-	        if ([errorCodeDictionary objectForKey:[[[responseObject objectForKey:@"__type"] componentsSeparatedByString:@"#"] lastObject]]) {
-	            if (error) {
-	                *error = [NSError errorWithDomain:AWSSimpleDBErrorDomain
-	                                             code:[[errorCodeDictionary objectForKey:[[[responseObject objectForKey:@"__type"] componentsSeparatedByString:@"#"] lastObject]] integerValue]
-	                                         userInfo:responseObject];
-	            }
-	            return responseObject;
-	        } else if ([[[responseObject objectForKey:@"__type"] componentsSeparatedByString:@"#"] lastObject]) {
-	            if (error) {
-	                *error = [NSError errorWithDomain:AWSCognitoIdentityErrorDomain
-	                                             code:AWSCognitoIdentityErrorUnknown
-	                                         userInfo:responseObject];
-	            }
-	            return responseObject;
-	        }
-    	}
+
+        NSDictionary *errorInfo = responseObject[@"Error"];
+        if (errorInfo[@"Code"] && errorCodeDictionary[errorInfo[@"Code"]]) {
+            if (error) {
+                *error = [NSError errorWithDomain:AWSSimpleDBErrorDomain
+                                             code:[errorCodeDictionary[errorInfo[@"Code"]] integerValue]
+                                         userInfo:errorInfo
+                         ];
+                return responseObject;
+            }
+        } else if (errorInfo) {
+            if (error) {
+                *error = [NSError errorWithDomain:AWSSimpleDBErrorDomain
+                                             code:AWSSimpleDBErrorUnknown
+                                         userInfo:errorInfo];
+                return responseObject;
+            }
+        }
     }
 
     if (!*error && response.statusCode/100 != 2) {
@@ -105,7 +105,8 @@ static NSDictionary *errorCodeDictionary = nil;
                                                        error:error];
         }
     }
-	    return responseObject;
+
+    return responseObject;
 }
 
 @end
@@ -176,7 +177,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
         if (!serviceConfiguration) {
             @throw [NSException exceptionWithName:NSInternalInconsistencyException
-                                           reason:@"The service configuration is `nil`. You need to configure `Info.plist` or set `defaultServiceConfiguration` before using this method."
+                                           reason:@"The service configuration is `nil`. You need to configure `awsconfiguration.json`, `Info.plist` or set `defaultServiceConfiguration` before using this method."
                                          userInfo:nil];
         }
         _defaultSimpleDB = [[AWSSimpleDB alloc] initWithConfiguration:serviceConfiguration];
@@ -302,11 +303,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self batchDeleteAttributes:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(error);
         }
@@ -328,11 +324,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self batchPutAttributes:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(error);
@@ -356,11 +347,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self createDomain:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(error);
         }
@@ -383,11 +369,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self deleteAttributes:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(error);
         }
@@ -409,11 +390,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self deleteDomain:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(error);
@@ -438,11 +414,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSimpleDBDomainMetadataResult *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -465,11 +436,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self getAttributes:request] continueWithBlock:^id _Nullable(AWSTask<AWSSimpleDBGetAttributesResult *> * _Nonnull task) {
         AWSSimpleDBGetAttributesResult *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);
@@ -494,11 +460,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         AWSSimpleDBListDomainsResult *result = task.result;
         NSError *error = task.error;
 
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
-
         if (completionHandler) {
             completionHandler(result, error);
         }
@@ -520,11 +481,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self putAttributes:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(error);
@@ -548,11 +504,6 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     [[self select:request] continueWithBlock:^id _Nullable(AWSTask<AWSSimpleDBSelectResult *> * _Nonnull task) {
         AWSSimpleDBSelectResult *result = task.result;
         NSError *error = task.error;
-
-        if (task.exception) {
-            AWSLogError(@"Fatal exception: [%@]", task.exception);
-            kill(getpid(), SIGKILL);
-        }
 
         if (completionHandler) {
             completionHandler(result, error);

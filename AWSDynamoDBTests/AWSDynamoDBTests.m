@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ static NSString *table2Name = nil;
 
 + (void)setUp {
     [super setUp];
-    [AWSTestUtility setupCognitoCredentialsProvider];
+    [AWSTestUtility setupSessionCredentialsProvider];
 
     NSTimeInterval timeIntervalSinceReferenceDate = [NSDate timeIntervalSinceReferenceDate];
     table1Name = [NSString stringWithFormat:@"%@-%f", AWSDynamoDBTestTable1, timeIntervalSinceReferenceDate];
@@ -307,7 +307,7 @@ static NSString *table2Name = nil;
             XCTFail(@"The request failed. error: [%@]", task.error);
         } else {
             AWSDynamoDBPutItemOutput *putItemOutput = task.result;
-            AWSLogDebug(@"Result of putItemOutput is:%@",[putItemOutput description]);
+            AWSDDLogDebug(@"Result of putItemOutput is:%@",[putItemOutput description]);
             //XCTAssertNotNil(putItemOutput, @"putItemOutput should NOT be nil!");
         }
 
@@ -620,6 +620,7 @@ static NSString *table2Name = nil;
 
     if (![[self class] createTable:table2Name]) {
         XCTFail(@"failed to createTable: %@",table2Name);
+        return;
     }
 
     NSNumber *newCapacity = @2;

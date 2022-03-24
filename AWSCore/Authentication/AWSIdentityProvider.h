@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ FOUNDATION_EXPORT NSString *const AWSCognitoIdentityIdChangedNotification;
 FOUNDATION_EXPORT NSString *const AWSCognitoNotificationPreviousId;
 FOUNDATION_EXPORT NSString *const AWSCognitoNotificationNewId;
 
+FOUNDATION_EXPORT NSString *const AWSIdentityProviderApple;
 FOUNDATION_EXPORT NSString *const AWSIdentityProviderDigits;
 FOUNDATION_EXPORT NSString *const AWSIdentityProviderFacebook;
 FOUNDATION_EXPORT NSString *const AWSIdentityProviderGoogle;
@@ -30,18 +31,10 @@ FOUNDATION_EXPORT NSString *const AWSIdentityProviderTwitter;
 
 FOUNDATION_EXPORT NSString *const AWSIdentityProviderAmazonCognitoIdentity;
 
-typedef NS_ENUM(NSInteger, AWSCognitoLoginProviderKey) {
-    AWSCognitoLoginProviderKeyUnknown,
-    AWSCognitoLoginProviderKeyFacebook,
-    AWSCognitoLoginProviderKeyGoogle,
-    AWSCognitoLoginProviderKeyLoginWithAmazon,
-    AWSCognitoLoginProviderKeyTwitter,
-} __attribute__((deprecated("Use 'AWSIdentityProvider' const strings instead. e.g. 'AWSIdentityProviderFacebook'")));
-
 FOUNDATION_EXPORT NSString *const AWSCognitoCredentialsProviderHelperErrorDomain;
 typedef NS_ENUM(NSInteger, AWSCognitoCredentialsProviderHelperErrorType) {
-    AWSCognitoCredentialsProviderHelperErrorIdentityIsNil,
-    AWSCognitoCredentialsProviderHelperErrorTokenRefreshTimeout,
+    AWSCognitoCredentialsProviderHelperErrorTypeIdentityIsNil,
+    AWSCognitoCredentialsProviderHelperErrorTypeTokenRefreshTimeout,
 };
 
 @class AWSTask<__covariant ResultType>;
@@ -139,6 +132,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoCredentialsProviderHelperErrorType) {
 
 @end
 
+@class AWSServiceConfiguration;
 /**
  An abstract implementation of the AWSCognitoCredentialsProviderHelper. Developers should extend this class when they want to implement developer authenticated identities and want to support the basic Amazon Cognito authflow in the same application.
  */
@@ -150,6 +144,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoCredentialsProviderHelperErrorType) {
                     identityPoolId:(NSString *)identityPoolId
                    useEnhancedFlow:(BOOL)useEnhancedFlow
            identityProviderManager:(nullable id<AWSIdentityProviderManager>)identityProviderManager;
+
+- (instancetype)initWithRegionType:(AWSRegionType)regionType
+                    identityPoolId:(NSString *)identityPoolId
+                   useEnhancedFlow:(BOOL)useEnhancedFlow
+           identityProviderManager:(nullable id<AWSIdentityProviderManager>)identityProviderManager
+         identityPoolConfiguration:(AWSServiceConfiguration *)configuration;
 @end
 
 NS_ASSUME_NONNULL_END

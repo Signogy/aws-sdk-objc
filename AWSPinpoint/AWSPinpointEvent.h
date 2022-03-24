@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -41,7 +41,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) UTCTimeMillis eventTimestamp;
 
 /**
- Returns the sesion of the event.
+ Returns the session of the event.
  The session should be populated with the current session in AWSPinpointSessionClient. If no session exists a session is started.
  
  @returns the session of this AWSPinpointEvent.

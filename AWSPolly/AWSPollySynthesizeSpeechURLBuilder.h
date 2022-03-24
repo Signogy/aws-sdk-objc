@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -40,6 +40,16 @@ typedef NS_ENUM(NSInteger, AWSPollySynthesizeSpeechURLBuilderErrorType) {
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable lexiconNames;
 
 /**
+ <p>Optional language code for the Synthesize Speech request. This is only necessary if using a bilingual voice, such as Aditi, which can be used for either Indian English (en-IN) or Hindi (hi-IN). </p><p>If a bilingual voice is used and no language code is specified, Amazon Polly will use the default language of the bilingual voice. The default language for any voice is the one returned by the <a href="https://docs.aws.amazon.com/polly/latest/dg/API_DescribeVoices.html">DescribeVoices</a> operation for the <code>LanguageCode</code> parameter. For example, if no language code is specified, Aditi will use Indian English rather than Hindi.</p>
+ */
+@property (nonatomic, assign) AWSPollyLanguageCode languageCode;
+
+/**
+<p> Input text to synthesize. If you specify <code>ssml</code> as the <code>TextType</code>, follow the SSML format for the input text. </p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable speechMarkTypes;
+
+/**
  <p>Format to use for the resulting audio stream.</p>
  */
 @property (nonatomic, assign) AWSPollyOutputFormat outputFormat;
@@ -69,6 +79,12 @@ typedef NS_ENUM(NSInteger, AWSPollySynthesizeSpeechURLBuilderErrorType) {
  */
 @property (nonatomic, strong) NSDate *expires;
 
+/**
+ Specifies the engine (standard or neural) for Amazon Polly to use when processing input text for speech synthesis.
+ Using a voice that is not supported for the engine selected will result in an error.
+ */
+@property (nonatomic, assign) AWSPollyEngine engine;
+
 @end
 
 
@@ -81,10 +97,10 @@ typedef NS_ENUM(NSInteger, AWSPollySynthesizeSpeechURLBuilderErrorType) {
  
  *Swift*
  
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
         let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
-        AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
  
         return true
     }
@@ -103,11 +119,11 @@ typedef NS_ENUM(NSInteger, AWSPollySynthesizeSpeechURLBuilderErrorType) {
  
  *Swift*
  
-    let Polly = AWSPolly.defaultPollySynthesizeSpeechURLBuilder()
+    let PollyURLBuilder = AWSPollySynthesizeSpeechURLBuilder.default()
  
  *Objective-C*
  
-    AWSPolly *Polly = [AWSPolly defaultPollySynthesizeSpeechURLBuilder];
+    AWSPollySynthesizeSpeechURLBuilder *PollyURLBuilder = [AWSPollySynthesizeSpeechURLBuilder defaultPollySynthesizeSpeechURLBuilder];
  
  @return The default service client.
  */
@@ -120,10 +136,10 @@ typedef NS_ENUM(NSInteger, AWSPollySynthesizeSpeechURLBuilderErrorType) {
  
  *Swift*
  
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
         let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
-        AWSPollySynthesizeSpeechURLBuilder.registerPollySynthesizeSpeechURLBuilder(configuration, forKey: "USWest2Polly")
+        AWSPollySynthesizeSpeechURLBuilder.register(configuration, forKey: "USWest2Polly")
  
         return true
     }
@@ -142,11 +158,11 @@ typedef NS_ENUM(NSInteger, AWSPollySynthesizeSpeechURLBuilderErrorType) {
  
  *Swift*
  
-    let Polly = AWSPollySynthesizeSpeechURLBuilder(forKey: "USWest2Polly")
+    let PollyURLBuilder = AWSPollySynthesizeSpeechURLBuilder(forKey: "USWest2Polly")
  
  *Objective-C*
  
-    AWSPollySynthesizeSpeechURLBuilder *Polly = [AWSPollySynthesizeSpeechURLBuilder PollySynthesizeSpeechURLBuilderForKey:@"USWest2Polly"];
+    AWSPollySynthesizeSpeechURLBuilder *PollyURLBuilder = [AWSPollySynthesizeSpeechURLBuilder PollySynthesizeSpeechURLBuilderForKey:@"USWest2Polly"];
  
  @warning After calling this method, do not modify the configuration object. It may cause unspecified behaviors.
  
@@ -162,10 +178,10 @@ typedef NS_ENUM(NSInteger, AWSPollySynthesizeSpeechURLBuilderErrorType) {
  
  *Swift*
  
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
         let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
-        AWSPollySynthesizeSpeechURLBuilder.registerPollySynthesizeSpeechURLBuilder(configuration, forKey: "USWest2Polly")
+        AWSPollySynthesizeSpeechURLBuilder.register(configuration, forKey: "USWest2Polly")
  
         return true
     }

@@ -1,5 +1,5 @@
 /*
- Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+ Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
  
  Licensed under the Apache License, Version 2.0 (the "License").
  You may not use this file except in compliance with the License.
@@ -21,24 +21,32 @@
 #import "AWSPinpointService.h"
 #import "AWSPinpointEvent.h"
 #import "AWSPinpointContext.h"
+#import "AWSPinpointConfiguration.h"
 
 static NSString *const AWSCampaignDeepLinkKey = @"deeplink";
 static NSString *const AWSAttributeApplicationStateKey = @"applicationState";
 static NSString *const AWSAttributeActionIdentifierKey = @"actionIdentifier";
-static NSString *const AWSEventTypeOpened = @"_campaign.opened_notification";
-static NSString *const AWSEventTypeReceivedForeground = @"_campaign.received_foreground";
-static NSString *const AWSEventTypeReceivedBackground = @"_campaign.received_background";
+static NSString *const AWSEventTypeOpened = @"opened_notification";
+static NSString *const AWSEventTypeReceivedForeground = @"received_foreground";
+static NSString *const AWSEventTypeReceivedBackground = @"received_background";
 NSString *const AWSDeviceTokenKey = @"com.amazonaws.AWSDeviceTokenKey";
 NSString *const AWSDataKey = @"data";
 NSString *const AWSPinpointKey = @"pinpoint";
 NSString *const AWSPinpointCampaignKey = @"campaign";
+NSString *const AWSPinpointJourneyKey = @"journey";
 
 @interface AWSPinpointNotificationManager()
 @property (nonatomic, strong) AWSPinpointContext *context;
+@property (nonatomic) AWSPinpointPushEventSourceType previousEventSourceType;
 @end
 
 @interface AWSPinpointAnalyticsClient()
-- (void) setCampaignAttributes:(NSDictionary*) campaign;
+- (void) setEventSourceAttributes:(NSDictionary*) campaign;
+- (void) removeAllGlobalEventSourceAttributes;
+@end
+
+@interface AWSPinpointConfiguration()
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
 @end
 
 @implementation AWSPinpointNotificationManager
@@ -52,19 +60,29 @@ NSString *const AWSPinpointCampaignKey = @"campaign";
 - (instancetype) initWithContext:(AWSPinpointContext*) context {
     if (self = [super init]) {
         _context = context;
+        _previousEventSourceType = AWSPinpointPushEventSourceTypeUnknown;
     }
     return self;
 }
 
 + (BOOL)isNotificationEnabled {
-    BOOL optOut = ![[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
-    if ([[UIApplication sharedApplication] currentUserNotificationSettings].types == UIUserNotificationTypeNone) {
-        optOut = YES;
-    }
-    return !optOut;
+    __block BOOL notificationsEnabled;
+    [self runOnMainThread:^{
+        notificationsEnabled = [[UIApplication sharedApplication] isRegisteredForRemoteNotifications];
+    }];
+    
+    return notificationsEnabled;
 }
 
-+ (BOOL)validCampaignPushForNotification:(NSDictionary*) notification {
++ (void) runOnMainThread:(void (^)(void))codeBlock {
+    if ([NSThread isMainThread]) {
+        codeBlock();
+    } else {
+        dispatch_sync(dispatch_get_main_queue(), codeBlock);
+    }
+}
+
++ (BOOL)validPinpointPushForNotification:(NSDictionary*) notification {
     if (![notification[AWSDataKey] isKindOfClass:[NSDictionary class]] || ![notification[AWSDataKey][AWSPinpointKey] isKindOfClass:[NSDictionary class]]) {
         return NO;
     } else {
@@ -77,49 +95,64 @@ NSString *const AWSPinpointCampaignKey = @"campaign";
     NSDictionary *notificationPayload = launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey];
     if(notificationPayload)
     {
-        if (![AWSPinpointNotificationManager validCampaignPushForNotification:notificationPayload]) {
+        if (![AWSPinpointNotificationManager validPinpointPushForNotification:notificationPayload]) {
             return YES;
         }
         
-        [self addGlobalCampaignMetadataForNotification:notificationPayload];
+        NSDictionary *metadata = [self getMetadataFromUserInfo:notificationPayload];
+        AWSPinpointPushEventSourceType eventSourceType = [self getEventSourceTypeFromUserInfo:notificationPayload];
+        [self addGlobalEventSourceMetadata:metadata withEventSourceType:eventSourceType];
         
         // Application launch because of notification
         [self recordMessageOpenedEventForNotification:notificationPayload
-                                       withIdentifier:nil
-                                 withApplicationState:[[UIApplication sharedApplication] applicationState]];
+                                       withIdentifier:nil];
     }
     
     return YES;
 }
 
 - (void)interceptDidRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     //Check if device token has changed
-    NSData *currentToken = [userDefaults objectForKey:AWSDeviceTokenKey];
+    NSData *currentToken = [self.context.configuration.userDefaults objectForKey:AWSDeviceTokenKey];
     if (![currentToken isEqualToData:deviceToken]) {
-        [userDefaults setObject:deviceToken forKey:AWSDeviceTokenKey];
-        [userDefaults synchronize];
+        [self.context.configuration.userDefaults setObject:deviceToken forKey:AWSDeviceTokenKey];
+        [self.context.configuration.userDefaults synchronize];
         //Update endpoint
-        AWSLogInfo(@"Calling endpoint Service to register token");
+        AWSDDLogInfo(@"Calling endpoint Service to register token");
         
         [self.context.targetingClient updateEndpointProfile];
     }
 }
 
+- (void)interceptDidReceiveRemoteNotification:(NSDictionary *)userInfo {
+    [self interceptDidReceiveRemoteNotification:userInfo shouldHandleNotificationDeepLink:YES];
+}
+
 - (void)interceptDidReceiveRemoteNotification:(NSDictionary *)userInfo
                        fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler {
-    [self handleNotificationReceived:[UIApplication sharedApplication] withNotification:userInfo];
+    [self interceptDidReceiveRemoteNotification:userInfo fetchCompletionHandler:handler shouldHandleNotificationDeepLink:YES];
+}
+
+- (void)interceptDidReceiveRemoteNotification:(NSDictionary *)userInfo
+             shouldHandleNotificationDeepLink:(BOOL) handleDeepLink {
+    [self handleNotificationReceived:[UIApplication sharedApplication] withNotification:userInfo shouldHandleNotificationDeepLink:handleDeepLink];
+}
+
+- (void)interceptDidReceiveRemoteNotification:(NSDictionary *)userInfo
+                       fetchCompletionHandler:(void (^)(UIBackgroundFetchResult result))handler
+             shouldHandleNotificationDeepLink:(BOOL) handleDeepLink {
+    [self handleNotificationReceived:[UIApplication sharedApplication] withNotification:userInfo shouldHandleNotificationDeepLink:handleDeepLink];
     //We must rely on the user calling the completion handler because if we call it ourselves as well as the user it would cause a crash due to calling it twice.
 }
 
 #pragma mark - Handlers
 - (void)handleNotificationDeepLinkForNotification:(NSDictionary*) userInfo {
-    if (![AWSPinpointNotificationManager validCampaignPushForNotification:userInfo]) {
+    if (![AWSPinpointNotificationManager validPinpointPushForNotification:userInfo]) {
         return;
     }
     NSDictionary *amaDict = userInfo[AWSDataKey][AWSPinpointKey];
     if ([amaDict[AWSCampaignDeepLinkKey] isKindOfClass:[NSString class]]) {
-        AWSLogVerbose(@"Received Deep Link: %@", amaDict[AWSCampaignDeepLinkKey]);
+        AWSDDLogVerbose(@"Received Deep Link: %@", amaDict[AWSCampaignDeepLinkKey]);
         NSURL *deepLinkURL = [NSURL URLWithString:amaDict[AWSCampaignDeepLinkKey]];
         if ([[UIApplication sharedApplication] canOpenURL:deepLinkURL]) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -130,85 +163,105 @@ NSString *const AWSPinpointCampaignKey = @"campaign";
 }
 
 - (void)handleNotificationReceived:(UIApplication *) app
-                  withNotification:(NSDictionary *) userInfo {
+                  withNotification:(NSDictionary *) userInfo
+  shouldHandleNotificationDeepLink:(BOOL) shouldHandleNotificationDeepLink {
     UIApplicationState state = [app applicationState];
+    NSDictionary *metadata = [self getMetadataFromUserInfo:userInfo];
+    AWSPinpointPushEventSourceType eventSourceType = [self getEventSourceTypeFromUserInfo:userInfo];
     
-    if (state == UIApplicationStateInactive) {
-        AWSLogVerbose(@"App launched from received notification.");
-        [self addGlobalCampaignMetadataForNotification:userInfo];
-        [self recordMessageOpenedEventForNotification:userInfo
-                                       withIdentifier:nil
-                                 withApplicationState:state];
-        [self handleNotificationDeepLinkForNotification:userInfo];
-    } else if (state == UIApplicationStateBackground) {
-        AWSLogVerbose(@"Received notification with app on background.");
-        [self addGlobalCampaignMetadataForNotification:userInfo];
-        [self recordMessageReceivedEventForNotification:userInfo
-                                              eventType:AWSEventTypeReceivedBackground
-                                   withApplicationState:state];
-    } else {
-        AWSLogVerbose(@"Received notification with app on foreground.");
-        [self recordMessageReceivedEventForNotification:userInfo
-                                              eventType:AWSEventTypeReceivedForeground
-                                   withApplicationState:state];
+    AWSPinpointPushActionType pushActionType = [self pushActionTypeOfApplicationState:state];
+    switch (pushActionType) {
+        case AWSPinpointPushActionTypeOpened: {
+            AWSDDLogVerbose(@"App launched from received notification.");
+            [self addGlobalEventSourceMetadata:metadata withEventSourceType:eventSourceType];
+            [self recordMessageOpenedEventForNotification:userInfo
+                                           withIdentifier:nil];
+            if (shouldHandleNotificationDeepLink) {
+                [self handleNotificationDeepLinkForNotification:userInfo];
+            }
+            break;
+        }
+        case AWSPinpointPushActionTypeReceivedBackground: {
+            AWSDDLogVerbose(@"Received notification with app on background.");
+            [self addGlobalEventSourceMetadata:metadata withEventSourceType:eventSourceType];
+            [self recordMessageReceivedEventForNotification:userInfo
+                                         withPushActionType:pushActionType];
+            break;
+        }
+        case AWSPinpointPushActionTypeReceivedForeground: {
+            AWSDDLogVerbose(@"Received notification with app on foreground.");
+
+            // Not adding global event source metadata because if the app session is already running,
+            // the session should not contribute to the new push notification that is being received
+            [self recordMessageReceivedEventForNotification:userInfo
+                                         withPushActionType:pushActionType];
+            break;
+        }
+        case AWSPinpointPushActionTypeUnknown: {
+            AWSDDLogError(@"Received notification with app in unknown state.");
+        }
     }
 }
 
 #pragma mark - Event recorders
 - (void)recordMessageReceivedEventForNotification:(NSDictionary *) userInfo
-                                        eventType:(NSString*) eventType
-                             withApplicationState:(UIApplicationState) state {
+                               withPushActionType:(AWSPinpointPushActionType) pushActionType {
     //Silent notification
-    AWSPinpointEvent *pushNotificationEvent = [self.context.analyticsClient createEventWithEventType:eventType];
-    
+    AWSPinpointEvent *pushNotificationEvent = [self buildEventFromUserInfo:userInfo
+                                                        withPushActionType:pushActionType];
+    if (!pushNotificationEvent) {
+        AWSDDLogError(@"Not valid Pinpoint push notification");
+        return;
+    }
+
     [self addApplicationStateAttributeToEvent:pushNotificationEvent
-                         withApplicationState:state];
-    [self addCampaignMetadataForEvent:pushNotificationEvent
-                     withNotification:userInfo];
-    
+                         withApplicationState:[[UIApplication sharedApplication] applicationState]];
+    NSDictionary *metadata = [self getMetadataFromUserInfo:userInfo];
+    [self addEventSourceMetadataForEvent:pushNotificationEvent
+                            withMetadata:metadata];
     [self.context.analyticsClient recordEvent:pushNotificationEvent];
 }
 
 - (void)recordMessageOpenedEventForNotification:(NSDictionary *) userInfo
-                                 withIdentifier:(NSString *) identifier
-                           withApplicationState:(UIApplicationState) state {
+                                 withIdentifier:(NSString *) identifier {
     //User tapped on notification
-    AWSPinpointEvent *pushNotificationEvent = [self.context.analyticsClient createEventWithEventType:AWSEventTypeOpened];
-    
+    AWSPinpointEvent *pushNotificationEvent = [self buildEventFromUserInfo:userInfo
+                                                        withPushActionType:AWSPinpointPushActionTypeOpened];
+    if (!pushNotificationEvent) {
+        AWSDDLogError(@"Not valid Pinpoint push notification");
+        return;
+    }
     if (identifier) {
         [pushNotificationEvent addAttribute:identifier forKey:AWSAttributeActionIdentifierKey];
     }
-    
     [self addApplicationStateAttributeToEvent:pushNotificationEvent
-                         withApplicationState:state];
+                         withApplicationState:[[UIApplication sharedApplication] applicationState]];
     [self.context.analyticsClient recordEvent:pushNotificationEvent];
 }
 
 #pragma mark - Helpers
-- (void)addCampaignMetadataForEvent:(AWSPinpointEvent *) event
-                   withNotification:(NSDictionary *) userInfo {
-    if (![AWSPinpointNotificationManager validCampaignPushForNotification:userInfo]) {
-        return;
-    }
-    NSDictionary *campaign = userInfo[AWSDataKey][AWSPinpointKey][AWSPinpointCampaignKey];
-    AWSLogVerbose(@"Adding campaign attributes to event[%@]: %@",event.eventType, campaign);
-    
-    for (NSString *key in [campaign allKeys]) {
-        [event addAttribute:campaign[key] forKey:key];
+- (void)addEventSourceMetadataForEvent:(AWSPinpointEvent *) event
+                          withMetadata:(NSDictionary *) metadata {
+    for (NSString *key in [metadata allKeys]) {
+        [event addAttribute:metadata[key] forKey:key];
     }
 }
 
-- (void)addGlobalCampaignMetadataForNotification:(NSDictionary *) userInfo {
-    if (![AWSPinpointNotificationManager validCampaignPushForNotification:userInfo]) {
-        return;
-    }
-    
-    NSDictionary *campaign = userInfo[AWSDataKey][AWSPinpointKey][AWSPinpointCampaignKey];
-    AWSLogVerbose(@"Adding campaign global attributes: %@", campaign);
-    [self.context.analyticsClient setCampaignAttributes:campaign];
-    
-    for (NSString *key in [campaign allKeys]) {
-        [self.context.analyticsClient addGlobalAttribute:campaign[key] forKey:key];
+- (void)addGlobalEventSourceMetadata:(NSDictionary *) metadata
+                 withEventSourceType:(AWSPinpointPushEventSourceType) eventSourceType {
+    if (metadata.count) {
+        // Remove previous global event source attributes from _globalAttributes
+        // only if event source type changes
+        // This is to prevent _globalAttributes containing attributes from multiple event sources (campaign/journey)
+        if (eventSourceType != AWSPinpointPushEventSourceTypeUnknown && eventSourceType != self.previousEventSourceType ) {
+            [self.context.analyticsClient removeAllGlobalEventSourceAttributes];
+            self.previousEventSourceType = eventSourceType;
+        }
+        [self.context.analyticsClient setEventSourceAttributes:metadata];
+
+        for (NSString *key in [metadata allKeys]) {
+            [self.context.analyticsClient addGlobalAttribute:metadata[key] forKey:key];
+        }
     }
 }
 
@@ -233,6 +286,104 @@ NSString *const AWSPinpointCampaignKey = @"campaign";
         default:
             break;
     }
+}
+
+- (AWSPinpointEvent*)buildEventFromUserInfo:(NSDictionary *) userInfo
+                         withPushActionType:(AWSPinpointPushActionType) pushActionType {
+    NSString *eventTypePrefix = [self getEventTypePrefixFromUserInfo:userInfo];
+    NSString *eventTypeSuffix = [self getEventTypeSuffixFromPushActionType:pushActionType];
+    if (!eventTypePrefix || !eventTypeSuffix) {
+        return nil;
+    }
+    NSString *eventType = [NSString stringWithFormat: @"_%@.%@", eventTypePrefix, eventTypeSuffix];
+
+    AWSPinpointEvent *pushNotificationEvent  = [self.context.analyticsClient createEventWithEventType:eventType];
+
+    return pushNotificationEvent;
+}
+
+- (NSString*)getEventTypePrefixFromUserInfo:(NSDictionary *) userInfo {
+    NSString *eventType;
+    AWSPinpointPushEventSourceType pushEventSourceType = [self getEventSourceTypeFromUserInfo:userInfo];
+    switch (pushEventSourceType) {
+        case AWSPinpointPushEventSourceTypeCampaign:
+            eventType = AWSPinpointCampaignKey;
+            break;
+        case AWSPinpointPushEventSourceTypeJourney:
+            eventType = AWSPinpointJourneyKey;
+            break;
+        case AWSPinpointPushEventSourceTypeUnknown:
+            AWSDDLogError(@"Cannot determine event type from Push payload");
+            break;
+    }
+    return eventType;
+}
+
+- (NSString*)getEventTypeSuffixFromPushActionType:(AWSPinpointPushActionType) pushActionType {
+    NSString *eventType;
+    switch (pushActionType) {
+        case AWSPinpointPushActionTypeOpened:
+            eventType = AWSEventTypeOpened;
+            break;
+        case AWSPinpointPushActionTypeReceivedForeground:
+            eventType = AWSEventTypeReceivedForeground;
+            break;
+        case AWSPinpointPushActionTypeReceivedBackground:
+            eventType = AWSEventTypeReceivedBackground;
+            break;
+        case AWSPinpointPushActionTypeUnknown:
+            break;
+    }
+    return eventType;
+}
+
+- (AWSPinpointPushActionType) pushActionTypeOfApplicationState:(UIApplicationState) state {
+    AWSPinpointPushActionType pushActionType = AWSPinpointPushActionTypeUnknown;
+    switch (state) {
+        case UIApplicationStateActive:
+            pushActionType = AWSPinpointPushActionTypeReceivedForeground;
+            break;
+        case UIApplicationStateBackground:
+            pushActionType = AWSPinpointPushActionTypeReceivedBackground;
+            break;
+        case UIApplicationStateInactive:
+            pushActionType = AWSPinpointPushActionTypeOpened;
+            break;
+        default:
+            break;
+    }
+    return pushActionType;
+}
+
+- (AWSPinpointPushEventSourceType)getEventSourceTypeFromUserInfo:(NSDictionary*) userInfo {
+    AWSPinpointPushEventSourceType eventType = AWSPinpointPushEventSourceTypeUnknown;
+    if ([AWSPinpointNotificationManager validPinpointPushForNotification:userInfo]) {
+        NSDictionary *pinpointData = userInfo[AWSDataKey][AWSPinpointKey];
+        if (pinpointData[AWSPinpointCampaignKey]) {
+            eventType = AWSPinpointPushEventSourceTypeCampaign;
+        } else if (pinpointData[AWSPinpointJourneyKey]) {
+            eventType = AWSPinpointPushEventSourceTypeJourney;
+        }
+    }
+    return eventType;
+}
+
+- (NSDictionary*)getMetadataFromUserInfo:(NSDictionary*) userInfo {
+    NSDictionary *metadata = nil;
+    if ([AWSPinpointNotificationManager validPinpointPushForNotification:userInfo]) {
+        NSDictionary *pinpointData = userInfo[AWSDataKey][AWSPinpointKey];
+        if (pinpointData[AWSPinpointCampaignKey]) {
+            metadata = pinpointData[AWSPinpointCampaignKey];
+            AWSDDLogVerbose(@"Found campaign attributes: %@", metadata);
+        } else if (pinpointData[AWSPinpointJourneyKey]) {
+            metadata = pinpointData[AWSPinpointJourneyKey];
+            AWSDDLogVerbose(@"Found journey attributes: %@", metadata);
+        }
+    }
+    if (!metadata) {
+        AWSDDLogError(@"No valid Pinpoint Push payload found");
+    }
+    return metadata;
 }
 
 @end

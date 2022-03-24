@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -111,7 +111,7 @@
                                        @"header-B3":@"VALUE3",
                                        @"Header-a2":@"VALUE2",
                                        @"header-A1":@"VALUE1",
-                                     };
+                                       };
     NSString *expectedResultThree = @"header-a1:VALUE1\nheader-a2:VALUE2\nheader-b3:VALUE3\nheader-b4:VALUE4\n";
     NSString *resultThree = [AWSSignatureV4Signer getCanonicalizedHeaderString:testHeadersThree];
     
@@ -132,7 +132,6 @@
     NSString *expectedResultOne = @"key1;key2";
     NSString *resultOne = [AWSSignatureV4Signer getSignedHeadersString:testHeadersOne];
     XCTAssertEqualObjects(expectedResultOne, resultOne);
-
     
     //test sorting
     NSDictionary *testHeadersThree = @{@"Header-b4":@"VALUE4",
@@ -145,8 +144,6 @@
     NSString *resultThree = [AWSSignatureV4Signer getSignedHeadersString:testHeadersThree];
     
     XCTAssertEqualObjects(expectedResultThree, resultThree);
-    
-    
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -12,7 +12,6 @@
 // express or implied. See the License for the specific language governing
 // permissions and limitations under the License.
 //
-
 #import "AWSURLRequestSerialization.h"
 
 #import "AWSGZIP.h"
@@ -21,7 +20,7 @@
 #import "AWSValidation.h"
 #import "AWSSerialization.h"
 #import "AWSCategory.h"
-#import "AWSLogging.h"
+#import "AWSCocoaLumberjack.h"
 #import "AWSClientContext.h"
 
 @interface NSMutableURLRequest (AWSRequestSerializer)
@@ -62,7 +61,7 @@
 
         _serviceDefinitionJSON = JSONDefinition;
         if (_serviceDefinitionJSON == nil) {
-            AWSLogError(@"serviceDefinitionJSON of is nil.");
+            AWSDDLogError(@"serviceDefinitionJSON is nil.");
             return nil;
         }
         _actionName = actionName;
@@ -94,12 +93,16 @@
     NSDictionary *actionHTTPRule = [actionRules objectForKey:@"http"];
     NSString *ruleURIStr = [actionHTTPRule objectForKey:@"requestUri"];
 
+    NSDictionary *actionEndpoint = [actionRules objectForKey:@"endpoint"];
+    NSString *endpointHostPrefix = [actionEndpoint objectForKey:@"hostPrefix"];
+    
     NSError *error = nil;
 
     [AWSXMLRequestSerializer constructURIandHeadersAndBody:request
                                                      rules:inputRules
                                                 parameters:parameters
                                                  uriSchema:ruleURIStr
+                                                hostPrefix:endpointHostPrefix
                                                      error:&error];
     if (error) {
         return [AWSTask taskWithError:error];
@@ -158,7 +161,7 @@
 
         _serviceDefinitionJSON = JSONDefinition;
         if (_serviceDefinitionJSON == nil) {
-            AWSLogError(@"serviceDefinitionJSON of is nil.");
+            AWSDDLogError(@"serviceDefinitionJSON is nil.");
             return nil;
         }
         _actionName = actionName;
@@ -187,11 +190,15 @@
     NSDictionary *shapeRules = [self.serviceDefinitionJSON objectForKey:@"shapes"];
     AWSJSONDictionary *inputRules = [[AWSJSONDictionary alloc] initWithDictionary:[anActionRules objectForKey:@"input"] JSONDefinitionRule:shapeRules];
 
+    NSDictionary *actionEndpoint = [anActionRules objectForKey:@"endpoint"];
+    NSString *endpointHostPrefix = [actionEndpoint objectForKey:@"hostPrefix"];
+    
     NSError *error = nil;
     [AWSXMLRequestSerializer constructURIandHeadersAndBody:request
                                                      rules:inputRules
                                                 parameters:parameters
                                                  uriSchema:ruleURIStr
+                                                hostPrefix:endpointHostPrefix
                                                      error:&error];
 
     if (!error) {
@@ -231,6 +238,7 @@
                                 rules:(AWSJSONDictionary *)rules
                            parameters:(NSDictionary *)params
                             uriSchema:(NSString *)uriSchema
+                           hostPrefix:(NSString *)hostPrefix
                                 error:(NSError *__autoreleasing *)error {
     //If no rule just return
     if (rules == (id)[NSNull null] ||  [rules count] == 0) {
@@ -297,7 +305,7 @@
             }
 
             //if it is a map type with headers tag, add to headers
-            if ([value isKindOfClass:[NSDictionary class]] && [rulesType isEqualToString:@"map"] && [memberRules[@"location"] isEqualToString:@"headers"] ) {
+            if ([value isKindOfClass:[NSDictionary class]] && [rulesType isEqualToString:@"map"] && [memberRules[@"location"] isEqualToString:@"headers"]) {
                 for (NSString *key in value) {
                     NSString *keyName = [memberRules[@"locationName"] stringByAppendingString:key];
                     [request addValue:value[key] forHTTPHeaderField:keyName];
@@ -315,14 +323,17 @@
 
                 } else if ([rawURI rangeOfString:greedyKeyToFind].location != NSNotFound) {
                     rawURI = [rawURI stringByReplacingOccurrencesOfString:greedyKeyToFind
-                                                               withString:[valueStr aws_stringWithURLEncodingPath]];
+                                                               withString:[valueStr aws_stringWithURLEncodingPathWithoutPriorDecoding]];
                 }
 
 
             }
 
             //if it is queryString type, construct queryString
-            if ([memberRules[@"location"] isEqualToString:@"querystring"]) {
+            if ([memberRules[@"location"] isEqualToString:@"querystring"] &&
+                [rulesType isEqualToString:@"list"]) {
+                [queryStringDictionary setObject:value forKey:memberRules[@"locationName"]];
+            } else if ([memberRules[@"location"] isEqualToString:@"querystring"]) {
                 [queryStringDictionary setObject:valueStr forKey:memberRules[@"locationName"]];
             }
 
@@ -348,7 +359,7 @@
             
             //if the shape is a blob stream then set the request stream
             if([memberRules[@"shape"] isEqualToString:@"BlobStream"]){
-                AWSLogVerbose(@"value type = %@", [value class]);
+                AWSDDLogVerbose(@"value type = %@", [value class]);
                 if([value isKindOfClass:[NSInputStream class]]){
                     request.HTTPBodyStream = value;
                 }else{
@@ -383,14 +394,29 @@
         NSArray *myKeys = [queryStringDictionary allKeys];
         NSArray *sortedKeys = [myKeys sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
         NSString *queryString = @"";
+        NSMutableArray *keyValuesToAppend = [@[] mutableCopy];
         for (NSString *key in sortedKeys) {
-            if ([queryString length] == 0 && uriSchemaContainsQuestionMark == NO) {
-                queryString = [NSString stringWithFormat:@"?%@=%@",[key aws_stringWithURLEncoding],[queryStringDictionary[key] aws_stringWithURLEncoding]];
+            if ([queryStringDictionary[key] isKindOfClass:[NSArray class]]) {
+                NSArray *listOfValues = (NSArray*)queryStringDictionary[key];
+                for (NSString *singleValue in listOfValues) {
+                    NSString *keyVal = [NSString stringWithFormat:@"%@=%@", [key aws_stringWithURLEncoding], [singleValue aws_stringWithURLEncoding]];
+                    [keyValuesToAppend addObject:keyVal];
+                }
             } else {
-                NSString *appendString = [NSString stringWithFormat:@"&%@=%@",[key aws_stringWithURLEncoding],[queryStringDictionary[key] aws_stringWithURLEncoding]];
+                NSString *keyVal = [NSString stringWithFormat:@"%@=%@", [key aws_stringWithURLEncoding], [queryStringDictionary[key] aws_stringWithURLEncoding]];
+                [keyValuesToAppend addObject:keyVal];
+            }
+        }
+        
+        for (NSString *keyValue in keyValuesToAppend) {
+            if ([queryString length] == 0 && uriSchemaContainsQuestionMark == NO) {
+                queryString = [NSString stringWithFormat:@"?%@", keyValue];
+            } else {
+                NSString *appendString = [NSString stringWithFormat:@"&%@", keyValue];
                 queryString = [queryString stringByAppendingString:appendString];
             }
         }
+        
         rawURI = [rawURI stringByAppendingString:queryString];
     }
 
@@ -398,6 +424,14 @@
     NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"\\{.*?\\}" options:NSRegularExpressionCaseInsensitive error:nil];
     rawURI = [regex stringByReplacingMatchesInString:rawURI options:0 range:NSMakeRange(0, [rawURI length]) withTemplate:@""];
 
+    //prepend the hostPrefix
+    if (hostPrefix.length) {
+        NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithURL:request.URL resolvingAgainstBaseURL:NO];
+        NSString* finalHost = [hostPrefix stringByAppendingString:request.URL.host];
+        [urlComponents setHost:finalHost];
+        request.URL = urlComponents.URL;
+    }
+    
     //validate URL
     NSRange r = [rawURI rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"{}"]];
     if (r.location != NSNotFound) {
@@ -413,7 +447,7 @@
 
         NSRange hasQuestionMark = [rawURI rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"?"]];
         NSRange hasEqualMark = [rawURI rangeOfCharacterFromSet:[NSCharacterSet characterSetWithCharactersInString:@"="]];
-        if ( (hasQuestionMark.location != NSNotFound) && (hasEqualMark.location == NSNotFound) ) {
+        if ((hasQuestionMark.location != NSNotFound) && (hasEqualMark.location == NSNotFound)) {
             rawURI = [rawURI stringByAppendingString:@"="];
         }
 
@@ -447,7 +481,7 @@
     if (self = [super init]) {
         _serviceDefinitionJSON = JSONDefinition;
         if (_serviceDefinitionJSON == nil) {
-            AWSLogError(@"serviceDefinitionJSON of is nil.");
+            AWSDDLogError(@"serviceDefinitionJSON of is nil.");
             return nil;
         }
         _actionName = actionName;
@@ -479,7 +513,7 @@
                 [queryString appendString:@"="];
                 [queryString appendString:[[obj stringValue] aws_stringWithURLEncoding]];
             } else {
-                AWSLogError(@"key[%@] is invalid.", key);
+                AWSDDLogError(@"key[%@] is invalid.", key);
                 [queryString appendString:[key aws_stringWithURLEncoding]];
                 [queryString appendString:@"="];
                 [queryString appendString:[[obj description]aws_stringWithURLEncoding]];

@@ -511,7 +511,13 @@ static NSString *_defaultService;
     return [self setData:data forKey:key genericAttribute:nil label:label comment:comment error:error];
 }
 
-- (BOOL)setData:(NSData *)data forKey:(NSString *)key genericAttribute:(id)genericAttribute label:(NSString *)label comment:(NSString *)comment error:(NSError *__autoreleasing *)error
+- (BOOL)setData:(NSData *)data forKey:(NSString *)key genericAttribute:(id)genericAttribute label:(NSString *)label comment:(NSString *)comment error:(NSError *__autoreleasing *)error {
+    @synchronized (self) {
+        return [self setDataNoLock: data forKey:key genericAttribute:genericAttribute label:label comment:comment error:error];
+    }
+}
+
+- (BOOL)setDataNoLock:(NSData *)data forKey:(NSString *)key genericAttribute:(id)genericAttribute label:(NSString *)label comment:(NSString *)comment error:(NSError *__autoreleasing *)error
 {
     if (!key) {
         NSError *e = [self.class argumentError:NSLocalizedString(@"the key must not to be nil", nil)];
@@ -528,12 +534,8 @@ static NSString *_defaultService;
     query[(__bridge __strong id)kSecAttrAccount] = key;
 #if TARGET_OS_IOS
 #pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-    if (floor(NSFoundationVersionNumber) > floor(1144.17)) { // iOS 9+
-        query[(__bridge __strong id)kSecUseAuthenticationUI] = (__bridge id)kSecUseAuthenticationUIFail;
-    } else if (floor(NSFoundationVersionNumber) > floor(1047.25)) { // iOS 8+
-        query[(__bridge __strong id)kSecUseNoAuthenticationUI] = (__bridge id)kCFBooleanTrue;
-    }
+#pragma clang diagnostic ignored "-Wunguarded-availability"
+    query[(__bridge __strong id)kSecUseAuthenticationUI] = (__bridge id)kSecUseAuthenticationUIFail;
 #pragma clang diagnostic pop
 #elif TARGET_OS_WATCH || TARGET_OS_TV
     query[(__bridge __strong id)kSecUseAuthenticationUI] = (__bridge id)kSecUseAuthenticationUIFail;
@@ -952,7 +954,7 @@ static NSString *_defaultService;
 
 #pragma mark -
 
-#if TARGET_OS_IOS
+#if TARGET_OS_IOS && !TARGET_OS_MACCATALYST
 - (void)sharedPasswordWithCompletion:(void (^)(NSString *account, NSString *password, NSError *error))completion
 {
     NSString *domain = self.server.host;
@@ -1074,19 +1076,6 @@ static NSString *_defaultService;
 
 #pragma mark -
 
-- (void)synchronize
-{
-    // Deprecated, calling this method is no longer required
-}
-
-- (BOOL)synchronizeWithError:(NSError *__autoreleasing *)error
-{
-    // Deprecated, calling this method is no longer required
-    return true;
-}
-
-#pragma mark -
-
 - (NSString *)description
 {
     NSArray *items = [self allItems];
@@ -1129,7 +1118,7 @@ static NSString *_defaultService;
         if (_server.host) {
             query[(__bridge __strong id)kSecAttrServer] = _server.host;
         }
-        if (_server.port) {
+        if (_server.port != nil) {
             query[(__bridge __strong id)kSecAttrPort] = _server.port;
         }
         CFTypeRef protocolTypeObject = [self protocolTypeObject];

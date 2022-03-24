@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -17,8 +17,8 @@
 #import <sys/types.h>
 #import <sys/sysctl.h>
 #import "AWSUICKeyChainStore.h"
-#import "AWSLogging.h"
 #import "AWSUIDevice.h"
+#import "AWSCocoaLumberjack.h"
 
 // Public constants
 NSString *const AWSClientContextVersion = @"1.0";
@@ -51,7 +51,7 @@ static NSString *const AWSClientContextKeychainInstallationIdKey = @"com.amazona
             _installationId = [keychain stringForKey:AWSClientContextKeychainInstallationIdKey];
         }
         if (_installationId == nil) {
-            AWSLogError(@"Failed to generate installation_id");
+            AWSDDLogError(@"Failed to generate installation_id");
         }
 
         NSString *appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
@@ -73,7 +73,7 @@ static NSString *const AWSClientContextKeychainInstallationIdKey = @"com.amazona
         _deviceModelVersion = [self deviceModelVersionCode] ? [self deviceModelVersionCode] : AWSClientContextUnknown;
 		_devicePlatformVersion = [currentDevice systemVersion] ? [currentDevice systemVersion] : AWSClientContextUnknown;
         _deviceManufacturer = @"apple";
-        _deviceLocale = autoUpdatingLoaleIdentifier ? autoUpdatingLoaleIdentifier : AWSClientContextUnknown;
+        _deviceLocale = autoUpdatingLocaleIdentifier ? autoUpdatingLocaleIdentifier : AWSClientContextUnknown;
 
         _customAttributes = @{};
         _serviceDetails = [NSMutableDictionary new];
@@ -112,7 +112,8 @@ static NSString *const AWSClientContextKeychainInstallationIdKey = @"com.amazona
                                                        options:kNilOptions
                                                          error:&error];
     if (!JSONData) {
-        AWSLogError(@"Failed to serialize JSON Data. [%@]", error);
+        AWSDDLogError(@"Failed to serialize JSON Data. [%@]", error);
+        return nil;
     }
 
     return [[NSString alloc] initWithData:JSONData
@@ -129,7 +130,7 @@ static NSString *const AWSClientContextKeychainInstallationIdKey = @"com.amazona
         [self.serviceDetails setValue:details
                                forKey:service];
     } else {
-        AWSLogError(@"'service' cannot be nil.");
+        AWSDDLogError(@"'service' cannot be nil.");
     }
 }
 

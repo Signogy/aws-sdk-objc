@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -13,6 +13,7 @@
 // permissions and limitations under the License.
 //
 
+#import <AWSCore/AWSNSCodingUtilities.h>
 #import "AWSPinpointSessionClient.h"
 #import "AWSPinpointContext.h"
 #import "AWSPinpointAnalyticsClient.h"
@@ -63,8 +64,9 @@ typedef void(^voidBlock)(void);
 #pragma mark - Categories -
 @interface AWSPinpointSessionClient()
 
+@property (nonatomic, weak) AWSPinpointContext *context;
+
 @property (nonatomic, readwrite) AWSPinpointSession *session;
-@property (nonatomic, strong) AWSPinpointContext *context;
 @property (nonatomic, assign) UIBackgroundTaskIdentifier bgTask;
 @property (nonatomic, strong) NSTimer *bgTimer;
 
@@ -72,13 +74,21 @@ typedef void(^voidBlock)(void);
 
 @interface AWSPinpointAnalyticsClient()
 
-- (void)removeAllGlobalCampaignAttributes;
-- (void)setCampaignAttributes:(NSDictionary*) campaign;
+- (void)removeAllGlobalEventSourceAttributes;
+- (void)setEventSourceAttributes:(NSDictionary*) campaign;
 
+@end
+
+@interface AWSPinpointConfiguration()
+@property (nonatomic, strong) NSUserDefaults *userDefaults;
 @end
 
 #pragma mark - AWSPinpointSessionClient -
 @implementation AWSPinpointSessionClient
+
+// Use this to control access to the AWSPinpointSession. Do not synchronize on the _session itself, since that reference will
+// change as sessions are destroyed & created
+NSObject *sessionLock;
 
 - (instancetype)init {
     @throw [NSException exceptionWithName:NSInternalInconsistencyException
@@ -90,8 +100,19 @@ typedef void(^voidBlock)(void);
     NSAssert(context != nil, @"context should not have been nil");
     if (self = [super init]) {
         _context = context;
-        NSData *sessionData = [[NSUserDefaults standardUserDefaults] dataForKey:AWSPinpointSessionKey];
-        _session = [NSKeyedUnarchiver unarchiveObjectWithData:sessionData];
+        NSData *sessionData = [context.configuration.userDefaults dataForKey:AWSPinpointSessionKey];
+
+        if (sessionData) {
+            NSError *decodeError;
+            _session = [AWSNSCodingUtilities versionSafeUnarchivedObjectOfClass:[AWSPinpointSession class]
+                                                                       fromData:sessionData
+                                                                          error:&decodeError];
+            if (decodeError) {
+                AWSDDLogError(@"Error decoding session: %@", decodeError);
+            }
+        }
+
+        sessionLock = [NSObject new];
         
         //Only add observers if auto session recording is enabled
         if (context.configuration.enableAutoSessionRecording) {
@@ -105,6 +126,12 @@ typedef void(^voidBlock)(void);
                                                      selector: @selector(applicationDidEnterForeground:)
                                                          name: UIApplicationWillEnterForegroundNotification
                                                        object: nil];
+            
+            // register for when application is terminated
+            [[NSNotificationCenter defaultCenter] addObserver: self
+                                                     selector: @selector(applicationWillTerminate:)
+                                                         name: UIApplicationWillTerminateNotification
+                                                       object: nil];
         }
     }
     
@@ -112,19 +139,47 @@ typedef void(^voidBlock)(void);
 }
 
 - (void)saveSession {
-    NSData *sessionData = [NSKeyedArchiver archivedDataWithRootObject:_session];
-    [[NSUserDefaults standardUserDefaults] setObject:sessionData forKey:AWSPinpointSessionKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
+    @try {
+        AWSPinpointSession *sessionCopy;
+        @synchronized (sessionLock) {
+            sessionCopy = [_session copy];
+        }
+
+        NSError *codingError;
+        NSData *sessionData = [AWSNSCodingUtilities versionSafeArchivedDataWithRootObject:sessionCopy
+                                                                    requiringSecureCoding:YES
+                                                                                    error:&codingError];
+        if (codingError) {
+            AWSDDLogError(@"Error archiving sessionData: %@", codingError);
+            return;
+        }
+
+        [self.context.configuration.userDefaults setObject:sessionData forKey:AWSPinpointSessionKey];
+        [self.context.configuration.userDefaults synchronize];
+    }
+    @catch (NSException *e) {
+        AWSDDLogError(@"Unable to save session to user defaults: %@", e.reason);
+    }}
 
 - (void)applicationDidEnterBackground:(NSNotification*)notification {
-    [self pauseSessionWithTimeoutEnabled:YES
+    [self pausePinpointSessionWithTimeoutEnabled:YES
                   timeoutCompletionBlock:nil];
 }
 
 - (void)applicationDidEnterForeground:(NSNotification*)notification {
+    // If the timer hasn't fired yet we can safely end the
+    // background task as no work has been done yet and the scheduled
+    // operation will be removed from its run loop.
+    // A nonrepeating timer fires once and then invalidates itself.
+    if ([self.bgTimer isValid]) {
+        [self endCurrentBackgroundTask];
+    }
     [self.bgTimer invalidate];
-    [self resumeSession];
+    [self resumePinpointSession];
+}
+
+- (void)applicationWillTerminate:(NSNotification*)notification {
+    [self endCurrentSession];
 }
 
 - (void)dealloc {
@@ -135,79 +190,166 @@ typedef void(^voidBlock)(void);
     [[NSNotificationCenter defaultCenter] removeObserver: self
                                                     name: UIApplicationWillEnterForegroundNotification
                                                   object: nil];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver: self
+                                                    name: UIApplicationWillTerminateNotification
+                                                  object: nil];
 }
 
 - (AWSPinpointSession*)session {
-    if (!_session) {
-        //Start a session if one is not active
-        [[self startNewSession] waitUntilFinished];
+    @synchronized(sessionLock) {
+        if (!_session) {
+            //Start a session if one is not active
+            [self startNewSession];
+        }
+        
+        return _session;
     }
-    
-    return _session;
 }
 
 - (AWSTask*)startSession {
-    if (!self.context.analyticsClient) {
-        AWSLogError(@"Pinpoint Analytics is disabled.");
-        return nil;
+    @synchronized(sessionLock) {
+        if (!self.context.analyticsClient) {
+            AWSDDLogError(@"Pinpoint Analytics is disabled.");
+            return nil;
+        }
+        if (_session) {
+            [self endCurrentSession];
+            return [self startNewSession];
+        } else {
+            return [self startNewSession];
+        }
     }
-    if (_session) {
-        [self endCurrentSession];
-        return [self startNewSession];
-    } else {
-        return [self startNewSession];
+}
+
+- (AWSTask*)startPinpointSession {
+    @synchronized(sessionLock) {
+        if (!self.context.analyticsClient) {
+            AWSDDLogError(@"Pinpoint Analytics is disabled.");
+            return nil;
+        }
+        if (_session) {
+            [self endCurrentSession];
+            return [self startNewSession];
+        } else {
+            return [self startNewSession];
+        }
     }
 }
 
 - (AWSTask*)stopSession {
-    if (!self.context.analyticsClient) {
-        AWSLogError(@"Pinpoint Analytics is disabled.");
-        return nil;
+    @synchronized(sessionLock) {
+        if (!self.context.analyticsClient) {
+            AWSDDLogError(@"Pinpoint Analytics is disabled.");
+            return nil;
+        }
+        if (_session) {
+            return [self endCurrentSession];
+        } else {
+            AWSDDLogDebug(@"Session Stop Failed: No session is running.");
+            return nil;
+        }
     }
-    if (_session) {
-        return [self endCurrentSession];
-    } else {
-        AWSLogDebug(@"Session Stop Failed: No session is running.");
-        return nil;
+}
+
+- (AWSTask*)stopPinpointSession {
+    @synchronized(sessionLock) {
+        if (!self.context.analyticsClient) {
+            AWSDDLogError(@"Pinpoint Analytics is disabled.");
+            return nil;
+        }
+        if (_session) {
+            return [self endCurrentSession];
+        } else {
+            AWSDDLogDebug(@"Session Stop Failed: No session is running.");
+            return nil;
+        }
     }
 }
 
 - (AWSTask*)pauseSessionWithTimeoutEnabled:(BOOL) timeoutEnabled
                     timeoutCompletionBlock:(AWSPinpointTimeoutBlock) block {
-    if (!self.context.analyticsClient) {
-        AWSLogError(@"Pinpoint Analytics is disabled.");
-        return nil;
-    }
-    if (_session) {
-        return [self pauseCurrentSessionWithTimeoutEnabled:timeoutEnabled
-                                    timeoutCompletionBlock:block];
-    } else {
-        AWSLogDebug(@"Session Pause Failed: No session is running.");
-        return nil;
+    @synchronized(sessionLock) {
+        if (!self.context.analyticsClient) {
+            AWSDDLogError(@"Pinpoint Analytics is disabled.");
+            return nil;
+        }
+        if (_session) {
+            return [self pauseCurrentSessionWithTimeoutEnabled:timeoutEnabled
+                                        timeoutCompletionBlock:block];
+        } else {
+            AWSDDLogDebug(@"Session Pause Failed: No session is running.");
+            return nil;
+        }
     }
 }
 
-- (AWSTask*)resumeSession {
-    if (!self.context.analyticsClient) {
-        AWSLogError(@"Pinpoint Analytics is disabled.");
-        return nil;
+- (AWSTask*)pausePinpointSessionWithTimeoutEnabled:(BOOL) timeoutEnabled
+                    timeoutCompletionBlock:(AWSPinpointTimeoutBlock) block {
+    @synchronized(sessionLock) {
+        if (!self.context.analyticsClient) {
+            AWSDDLogError(@"Pinpoint Analytics is disabled.");
+            return nil;
+        }
+        if (_session) {
+            return [self pauseCurrentSessionWithTimeoutEnabled:timeoutEnabled
+                                        timeoutCompletionBlock:block];
+        } else {
+            AWSDDLogDebug(@"Session Pause Failed: No session is running.");
+            return nil;
+        }
     }
-    if (_session) {
+}
+ 
+- (AWSTask*)resumeSession {
+    @synchronized(sessionLock) {
+        if (!self.context.analyticsClient) {
+            AWSDDLogError(@"Pinpoint Analytics is disabled.");
+            return nil;
+        }
+        if (!_session) {
+            return [self startNewSession];
+        }
+
         if ([_session stopTime]) {
             UTCTimeMillis now = [AWSPinpointDateUtils utcTimeMillisNow];
             if (now - [AWSPinpointDateUtils utcTimeMillisFromDate:[_session stopTime]] < self.context.configuration.sessionTimeout){
                 return [self resumeCurrentSession];
             } else {
-                AWSLogVerbose(@"Session has expired. Starting a fresh one...");
+                AWSDDLogVerbose(@"Session has expired. Starting a fresh one...");
                 [self endCurrentSession];
                 return [self startNewSession];
             }
         } else {
-            AWSLogVerbose(@"Session Resume Failed: Session is already running.");
+            AWSDDLogVerbose(@"Session Resume Failed: Session is already running.");
             return nil;
         }
-    } else {
-        return [self startNewSession];
+    }
+}
+
+- (AWSTask*)resumePinpointSession {
+    @synchronized(sessionLock) {
+        if (!self.context.analyticsClient) {
+            AWSDDLogError(@"Pinpoint Analytics is disabled.");
+            return nil;
+        }
+        if (!_session) {
+            return [self startNewSession];
+        }
+        
+        if ([_session stopTime]) {
+            UTCTimeMillis now = [AWSPinpointDateUtils utcTimeMillisNow];
+            if (now - [AWSPinpointDateUtils utcTimeMillisFromDate:[_session stopTime]] < self.context.configuration.sessionTimeout){
+                return [self resumeCurrentSession];
+            } else {
+                AWSDDLogVerbose(@"Session has expired. Starting a fresh one...");
+                [self endCurrentSession];
+                return [self startNewSession];
+            }
+        } else {
+            AWSDDLogVerbose(@"Session Resume Failed: Session is already running.");
+            return nil;
+        }
     }
 }
 
@@ -215,77 +357,70 @@ typedef void(^voidBlock)(void);
     [self.bgTimer invalidate];
     
     //Generate new session object
-    _session = [[AWSPinpointSession alloc] initWithContext:self.context];
-    [self saveSession];
-    
-    AWSLogVerbose(@"Firing Session Event: Start");
-    //Fire Session start Event
-    AWSPinpointEvent *startEvent = [self.context.analyticsClient createEventWithEventType:SESSION_START_EVENT_TYPE];
-    
+    AWSPinpointEvent *startEvent;
+    @synchronized(sessionLock) {
+        _session = [[AWSPinpointSession alloc] initWithContext:self.context];
+        [self saveSession];
+        AWSDDLogInfo(@"Session Started.");
+
+        startEvent = [self.context.analyticsClient createEventWithEventType:SESSION_START_EVENT_TYPE];
+    }
+
     //Update Endpoint
     [self.context.targetingClient updateEndpointProfile];
     
-    AWSLogInfo(@"Session Started.");
+    //Fire Session start Event
+    AWSDDLogVerbose(@"Firing Session Event: Start");
     return [self.context.analyticsClient recordEvent:startEvent];
 }
 
 - (AWSTask*)endCurrentSession {
     [self.bgTimer invalidate];
-    if(![_session isPaused]){
+
+    AWSPinpointEvent *stopEvent;
+    @synchronized(sessionLock) {
         [_session pause];
+
+        // Fire Session stop Event. Synchronized so the event is recorded with current session reference
+        AWSDDLogVerbose(@"Firing Session Event: Stop");
+        stopEvent = [self.context.analyticsClient createEventWithEventType:SESSION_STOP_EVENT_TYPE];
+
+        AWSDDLogInfo(@"Session Stopped.");
+        _session = nil;
     }
-    
-    //Fire Session stop Event
-    AWSLogVerbose(@"Firing Session Event: Stop");
-    AWSPinpointEvent *stopEvent = [self.context.analyticsClient createEventWithEventType:SESSION_STOP_EVENT_TYPE];
-    
-    //Kill current session object
-    _session = nil;
-    
-    //Remove campaign global attributes
-    [self.context.analyticsClient removeAllGlobalCampaignAttributes];
-    
-    //Remove current session
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:AWSPinpointSessionKey];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    AWSLogInfo(@"Session Stopped.");
+
+    //Remove global event source attributes
+    AWSDDLogVerbose(@"Removed global event source attributes");
+    [self.context.analyticsClient removeAllGlobalEventSourceAttributes];
+
     return [self.context.analyticsClient recordEvent:stopEvent];
 }
 
-- (void) endCurrentSessionTimeoutWithTimer:(NSTimer*) timer {
-    AWSPinpointTimeoutBlock block;
-    if (timer) {
-        block = [[timer userInfo] objectForKey:@"completionBlock"];
-    }
-    
-    [self endCurrentSessionWithBlock:block];
-}
-
 - (void) endCurrentSessionWithBlock:(AWSPinpointTimeoutBlock) block {
-    [self endCurrentSession];
-    if (block) {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self endCurrentSession];
+
         //Add to background queue so its in different thread and not blocking.
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [[[self.context.analyticsClient submitEvents] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
+        [[self.context.analyticsClient submitEvents] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
+            if (block) {
                 block(task);
-                [[UIApplication sharedApplication] endBackgroundTask:self.bgTask];
-                self.bgTask = UIBackgroundTaskInvalid;
-                return nil;
-            }] waitUntilFinished];
-        });
-    } else {
-        [[self.context.analyticsClient submitEvents] waitUntilFinished];
-    }
+            }
+            [self endCurrentBackgroundTask];
+            return nil;
+        }];
+    });
 }
 
 - (AWSTask*)pauseCurrentSessionWithTimeoutEnabled:(BOOL) timeoutEnabled
                            timeoutCompletionBlock:(AWSPinpointTimeoutBlock) block {
-    [_session pause];
-    [self saveSession];
-    AWSPinpointEvent *pauseEvent = [self.context.analyticsClient createEventWithEventType:SESSION_PAUSE_EVENT_TYPE];
-    
-    AWSLogInfo("Session Paused.");
+    AWSPinpointEvent *pauseEvent;
+    @synchronized (sessionLock) {
+        [_session pause];
+        [self saveSession];
+        pauseEvent = [self.context.analyticsClient createEventWithEventType:SESSION_PAUSE_EVENT_TYPE];
+        AWSDDLogInfo(@"Session Paused.");
+    }
+
     return [[self.context.analyticsClient recordEvent:pauseEvent] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         if (timeoutEnabled) {
             [self waitForSessionTimeoutWithCompletionBlock:block];
@@ -296,49 +431,49 @@ typedef void(^voidBlock)(void);
 
 - (AWSTask*)resumeCurrentSession {
     [self.bgTimer invalidate];
-    [_session resume];
-    [self saveSession];
-    AWSPinpointEvent *resumeEvent = [self.context.analyticsClient createEventWithEventType:SESSION_RESUME_EVENT_TYPE];
-    AWSLogInfo("Session Resumed.");
+    AWSPinpointEvent *resumeEvent;
+    @synchronized (sessionLock) {
+        [_session resume];
+        [self saveSession];
+        resumeEvent = [self.context.analyticsClient createEventWithEventType:SESSION_RESUME_EVENT_TYPE];
+        AWSDDLogInfo(@"Session Resumed.");
+    }
     return [self.context.analyticsClient recordEvent:resumeEvent];
 }
 
+- (void)endCurrentBackgroundTask {
+    if (self.bgTask != UIBackgroundTaskInvalid) {
+        [[UIApplication sharedApplication] endBackgroundTask:self.bgTask];
+        self.bgTask = UIBackgroundTaskInvalid;
+    }
+}
+
 - (void)waitForSessionTimeoutWithCompletionBlock:(AWSPinpointTimeoutBlock) block {
-    dispatch_async(dispatch_get_main_queue(), ^{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         if (self.context.configuration.sessionTimeout > 0) {
             self.bgTask = [[UIApplication sharedApplication] beginBackgroundTaskWithName:AWSPinpointSessionBackgroundTask expirationHandler:^{
                 // If background task expires before timeout then stop the session and submit events.
                 [self endCurrentSessionWithBlock:block];
-                [[UIApplication sharedApplication] endBackgroundTask:self.bgTask];
-                self.bgTask = UIBackgroundTaskInvalid;
+                [self endCurrentBackgroundTask];
             }];
-            NSDictionary *userInfo = nil;
-            if (block) {
-                userInfo = @{@"completionBlock":block};
-            }
-            
-            self.bgTimer = [NSTimer scheduledTimerWithTimeInterval:(self.context.configuration.sessionTimeout / 1000)
-                                                            target:self
-                                                          selector:@selector(endCurrentSessionTimeoutWithTimer:)
-                                                          userInfo:userInfo
-                                                           repeats:NO];
-            [[NSRunLoop mainRunLoop] addTimer:self.bgTimer forMode:NSDefaultRunLoopMode];
+
+            dispatch_async(dispatch_get_main_queue(), ^(){
+                // Wrapping the block in an NSBlockOperation prevents a crash from when it was stored in userInfo
+                self.bgTimer = [NSTimer scheduledTimerWithTimeInterval:(self.context.configuration.sessionTimeout / 1000)
+                                                                target:[NSBlockOperation blockOperationWithBlock:^{ [self endCurrentSessionWithBlock:block]; }]
+                                                              selector:@selector(main)
+                                                              userInfo:nil
+                                                               repeats:NO];
+            });
         } else {
             [self endCurrentSession];
-            if (block) {
-                [[[self.context.analyticsClient submitEvents] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
+            [[self.context.analyticsClient submitEvents] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
+                if (block) {
                     block(task);
-                    [[UIApplication sharedApplication] endBackgroundTask:self.bgTask];
-                    self.bgTask = UIBackgroundTaskInvalid;
-                    return nil;
-                }] waitUntilFinished];
-            } else {
-                [[[self.context.analyticsClient submitEvents] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
-                    [[UIApplication sharedApplication] endBackgroundTask:self.bgTask];
-                    self.bgTask = UIBackgroundTaskInvalid;
-                    return nil;
-                }] waitUntilFinished];
-            }
+                }
+                [self endCurrentBackgroundTask];
+                return nil;
+            }];
         }
     });
 }
@@ -346,13 +481,18 @@ typedef void(^voidBlock)(void);
 @end
 
 #pragma mark - AWSPinpointSession -
+
 @implementation AWSPinpointSession
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 - (id)initWithCoder:(NSCoder *)decoder {
     if (self = [super init]) {
-        _sessionId = [decoder decodeObjectForKey:@"sessionId"];
-        _startTime = [decoder decodeObjectForKey:@"startTime"];
-        _stopTime = [decoder decodeObjectForKey:@"stopTime"];
+        _sessionId = [decoder decodeObjectOfClass:[NSString class] forKey:@"sessionId"];
+        _startTime = [decoder decodeObjectOfClass:[NSDate class] forKey:@"startTime"];
+        _stopTime = [decoder decodeObjectOfClass:[NSDate class] forKey:@"stopTime"];
     }
     return self;
 }
@@ -392,23 +532,31 @@ typedef void(^voidBlock)(void);
 }
 
 - (void)stop {
-    if(!self.stopTime) {
-        self.stopTime = [NSDate date];
+    @synchronized(self) {
+        if(!self.stopTime) {
+            self.stopTime = [NSDate date];
+        }
     }
 }
 
 - (BOOL)isPaused {
-    return (self.stopTime != nil);
+    @synchronized(self) {
+        return (self.stopTime != nil);
+    }
 }
 
 - (void) pause {
-    if(![self isPaused]) {
-        self.stopTime = [NSDate date];
+    @synchronized(self) {
+        if(![self isPaused]) {
+            self.stopTime = [NSDate date];
+        }
     }
 }
 
 - (void)resume {
-    self.stopTime = nil;
+    @synchronized(self) {
+        self.stopTime = nil;
+    }
 }
 
 + (NSString *)generateSessionIdWithContext:(AWSPinpointContext *) context {
@@ -436,8 +584,18 @@ typedef void(^voidBlock)(void);
     [dateFormatter setDateFormat:AWSPinpointSessionIDTimeFormat];
     NSString *timestamp_time = [dateFormatter stringFromDate:tDate];
     
-    //<AppKey> - <UniqueID> - <Day> - <Time>
+    //Session ID as String, formatted as <AppKey> - <UniqueID> - <Day> - <Time>
     return [NSString stringWithFormat:@"%@%c%@%c%@%c%@", appKey, AWSPinpointSessionIDDelimiter, uniqID, AWSPinpointSessionIDDelimiter, timestamp_day, AWSPinpointSessionIDDelimiter, timestamp_time];
 };
+
+- (id)copyWithZone:(nullable NSZone *)zone {
+    @synchronized(self) {
+        id copy = [[AWSPinpointSession alloc] initWithSessionId:[_sessionId copyWithZone:zone]
+                                                  withStartTime:[_startTime copyWithZone:zone]
+                                                   withStopTime:[_stopTime copyWithZone:zone]];
+        
+        return copy;
+    }
+}
 
 @end

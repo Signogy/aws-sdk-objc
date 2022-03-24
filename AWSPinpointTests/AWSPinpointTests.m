@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -30,7 +30,7 @@
 
 - (void)setUp {
     [super setUp];
-    [AWSTestUtility setupCognitoCredentialsProvider];
+    [AWSTestUtility setupSessionCredentialsProvider];
 }
 
 - (void)tearDown {
@@ -83,6 +83,7 @@
     XCTAssertTrue(pinpointConfiguration.enableAutoSessionRecording);
     XCTAssertEqual(pinpointConfiguration.maxStorageSize, 1024 * 1024 * 5);
     XCTAssertEqual(pinpointConfiguration.sessionTimeout, 5000);
+    XCTAssertFalse(pinpointConfiguration.debug);
     XCTAssertNotNil(pinpointConfiguration.attributes);
     XCTAssertNotNil(pinpointConfiguration.environment);
     XCTAssertNotNil(pinpointConfiguration.environment.appVersion);
@@ -171,7 +172,6 @@
     XCTAssertNotNil(pinpoint.pinpointContext);
     XCTAssertNotNil(pinpoint.pinpointContext.clientContext);
     XCTAssertNotNil(pinpoint.pinpointContext.uniqueId);
-    XCTAssertNotNil(pinpoint.pinpointContext.analyticsService);
     XCTAssertNotNil(pinpoint.pinpointContext.targetingService);
     XCTAssertNotNil(pinpoint.pinpointContext.configuration);
     XCTAssertTrue([pinpointConfiguration.appId isEqualToString:pinpoint.pinpointContext.configuration.appId]);
@@ -219,7 +219,6 @@
     XCTAssertNotNil(pinpoint.pinpointContext);
     XCTAssertNotNil(pinpoint.pinpointContext.clientContext);
     XCTAssertNotNil(pinpoint.pinpointContext.uniqueId);
-    XCTAssertNotNil(pinpoint.pinpointContext.analyticsService);
     XCTAssertNotNil(pinpoint.pinpointContext.targetingService);
     XCTAssertNotNil(pinpoint.pinpointContext.configuration);
     XCTAssertEqual(pinpointConfiguration, pinpoint.pinpointContext.configuration);
@@ -268,7 +267,6 @@
     XCTAssertNotNil(pinpoint.pinpointContext);
     XCTAssertNotNil(pinpoint.pinpointContext.clientContext);
     XCTAssertNotNil(pinpoint.pinpointContext.uniqueId);
-    XCTAssertNotNil(pinpoint.pinpointContext.analyticsService);
     XCTAssertNil(pinpoint.pinpointContext.targetingService);
     XCTAssertNotNil(pinpoint.pinpointContext.configuration);
     XCTAssertEqual(pinpointConfiguration, pinpoint.pinpointContext.configuration);

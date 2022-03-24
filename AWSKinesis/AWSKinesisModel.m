@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -20,6 +20,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisAddTagsToStreamInput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"streamName" : @"StreamName",
@@ -30,6 +34,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 @end
 
 @implementation AWSKinesisCreateStreamInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -42,6 +50,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisDecreaseStreamRetentionPeriodInput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"retentionPeriodHours" : @"RetentionPeriodHours",
@@ -53,6 +65,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisDeleteStreamInput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"streamName" : @"StreamName",
@@ -61,7 +77,34 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @end
 
+@implementation AWSKinesisDescribeLimitsInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSKinesisDescribeLimitsOutput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"openShardCount" : @"OpenShardCount",
+             @"shardLimit" : @"ShardLimit",
+             };
+}
+
+@end
+
 @implementation AWSKinesisDescribeStreamInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -75,6 +118,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisDescribeStreamOutput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"streamDescription" : @"StreamDescription",
@@ -87,7 +134,43 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @end
 
+@implementation AWSKinesisDescribeStreamSummaryInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"streamName" : @"StreamName",
+             };
+}
+
+@end
+
+@implementation AWSKinesisDescribeStreamSummaryOutput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"streamDescriptionSummary" : @"StreamDescriptionSummary",
+             };
+}
+
++ (NSValueTransformer *)streamDescriptionSummaryJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSKinesisStreamDescriptionSummary class]];
+}
+
+@end
+
 @implementation AWSKinesisDisableEnhancedMonitoringInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -100,6 +183,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisEnableEnhancedMonitoringInput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"shardLevelMetrics" : @"ShardLevelMetrics",
@@ -111,6 +198,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisEnhancedMetrics
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"shardLevelMetrics" : @"ShardLevelMetrics",
@@ -120,6 +211,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 @end
 
 @implementation AWSKinesisEnhancedMonitoringOutput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -133,6 +228,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisGetRecordsInput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"limit" : @"Limit",
@@ -143,6 +242,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 @end
 
 @implementation AWSKinesisGetRecordsOutput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -159,6 +262,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 @end
 
 @implementation AWSKinesisGetShardIteratorInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -218,6 +325,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisGetShardIteratorOutput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"shardIterator" : @"ShardIterator",
@@ -227,6 +338,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 @end
 
 @implementation AWSKinesisHashKeyRange
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -239,6 +354,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisIncreaseStreamRetentionPeriodInput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"retentionPeriodHours" : @"RetentionPeriodHours",
@@ -248,7 +367,56 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @end
 
+@implementation AWSKinesisListShardsInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"exclusiveStartShardId" : @"ExclusiveStartShardId",
+             @"maxResults" : @"MaxResults",
+             @"nextToken" : @"NextToken",
+             @"streamCreationTimestamp" : @"StreamCreationTimestamp",
+             @"streamName" : @"StreamName",
+             };
+}
+
++ (NSValueTransformer *)streamCreationTimestampJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+        return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
+    } reverseBlock:^id(NSDate *date) {
+        return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+    }];
+}
+
+@end
+
+@implementation AWSKinesisListShardsOutput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"nextToken" : @"NextToken",
+             @"shards" : @"Shards",
+             };
+}
+
++ (NSValueTransformer *)shardsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSKinesisShard class]];
+}
+
+@end
+
 @implementation AWSKinesisListStreamsInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -261,6 +429,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisListStreamsOutput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"hasMoreStreams" : @"HasMoreStreams",
@@ -271,6 +443,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 @end
 
 @implementation AWSKinesisListTagsForStreamInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -283,6 +459,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 @end
 
 @implementation AWSKinesisListTagsForStreamOutput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -299,6 +479,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisMergeShardsInput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"adjacentShardToMerge" : @"AdjacentShardToMerge",
@@ -310,6 +494,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 @end
 
 @implementation AWSKinesisPutRecordInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -325,16 +513,46 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisPutRecordOutput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"encryptionType" : @"EncryptionType",
              @"sequenceNumber" : @"SequenceNumber",
              @"shardId" : @"ShardId",
              };
 }
 
++ (NSValueTransformer *)encryptionTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"NONE"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeNone);
+        }
+        if ([value caseInsensitiveCompare:@"KMS"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeKms);
+        }
+        return @(AWSKinesisEncryptionTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSKinesisEncryptionTypeNone:
+                return @"NONE";
+            case AWSKinesisEncryptionTypeKms:
+                return @"KMS";
+            default:
+                return nil;
+        }
+    }];
+}
+
 @end
 
 @implementation AWSKinesisPutRecordsInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -351,11 +569,37 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisPutRecordsOutput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"encryptionType" : @"EncryptionType",
              @"failedRecordCount" : @"FailedRecordCount",
              @"records" : @"Records",
              };
+}
+
++ (NSValueTransformer *)encryptionTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"NONE"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeNone);
+        }
+        if ([value caseInsensitiveCompare:@"KMS"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeKms);
+        }
+        return @(AWSKinesisEncryptionTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSKinesisEncryptionTypeNone:
+                return @"NONE";
+            case AWSKinesisEncryptionTypeKms:
+                return @"KMS";
+            default:
+                return nil;
+        }
+    }];
 }
 
 + (NSValueTransformer *)recordsJSONTransformer {
@@ -365,6 +609,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 @end
 
 @implementation AWSKinesisPutRecordsRequestEntry
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -377,6 +625,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 @end
 
 @implementation AWSKinesisPutRecordsResultEntry
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -391,10 +643,15 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisRecord
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"approximateArrivalTimestamp" : @"ApproximateArrivalTimestamp",
              @"data" : @"Data",
+             @"encryptionType" : @"EncryptionType",
              @"partitionKey" : @"PartitionKey",
              @"sequenceNumber" : @"SequenceNumber",
              };
@@ -408,9 +665,34 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
     }];
 }
 
++ (NSValueTransformer *)encryptionTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"NONE"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeNone);
+        }
+        if ([value caseInsensitiveCompare:@"KMS"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeKms);
+        }
+        return @(AWSKinesisEncryptionTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSKinesisEncryptionTypeNone:
+                return @"NONE";
+            case AWSKinesisEncryptionTypeKms:
+                return @"KMS";
+            default:
+                return nil;
+        }
+    }];
+}
+
 @end
 
 @implementation AWSKinesisRemoveTagsFromStreamInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -423,6 +705,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisSequenceNumberRange
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"endingSequenceNumber" : @"EndingSequenceNumber",
@@ -433,6 +719,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 @end
 
 @implementation AWSKinesisShard
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -456,6 +746,10 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisSplitShardInput
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"latestStartingHashKey" : @"NewStartingHashKey",
@@ -466,18 +760,120 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @end
 
-@implementation AWSKinesisStreamDescription
+@implementation AWSKinesisStartStreamEncryptionInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"encryptionType" : @"EncryptionType",
+             @"keyId" : @"KeyId",
+             @"streamName" : @"StreamName",
+             };
+}
+
++ (NSValueTransformer *)encryptionTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"NONE"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeNone);
+        }
+        if ([value caseInsensitiveCompare:@"KMS"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeKms);
+        }
+        return @(AWSKinesisEncryptionTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSKinesisEncryptionTypeNone:
+                return @"NONE";
+            case AWSKinesisEncryptionTypeKms:
+                return @"KMS";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSKinesisStopStreamEncryptionInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"encryptionType" : @"EncryptionType",
+             @"keyId" : @"KeyId",
+             @"streamName" : @"StreamName",
+             };
+}
+
++ (NSValueTransformer *)encryptionTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"NONE"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeNone);
+        }
+        if ([value caseInsensitiveCompare:@"KMS"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeKms);
+        }
+        return @(AWSKinesisEncryptionTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSKinesisEncryptionTypeNone:
+                return @"NONE";
+            case AWSKinesisEncryptionTypeKms:
+                return @"KMS";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSKinesisStreamDescription
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"encryptionType" : @"EncryptionType",
              @"enhancedMonitoring" : @"EnhancedMonitoring",
              @"hasMoreShards" : @"HasMoreShards",
+             @"keyId" : @"KeyId",
              @"retentionPeriodHours" : @"RetentionPeriodHours",
              @"shards" : @"Shards",
              @"streamARN" : @"StreamARN",
+             @"streamCreationTimestamp" : @"StreamCreationTimestamp",
              @"streamName" : @"StreamName",
              @"streamStatus" : @"StreamStatus",
              };
+}
+
++ (NSValueTransformer *)encryptionTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"NONE"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeNone);
+        }
+        if ([value caseInsensitiveCompare:@"KMS"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeKms);
+        }
+        return @(AWSKinesisEncryptionTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSKinesisEncryptionTypeNone:
+                return @"NONE";
+            case AWSKinesisEncryptionTypeKms:
+                return @"KMS";
+            default:
+                return nil;
+        }
+    }];
 }
 
 + (NSValueTransformer *)enhancedMonitoringJSONTransformer {
@@ -486,6 +882,100 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 + (NSValueTransformer *)shardsJSONTransformer {
     return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSKinesisShard class]];
+}
+
++ (NSValueTransformer *)streamCreationTimestampJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+        return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
+    } reverseBlock:^id(NSDate *date) {
+        return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+    }];
+}
+
++ (NSValueTransformer *)streamStatusJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"CREATING"] == NSOrderedSame) {
+            return @(AWSKinesisStreamStatusCreating);
+        }
+        if ([value caseInsensitiveCompare:@"DELETING"] == NSOrderedSame) {
+            return @(AWSKinesisStreamStatusDeleting);
+        }
+        if ([value caseInsensitiveCompare:@"ACTIVE"] == NSOrderedSame) {
+            return @(AWSKinesisStreamStatusActive);
+        }
+        if ([value caseInsensitiveCompare:@"UPDATING"] == NSOrderedSame) {
+            return @(AWSKinesisStreamStatusUpdating);
+        }
+        return @(AWSKinesisStreamStatusUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSKinesisStreamStatusCreating:
+                return @"CREATING";
+            case AWSKinesisStreamStatusDeleting:
+                return @"DELETING";
+            case AWSKinesisStreamStatusActive:
+                return @"ACTIVE";
+            case AWSKinesisStreamStatusUpdating:
+                return @"UPDATING";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSKinesisStreamDescriptionSummary
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"encryptionType" : @"EncryptionType",
+             @"enhancedMonitoring" : @"EnhancedMonitoring",
+             @"keyId" : @"KeyId",
+             @"openShardCount" : @"OpenShardCount",
+             @"retentionPeriodHours" : @"RetentionPeriodHours",
+             @"streamARN" : @"StreamARN",
+             @"streamCreationTimestamp" : @"StreamCreationTimestamp",
+             @"streamName" : @"StreamName",
+             @"streamStatus" : @"StreamStatus",
+             };
+}
+
++ (NSValueTransformer *)encryptionTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"NONE"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeNone);
+        }
+        if ([value caseInsensitiveCompare:@"KMS"] == NSOrderedSame) {
+            return @(AWSKinesisEncryptionTypeKms);
+        }
+        return @(AWSKinesisEncryptionTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSKinesisEncryptionTypeNone:
+                return @"NONE";
+            case AWSKinesisEncryptionTypeKms:
+                return @"KMS";
+            default:
+                return nil;
+        }
+    }];
+}
+
++ (NSValueTransformer *)enhancedMonitoringJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSKinesisEnhancedMetrics class]];
+}
+
++ (NSValueTransformer *)streamCreationTimestampJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+        return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
+    } reverseBlock:^id(NSDate *date) {
+        return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+    }];
 }
 
 + (NSValueTransformer *)streamStatusJSONTransformer {
@@ -523,10 +1013,62 @@ NSString *const AWSKinesisErrorDomain = @"com.amazonaws.AWSKinesisErrorDomain";
 
 @implementation AWSKinesisTag
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"key" : @"Key",
              @"value" : @"Value",
+             };
+}
+
+@end
+
+@implementation AWSKinesisUpdateShardCountInput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"scalingType" : @"ScalingType",
+             @"streamName" : @"StreamName",
+             @"targetShardCount" : @"TargetShardCount",
+             };
+}
+
++ (NSValueTransformer *)scalingTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"UNIFORM_SCALING"] == NSOrderedSame) {
+            return @(AWSKinesisScalingTypeUniformScaling);
+        }
+        return @(AWSKinesisScalingTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSKinesisScalingTypeUniformScaling:
+                return @"UNIFORM_SCALING";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSKinesisUpdateShardCountOutput
+
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"currentShardCount" : @"CurrentShardCount",
+             @"streamName" : @"StreamName",
+             @"targetShardCount" : @"TargetShardCount",
              };
 }
 

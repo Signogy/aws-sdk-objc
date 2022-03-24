@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@
 FOUNDATION_EXPORT NSString *const AWSNetworkingErrorDomain;
 typedef NS_ENUM(NSInteger, AWSNetworkingErrorType) {
     AWSNetworkingErrorUnknown,
-    AWSNetworkingErrorCancelled
+    AWSNetworkingErrorCancelled,
+    AWSNetworkingErrorSessionInvalid
 };
 
 typedef NS_ENUM(NSInteger, AWSNetworkingRetryType) {
@@ -30,6 +31,9 @@ typedef NS_ENUM(NSInteger, AWSNetworkingRetryType) {
     AWSNetworkingRetryTypeShouldCorrectClockSkewAndRetry,
     AWSNetworkingRetryTypeResetStreamAndRetry
 };
+
+/** UserInfo dictionary key for response errors */
+FOUNDATION_EXPORT NSString *const AWSResponseObjectErrorUserInfoKey;
 
 @class AWSNetworkingConfiguration;
 @class AWSNetworkingRequest;

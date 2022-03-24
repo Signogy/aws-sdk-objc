@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -20,6 +20,8 @@
 
 static NSString *const AWSInfoIoTManager = @"IoTManager";
 
+static NSString *const AWSIoTEndpoint = @"Endpoint";
+
 @interface AWSIoT()
 
 - (instancetype)initWithConfiguration:(AWSServiceConfiguration *)configuration;
@@ -34,6 +36,10 @@ static NSString *const AWSInfoIoTManager = @"IoTManager";
 
 @implementation AWSIoTCreateCertificateResponse
 
++ (BOOL) supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSIoTManager
@@ -46,7 +52,18 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     dispatch_once(&onceToken, ^{
         AWSServiceConfiguration *serviceConfiguration = nil;
         AWSServiceInfo *serviceInfo = [[AWSInfo defaultAWSInfo] defaultServiceInfo:AWSInfoIoTManager];
-        if (serviceInfo) {
+
+        AWSEndpoint *endpoint = nil;
+        NSString *endpointURLString = [serviceInfo.infoDictionary objectForKey:AWSIoTEndpoint];
+        if (endpointURLString) {
+            endpoint = [[AWSEndpoint alloc] initWithURLString:endpointURLString];
+        }
+
+        if (serviceInfo && endpoint) {
+            serviceConfiguration = [[AWSServiceConfiguration alloc] initWithRegion:serviceInfo.region
+                                                                          endpoint:endpoint
+                                                               credentialsProvider:serviceInfo.cognitoCredentialsProvider];
+        } else if (serviceInfo) {
             serviceConfiguration = [[AWSServiceConfiguration alloc] initWithRegion:serviceInfo.region
                                                                credentialsProvider:serviceInfo.cognitoCredentialsProvider];
         }
@@ -115,7 +132,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     return self;
 }
 
-- (void)createKeysAndCertificateFromCsr:(NSDictionary *)csrDictionary callback:(void (^)(AWSIoTCreateCertificateResponse *mainResponse))callback {
+- (void)createKeysAndCertificateFromCsr:(NSDictionary<NSString *, NSString*> *)csrDictionary callback:(void (^)(AWSIoTCreateCertificateResponse *mainResponse))callback {
 
     NSString *commonName = [csrDictionary objectForKey:@"commonName"];
     NSString *countryName = [csrDictionary objectForKey:@"countryName"];
@@ -124,7 +141,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     
     if ((commonName == nil) || (countryName == nil) || (organizationName == nil) || (organizationalUnitName == nil))
     {
-        AWSLogError(@"all CSR dictionary fields must be specified");
+        AWSDDLogError(@"all CSR dictionary fields must be specified");
         callback(nil);
     }
     
@@ -145,32 +162,26 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 
     [[self.IoT createCertificateFromCsr:request] continueWithBlock:^id(AWSTask *task) {
         NSError *error = task.error;
-        AWSLogInfo(@"error: %@", error);
+        AWSDDLogInfo(@"error: %@", error);
         if (error != nil) {
             callback(nil);
             return nil;
         }
-        NSException *exception = task.exception;
-        AWSLogInfo(@"exception: %@", exception);
-        if (exception != nil) {
-            callback(nil);
-            return nil;
-        }
 
-        AWSLogInfo(@"result: %@", task.result);
+        AWSDDLogInfo(@"result: %@", task.result);
 
         if ([task.result isKindOfClass:[AWSIoTCreateCertificateFromCsrResponse class]]) {
 
             AWSIoTCreateCertificateFromCsrResponse *response = task.result;
 
             NSString* certificateArn = response.certificateArn;
-            AWSLogInfo(@"certificateArn: %@", certificateArn);
+            AWSDDLogInfo(@"certificateArn: %@", certificateArn);
 
             NSString* certificateId = response.certificateId;
-            AWSLogInfo(@"certificateId: %@", certificateId);
+            AWSDDLogInfo(@"certificateId: %@", certificateId);
 
             NSString* certificatePem = response.certificatePem;
-            AWSLogInfo(@"certificatePem: %@", certificatePem);
+            AWSDDLogInfo(@"certificatePem: %@", certificatePem);
 
             if (certificatePem != nil && certificateArn != nil && certificateId != nil) {
                 NSString *newPublicTag = [AWSIoTKeychain.publicKeyTag stringByAppendingString:certificateId];
@@ -225,12 +236,28 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     
     [AWSIoTManager readPk12:pkcs12Data passPhrase:passPhrase certRef:&certRef privateKeyRef:&privateKey publicKeyRef:&publicKey];
     
+    if (!certRef || !privateKey || !publicKey) {
+        if (certRef) {
+            CFRelease(certRef);
+        }
+        if (privateKey) {
+            CFRelease(privateKey);
+        }
+        if (publicKey) {
+            CFRelease(publicKey);
+        }
+        AWSDDLogError(@"Unable to extract PKCS12 data. Ensure the passPhrase is correct.");
+        return NO;
+    }
+
     NSString *publicTag = [AWSIoTKeychain.publicKeyTag stringByAppendingString:certificateId];
     NSString *privateTag = [AWSIoTKeychain.privateKeyTag stringByAppendingString:certificateId];
 
     if (![AWSIoTKeychain addPrivateKeyRef:privateKey tag:privateTag])
     {
-        AWSLogError(@"Unable to add private key");
+        if (publicKey)
+            CFRelease(publicKey);
+        AWSDDLogError(@"Unable to add private key");
         return NO;
     }
     
@@ -238,7 +265,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     {
         [AWSIoTKeychain deleteAsymmetricKeysWithPublicTag:publicTag privateTag:privateTag];
         
-        AWSLogError(@"Unable to add public key");
+        AWSDDLogError(@"Unable to add public key");
         return NO;
     }
     
@@ -246,7 +273,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     {
         [AWSIoTKeychain deleteAsymmetricKeysWithPublicTag:publicTag privateTag:privateTag];
         
-        AWSLogError(@"Unable to add certificate");
+        AWSDDLogError(@"Unable to add certificate");
         return NO;
     }
     
@@ -261,8 +288,8 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     SecTrustRef trust = NULL;
     
     // cleanup stuff in a block so we don't need to do this over and over again.
-    static BOOL (^cleanup)();
-    static BOOL (^errorCleanup)();
+    static BOOL (^cleanup)(void);
+    static BOOL (^errorCleanup)(void);
     static dispatch_once_t once;
     dispatch_once(&once, ^{
         cleanup = ^BOOL {
@@ -300,13 +327,13 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         
         if (SecIdentityCopyPrivateKey(identityApp, privateKeyRef) != errSecSuccess)
         {
-                AWSLogError(@"Unable to copy private key");
+                AWSDDLogError(@"Unable to copy private key");
                 return errorCleanup();
         }
         
         if (SecIdentityCopyCertificate(identityApp, certRef) != errSecSuccess)
         {
-                AWSLogError(@"Unable to copy certificate");
+                AWSDDLogError(@"Unable to copy certificate");
                 return errorCleanup();
         }
         
@@ -317,7 +344,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         status = SecTrustCreateWithCertificates((__bridge CFArrayRef) @[(__bridge id) *certRef], policy, &trust);
         if (status != errSecSuccess)
         {
-            AWSLogError(@"Unable to create trust");
+            AWSDDLogError(@"Unable to create trust");
             return errorCleanup();
         }
         //
@@ -326,7 +353,7 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         SecTrustResultType result;
         if (SecTrustEvaluate(trust, &result) != errSecSuccess)
         {
-            AWSLogError(@"Unable to evaluate trust");
+            AWSDDLogError(@"Unable to evaluate trust");
             return errorCleanup();
         }
         
@@ -336,13 +363,13 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
         *publicKeyRef = SecTrustCopyPublicKey(trust);
         if(*publicKeyRef == NULL)
         {
-            AWSLogError(@"Unable to copy public key");
+            AWSDDLogError(@"Unable to copy public key");
             return errorCleanup();
         }
     
         return cleanup();
     }
-    AWSLogError(@"Unable to import from PKCS12 data");
+    AWSDDLogError(@"Unable to import from PKCS12 data");
     return errorCleanup();
 }
 

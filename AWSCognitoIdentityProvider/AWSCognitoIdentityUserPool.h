@@ -1,18 +1,8 @@
 //
-// Copyright 2014-2016 Amazon.com,
+// Copyright 2014-2017 Amazon.com,
 // Inc. or its affiliates. All Rights Reserved.
 //
-// Licensed under the Amazon Software License (the "License").
-// You may not use this file except in compliance with the
-// License. A copy of the License is located at
-//
-//     http://aws.amazon.com/asl/
-//
-// or in the "license" file accompanying this file. This file is
-// distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-// CONDITIONS OF ANY KIND, express or implied. See the License
-// for the specific language governing permissions and
-// limitations under the License.
+// SPDX-License-Identifier: Apache-2.0
 //
 
 #import <Foundation/Foundation.h>
@@ -27,6 +17,9 @@
 @class AWSCognitoIdentityUserPoolConfiguration;
 @class AWSCognitoIdentityUserPoolSignUpResponse;
 @class AWSCognitoIdentityNewPasswordRequiredDetails;
+@class AWSCognitoIdentityMfaCodeDetails;
+@class AWSCognitoIdentitySoftwareMfaSetupRequiredDetails;
+@class AWSCognitoIdentitySelectMfaDetails;
 
 @protocol AWSCognitoIdentityInteractiveAuthenticationDelegate;
 @protocol AWSCognitoIdentityPasswordAuthentication;
@@ -34,6 +27,8 @@
 @protocol AWSCognitoIdentityCustomAuthentication;
 @protocol AWSCognitoIdentityRememberDevice;
 @protocol AWSCognitoIdentityNewPasswordRequired;
+@protocol AWSCognitoIdentitySoftwareMfaSetupRequired;
+@protocol AWSCognitoIdentitySelectMfa;
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -62,9 +57,11 @@ NS_ASSUME_NONNULL_BEGIN
                                    userPoolConfiguration:(AWSCognitoIdentityUserPoolConfiguration *)userPoolConfiguration
                                                   forKey:(NSString *)key;
 
-+ (instancetype)CognitoIdentityUserPoolForKey:(NSString *)key;
++ (nullable instancetype)CognitoIdentityUserPoolForKey:(NSString *)key;
 
 + (void)removeCognitoIdentityUserPoolForKey:(NSString *)key;
+
++ (AWSCognitoIdentityUserPoolConfiguration *)buildUserPoolConfiguration:(nullable AWSServiceInfo *) serviceInfo;
 
 /**
  Sign up a new user
@@ -72,7 +69,15 @@ NS_ASSUME_NONNULL_BEGIN
 - (AWSTask<AWSCognitoIdentityUserPoolSignUpResponse *> *)signUp:(NSString *)username
                                                        password:(NSString *)password
                                                  userAttributes:(nullable NSArray<AWSCognitoIdentityUserAttributeType *> *)userAttributes
+                                                 validationData:(nullable NSArray<AWSCognitoIdentityUserAttributeType *> *)validationData
+                                                 clientMetaData:(nullable NSDictionary<NSString *, NSString*> *) clientMetaData;
+
+
+- (AWSTask<AWSCognitoIdentityUserPoolSignUpResponse *> *)signUp:(NSString *)username
+                                                       password:(NSString *)password
+                                                 userAttributes:(nullable NSArray<AWSCognitoIdentityUserAttributeType *> *)userAttributes
                                                  validationData:(nullable NSArray<AWSCognitoIdentityUserAttributeType *> *)validationData;
+
 
 /**
  Return the user who last authenticated.  Username may be nil if current user is unknown.
@@ -107,7 +112,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) NSString *clientId;
 @property (nonatomic, readonly, nullable) NSString *clientSecret;
 @property (nonatomic, readonly) NSString *poolId;
+@property (nonatomic, readonly) NSString *pinpointAppId;
 @property (nonatomic, readonly) BOOL shouldProvideCognitoValidationData;
+@property (nonatomic, readonly) BOOL migrationEnabled;
 
 - (instancetype)initWithClientId:(NSString *)clientId
                     clientSecret:(nullable NSString *)clientSecret
@@ -117,6 +124,19 @@ NS_ASSUME_NONNULL_BEGIN
                     clientSecret:(nullable NSString *)clientSecret
                           poolId:(NSString *)poolId
 shouldProvideCognitoValidationData:(BOOL)shouldProvideCognitoValidationData;
+
+- (instancetype)initWithClientId:(NSString *)clientId
+                    clientSecret:(nullable NSString *)clientSecret
+                          poolId:(NSString *)poolId
+shouldProvideCognitoValidationData:(BOOL)shouldProvideCognitoValidationData
+                   pinpointAppId:(nullable NSString *)pinpointAppId;
+
+- (instancetype)initWithClientId:(NSString *)clientId
+                    clientSecret:(nullable NSString *)clientSecret
+                          poolId:(NSString *)poolId
+shouldProvideCognitoValidationData:(BOOL)shouldProvideCognitoValidationData
+                   pinpointAppId:(nullable NSString *)pinpointAppId
+                migrationEnabled:(BOOL) migrationEnabled;
 
 @end
 
@@ -175,6 +195,11 @@ shouldProvideCognitoValidationData:(BOOL)shouldProvideCognitoValidationData;
  */
 @property(nonatomic, strong) NSDictionary<NSString*,NSString*>* challengeResponses;
 
+/**
+ A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers.
+ */
+@property(nonatomic, copy, nullable) NSDictionary<NSString*, NSString*> *clientMetaData;
+
 -(instancetype) initWithChallengeResponses: (NSDictionary<NSString*,NSString*> *) challengeResponses;
 
 @end
@@ -195,9 +220,35 @@ shouldProvideCognitoValidationData:(BOOL)shouldProvideCognitoValidationData;
 @property(nonatomic, strong, nullable) NSArray<AWSCognitoIdentityUserAttributeType*> *userAttributes;
 
 /**
+ A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers.
+ */
+@property(nonatomic, copy, nullable) NSDictionary<NSString*, NSString*> *clientMetaData;
+
+/**
  Initializer given a new password and map of user attributes to set 
  **/
 -(instancetype) initWithProposedPassword: (NSString *) proposedPassword userAttributes:(NSDictionary<NSString*,NSString*> *) userAttributes;
+
+@end
+
+/**
+ When responding to a mfa code challenge this encapsulates the end users' mfa code and client metadata
+ */
+@interface AWSCognitoIdentityMfaCodeDetails : NSObject
+/**
+ The end user's new password
+ */
+@property(nonatomic, copy, nonnull) NSString *mfaCode;
+
+/**
+ A map of custom key-value pairs that you can provide as input for any custom workflows that this action triggers.
+ */
+@property(nonatomic, copy, nullable) NSDictionary<NSString*, NSString*> *clientMetaData;
+
+/**
+ Initializer given the mfa code
+ **/
+-(instancetype) initWithMfaCode: (NSString *) mfaCode;
 
 @end
 
@@ -224,6 +275,67 @@ shouldProvideCognitoValidationData:(BOOL)shouldProvideCognitoValidationData;
 -(instancetype) initWithUserAttributes: (NSDictionary<NSString*,NSString*> *) userAttributes requiredAttributes: (NSSet<NSString*>*) requiredAttributes;
 
 @end
+
+/**
+ When responding to software mfa setup required, this encapsulates the secret code the end user must provide to their software mfa.
+ */
+@interface AWSCognitoIdentitySoftwareMfaSetupRequiredInput : NSObject
+
+@property(nonatomic, strong) NSString *secretCode;
+@property(nonatomic, strong) NSString *username;
+
+-(instancetype) initWithSecretCode: (NSString *) secretCode username: (NSString *) username;
+
+@end
+
+/**
+ When responding to a software mfa setup required challenge this encapsulates the end user's user code and friendly name for their TOTP
+ */
+@interface AWSCognitoIdentitySoftwareMfaSetupRequiredDetails : NSObject
+/**
+ The end user's code from their software mfa
+ */
+@property(nonatomic, strong, nonnull) NSString *userCode;
+/**
+ The friendly device name that will be specified when this software mfa is requested.
+ */
+@property(nonatomic, strong, nullable) NSString *friendlyDeviceName;
+
+/**
+ Initializer given the software tokens' code and friendly device name
+ **/
+-(instancetype) initWithUserCode: (NSString *) userCode friendlyDeviceName:(NSString* _Nullable) friendlyDeviceName;
+
+@end
+
+/**
+ When responding to a select mfa challenge, this encapsulates the available mfas the end user can choose from
+ */
+@interface AWSCognitoIdentitySelectMfaInput : NSObject
+
+@property(nonatomic, strong) NSDictionary<NSString*,NSString *>* availableMfas;
+
+-(instancetype) initWithAvailableMfas: (NSDictionary<NSString*,NSString *>*) availableMfas;
+
+@end
+
+
+/**
+ When responding to a select mfa challenge this encapsulates the end users mfa choice
+ */
+@interface AWSCognitoIdentitySelectMfaDetails : NSObject
+/**
+ The mfa the end user selected
+ */
+@property(nonatomic, strong, nonnull) NSString *selectedMfa;
+/**
+ Initializer given the mfa selected by the end user
+ **/
+-(instancetype) initWithSelectedMfa:(NSString*) selectedMfa;
+
+@end
+
+
 
 
 /**
@@ -273,6 +385,14 @@ typedef NS_ENUM(NSInteger, AWSCognitoIdentityClientErrorType) {
  */
 -(id<AWSCognitoIdentityCustomAuthentication>) startCustomAuthentication;
 
+/**
+ Initialize ui to prompt end user to setup a software mfa token */
+-(id<AWSCognitoIdentitySoftwareMfaSetupRequired>) startSoftwareMfaSetupRequired;
+
+/**
+ Initialize ui to prompt end user to pick desired mfa */
+-(id<AWSCognitoIdentitySelectMfa>) startSelectMfa;
+
 @end
 
 @protocol AWSCognitoIdentityPasswordAuthentication <NSObject>
@@ -292,11 +412,25 @@ typedef NS_ENUM(NSInteger, AWSCognitoIdentityClientErrorType) {
 
 @protocol AWSCognitoIdentityMultiFactorAuthentication <NSObject>
 /**
- Obtain mfa code from the end user
+ Obtain mfa code from the end user. This is deprecated, thus made optional to account for new clients implementing only
+ `getMultiFactorAuthenticationCode_v2:mfaCodeCompletionSource:`
  @param authenticationInput details about the deliveryMedium and masked destination for where the code was sent
  @param mfaCodeCompletionSource set mfaCodeCompletionSource.result with the mfa code from end user
  */
--(void) getMultiFactorAuthenticationCode: (AWSCognitoIdentityMultifactorAuthenticationInput *) authenticationInput mfaCodeCompletionSource: (AWSTaskCompletionSource<NSString *> *) mfaCodeCompletionSource;
+@optional
+-(void) getMultiFactorAuthenticationCode: (AWSCognitoIdentityMultifactorAuthenticationInput *) authenticationInput
+                 mfaCodeCompletionSource: (AWSTaskCompletionSource<NSString *> *) mfaCodeCompletionSource __attribute__((deprecated("Use `getMultiFactorAuthenticationCode_v2:mfaCodeCompletionSource:` instead")));
+
+/**
+ Obtain mfa code and clientMetadata from the end user. This is optional for backwards compatibility with existing clients
+ that have already implemented the deprecated `getMultiFactorAuthenticationCode:mfaCodeCompletionSource` method.
+ New clients should implement this.
+ @param authenticationInput details about the deliveryMedium and masked destination for where the code was sent
+ @param mfaCodeCompletionSource set mfaCodeCompletionSource.result with the mfa code and client metadata from end user
+ */
+@optional
+-(void) getMultiFactorAuthenticationCode_v2: (AWSCognitoIdentityMultifactorAuthenticationInput *) authenticationInput
+                    mfaCodeCompletionSource: (AWSTaskCompletionSource<AWSCognitoIdentityMfaCodeDetails *> *) mfaCodeCompletionSource;
 /**
  This step completed, usually either display an error to the end user or dismiss ui
  @param error the error if any that occured
@@ -343,7 +477,7 @@ typedef NS_ENUM(NSInteger, AWSCognitoIdentityClientErrorType) {
 /**
  Obtain a new password and specify profile information as part of sign in from the end user
  @param newPasswordRequiredInput user profile and required attributes of the end user
- @param newPasswordRequiredCompletionSource set newPasswordRequiredCompletionSource with the new password and any attribute updates from the end user
+ @param newPasswordRequiredCompletionSource set newPasswordRequiredCompletionSource.result with the new password and any attribute updates from the end user
  */
 -(void) getNewPasswordDetails: (AWSCognitoIdentityNewPasswordRequiredInput *) newPasswordRequiredInput newPasswordRequiredCompletionSource: (AWSTaskCompletionSource<AWSCognitoIdentityNewPasswordRequiredDetails *> *) newPasswordRequiredCompletionSource;
 /**
@@ -355,5 +489,39 @@ typedef NS_ENUM(NSInteger, AWSCognitoIdentityClientErrorType) {
 
 @end
 
+
+@protocol AWSCognitoIdentitySoftwareMfaSetupRequired <NSObject>
+
+/**
+ Obtain information about end user's software mfa
+ @param softwareMfaSetupInput contains secret code necessary for end user to configure their software mfa
+ @param softwareMfaSetupRequiredCompletionSource set softwareMfaSetupRequiredCompletionSource.result with the secret code and device name from the end user
+ */
+-(void) getSoftwareMfaSetupDetails: (AWSCognitoIdentitySoftwareMfaSetupRequiredInput *) softwareMfaSetupInput softwareMfaSetupRequiredCompletionSource: (AWSTaskCompletionSource<AWSCognitoIdentitySoftwareMfaSetupRequiredDetails *> *) softwareMfaSetupRequiredCompletionSource;
+/**
+ This step completed, usually either display an error to the end user or dismiss ui
+ @param error the error if any that occured
+ */
+-(void) didCompleteMfaSetupStepWithError:(NSError* _Nullable) error;
+
+
+@end
+
+@protocol AWSCognitoIdentitySelectMfa <NSObject>
+
+/**
+ Obtain which mfa end user wants to provide
+ @param selectMfaInput contains which mfas are available
+ @param selectMfaCompletionSource set selectMfaCompletionSource.result with the mfa end user picked
+ */
+-(void) getSelectMfaDetails: (AWSCognitoIdentitySelectMfaInput *) selectMfaInput selectMfaCompletionSource: (AWSTaskCompletionSource<AWSCognitoIdentitySelectMfaDetails *> *) selectMfaCompletionSource;
+/**
+ This step completed, usually either display an error to the end user or dismiss ui
+ @param error the error if any that occured
+ */
+-(void) didCompleteSelectMfaStepWithError:(NSError* _Nullable) error;
+
+
+@end
 
 NS_ASSUME_NONNULL_END

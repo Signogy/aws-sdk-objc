@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
 
 
 #import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
 #import <AWSCore/AWSCore.h>
 #import "AWSLexModel.h"
 #import "AWSLexService.h"
@@ -234,33 +235,33 @@ typedef NS_ENUM(NSInteger, AWSLexSpeechEncoding) {
  
  *Swift*
  
- func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
-    let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
-    AWSServiceManager.defaultServiceManager().defaultServiceConfiguration = configuration
+     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
+         let configuration = AWSServiceConfiguration(region: .USEast1, credentialsProvider: credentialProvider)
+         AWSServiceManager.default().defaultServiceConfiguration = configuration
  
-    return true
- }
+         return true
+      }
  
  *Objective-C*
  
- -(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1 identityPoolId:@"YourIdentityPoolId"];
-    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
-    [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
+      -(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+         AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1 identityPoolId:@"YourIdentityPoolId"];
+         AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSEast1 credentialsProvider:credentialsProvider];
+         [AWSServiceManager defaultServiceManager].defaultServiceConfiguration = configuration;
  
-    return YES;
- }
+         return YES;
+      }
  
  Then call the following to get the default service client:
  
  *Swift*
  
- let interactionKit = AWSLexInteractionKit.defaultInteractionKit()
+      let interactionKit = AWSLexInteractionKit.default()
  
  *Objective-C*
  
- AWSLexInteractionKit *interactionKit = [AWSLexInteractionKit defaultInteractionKit];
+      AWSLexInteractionKit *interactionKit = [AWSLexInteractionKit defaultInteractionKit];
  
  @return The default interactionKit client.
  */
@@ -274,34 +275,34 @@ typedef NS_ENUM(NSInteger, AWSLexSpeechEncoding) {
  
  *Swift*
  
- func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
-    let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
-    AWSLexInteractionKit.registerInteractionKitWithServiceConfiguration(configuration, forKey: "USWest2InteractionKit")
+     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
+         let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
+         AWSLexInteractionKit.register(with: configuration!, forKey: "USWest2InteractionKit")
  
-    return true
- }
+         return true
+      }
  
  *Objective-C*
  
- - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1 identityPoolId:@"YourIdentityPoolId"];
-    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSWest2 credentialsProvider:credentialsProvider];
+      - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+         AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1 identityPoolId:@"YourIdentityPoolId"];
+         AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSWest2 credentialsProvider:credentialsProvider];
  
-    [AWSLexInteractionKit registerInteractionKitWithServiceConfiguration:configuration forKey:@"USWest2InteractionKit"];
+         [AWSLexInteractionKit registerInteractionKitWithServiceConfiguration:configuration forKey:@"USWest2InteractionKit"];
  
-    return YES;
- }
+         return YES;
+      }
  
  Then call the following to get the service client:
  
  *Swift*
  
- let interactionKit = AWSLexInteractionKit(forKey: "USWest2InteractionKit")
+      let interactionKit = AWSLexInteractionKit(forKey: "USWest2InteractionKit")
  
  *Objective-C*
  
- AWSLexInteractionKit *interactionKit = [AWSLexInteractionKit interactionKitForKey:@"USWest2InteractionKit"];
+      AWSLexInteractionKit *interactionKit = [AWSLexInteractionKit interactionKitForKey:@"USWest2InteractionKit"];
  
  @warning After calling this method, do not modify the configuration object. It may cause unspecified behaviors.
  
@@ -319,33 +320,33 @@ typedef NS_ENUM(NSInteger, AWSLexSpeechEncoding) {
  
  *Swift*
  
- func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-    let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
-    let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
-    AWSLexInteractionKit.registerInteractionKitWithServiceConfiguration(configuration, forKey: "USWest2InteractionKit")
+     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+         let credentialProvider = AWSCognitoCredentialsProvider(regionType: .USEast1, identityPoolId: "YourIdentityPoolId")
+         let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialProvider)
+         AWSLexInteractionKit.register(with: configuration!, forKey: "USWest2InteractionKit")
  
-    return true
- }
+         return true
+      }
  
  *Objective-C*
  
- - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1 identityPoolId:@"YourIdentityPoolId"];
-    AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSWest2 credentialsProvider:credentialsProvider];
-    [AWSLexInteractionKit registerInteractionKitWithServiceConfiguration:configuration forKey:@"USWest2InteractionKit"];
+      - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+         AWSCognitoCredentialsProvider *credentialsProvider = [[AWSCognitoCredentialsProvider alloc] initWithRegionType:AWSRegionUSEast1 identityPoolId:@"YourIdentityPoolId"];
+         AWSServiceConfiguration *configuration = [[AWSServiceConfiguration alloc] initWithRegion:AWSRegionUSWest2 credentialsProvider:credentialsProvider];
+         [AWSLexInteractionKit registerInteractionKitWithServiceConfiguration:configuration forKey:@"USWest2InteractionKit"];
  
-    return YES;
- }
+         return YES;
+      }
  
  Then call the following to get the service client:
  
  *Swift*
  
- let interactionKit = AWSLexInteractionKit(forKey: "USWest2InteractionKit")
+      let interactionKit = AWSLexInteractionKit(forKey: "USWest2InteractionKit")
  
  *Objective-C*
  
- AWSLexInteractionKit *interactionKit = [AWSLexInteractionKit interactionKitForKey:@"USWest2InteractionKit"];
+      AWSLexInteractionKit *interactionKit = [AWSLexInteractionKit interactionKitForKey:@"USWest2InteractionKit"];
  
  @param key A string to identify the service client.
  
@@ -428,52 +429,47 @@ typedef NS_ENUM(NSInteger, AWSLexSpeechEncoding) {
 /**
  Name of the intent being ellicited.
  */
-@property (nonatomic, strong) NSString * _Nullable intent;
+@property (nonatomic, strong, readonly) NSString * _Nullable intent;
 
 /**
  Text response.
  */
-@property (nonatomic, strong) NSString * _Nullable outputText;
+@property (nonatomic, strong, readonly) NSString * _Nullable outputText;
 
 /**
  The slots which are currently filled in an ongoing dialog
  */
-@property (nonatomic, strong) NSDictionary * _Nullable slots;
+@property (nonatomic, strong, readonly) NSDictionary * _Nullable slots;
 
 /**
  The slot which is being ellicited for an intent.
  */
-@property (nonatomic, strong) NSString * _Nullable elicitSlot;
+@property (nonatomic, strong, readonly) NSString * _Nullable elicitSlot;
 
 /**
  The current dialog state.
  */
-@property (nonatomic, assign) AWSLexDialogState dialogState;
+@property (nonatomic, assign, readonly) AWSLexDialogState dialogState;
 
 /**
  The session attributes returned from the service.
  */
-@property (nonatomic, strong) NSDictionary * _Nullable sessionAttributes;
+@property (nonatomic, strong, readonly) NSDictionary * _Nullable sessionAttributes;
 
 /**
  The audio stream . This may be null incase of a text response.
  */
-@property (nonatomic, strong) NSData * _Nullable audioStream;
+@property (nonatomic, strong, readonly) NSData * _Nullable audioStream;
 
 /**
  The format for the audio stream. This may be null if the audion stream is null.
  */
-@property (nonatomic, strong) NSString * _Nullable audioContentType;
+@property (nonatomic, strong, readonly) NSString * _Nullable audioContentType;
 
-
-- (instancetype) initWithOutputText:(NSString *)outputText
-                             intent:(NSString * _Nullable)intent
-                  sessionAttributes:(NSDictionary * _Nullable)sessionAttributes
-                       slotToElicit:(NSString * _Nullable)elicitSlot
-                              slots:(NSDictionary * _Nullable)slots
-                        dialogState:(AWSLexDialogState)dialogState
-                        audioStream:(NSData * _Nullable)audioStream
-                   audioContentType:(NSString * _Nullable)audioContentType;
+/**
+ Transcript of the voice input to the operation.
+ */
+@property (nonatomic, strong, readonly) NSString * _Nullable inputTranscript;
 
 
 @end
@@ -492,6 +488,82 @@ typedef NS_ENUM(NSInteger, AWSLexSpeechEncoding) {
  The session attributes.
  */
 @property (nonatomic, strong) NSDictionary * _Nullable sessionAttributes;
+
+@end
+
+#pragma mark - AVAudioSession
+
+/**
+ Wrapper to AVAudioSession class.
+ It auto-detects output source(Internal speaker or microphone) at runtime by listening to
+ AVAudioSessionRouteChangeNotification.
+ */
+@interface AWSLexAudioSession : NSObject
+
++ (instancetype)sharedInstance;
+
+/**
+ Set AVAudioSession category to AVAudioSessionCategoryPlayAndRecord
+ */
+- (void)setPlayAndRecordCategory:(NSError **)outError;
+
+/**
+ Override output audio port to AVAudioSessionPortOverrideSpeaker if headset is not detected.
+ */
+- (void)overrideOutputAudioPort:(NSError **)outError;
+
+
+/**
+ Request record permission to AVAudioSession.
+ */
+- (void)requestRecordPermission:(void (^)(BOOL granted))response;
+
+/**
+ Start observing for AVAudioSessionRouteChangeNotification if not already started.
+ */
+- (void)startObservingAudioSessionRouteChangeNotification;
+
+/**
+ Remove observing for AVAudioSessionRouteChangeNotification.
+ */
+- (void)endObservingAudioSessionRouteChangeNotification;
+
+@end
+
+
+#pragma mark - AWSLexAudioPlayer
+
+
+/**
+ Wrapper to AVAudioPLayer class.
+ */
+@interface AWSLexAudioPlayer : NSObject
+
+/**
+ Set it to handle error.
+ */
+@property (nonatomic) void (^errorBlock)(NSError *error);
+
+/**
+ Set it to handle successful audio play.
+ */
+@property (nonatomic) void (^completionBlock)(void);
+
+/**
+ Set it to handle when audio has been prepared to play.
+ */
+@property (nonatomic) void (^preparedBlock)(void);
+
+- (instancetype)initWithData:(NSData *)audioData;
+
+/**
+ Start playing sound.
+ 
+ When audio is prepared to play, preparedBlock will get called if it is set.
+ Once audio is successfully played audio, completionBlock will get called if it is set.
+ Otherwise errorBlock is get called.
+ */
+- (void)start;
 
 @end
 

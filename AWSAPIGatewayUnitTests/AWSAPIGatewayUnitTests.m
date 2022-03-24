@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@
 #import "AWSAPIGateway.h"
 
 @interface AWSAPIGatewayClient()
-
-@property (nonatomic, strong) AWSServiceConfiguration *configuration;
 
 - (NSURL *)requestURL:(NSString *)URLString query:(NSDictionary *)query URLPathComponentsDictionary:(NSDictionary *)URLPathComponentsDictionary;
 

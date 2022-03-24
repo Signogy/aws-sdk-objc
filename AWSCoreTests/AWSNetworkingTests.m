@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -129,7 +129,7 @@
     XCTAssertEqual(STS.configuration.timeoutIntervalForRequest, 0);
     XCTAssertEqual(STS.configuration.timeoutIntervalForResource, 0);
     XCTAssertEqual(STS.configuration.maxRetryCount, 3);
-    NSURLSessionConfiguration *URLSessionConfiguration = [STS valueForKeyPath:@"networking.networkManager.session.configuration"];
+    NSURLSessionConfiguration *URLSessionConfiguration = [STS valueForKeyPath:@"networking.sessionManager.session.configuration"];
     XCTAssertEqual(URLSessionConfiguration.timeoutIntervalForRequest, 60);
     XCTAssertEqual(URLSessionConfiguration.timeoutIntervalForResource, 604800); // 1 week
 }
@@ -148,7 +148,7 @@
     XCTAssertEqual(STS.configuration.timeoutIntervalForRequest, 123);
     XCTAssertEqual(STS.configuration.timeoutIntervalForResource, 321);
     XCTAssertEqual(STS.configuration.maxRetryCount, 4);
-    NSURLSessionConfiguration *URLSessionConfiguration = [STS valueForKeyPath:@"networking.networkManager.session.configuration"];
+    NSURLSessionConfiguration *URLSessionConfiguration = [STS valueForKeyPath:@"networking.sessionManager.session.configuration"];
     XCTAssertEqual(URLSessionConfiguration.timeoutIntervalForRequest, 123);
     XCTAssertEqual(URLSessionConfiguration.timeoutIntervalForResource, 321);
 }
@@ -167,7 +167,7 @@
     XCTAssertEqual(STS.configuration.timeoutIntervalForRequest, 1);
     XCTAssertEqual(STS.configuration.timeoutIntervalForResource, 1);
     XCTAssertEqual(STS.configuration.maxRetryCount, 1);
-    NSURLSessionConfiguration *URLSessionConfiguration = [STS valueForKeyPath:@"networking.networkManager.session.configuration"];
+    NSURLSessionConfiguration *URLSessionConfiguration = [STS valueForKeyPath:@"networking.sessionManager.session.configuration"];
     XCTAssertEqual(URLSessionConfiguration.timeoutIntervalForRequest, 1);
     XCTAssertEqual(URLSessionConfiguration.timeoutIntervalForResource, 1);
 }

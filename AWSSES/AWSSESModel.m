@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -20,6 +20,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESAddHeaderAction
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"headerName" : @"HeaderName",
@@ -30,6 +34,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESBody
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -50,6 +58,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESBounceAction
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"message" : @"Message",
@@ -63,6 +75,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESBouncedRecipientInfo
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -120,7 +136,132 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @end
 
+@implementation AWSSESBulkEmailDestination
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"destination" : @"Destination",
+             @"replacementTags" : @"ReplacementTags",
+             @"replacementTemplateData" : @"ReplacementTemplateData",
+             };
+}
+
++ (NSValueTransformer *)destinationJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESDestination class]];
+}
+
++ (NSValueTransformer *)replacementTagsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSSESMessageTag class]];
+}
+
+@end
+
+@implementation AWSSESBulkEmailDestinationStatus
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"error" : @"Error",
+             @"messageId" : @"MessageId",
+             @"status" : @"Status",
+             };
+}
+
++ (NSValueTransformer *)statusJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"Success"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusSuccess);
+        }
+        if ([value caseInsensitiveCompare:@"MessageRejected"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusMessageRejected);
+        }
+        if ([value caseInsensitiveCompare:@"MailFromDomainNotVerified"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusMailFromDomainNotVerified);
+        }
+        if ([value caseInsensitiveCompare:@"ConfigurationSetDoesNotExist"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusConfigurationSetDoesNotExist);
+        }
+        if ([value caseInsensitiveCompare:@"TemplateDoesNotExist"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusTemplateDoesNotExist);
+        }
+        if ([value caseInsensitiveCompare:@"AccountSuspended"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusAccountSuspended);
+        }
+        if ([value caseInsensitiveCompare:@"AccountThrottled"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusAccountThrottled);
+        }
+        if ([value caseInsensitiveCompare:@"AccountDailyQuotaExceeded"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusAccountDailyQuotaExceeded);
+        }
+        if ([value caseInsensitiveCompare:@"InvalidSendingPoolName"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusInvalidSendingPoolName);
+        }
+        if ([value caseInsensitiveCompare:@"AccountSendingPaused"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusAccountSendingPaused);
+        }
+        if ([value caseInsensitiveCompare:@"ConfigurationSetSendingPaused"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusConfigurationSetSendingPaused);
+        }
+        if ([value caseInsensitiveCompare:@"InvalidParameterValue"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusInvalidParameterValue);
+        }
+        if ([value caseInsensitiveCompare:@"TransientFailure"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusTransientFailure);
+        }
+        if ([value caseInsensitiveCompare:@"Failed"] == NSOrderedSame) {
+            return @(AWSSESBulkEmailStatusFailed);
+        }
+        return @(AWSSESBulkEmailStatusUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSSESBulkEmailStatusSuccess:
+                return @"Success";
+            case AWSSESBulkEmailStatusMessageRejected:
+                return @"MessageRejected";
+            case AWSSESBulkEmailStatusMailFromDomainNotVerified:
+                return @"MailFromDomainNotVerified";
+            case AWSSESBulkEmailStatusConfigurationSetDoesNotExist:
+                return @"ConfigurationSetDoesNotExist";
+            case AWSSESBulkEmailStatusTemplateDoesNotExist:
+                return @"TemplateDoesNotExist";
+            case AWSSESBulkEmailStatusAccountSuspended:
+                return @"AccountSuspended";
+            case AWSSESBulkEmailStatusAccountThrottled:
+                return @"AccountThrottled";
+            case AWSSESBulkEmailStatusAccountDailyQuotaExceeded:
+                return @"AccountDailyQuotaExceeded";
+            case AWSSESBulkEmailStatusInvalidSendingPoolName:
+                return @"InvalidSendingPoolName";
+            case AWSSESBulkEmailStatusAccountSendingPaused:
+                return @"AccountSendingPaused";
+            case AWSSESBulkEmailStatusConfigurationSetSendingPaused:
+                return @"ConfigurationSetSendingPaused";
+            case AWSSESBulkEmailStatusInvalidParameterValue:
+                return @"InvalidParameterValue";
+            case AWSSESBulkEmailStatusTransientFailure:
+                return @"TransientFailure";
+            case AWSSESBulkEmailStatusFailed:
+                return @"Failed";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
 @implementation AWSSESCloneReceiptRuleSetRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -133,9 +274,91 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESCloneReceiptRuleSetResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESCloudWatchDestination
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"dimensionConfigurations" : @"DimensionConfigurations",
+             };
+}
+
++ (NSValueTransformer *)dimensionConfigurationsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSSESCloudWatchDimensionConfiguration class]];
+}
+
+@end
+
+@implementation AWSSESCloudWatchDimensionConfiguration
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"defaultDimensionValue" : @"DefaultDimensionValue",
+             @"dimensionName" : @"DimensionName",
+             @"dimensionValueSource" : @"DimensionValueSource",
+             };
+}
+
++ (NSValueTransformer *)dimensionValueSourceJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"messageTag"] == NSOrderedSame) {
+            return @(AWSSESDimensionValueSourceMessageTag);
+        }
+        if ([value caseInsensitiveCompare:@"emailHeader"] == NSOrderedSame) {
+            return @(AWSSESDimensionValueSourceEmailHeader);
+        }
+        if ([value caseInsensitiveCompare:@"linkTag"] == NSOrderedSame) {
+            return @(AWSSESDimensionValueSourceLinkTag);
+        }
+        return @(AWSSESDimensionValueSourceUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSSESDimensionValueSourceMessageTag:
+                return @"messageTag";
+            case AWSSESDimensionValueSourceEmailHeader:
+                return @"emailHeader";
+            case AWSSESDimensionValueSourceLinkTag:
+                return @"linkTag";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSSESConfigurationSet
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"name" : @"Name",
+             };
+}
+
 @end
 
 @implementation AWSSESContent
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -146,7 +369,110 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @end
 
+@implementation AWSSESCreateConfigurationSetEventDestinationRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             @"eventDestination" : @"EventDestination",
+             };
+}
+
++ (NSValueTransformer *)eventDestinationJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESEventDestination class]];
+}
+
+@end
+
+@implementation AWSSESCreateConfigurationSetEventDestinationResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESCreateConfigurationSetRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSet" : @"ConfigurationSet",
+             };
+}
+
++ (NSValueTransformer *)configurationSetJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESConfigurationSet class]];
+}
+
+@end
+
+@implementation AWSSESCreateConfigurationSetResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESCreateConfigurationSetTrackingOptionsRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             @"trackingOptions" : @"TrackingOptions",
+             };
+}
+
++ (NSValueTransformer *)trackingOptionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESTrackingOptions class]];
+}
+
+@end
+
+@implementation AWSSESCreateConfigurationSetTrackingOptionsResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESCreateCustomVerificationEmailTemplateRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"failureRedirectionURL" : @"FailureRedirectionURL",
+             @"fromEmailAddress" : @"FromEmailAddress",
+             @"successRedirectionURL" : @"SuccessRedirectionURL",
+             @"templateContent" : @"TemplateContent",
+             @"templateName" : @"TemplateName",
+             @"templateSubject" : @"TemplateSubject",
+             };
+}
+
+@end
+
 @implementation AWSSESCreateReceiptFilterRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -162,9 +488,17 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESCreateReceiptFilterResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESCreateReceiptRuleRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -182,9 +516,17 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESCreateReceiptRuleResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESCreateReceiptRuleSetRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -196,9 +538,142 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESCreateReceiptRuleSetResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESCreateTemplateRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"template" : @"Template",
+             };
+}
+
++ (NSValueTransformer *)templateJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESTemplate class]];
+}
+
+@end
+
+@implementation AWSSESCreateTemplateResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESCustomVerificationEmailTemplate
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"failureRedirectionURL" : @"FailureRedirectionURL",
+             @"fromEmailAddress" : @"FromEmailAddress",
+             @"successRedirectionURL" : @"SuccessRedirectionURL",
+             @"templateName" : @"TemplateName",
+             @"templateSubject" : @"TemplateSubject",
+             };
+}
+
+@end
+
+@implementation AWSSESDeleteConfigurationSetEventDestinationRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             @"eventDestinationName" : @"EventDestinationName",
+             };
+}
+
+@end
+
+@implementation AWSSESDeleteConfigurationSetEventDestinationResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESDeleteConfigurationSetRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             };
+}
+
+@end
+
+@implementation AWSSESDeleteConfigurationSetResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESDeleteConfigurationSetTrackingOptionsRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             };
+}
+
+@end
+
+@implementation AWSSESDeleteConfigurationSetTrackingOptionsResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESDeleteCustomVerificationEmailTemplateRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"templateName" : @"TemplateName",
+             };
+}
+
 @end
 
 @implementation AWSSESDeleteIdentityPolicyRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -211,9 +686,17 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESDeleteIdentityPolicyResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESDeleteIdentityRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -225,9 +708,17 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESDeleteIdentityResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESDeleteReceiptFilterRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -239,9 +730,17 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESDeleteReceiptFilterResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESDeleteReceiptRuleRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -254,9 +753,17 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESDeleteReceiptRuleResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESDeleteReceiptRuleSetRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -268,9 +775,39 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESDeleteReceiptRuleSetResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESDeleteTemplateRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"templateName" : @"TemplateName",
+             };
+}
+
+@end
+
+@implementation AWSSESDeleteTemplateResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESDeleteVerifiedEmailAddressRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -280,11 +817,54 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @end
 
+@implementation AWSSESDeliveryOptions
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"tlsPolicy" : @"TlsPolicy",
+             };
+}
+
++ (NSValueTransformer *)tlsPolicyJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"Require"] == NSOrderedSame) {
+            return @(AWSSESTlsPolicyRequire);
+        }
+        if ([value caseInsensitiveCompare:@"Optional"] == NSOrderedSame) {
+            return @(AWSSESTlsPolicyOptional);
+        }
+        return @(AWSSESTlsPolicyUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSSESTlsPolicyRequire:
+                return @"Require";
+            case AWSSESTlsPolicyOptional:
+                return @"Optional";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
 @implementation AWSSESDescribeActiveReceiptRuleSetRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 @end
 
 @implementation AWSSESDescribeActiveReceiptRuleSetResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -303,7 +883,64 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @end
 
+@implementation AWSSESDescribeConfigurationSetRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetAttributeNames" : @"ConfigurationSetAttributeNames",
+             @"configurationSetName" : @"ConfigurationSetName",
+             };
+}
+
+@end
+
+@implementation AWSSESDescribeConfigurationSetResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSet" : @"ConfigurationSet",
+             @"deliveryOptions" : @"DeliveryOptions",
+             @"eventDestinations" : @"EventDestinations",
+             @"reputationOptions" : @"ReputationOptions",
+             @"trackingOptions" : @"TrackingOptions",
+             };
+}
+
++ (NSValueTransformer *)configurationSetJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESConfigurationSet class]];
+}
+
++ (NSValueTransformer *)deliveryOptionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESDeliveryOptions class]];
+}
+
++ (NSValueTransformer *)eventDestinationsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSSESEventDestination class]];
+}
+
++ (NSValueTransformer *)reputationOptionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESReputationOptions class]];
+}
+
++ (NSValueTransformer *)trackingOptionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESTrackingOptions class]];
+}
+
+@end
+
 @implementation AWSSESDescribeReceiptRuleRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -315,6 +952,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESDescribeReceiptRuleResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -330,6 +971,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESDescribeReceiptRuleSetRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"ruleSetName" : @"RuleSetName",
@@ -339,6 +984,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESDescribeReceiptRuleSetResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -359,6 +1008,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESDestination
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bccAddresses" : @"BccAddresses",
@@ -369,7 +1022,42 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @end
 
+@implementation AWSSESEventDestination
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"cloudWatchDestination" : @"CloudWatchDestination",
+             @"enabled" : @"Enabled",
+             @"kinesisFirehoseDestination" : @"KinesisFirehoseDestination",
+             @"matchingEventTypes" : @"MatchingEventTypes",
+             @"name" : @"Name",
+             @"SNSDestination" : @"SNSDestination",
+             };
+}
+
++ (NSValueTransformer *)cloudWatchDestinationJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESCloudWatchDestination class]];
+}
+
++ (NSValueTransformer *)kinesisFirehoseDestinationJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESKinesisFirehoseDestination class]];
+}
+
++ (NSValueTransformer *)SNSDestinationJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESSNSDestination class]];
+}
+
+@end
+
 @implementation AWSSESExtensionField
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -380,7 +1068,58 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @end
 
+@implementation AWSSESGetAccountSendingEnabledResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"enabled" : @"Enabled",
+             };
+}
+
+@end
+
+@implementation AWSSESGetCustomVerificationEmailTemplateRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"templateName" : @"TemplateName",
+             };
+}
+
+@end
+
+@implementation AWSSESGetCustomVerificationEmailTemplateResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"failureRedirectionURL" : @"FailureRedirectionURL",
+             @"fromEmailAddress" : @"FromEmailAddress",
+             @"successRedirectionURL" : @"SuccessRedirectionURL",
+             @"templateContent" : @"TemplateContent",
+             @"templateName" : @"TemplateName",
+             @"templateSubject" : @"TemplateSubject",
+             };
+}
+
+@end
+
 @implementation AWSSESGetIdentityDkimAttributesRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -391,6 +1130,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESGetIdentityDkimAttributesResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -410,6 +1153,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESGetIdentityMailFromDomainAttributesRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"identities" : @"Identities",
@@ -419,6 +1166,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESGetIdentityMailFromDomainAttributesResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -438,6 +1189,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESGetIdentityNotificationAttributesRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"identities" : @"Identities",
@@ -447,6 +1202,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESGetIdentityNotificationAttributesResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -466,6 +1225,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESGetIdentityPoliciesRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"identity" : @"Identity",
@@ -477,6 +1240,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESGetIdentityPoliciesResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"policies" : @"Policies",
@@ -487,6 +1254,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESGetIdentityVerificationAttributesRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"identities" : @"Identities",
@@ -496,6 +1267,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESGetIdentityVerificationAttributesResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -515,6 +1290,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESGetSendQuotaResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"max24HourSend" : @"Max24HourSend",
@@ -526,6 +1305,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESGetSendStatisticsResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -539,7 +1322,43 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @end
 
+@implementation AWSSESGetTemplateRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"templateName" : @"TemplateName",
+             };
+}
+
+@end
+
+@implementation AWSSESGetTemplateResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"template" : @"Template",
+             };
+}
+
++ (NSValueTransformer *)templateJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESTemplate class]];
+}
+
+@end
+
 @implementation AWSSESIdentityDkimAttributes
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -588,6 +1407,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESIdentityMailFromDomainAttributes
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -653,6 +1476,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESIdentityNotificationAttributes
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"bounceTopic" : @"BounceTopic",
@@ -668,6 +1495,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESIdentityVerificationAttributes
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -714,7 +1545,26 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @end
 
+@implementation AWSSESKinesisFirehoseDestination
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"deliveryStreamARN" : @"DeliveryStreamARN",
+             @"IAMRoleARN" : @"IAMRoleARN",
+             };
+}
+
+@end
+
 @implementation AWSSESLambdaAction
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -747,7 +1597,79 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @end
 
+@implementation AWSSESListConfigurationSetsRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"maxItems" : @"MaxItems",
+             @"nextToken" : @"NextToken",
+             };
+}
+
+@end
+
+@implementation AWSSESListConfigurationSetsResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSets" : @"ConfigurationSets",
+             @"nextToken" : @"NextToken",
+             };
+}
+
++ (NSValueTransformer *)configurationSetsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSSESConfigurationSet class]];
+}
+
+@end
+
+@implementation AWSSESListCustomVerificationEmailTemplatesRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"maxResults" : @"MaxResults",
+             @"nextToken" : @"NextToken",
+             };
+}
+
+@end
+
+@implementation AWSSESListCustomVerificationEmailTemplatesResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"customVerificationEmailTemplates" : @"CustomVerificationEmailTemplates",
+             @"nextToken" : @"NextToken",
+             };
+}
+
++ (NSValueTransformer *)customVerificationEmailTemplatesJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSSESCustomVerificationEmailTemplate class]];
+}
+
+@end
+
 @implementation AWSSESListIdentitiesRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -782,6 +1704,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESListIdentitiesResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"identities" : @"Identities",
@@ -793,6 +1719,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESListIdentityPoliciesRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"identity" : @"Identity",
@@ -802,6 +1732,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESListIdentityPoliciesResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -813,9 +1747,17 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESListReceiptFiltersRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESListReceiptFiltersResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -831,6 +1773,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @implementation AWSSESListReceiptRuleSetsRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"nextToken" : @"NextToken",
@@ -840,6 +1786,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESListReceiptRuleSetsResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -854,7 +1804,45 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 
 @end
 
+@implementation AWSSESListTemplatesRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"maxItems" : @"MaxItems",
+             @"nextToken" : @"NextToken",
+             };
+}
+
+@end
+
+@implementation AWSSESListTemplatesResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"nextToken" : @"NextToken",
+             @"templatesMetadata" : @"TemplatesMetadata",
+             };
+}
+
++ (NSValueTransformer *)templatesMetadataJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSSESTemplateMetadata class]];
+}
+
+@end
+
 @implementation AWSSESListVerifiedEmailAddressesResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -865,6 +1853,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESMessage
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -884,6 +1876,10 @@ NSString *const AWSSESErrorDomain = @"com.amazonaws.AWSSESErrorDomain";
 @end
 
 @implementation AWSSESMessageDsn
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -907,7 +1903,53 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @end
 
+@implementation AWSSESMessageTag
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"name" : @"Name",
+             @"value" : @"Value",
+             };
+}
+
+@end
+
+@implementation AWSSESPutConfigurationSetDeliveryOptionsRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             @"deliveryOptions" : @"DeliveryOptions",
+             };
+}
+
++ (NSValueTransformer *)deliveryOptionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESDeliveryOptions class]];
+}
+
+@end
+
+@implementation AWSSESPutConfigurationSetDeliveryOptionsResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
 @implementation AWSSESPutIdentityPolicyRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -921,9 +1963,17 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESPutIdentityPolicyResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESRawMessage
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -934,6 +1984,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSSESReceiptAction
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -979,6 +2033,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESReceiptFilter
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"ipFilter" : @"IpFilter",
@@ -993,6 +2051,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSSESReceiptIpFilter
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1025,6 +2087,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSSESReceiptRule
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1066,6 +2132,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESReceiptRuleSetMetadata
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"createdTimestamp" : @"CreatedTimestamp",
@@ -1084,6 +2154,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSSESRecipientDsnFields
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1149,6 +2223,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESReorderReceiptRuleSetRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"ruleNames" : @"RuleNames",
@@ -1160,9 +2238,41 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESReorderReceiptRuleSetResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESReputationOptions
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"lastFreshStart" : @"LastFreshStart",
+             @"reputationMetricsEnabled" : @"ReputationMetricsEnabled",
+             @"sendingEnabled" : @"SendingEnabled",
+             };
+}
+
++ (NSValueTransformer *)lastFreshStartJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSString *str) {
+        return [NSDate aws_dateFromString:str];
+    } reverseBlock:^id(NSDate *date) {
+return [date aws_stringValue:AWSDateISO8601DateFormat1];
+    }];
+}
+
 @end
 
 @implementation AWSSESS3Action
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1176,6 +2286,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSSESSNSAction
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1207,7 +2321,25 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @end
 
+@implementation AWSSESSNSDestination
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"topicARN" : @"TopicARN",
+             };
+}
+
+@end
+
 @implementation AWSSESSendBounceRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1232,6 +2364,90 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESSendBounceResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"messageId" : @"MessageId",
+             };
+}
+
+@end
+
+@implementation AWSSESSendBulkTemplatedEmailRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             @"defaultTags" : @"DefaultTags",
+             @"defaultTemplateData" : @"DefaultTemplateData",
+             @"destinations" : @"Destinations",
+             @"replyToAddresses" : @"ReplyToAddresses",
+             @"returnPath" : @"ReturnPath",
+             @"returnPathArn" : @"ReturnPathArn",
+             @"source" : @"Source",
+             @"sourceArn" : @"SourceArn",
+             @"template" : @"Template",
+             @"templateArn" : @"TemplateArn",
+             };
+}
+
++ (NSValueTransformer *)defaultTagsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSSESMessageTag class]];
+}
+
++ (NSValueTransformer *)destinationsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSSESBulkEmailDestination class]];
+}
+
+@end
+
+@implementation AWSSESSendBulkTemplatedEmailResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"status" : @"Status",
+             };
+}
+
++ (NSValueTransformer *)statusJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSSESBulkEmailDestinationStatus class]];
+}
+
+@end
+
+@implementation AWSSESSendCustomVerificationEmailRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             @"emailAddress" : @"EmailAddress",
+             @"templateName" : @"TemplateName",
+             };
+}
+
+@end
+
+@implementation AWSSESSendCustomVerificationEmailResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"messageId" : @"MessageId",
@@ -1241,6 +2457,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSSESSendDataPoint
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1264,8 +2484,13 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESSendEmailRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
              @"destination" : @"Destination",
              @"message" : @"Message",
              @"replyToAddresses" : @"ReplyToAddresses",
@@ -1273,6 +2498,7 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"returnPathArn" : @"ReturnPathArn",
              @"source" : @"Source",
              @"sourceArn" : @"SourceArn",
+             @"tags" : @"Tags",
              };
 }
 
@@ -1284,9 +2510,17 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESMessage class]];
 }
 
++ (NSValueTransformer *)tagsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSSESMessageTag class]];
+}
+
 @end
 
 @implementation AWSSESSendEmailResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1298,14 +2532,20 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESSendRawEmailRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
              @"destinations" : @"Destinations",
              @"fromArn" : @"FromArn",
              @"rawMessage" : @"RawMessage",
              @"returnPathArn" : @"ReturnPathArn",
              @"source" : @"Source",
              @"sourceArn" : @"SourceArn",
+             @"tags" : @"Tags",
              };
 }
 
@@ -1313,9 +2553,63 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESRawMessage class]];
 }
 
++ (NSValueTransformer *)tagsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSSESMessageTag class]];
+}
+
 @end
 
 @implementation AWSSESSendRawEmailResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"messageId" : @"MessageId",
+             };
+}
+
+@end
+
+@implementation AWSSESSendTemplatedEmailRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             @"destination" : @"Destination",
+             @"replyToAddresses" : @"ReplyToAddresses",
+             @"returnPath" : @"ReturnPath",
+             @"returnPathArn" : @"ReturnPathArn",
+             @"source" : @"Source",
+             @"sourceArn" : @"SourceArn",
+             @"tags" : @"Tags",
+             @"template" : @"Template",
+             @"templateArn" : @"TemplateArn",
+             @"templateData" : @"TemplateData",
+             };
+}
+
++ (NSValueTransformer *)destinationJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESDestination class]];
+}
+
++ (NSValueTransformer *)tagsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSSESMessageTag class]];
+}
+
+@end
+
+@implementation AWSSESSendTemplatedEmailResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1327,6 +2621,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESSetActiveReceiptRuleSetRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"ruleSetName" : @"RuleSetName",
@@ -1337,9 +2635,17 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESSetActiveReceiptRuleSetResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESSetIdentityDkimEnabledRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1352,9 +2658,17 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESSetIdentityDkimEnabledResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESSetIdentityFeedbackForwardingEnabledRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1367,9 +2681,17 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESSetIdentityFeedbackForwardingEnabledResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESSetIdentityHeadersInNotificationsEnabledRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1409,9 +2731,17 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESSetIdentityHeadersInNotificationsEnabledResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESSetIdentityMailFromDomainRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1446,9 +2776,17 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESSetIdentityMailFromDomainResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESSetIdentityNotificationTopicRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1488,9 +2826,17 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESSetIdentityNotificationTopicResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESSetReceiptRulePositionRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1504,9 +2850,17 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESSetReceiptRulePositionResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESStopAction
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1533,7 +2887,211 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @end
 
+@implementation AWSSESTemplate
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"htmlPart" : @"HtmlPart",
+             @"subjectPart" : @"SubjectPart",
+             @"templateName" : @"TemplateName",
+             @"textPart" : @"TextPart",
+             };
+}
+
+@end
+
+@implementation AWSSESTemplateMetadata
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"createdTimestamp" : @"CreatedTimestamp",
+             @"name" : @"Name",
+             };
+}
+
++ (NSValueTransformer *)createdTimestampJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSString *str) {
+        return [NSDate aws_dateFromString:str];
+    } reverseBlock:^id(NSDate *date) {
+return [date aws_stringValue:AWSDateISO8601DateFormat1];
+    }];
+}
+
+@end
+
+@implementation AWSSESTestRenderTemplateRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"templateData" : @"TemplateData",
+             @"templateName" : @"TemplateName",
+             };
+}
+
+@end
+
+@implementation AWSSESTestRenderTemplateResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"renderedTemplate" : @"RenderedTemplate",
+             };
+}
+
+@end
+
+@implementation AWSSESTrackingOptions
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"customRedirectDomain" : @"CustomRedirectDomain",
+             };
+}
+
+@end
+
+@implementation AWSSESUpdateAccountSendingEnabledRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"enabled" : @"Enabled",
+             };
+}
+
+@end
+
+@implementation AWSSESUpdateConfigurationSetEventDestinationRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             @"eventDestination" : @"EventDestination",
+             };
+}
+
++ (NSValueTransformer *)eventDestinationJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESEventDestination class]];
+}
+
+@end
+
+@implementation AWSSESUpdateConfigurationSetEventDestinationResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESUpdateConfigurationSetReputationMetricsEnabledRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             @"enabled" : @"Enabled",
+             };
+}
+
+@end
+
+@implementation AWSSESUpdateConfigurationSetSendingEnabledRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             @"enabled" : @"Enabled",
+             };
+}
+
+@end
+
+@implementation AWSSESUpdateConfigurationSetTrackingOptionsRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"configurationSetName" : @"ConfigurationSetName",
+             @"trackingOptions" : @"TrackingOptions",
+             };
+}
+
++ (NSValueTransformer *)trackingOptionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESTrackingOptions class]];
+}
+
+@end
+
+@implementation AWSSESUpdateConfigurationSetTrackingOptionsResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESUpdateCustomVerificationEmailTemplateRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"failureRedirectionURL" : @"FailureRedirectionURL",
+             @"fromEmailAddress" : @"FromEmailAddress",
+             @"successRedirectionURL" : @"SuccessRedirectionURL",
+             @"templateContent" : @"TemplateContent",
+             @"templateName" : @"TemplateName",
+             @"templateSubject" : @"TemplateSubject",
+             };
+}
+
+@end
+
 @implementation AWSSESUpdateReceiptRuleRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1550,9 +3108,43 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESUpdateReceiptRuleResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
+@implementation AWSSESUpdateTemplateRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"template" : @"Template",
+             };
+}
+
++ (NSValueTransformer *)templateJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSSESTemplate class]];
+}
+
+@end
+
+@implementation AWSSESUpdateTemplateResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESVerifyDomainDkimRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1564,6 +3156,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESVerifyDomainDkimResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"dkimTokens" : @"DkimTokens",
@@ -1573,6 +3169,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSSESVerifyDomainIdentityRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1584,6 +3184,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESVerifyDomainIdentityResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"verificationToken" : @"VerificationToken",
@@ -1593,6 +3197,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 @end
 
 @implementation AWSSESVerifyEmailAddressRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
@@ -1604,6 +3212,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESVerifyEmailIdentityRequest
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"emailAddress" : @"EmailAddress",
@@ -1614,9 +3226,17 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 @implementation AWSSESVerifyEmailIdentityResponse
 
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
 @end
 
 @implementation AWSSESWorkmailAction
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{

@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -67,12 +67,6 @@
 
     inputString = @"abcDefg";
     XCTAssertFalse([inputString aws_isVirtualHostedStyleCompliant]);
-
-    inputString = @"Some random input";
-    XCTAssertEqualObjects([inputString aws_md5String], @"07d2d230c1227ff3d0004abb395e8bf2");
-
-    inputString = @"Some random input";
-    XCTAssertEqualObjects([inputString aws_md5StringLittleEndian], @"cba39458a339ee8fe133ae72974471a1");
 }
 
 - (void)testCategoryNSJSONSerialization {
@@ -115,6 +109,10 @@
     
     
 }
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+
 - (void)testLogger {
     XCTAssertEqualObjects([[AWSLogger defaultLogger] logLevelLabel:AWSLogLevelUnknown], @"?");
     XCTAssertEqualObjects([[AWSLogger defaultLogger] logLevelLabel:AWSLogLevelNone], @"?");
@@ -124,5 +122,7 @@
     XCTAssertEqualObjects([[AWSLogger defaultLogger] logLevelLabel:AWSLogLevelDebug], @"Debug");
     XCTAssertEqualObjects([[AWSLogger defaultLogger] logLevelLabel:AWSLogLevelVerbose], @"Verbose");
 }
+
+#pragma clang diagnostic pop
 
 @end

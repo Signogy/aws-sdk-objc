@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -29,11 +29,12 @@ typedef NS_ENUM(NSInteger, AWSCognitoCredentialsProviderErrorType) {
 };
 
 @class AWSTask<__covariant ResultType>;
+@class AWSCancellationTokenSource;
 
 /**
  An AWS credentials container class.
  */
-@interface AWSCredentials : NSObject
+@interface AWSCredentials : NSObject <NSCopying>
 
 /**
  Access Key component of credentials.
@@ -110,6 +111,27 @@ typedef NS_ENUM(NSInteger, AWSCognitoCredentialsProviderErrorType) {
 
 @end
 
+/**
+ @warning This credentials provider is intended only for testing purposes.
+ We strongly discourage embedding AWS credentials in your production apps because they can be easily extracted and abused. Consider using `AWSCognitoCredentialsProvider`.
+ Simple session credentials with keys and session token.
+ */
+@interface AWSBasicSessionCredentialsProvider: NSObject <AWSCredentialsProvider>
+
+/**
+ Instantiates a static credentials provider.
+ 
+ @param accessKey An AWS Access key.
+ @param secretKey An AWS Secret key.
+ @param sessionToken The session token for this session.
+ @return An AWS credentials object.
+ */
+- (instancetype)initWithAccessKey:(NSString *)accessKey
+                        secretKey:(NSString *)secretKey
+                     sessionToken:(NSString *)sessionToken;
+
+@end
+
 @interface AWSAnonymousCredentialsProvider : NSObject <AWSCredentialsProvider>
 
 @end
@@ -169,6 +191,17 @@ typedef NS_ENUM(NSInteger, AWSCognitoCredentialsProviderErrorType) {
  */
 - (instancetype)initWithRegionType:(AWSRegionType)regionType
                     identityPoolId:(NSString *)identityPoolId;
+
+/**
+Initializer for credentials provider with enhanced authentication flow. This is the recommended constructor for first time Amazon Cognito developers. Will create an instance of `AWSEnhancedCognitoIdentityProvider`.
+
+@param regionType The region in which your identity pool exists.
+@param identityPoolId The identity pool id for this provider. Value is used to communicate with Amazon Cognito as well as namespace values stored in the keychain.
+@param configuration Configuration to be used while creating service client for Identity Pool
+*/
+- (instancetype)initWithRegionType:(AWSRegionType)regionType
+                    identityPoolId:(NSString *)identityPoolId
+         identityPoolConfiguration:(AWSServiceConfiguration *)configuration;
 
 /**
  Initializer for credentials provider with enhanced authentication flow. This is the recommended method for first time Amazon Cognito developers. Will create an instance of `AWSEnhancedCognitoIdentityProvider`.
@@ -236,23 +269,6 @@ typedef NS_ENUM(NSInteger, AWSCognitoCredentialsProviderErrorType) {
 - (void)clearCredentials;
 
 - (void)setIdentityProviderManagerOnce:(id<AWSIdentityProviderManager>)identityProviderManager;
-
-// === Deprecated property and methods ===
-
-@property (nonatomic, strong, nullable) NSDictionary *logins __attribute__ ((deprecated("Use 'AWSIdentityProviderManager' to provide a valid logins dictionary to the credentials provider.")));
-
-- (instancetype)initWithRegionType:(AWSRegionType)regionType
-                        identityId:(NSString *)identityId
-                    identityPoolId:(NSString *)identityPoolId
-                            logins:(nullable NSDictionary *)logins __attribute__ ((deprecated("Use 'initWithRegionType:identityPoolId:identityProviderManager:' instead. 'identityId' passed to this method will be ignored.")));
-
-- (instancetype)initWithRegionType:(AWSRegionType)regionType
-                        identityId:(nullable NSString *)identityId
-                         accountId:(nullable NSString *)accountId
-                    identityPoolId:(NSString *)identityPoolId
-                     unauthRoleArn:(nullable NSString *)unauthRoleArn
-                       authRoleArn:(nullable NSString *)authRoleArn
-                            logins:(nullable NSDictionary *)logins __attribute__ ((deprecated("Use '- initWithRegionType:identityPoolId:unauthRoleArn:authRoleArn:identityProviderManager:' instead. 'identityId' and 'accountId' passed to this method will be ignored.")));
 
 @end
 

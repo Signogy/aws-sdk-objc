@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -18,6 +18,7 @@
 #import "AWSCredentialsProvider.h"
 #import "AWSServiceEnum.h"
 
+//! SDK version for AWS Core
 FOUNDATION_EXPORT NSString *const AWSiOSSDKVersion;
 
 FOUNDATION_EXPORT NSString *const AWSServiceErrorDomain;
@@ -92,6 +93,7 @@ typedef NS_ENUM(NSInteger, AWSServiceErrorType) {
 @property (nonatomic, strong, readonly) id<AWSCredentialsProvider> credentialsProvider;
 @property (nonatomic, strong, readonly) AWSEndpoint *endpoint;
 @property (nonatomic, readonly) NSString *userAgent;
+@property (nonatomic, readonly) BOOL localTestingEnabled;
 
 + (NSString *)baseUserAgent;
 
@@ -101,8 +103,18 @@ typedef NS_ENUM(NSInteger, AWSServiceErrorType) {
            credentialsProvider:(id<AWSCredentialsProvider>)credentialsProvider;
 
 - (instancetype)initWithRegion:(AWSRegionType)regionType
+                   serviceType:(AWSServiceType)serviceType
+           credentialsProvider:(id<AWSCredentialsProvider>)credentialsProvider
+           localTestingEnabled:(BOOL)localTestingEnabled;
+
+- (instancetype)initWithRegion:(AWSRegionType)regionType
                       endpoint:(AWSEndpoint *)endpoint
            credentialsProvider:(id<AWSCredentialsProvider>)credentialsProvider;
+
+- (instancetype)initWithRegion:(AWSRegionType)regionType
+                      endpoint:(AWSEndpoint *)endpoint
+           credentialsProvider:(id<AWSCredentialsProvider>)credentialsProvider
+           localTestingEnabled:(BOOL)localTestingEnabled;
 
 - (void)addUserAgentProductToken:(NSString *)productToken;
 
@@ -116,9 +128,13 @@ typedef NS_ENUM(NSInteger, AWSServiceErrorType) {
 @property (nonatomic, readonly) NSString *regionName;
 @property (nonatomic, readonly) AWSServiceType serviceType;
 @property (nonatomic, readonly) NSString *serviceName;
+@property (nonatomic, readonly) NSString *signingName;
 @property (nonatomic, readonly) NSURL *URL;
 @property (nonatomic, readonly) NSString *hostName;
 @property (nonatomic, readonly) BOOL useUnsafeURL;
+@property (nonatomic, readonly) NSNumber *portNumber;
+
++ (NSString *)regionNameFromType:(AWSRegionType)regionType;
 
 - (instancetype)initWithRegion:(AWSRegionType)regionType
                        service:(AWSServiceType)serviceType
@@ -128,8 +144,16 @@ typedef NS_ENUM(NSInteger, AWSServiceErrorType) {
                        service:(AWSServiceType)serviceType
                            URL:(NSURL *)URL;
 
+- (instancetype)initWithRegion:(AWSRegionType)regionType
+                   serviceName:(NSString *)serviceName
+                           URL:(NSURL *)URL;
+
 - (instancetype)initWithURL:(NSURL *)URL;
 
 - (instancetype)initWithURLString:(NSString *)URLString;
+
+- (instancetype)initLocalEndpointWithRegion:(AWSRegionType)regionType
+                                    service:(AWSServiceType)serviceType
+                               useUnsafeURL:(BOOL)useUnsafeURL;
 
 @end

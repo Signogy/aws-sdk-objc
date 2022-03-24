@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2016 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2017 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@
 #import "AWSKinesis.h"
 #import "AWSTestUtility.h"
 
-NSString *const AWSFirehoseTestStream = @"test-permanent-firehose";
-
 @interface AWSFirehoseTests : XCTestCase
+
+@property (nonatomic, strong) NSString *streamName;
 
 @end
 
@@ -29,7 +29,9 @@ NSString *const AWSFirehoseTestStream = @"test-permanent-firehose";
 
 - (void)setUp {
     [super setUp];
-    [AWSTestUtility setupCognitoCredentialsProvider];
+    [AWSTestUtility setupSessionCredentialsProvider];
+    _streamName = [AWSTestUtility getIntegrationTestConfigurationValueForPackageId:@"firehose"
+                                                                         configKey:@"firehose_stream_name"];
 }
 
 - (void)tearDown {
@@ -42,14 +44,13 @@ NSString *const AWSFirehoseTestStream = @"test-permanent-firehose";
     AWSFirehoseListDeliveryStreamsInput *listDeliveryStreamsInput = [AWSFirehoseListDeliveryStreamsInput new];
     [[[firehose listDeliveryStreams:listDeliveryStreamsInput] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         XCTAssertNil(task.error);
-        XCTAssertNil(task.exception);
         XCTAssertEqual([task.result class], [AWSFirehoseListDeliveryStreamsOutput class]);
 
         AWSFirehoseListDeliveryStreamsOutput *listDeliveryStreamsOutput = task.result;
 
         __block BOOL didFind = NO;
         for (NSString *streamName in listDeliveryStreamsOutput.deliveryStreamNames) {
-            if ([streamName isEqualToString:AWSFirehoseTestStream]) {
+            if ([streamName isEqualToString:self.streamName]) {
                 didFind = YES;
                 break;
             }
@@ -70,12 +71,11 @@ NSString *const AWSFirehoseTestStream = @"test-permanent-firehose";
     record.data = [testString dataUsingEncoding:NSUTF8StringEncoding];
 
     AWSFirehosePutRecordInput *putRecordInput = [AWSFirehosePutRecordInput new];
-    putRecordInput.deliveryStreamName = AWSFirehoseTestStream;
+    putRecordInput.deliveryStreamName = self.streamName;
     putRecordInput.record = record;
 
     [[[firehose putRecord:putRecordInput] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         XCTAssertNil(task.error);
-        XCTAssertNil(task.exception);
         XCTAssertEqual([task.result class], [AWSFirehosePutRecordOutput class]);
 
         AWSFirehosePutRecordOutput *putRecordOutput = task.result;
@@ -94,12 +94,11 @@ NSString *const AWSFirehoseTestStream = @"test-permanent-firehose";
     record.data = [testString dataUsingEncoding:NSUTF8StringEncoding];
 
     AWSFirehosePutRecordBatchInput *putRecordBatchInput = [AWSFirehosePutRecordBatchInput new];
-    putRecordBatchInput.deliveryStreamName = AWSFirehoseTestStream;
+    putRecordBatchInput.deliveryStreamName = self.streamName;
     putRecordBatchInput.records = @[record];
 
     [[[firehose putRecordBatch:putRecordBatchInput] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         XCTAssertNil(task.error);
-        XCTAssertNil(task.exception);
         XCTAssertEqual([task.result class], [AWSFirehosePutRecordBatchOutput class]);
 
         AWSFirehosePutRecordBatchOutput *putRecordBatchOutput = task.result;
