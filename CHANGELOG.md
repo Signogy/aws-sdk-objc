@@ -2,8 +2,63 @@
 
 ## Unreleased
 
-
 -Features for next release
+
+## 2.27.8
+
+### Bug Fixes
+
+- **Pinpoint**
+  - fix: Updates Pinpoint to allow for push events for received and opened (See [PR #4105](https://github.com/aws-amplify/aws-sdk-ios/pull/4105))
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSEC2
+  - AWSConnect
+  - AWSRekognition
+  - AWSKinesisVideo
+  - AWSKinesisVideoArchivedMedia
+  - AWSIoT
+
+## 2.27.7
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSEC2
+  - AWSLambda
+  - AWSIoT
+  - AWSConnect
+  - AWSIoTDataPlane
+  - AWSKMS
+  - AWSPolly
+  - AWSTextract
+  - AWSAutoScaling
+
+## 2.27.6
+
+### Misc. Updates
+
+- **AWSMobileClient**
+  - chore: Remove unused completion handler and cleanup (See [PR #4067](https://github.com/aws-amplify/aws-sdk-ios/pull/4067))
+
+## 2.27.5
+
+### Misc. Updates
+
+- **AWSMobileClient**
+  - chore: Modified getToken flow for hostedUI signIn (See [PR #4049](https://github.com/aws-amplify/aws-sdk-ios/pull/4049))
+
+- Model updates for the following services
+  - AWSLocation
+  - AWSPolly
+  - AWSEC2
+  - AWSLambda
+  - AWSTranscribe
+
+- **AWSCore**
+  - Improves `AWSSynchronizedMutableDictionary` and adds unit tests (See [PR #4051](https://github.com/aws-amplify/aws-sdk-ios/pull/4051))
 
 ## 2.27.4
 

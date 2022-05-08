@@ -457,6 +457,25 @@ NSString *const AWSEC2ErrorDomain = @"com.amazonaws.AWSEC2ErrorDomain";
 
 @end
 
+@implementation AWSEC2AdditionalDetail
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"additionalDetailType" : @"AdditionalDetailType",
+             @"component" : @"Component",
+             };
+}
+
++ (NSValueTransformer *)componentJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2AnalysisComponent class]];
+}
+
+@end
+
 @implementation AWSEC2Address
 
 + (BOOL)supportsSecureCoding {
@@ -664,6 +683,7 @@ NSString *const AWSEC2ErrorDomain = @"com.amazonaws.AWSEC2ErrorDomain";
              @"hostRecovery" : @"HostRecovery",
              @"instanceFamily" : @"InstanceFamily",
              @"instanceType" : @"InstanceType",
+             @"outpostArn" : @"OutpostArn",
              @"quantity" : @"Quantity",
              @"tagSpecifications" : @"TagSpecifications",
              };
@@ -7122,6 +7142,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -8095,6 +8202,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -8829,10 +8994,32 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"dryRun" : @"DryRun",
+             @"keyFormat" : @"KeyFormat",
              @"keyName" : @"KeyName",
              @"keyType" : @"KeyType",
              @"tagSpecifications" : @"TagSpecifications",
              };
+}
+
++ (NSValueTransformer *)keyFormatJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"pem"] == NSOrderedSame) {
+            return @(AWSEC2KeyFormatPem);
+        }
+        if ([value caseInsensitiveCompare:@"ppk"] == NSOrderedSame) {
+            return @(AWSEC2KeyFormatPpk);
+        }
+        return @(AWSEC2KeyFormatUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSEC2KeyFormatPem:
+                return @"pem";
+            case AWSEC2KeyFormatPpk:
+                return @"ppk";
+            default:
+                return nil;
+        }
+    }];
 }
 
 + (NSValueTransformer *)keyTypeJSONTransformer {
@@ -16497,6 +16684,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -17470,6 +17744,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -18752,6 +19084,7 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 	return @{
              @"dryRun" : @"DryRun",
              @"filters" : @"Filters",
+             @"includePublicKey" : @"IncludePublicKey",
              @"keyNames" : @"KeyNames",
              @"keyPairIds" : @"KeyPairIds",
              };
@@ -21468,6 +21801,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -22441,6 +22861,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -27136,6 +27614,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"state" : @"State",
              @"subnet" : @"Subnet",
              @"subnetRouteTable" : @"SubnetRouteTable",
+             @"transitGateway" : @"TransitGateway",
+             @"transitGatewayAttachment" : @"TransitGatewayAttachment",
+             @"transitGatewayRouteTable" : @"TransitGatewayRouteTable",
+             @"transitGatewayRouteTableRoute" : @"TransitGatewayRouteTableRoute",
              @"vpc" : @"Vpc",
              @"vpcEndpoint" : @"VpcEndpoint",
              @"vpcPeeringConnection" : @"VpcPeeringConnection",
@@ -27246,6 +27728,22 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 + (NSValueTransformer *)subnetRouteTableJSONTransformer {
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2AnalysisComponent class]];
+}
+
++ (NSValueTransformer *)transitGatewayJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2AnalysisComponent class]];
+}
+
++ (NSValueTransformer *)transitGatewayAttachmentJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2AnalysisComponent class]];
+}
+
++ (NSValueTransformer *)transitGatewayRouteTableJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2AnalysisComponent class]];
+}
+
++ (NSValueTransformer *)transitGatewayRouteTableRouteJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2TransitGatewayRouteTableRoute class]];
 }
 
 + (NSValueTransformer *)vpcJSONTransformer {
@@ -29446,6 +29944,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -30419,6 +31004,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -32163,6 +32806,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -33136,6 +33866,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -34628,6 +35416,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -35601,6 +36476,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -37754,6 +38687,7 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"hostReservationId" : @"HostReservationId",
              @"instances" : @"Instances",
              @"memberOfServiceLinkedResourceGroup" : @"MemberOfServiceLinkedResourceGroup",
+             @"outpostArn" : @"OutpostArn",
              @"ownerId" : @"OwnerId",
              @"releaseTime" : @"ReleaseTime",
              @"state" : @"State",
@@ -40408,6 +41342,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -41381,6 +42402,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -41785,6 +42864,7 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"keyName" : @"KeyName",
              @"launchTime" : @"LaunchTime",
              @"licenses" : @"Licenses",
+             @"maintenanceOptions" : @"MaintenanceOptions",
              @"metadataOptions" : @"MetadataOptions",
              @"monitoring" : @"Monitoring",
              @"networkInterfaces" : @"NetworkInterfaces",
@@ -43400,6 +44480,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -44373,6 +45540,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -44389,6 +45614,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 + (NSValueTransformer *)licensesJSONTransformer {
     return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSEC2LicenseConfiguration class]];
+}
+
++ (NSValueTransformer *)maintenanceOptionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2InstanceMaintenanceOptions class]];
 }
 
 + (NSValueTransformer *)metadataOptionsJSONTransformer {
@@ -45246,6 +46475,76 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 	return @{
              @"ipv6Prefix" : @"Ipv6Prefix",
              };
+}
+
+@end
+
+@implementation AWSEC2InstanceMaintenanceOptions
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"autoRecovery" : @"AutoRecovery",
+             };
+}
+
++ (NSValueTransformer *)autoRecoveryJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"disabled"] == NSOrderedSame) {
+            return @(AWSEC2InstanceAutoRecoveryStateDisabled);
+        }
+        if ([value caseInsensitiveCompare:@"default"] == NSOrderedSame) {
+            return @(AWSEC2InstanceAutoRecoveryStateDefault);
+        }
+        return @(AWSEC2InstanceAutoRecoveryStateUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSEC2InstanceAutoRecoveryStateDisabled:
+                return @"disabled";
+            case AWSEC2InstanceAutoRecoveryStateDefault:
+                return @"default";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSEC2InstanceMaintenanceOptionsRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"autoRecovery" : @"AutoRecovery",
+             };
+}
+
++ (NSValueTransformer *)autoRecoveryJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"disabled"] == NSOrderedSame) {
+            return @(AWSEC2InstanceAutoRecoveryStateDisabled);
+        }
+        if ([value caseInsensitiveCompare:@"default"] == NSOrderedSame) {
+            return @(AWSEC2InstanceAutoRecoveryStateDefault);
+        }
+        return @(AWSEC2InstanceAutoRecoveryStateUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSEC2InstanceAutoRecoveryStateDisabled:
+                return @"disabled";
+            case AWSEC2InstanceAutoRecoveryStateDefault:
+                return @"default";
+            default:
+                return nil;
+        }
+    }];
 }
 
 @end
@@ -48030,6 +49329,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -49003,6 +50389,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -50516,6 +51960,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -51489,6 +53020,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -52692,12 +54281,22 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"createTime" : @"CreateTime",
              @"keyFingerprint" : @"KeyFingerprint",
              @"keyName" : @"KeyName",
              @"keyPairId" : @"KeyPairId",
              @"keyType" : @"KeyType",
+             @"publicKey" : @"PublicKey",
              @"tags" : @"Tags",
              };
+}
+
++ (NSValueTransformer *)createTimeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSString *str) {
+        return [NSDate aws_dateFromString:str];
+    } reverseBlock:^id(NSDate *date) {
+return [date aws_stringValue:AWSDateISO8601DateFormat1];
+    }];
 }
 
 + (NSValueTransformer *)keyTypeJSONTransformer {
@@ -54289,6 +55888,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -55262,6 +56948,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -55762,6 +57506,76 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"arn" : @"Arn",
              @"name" : @"Name",
              };
+}
+
+@end
+
+@implementation AWSEC2LaunchTemplateInstanceMaintenanceOptions
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"autoRecovery" : @"AutoRecovery",
+             };
+}
+
++ (NSValueTransformer *)autoRecoveryJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"default"] == NSOrderedSame) {
+            return @(AWSEC2LaunchTemplateAutoRecoveryStateDefault);
+        }
+        if ([value caseInsensitiveCompare:@"disabled"] == NSOrderedSame) {
+            return @(AWSEC2LaunchTemplateAutoRecoveryStateDisabled);
+        }
+        return @(AWSEC2LaunchTemplateAutoRecoveryStateUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSEC2LaunchTemplateAutoRecoveryStateDefault:
+                return @"default";
+            case AWSEC2LaunchTemplateAutoRecoveryStateDisabled:
+                return @"disabled";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSEC2LaunchTemplateInstanceMaintenanceOptionsRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"autoRecovery" : @"AutoRecovery",
+             };
+}
+
++ (NSValueTransformer *)autoRecoveryJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"default"] == NSOrderedSame) {
+            return @(AWSEC2LaunchTemplateAutoRecoveryStateDefault);
+        }
+        if ([value caseInsensitiveCompare:@"disabled"] == NSOrderedSame) {
+            return @(AWSEC2LaunchTemplateAutoRecoveryStateDisabled);
+        }
+        return @(AWSEC2LaunchTemplateAutoRecoveryStateUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSEC2LaunchTemplateAutoRecoveryStateDefault:
+                return @"default";
+            case AWSEC2LaunchTemplateAutoRecoveryStateDisabled:
+                return @"disabled";
+            default:
+                return nil;
+        }
+    }];
 }
 
 @end
@@ -57665,6 +59479,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -58638,6 +60539,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -61376,6 +63335,79 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 + (NSValueTransformer *)instanceEventWindowJSONTransformer {
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2InstanceEventWindow class]];
+}
+
+@end
+
+@implementation AWSEC2ModifyInstanceMaintenanceOptionsRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"autoRecovery" : @"AutoRecovery",
+             @"dryRun" : @"DryRun",
+             @"instanceId" : @"InstanceId",
+             };
+}
+
++ (NSValueTransformer *)autoRecoveryJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"disabled"] == NSOrderedSame) {
+            return @(AWSEC2InstanceAutoRecoveryStateDisabled);
+        }
+        if ([value caseInsensitiveCompare:@"default"] == NSOrderedSame) {
+            return @(AWSEC2InstanceAutoRecoveryStateDefault);
+        }
+        return @(AWSEC2InstanceAutoRecoveryStateUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSEC2InstanceAutoRecoveryStateDisabled:
+                return @"disabled";
+            case AWSEC2InstanceAutoRecoveryStateDefault:
+                return @"default";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSEC2ModifyInstanceMaintenanceOptionsResult
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"autoRecovery" : @"AutoRecovery",
+             @"instanceId" : @"InstanceId",
+             };
+}
+
++ (NSValueTransformer *)autoRecoveryJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"disabled"] == NSOrderedSame) {
+            return @(AWSEC2InstanceAutoRecoveryStateDisabled);
+        }
+        if ([value caseInsensitiveCompare:@"default"] == NSOrderedSame) {
+            return @(AWSEC2InstanceAutoRecoveryStateDefault);
+        }
+        return @(AWSEC2InstanceAutoRecoveryStateUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSEC2InstanceAutoRecoveryStateDisabled:
+                return @"disabled";
+            case AWSEC2InstanceAutoRecoveryStateDefault:
+                return @"default";
+            default:
+                return nil;
+        }
+    }];
 }
 
 @end
@@ -64733,6 +66765,7 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"aclRule" : @"AclRule",
+             @"additionalDetails" : @"AdditionalDetails",
              @"attachedTo" : @"AttachedTo",
              @"component" : @"Component",
              @"destinationVpc" : @"DestinationVpc",
@@ -64743,12 +66776,18 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"sequenceNumber" : @"SequenceNumber",
              @"sourceVpc" : @"SourceVpc",
              @"subnet" : @"Subnet",
+             @"transitGateway" : @"TransitGateway",
+             @"transitGatewayRouteTableRoute" : @"TransitGatewayRouteTableRoute",
              @"vpc" : @"Vpc",
              };
 }
 
 + (NSValueTransformer *)aclRuleJSONTransformer {
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2AnalysisAclRule class]];
+}
+
++ (NSValueTransformer *)additionalDetailsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSEC2AdditionalDetail class]];
 }
 
 + (NSValueTransformer *)attachedToJSONTransformer {
@@ -64785,6 +66824,14 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 + (NSValueTransformer *)subnetJSONTransformer {
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2AnalysisComponent class]];
+}
+
++ (NSValueTransformer *)transitGatewayJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2AnalysisComponent class]];
+}
+
++ (NSValueTransformer *)transitGatewayRouteTableRouteJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2TransitGatewayRouteTableRoute class]];
 }
 
 + (NSValueTransformer *)vpcJSONTransformer {
@@ -67088,6 +69135,7 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"kernelId" : @"KernelId",
              @"keyName" : @"KeyName",
              @"licenseSpecifications" : @"LicenseSpecifications",
+             @"maintenanceOptions" : @"MaintenanceOptions",
              @"metadataOptions" : @"MetadataOptions",
              @"monitoring" : @"Monitoring",
              @"networkInterfaces" : @"NetworkInterfaces",
@@ -68623,6 +70671,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -69596,6 +71731,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -69604,6 +71797,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 + (NSValueTransformer *)licenseSpecificationsJSONTransformer {
     return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSEC2LaunchTemplateLicenseConfigurationRequest class]];
+}
+
++ (NSValueTransformer *)maintenanceOptionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2LaunchTemplateInstanceMaintenanceOptionsRequest class]];
 }
 
 + (NSValueTransformer *)metadataOptionsJSONTransformer {
@@ -71272,6 +73469,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -72245,6 +74529,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -73862,6 +76204,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -74835,6 +77264,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -76445,6 +78932,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -77418,6 +79992,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -79070,6 +81702,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -80043,6 +82762,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -81766,6 +84543,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -82739,6 +85603,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -83293,6 +86215,7 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"kernelId" : @"KernelId",
              @"keyName" : @"KeyName",
              @"licenseSpecifications" : @"LicenseSpecifications",
+             @"maintenanceOptions" : @"MaintenanceOptions",
              @"metadataOptions" : @"MetadataOptions",
              @"monitoring" : @"Monitoring",
              @"networkInterfaces" : @"NetworkInterfaces",
@@ -84828,6 +87751,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -85801,6 +88811,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -85809,6 +88877,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 + (NSValueTransformer *)licenseSpecificationsJSONTransformer {
     return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSEC2LaunchTemplateLicenseConfiguration class]];
+}
+
++ (NSValueTransformer *)maintenanceOptionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2LaunchTemplateInstanceMaintenanceOptions class]];
 }
 
 + (NSValueTransformer *)metadataOptionsJSONTransformer {
@@ -86442,6 +89514,7 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
              @"keyName" : @"KeyName",
              @"launchTemplate" : @"LaunchTemplate",
              @"licenseSpecifications" : @"LicenseSpecifications",
+             @"maintenanceOptions" : @"MaintenanceOptions",
              @"maxCount" : @"MaxCount",
              @"metadataOptions" : @"MetadataOptions",
              @"minCount" : @"MinCount",
@@ -87977,6 +91050,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -88950,6 +92110,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -88966,6 +92184,10 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
 
 + (NSValueTransformer *)licenseSpecificationsJSONTransformer {
     return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSEC2LicenseConfigurationRequest class]];
+}
+
++ (NSValueTransformer *)maintenanceOptionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSEC2InstanceMaintenanceOptionsRequest class]];
 }
 
 + (NSValueTransformer *)metadataOptionsJSONTransformer {
@@ -91999,6 +95221,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -92972,6 +96281,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -95733,6 +99100,93 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
         if ([value caseInsensitiveCompare:@"z1d.metal"] == NSOrderedSame) {
             return @(AWSEC2InstanceTypeZ1D_metal);
         }
+        if ([value caseInsensitiveCompare:@"x2idn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2idn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Idn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"x2iedn.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeX2Iedn_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_large);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.12xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_12xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.24xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_24xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_32xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.48xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_48xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"c6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeC6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"m6a.metal"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeM6A_metal);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.large"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_large);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.2xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_2xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.4xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_4xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.8xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_8xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.16xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_16xlarge);
+        }
+        if ([value caseInsensitiveCompare:@"i4i.32xlarge"] == NSOrderedSame) {
+            return @(AWSEC2InstanceTypeI4I_32xlarge);
+        }
         return @(AWSEC2InstanceTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -96706,6 +100160,64 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return @"z1d.12xlarge";
             case AWSEC2InstanceTypeZ1D_metal:
                 return @"z1d.metal";
+            case AWSEC2InstanceTypeX2Idn_16xlarge:
+                return @"x2idn.16xlarge";
+            case AWSEC2InstanceTypeX2Idn_24xlarge:
+                return @"x2idn.24xlarge";
+            case AWSEC2InstanceTypeX2Idn_32xlarge:
+                return @"x2idn.32xlarge";
+            case AWSEC2InstanceTypeX2Iedn_xlarge:
+                return @"x2iedn.xlarge";
+            case AWSEC2InstanceTypeX2Iedn_2xlarge:
+                return @"x2iedn.2xlarge";
+            case AWSEC2InstanceTypeX2Iedn_4xlarge:
+                return @"x2iedn.4xlarge";
+            case AWSEC2InstanceTypeX2Iedn_8xlarge:
+                return @"x2iedn.8xlarge";
+            case AWSEC2InstanceTypeX2Iedn_16xlarge:
+                return @"x2iedn.16xlarge";
+            case AWSEC2InstanceTypeX2Iedn_24xlarge:
+                return @"x2iedn.24xlarge";
+            case AWSEC2InstanceTypeX2Iedn_32xlarge:
+                return @"x2iedn.32xlarge";
+            case AWSEC2InstanceTypeC6A_large:
+                return @"c6a.large";
+            case AWSEC2InstanceTypeC6A_xlarge:
+                return @"c6a.xlarge";
+            case AWSEC2InstanceTypeC6A_2xlarge:
+                return @"c6a.2xlarge";
+            case AWSEC2InstanceTypeC6A_4xlarge:
+                return @"c6a.4xlarge";
+            case AWSEC2InstanceTypeC6A_8xlarge:
+                return @"c6a.8xlarge";
+            case AWSEC2InstanceTypeC6A_12xlarge:
+                return @"c6a.12xlarge";
+            case AWSEC2InstanceTypeC6A_16xlarge:
+                return @"c6a.16xlarge";
+            case AWSEC2InstanceTypeC6A_24xlarge:
+                return @"c6a.24xlarge";
+            case AWSEC2InstanceTypeC6A_32xlarge:
+                return @"c6a.32xlarge";
+            case AWSEC2InstanceTypeC6A_48xlarge:
+                return @"c6a.48xlarge";
+            case AWSEC2InstanceTypeC6A_metal:
+                return @"c6a.metal";
+            case AWSEC2InstanceTypeM6A_metal:
+                return @"m6a.metal";
+            case AWSEC2InstanceTypeI4I_large:
+                return @"i4i.large";
+            case AWSEC2InstanceTypeI4I_xlarge:
+                return @"i4i.xlarge";
+            case AWSEC2InstanceTypeI4I_2xlarge:
+                return @"i4i.2xlarge";
+            case AWSEC2InstanceTypeI4I_4xlarge:
+                return @"i4i.4xlarge";
+            case AWSEC2InstanceTypeI4I_8xlarge:
+                return @"i4i.8xlarge";
+            case AWSEC2InstanceTypeI4I_16xlarge:
+                return @"i4i.16xlarge";
+            case AWSEC2InstanceTypeI4I_32xlarge:
+                return @"i4i.32xlarge";
             default:
                 return nil;
         }
@@ -100836,6 +104348,26 @@ return [date aws_stringValue:AWSDateISO8601DateFormat1];
                 return nil;
         }
     }];
+}
+
+@end
+
+@implementation AWSEC2TransitGatewayRouteTableRoute
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"attachmentId" : @"AttachmentId",
+             @"destinationCidr" : @"DestinationCidr",
+             @"prefixListId" : @"PrefixListId",
+             @"resourceId" : @"ResourceId",
+             @"resourceType" : @"ResourceType",
+             @"routeOrigin" : @"RouteOrigin",
+             @"state" : @"State",
+             };
 }
 
 @end

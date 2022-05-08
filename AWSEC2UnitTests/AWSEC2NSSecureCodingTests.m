@@ -43,6 +43,7 @@
 - (void) test_AWSEC2ActiveInstance API_AVAILABLE(ios(11));
 - (void) test_AWSEC2AddIpamOperatingRegion API_AVAILABLE(ios(11));
 - (void) test_AWSEC2AddPrefixListEntry API_AVAILABLE(ios(11));
+- (void) test_AWSEC2AdditionalDetail API_AVAILABLE(ios(11));
 - (void) test_AWSEC2Address API_AVAILABLE(ios(11));
 - (void) test_AWSEC2AddressAttribute API_AVAILABLE(ios(11));
 - (void) test_AWSEC2AdvertiseByoipCidrRequest API_AVAILABLE(ios(11));
@@ -1014,6 +1015,8 @@
 - (void) test_AWSEC2InstanceIpv6Address API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceIpv6AddressRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceIpv6Prefix API_AVAILABLE(ios(11));
+- (void) test_AWSEC2InstanceMaintenanceOptions API_AVAILABLE(ios(11));
+- (void) test_AWSEC2InstanceMaintenanceOptionsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceMarketOptionsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceMetadataOptionsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2InstanceMetadataOptionsResponse API_AVAILABLE(ios(11));
@@ -1090,6 +1093,8 @@
 - (void) test_AWSEC2LaunchTemplateHibernationOptionsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2LaunchTemplateIamInstanceProfileSpecification API_AVAILABLE(ios(11));
 - (void) test_AWSEC2LaunchTemplateIamInstanceProfileSpecificationRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2LaunchTemplateInstanceMaintenanceOptions API_AVAILABLE(ios(11));
+- (void) test_AWSEC2LaunchTemplateInstanceMaintenanceOptionsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2LaunchTemplateInstanceMarketOptions API_AVAILABLE(ios(11));
 - (void) test_AWSEC2LaunchTemplateInstanceMarketOptionsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2LaunchTemplateInstanceMetadataOptions API_AVAILABLE(ios(11));
@@ -1166,6 +1171,8 @@
 - (void) test_AWSEC2ModifyInstanceEventStartTimeResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ModifyInstanceEventWindowRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ModifyInstanceEventWindowResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2ModifyInstanceMaintenanceOptionsRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2ModifyInstanceMaintenanceOptionsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ModifyInstanceMetadataOptionsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ModifyInstanceMetadataOptionsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2ModifyInstancePlacementRequest API_AVAILABLE(ios(11));
@@ -1569,6 +1576,7 @@
 - (void) test_AWSEC2TransitGatewayRouteTable API_AVAILABLE(ios(11));
 - (void) test_AWSEC2TransitGatewayRouteTableAssociation API_AVAILABLE(ios(11));
 - (void) test_AWSEC2TransitGatewayRouteTablePropagation API_AVAILABLE(ios(11));
+- (void) test_AWSEC2TransitGatewayRouteTableRoute API_AVAILABLE(ios(11));
 - (void) test_AWSEC2TransitGatewayVpcAttachment API_AVAILABLE(ios(11));
 - (void) test_AWSEC2TransitGatewayVpcAttachmentOptions API_AVAILABLE(ios(11));
 - (void) test_AWSEC2TrunkInterfaceAssociation API_AVAILABLE(ios(11));
@@ -1726,6 +1734,10 @@
 
 - (void) test_AWSEC2AddPrefixListEntry {
     [self validateSecureCodingForClass:[AWSEC2AddPrefixListEntry class]];
+}
+
+- (void) test_AWSEC2AdditionalDetail {
+    [self validateSecureCodingForClass:[AWSEC2AdditionalDetail class]];
 }
 
 - (void) test_AWSEC2Address {
@@ -5612,6 +5624,14 @@
     [self validateSecureCodingForClass:[AWSEC2InstanceIpv6Prefix class]];
 }
 
+- (void) test_AWSEC2InstanceMaintenanceOptions {
+    [self validateSecureCodingForClass:[AWSEC2InstanceMaintenanceOptions class]];
+}
+
+- (void) test_AWSEC2InstanceMaintenanceOptionsRequest {
+    [self validateSecureCodingForClass:[AWSEC2InstanceMaintenanceOptionsRequest class]];
+}
+
 - (void) test_AWSEC2InstanceMarketOptionsRequest {
     [self validateSecureCodingForClass:[AWSEC2InstanceMarketOptionsRequest class]];
 }
@@ -5916,6 +5936,14 @@
     [self validateSecureCodingForClass:[AWSEC2LaunchTemplateIamInstanceProfileSpecificationRequest class]];
 }
 
+- (void) test_AWSEC2LaunchTemplateInstanceMaintenanceOptions {
+    [self validateSecureCodingForClass:[AWSEC2LaunchTemplateInstanceMaintenanceOptions class]];
+}
+
+- (void) test_AWSEC2LaunchTemplateInstanceMaintenanceOptionsRequest {
+    [self validateSecureCodingForClass:[AWSEC2LaunchTemplateInstanceMaintenanceOptionsRequest class]];
+}
+
 - (void) test_AWSEC2LaunchTemplateInstanceMarketOptions {
     [self validateSecureCodingForClass:[AWSEC2LaunchTemplateInstanceMarketOptions class]];
 }
@@ -6218,6 +6246,14 @@
 
 - (void) test_AWSEC2ModifyInstanceEventWindowResult {
     [self validateSecureCodingForClass:[AWSEC2ModifyInstanceEventWindowResult class]];
+}
+
+- (void) test_AWSEC2ModifyInstanceMaintenanceOptionsRequest {
+    [self validateSecureCodingForClass:[AWSEC2ModifyInstanceMaintenanceOptionsRequest class]];
+}
+
+- (void) test_AWSEC2ModifyInstanceMaintenanceOptionsResult {
+    [self validateSecureCodingForClass:[AWSEC2ModifyInstanceMaintenanceOptionsResult class]];
 }
 
 - (void) test_AWSEC2ModifyInstanceMetadataOptionsRequest {
@@ -7830,6 +7866,10 @@
 
 - (void) test_AWSEC2TransitGatewayRouteTablePropagation {
     [self validateSecureCodingForClass:[AWSEC2TransitGatewayRouteTablePropagation class]];
+}
+
+- (void) test_AWSEC2TransitGatewayRouteTableRoute {
+    [self validateSecureCodingForClass:[AWSEC2TransitGatewayRouteTableRoute class]];
 }
 
 - (void) test_AWSEC2TransitGatewayVpcAttachment {

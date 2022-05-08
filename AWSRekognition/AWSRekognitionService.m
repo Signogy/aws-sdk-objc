@@ -25,7 +25,7 @@
 #import "AWSRekognitionResources.h"
 
 static NSString *const AWSInfoRekognition = @"Rekognition";
-NSString *const AWSRekognitionSDKVersion = @"2.27.4";
+NSString *const AWSRekognitionSDKVersion = @"2.27.8";
 
 
 @interface AWSRekognitionResponseSerializer : AWSJSONResponseSerializer
@@ -1615,6 +1615,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSRekognitionUpdateDatasetEntriesResponse *response, NSError *error))completionHandler {
     [[self updateDatasetEntries:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionUpdateDatasetEntriesResponse *> * _Nonnull task) {
         AWSRekognitionUpdateDatasetEntriesResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSRekognitionUpdateStreamProcessorResponse *> *)updateStreamProcessor:(AWSRekognitionUpdateStreamProcessorRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"RekognitionService"
+                 operationName:@"UpdateStreamProcessor"
+                   outputClass:[AWSRekognitionUpdateStreamProcessorResponse class]];
+}
+
+- (void)updateStreamProcessor:(AWSRekognitionUpdateStreamProcessorRequest *)request
+     completionHandler:(void (^)(AWSRekognitionUpdateStreamProcessorResponse *response, NSError *error))completionHandler {
+    [[self updateStreamProcessor:request] continueWithBlock:^id _Nullable(AWSTask<AWSRekognitionUpdateStreamProcessorResponse *> * _Nonnull task) {
+        AWSRekognitionUpdateStreamProcessorResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
