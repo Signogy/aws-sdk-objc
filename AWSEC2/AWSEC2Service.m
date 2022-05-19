@@ -26,7 +26,7 @@
 #import "AWSEC2Serializer.h"
 
 static NSString *const AWSInfoEC2 = @"EC2";
-NSString *const AWSEC2SDKVersion = @"2.27.8";
+NSString *const AWSEC2SDKVersion = @"2.27.9";
 
 
 @interface AWSEC2ResponseSerializer : AWSXMLResponseSerializer
@@ -8804,6 +8804,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSEC2GetInstanceTypesFromInstanceRequirementsResult *response, NSError *error))completionHandler {
     [[self getInstanceTypesFromInstanceRequirements:request] continueWithBlock:^id _Nullable(AWSTask<AWSEC2GetInstanceTypesFromInstanceRequirementsResult *> * _Nonnull task) {
         AWSEC2GetInstanceTypesFromInstanceRequirementsResult *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSEC2GetInstanceUefiDataResult *> *)getInstanceUefiData:(AWSEC2GetInstanceUefiDataRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@""
+                 operationName:@"GetInstanceUefiData"
+                   outputClass:[AWSEC2GetInstanceUefiDataResult class]];
+}
+
+- (void)getInstanceUefiData:(AWSEC2GetInstanceUefiDataRequest *)request
+     completionHandler:(void (^)(AWSEC2GetInstanceUefiDataResult *response, NSError *error))completionHandler {
+    [[self getInstanceUefiData:request] continueWithBlock:^id _Nullable(AWSTask<AWSEC2GetInstanceUefiDataResult *> * _Nonnull task) {
+        AWSEC2GetInstanceUefiDataResult *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
