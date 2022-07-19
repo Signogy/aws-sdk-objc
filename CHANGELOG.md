@@ -4,18 +4,68 @@
 
 -Features for next release
 
+## 2.27.12
+
+### Bug Fixes
+
+- **AWSMobileClient**
+  - fix(awsmobileClient): AWSMobileclient will refresh the token before making user attribute calls (See [PR #4215](https://github.com/aws-amplify/aws-sdk-ios/pull/4215))
+  - fix(AWSMobileClient): Change logic to handle weak reference of token operations (See [PR #4205](https://github.com/aws-amplify/aws-sdk-ios/pull/4205))
+
+## 2.27.11
+
+### Bug Fixes
+
+- **AWSMobileClient**
+  - fix(awsmobileclient): Makes fetch aws credentials serial with the rest of the calls. (See [PR #4202](https://github.com/aws-amplify/aws-sdk-ios/pull/4202))
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSLambda
+  - AWSIoT
+  - AWSEC2
+  - AWSPolly
+  - AWSElasticLoadBalancingv2
+  - AWSTranslate
+  - AWSSTS
+  - AWSRekognition
+  - AWSKMS
+  - AWSComprehend
+  - AWSCloudWatchLogs
+  - AWSCognitoIdentityProvider
+  - AWSTranscribe
+  - AWSConnect
+  - AWSChimeSDKMessaging
+  - AWSDynamoDB
+
+## 2.27.10
+
+### Bug Fixes
+
+- **AWSCognito**
+  - Fix the parsing of providerName used in the loginMap to use the right value in case of customer endpoint is configured. (See [PR #4162](https://github.com/aws-amplify/aws-sdk-ios/pull/4162))
+
+### Misc. Updates
+- **Core**
+  - Update keychain accessibility level to `kSecAttrAccessibleAfterFirstUnlockThisDeviceOnly` as default to keep the keychain value in the device. (See [PR #4159](https://github.com/aws-amplify/aws-sdk-ios/pull/4159))
+
 ## 2.27.9
 
-- Features for next release
+### Bug Fixes
 
 - **AWSS3**
 
   - fix: adds details to userInfo for NSError for TransferUtility (See [PR #4115](https://github.com/aws-amplify/aws-sdk-ios/pull/4115))
   - fix: Reduces memory use for multipart uploads with `@autoreleasepool` to prevent excessive memory allocation (See [PR #4129](https://github.com/aws-amplify/aws-sdk-ios/pull/4129))
 
+### Misc. Updates
+
 - Model updates for the following services
   - AWSLocation
   - AWSEC2
+  - AWSSTS
+  - AWSRekognition
 
 ## 2.27.8
 
