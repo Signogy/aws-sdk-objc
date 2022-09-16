@@ -4,13 +4,75 @@
 
 -Features for next release
 
+## 2.28.0
+
+-Features for next release
+
+### Bug Fixes
+
+- **AWSMobileClient**
+  - Add getToken hashTable access inside a serial queue to avoid race condition (See [PR #4290](https://github.com/aws-amplify/aws-sdk-ios/pull/4290))
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSEC2  
+  - AWSConnect
+  - AWSSNS
+  - **Breaking Change** AWSCognitoIdentityProvider
+  - **Breaking Change** AWSTranscribe
+
+
+## 2.27.15
+
+### New features
+- **AWSCore**
+  - Support for `me-central-1` - Middle East (UAE) (see [AWS Regional Services List](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) for a list of services supported in the region)
+
+## 2.27.14
+
+### Bug Fixes
+
+- **AWSMobileClient**
+  - Add missing parameters for SignInResult init in getNewPasswordDetails (See [PR #4200](https://github.com/aws-amplify/aws-sdk-ios/pull/4200))
+
+- **AWSPinpoint**
+  - Migrate key-value storage from NSUserdefaults to Keychain (See [PR #4223](https://github.com/aws-amplify/aws-sdk-ios/pull/4223))
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSEC2  
+  - AWSConnect
+  - AWSKMS
+  - AWSAutoScaling
+  - AWSPolly
+  - AWSIoT
+  - AWSPinpoint
+  - AWSLocation
+  - AWSChimeSDKMessaging
+  - AWSRekognition
+  - AWSLambda
+  - AWSDynamoDB
+
+## 2.27.13
+
+### Bug Fixes
+  
+- **AWSMobileClient**
+  - Fixes duplicated callbacks when getToken fails on device operations (See https://github.com/aws-amplify/aws-sdk-ios/pull/4229)
+  
+- **AWSIoT**
+  - Adds support for handling certificate with certificateId (See [PR #4219](https://github.com/aws-amplify/aws-sdk-ios/pull/4219))
+  - Eliminates Dispatch Semaphore in MQTT internal code [PR #4211](https://github.com/aws-amplify/aws-sdk-ios/pull/4211)
+
 ## 2.27.12
 
 ### Bug Fixes
 
 - **AWSMobileClient**
-  - fix(awsmobileClient): AWSMobileclient will refresh the token before making user attribute calls (See [PR #4215](https://github.com/aws-amplify/aws-sdk-ios/pull/4215))
-  - fix(AWSMobileClient): Change logic to handle weak reference of token operations (See [PR #4205](https://github.com/aws-amplify/aws-sdk-ios/pull/4205))
+- fix(AWSMobileClient): AWSMobileclient will refresh the token before making user attribute calls (See [PR #4215](https://github.com/aws-amplify/aws-sdk-ios/pull/4215))
+- fix(AWSMobileClient): Change logic to handle weak reference of token operations (See [PR #4205](https://github.com/aws-amplify/aws-sdk-ios/pull/4205))
 
 ## 2.27.11
 

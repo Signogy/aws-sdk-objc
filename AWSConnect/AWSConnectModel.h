@@ -111,6 +111,19 @@ typedef NS_ENUM(NSInteger, AWSConnectContactInitiationMethod) {
     AWSConnectContactInitiationMethodApi,
 };
 
+typedef NS_ENUM(NSInteger, AWSConnectContactState) {
+    AWSConnectContactStateUnknown,
+    AWSConnectContactStateIncoming,
+    AWSConnectContactStatePending,
+    AWSConnectContactStateConnecting,
+    AWSConnectContactStateConnected,
+    AWSConnectContactStateConnectedOnhold,
+    AWSConnectContactStateMissed,
+    AWSConnectContactStateError,
+    AWSConnectContactStateEnded,
+    AWSConnectContactStateRejected,
+};
+
 typedef NS_ENUM(NSInteger, AWSConnectCurrentMetricName) {
     AWSConnectCurrentMetricNameUnknown,
     AWSConnectCurrentMetricNameAgentsOnline,
@@ -202,6 +215,7 @@ typedef NS_ENUM(NSInteger, AWSConnectInstanceAttributeType) {
     AWSConnectInstanceAttributeTypeUseCustomTtsVoices,
     AWSConnectInstanceAttributeTypeEarlyMedia,
     AWSConnectInstanceAttributeTypeMultiPartyConference,
+    AWSConnectInstanceAttributeTypeHighVolumeOutbound,
 };
 
 typedef NS_ENUM(NSInteger, AWSConnectInstanceStatus) {
@@ -553,6 +567,11 @@ typedef NS_ENUM(NSInteger, AWSConnectResourceType) {
     AWSConnectResourceTypeUser,
 };
 
+typedef NS_ENUM(NSInteger, AWSConnectSearchableQueueType) {
+    AWSConnectSearchableQueueTypeUnknown,
+    AWSConnectSearchableQueueTypeStandard,
+};
+
 typedef NS_ENUM(NSInteger, AWSConnectSourceType) {
     AWSConnectSourceTypeUnknown,
     AWSConnectSourceTypeSalesforce,
@@ -662,8 +681,10 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
     AWSConnectVoiceRecordingTrackAll,
 };
 
+@class AWSConnectAgentContactReference;
 @class AWSConnectAgentInfo;
 @class AWSConnectAgentStatus;
+@class AWSConnectAgentStatusReference;
 @class AWSConnectAgentStatusSummary;
 @class AWSConnectAnswerMachineDetectionConfig;
 @class AWSConnectAssociateApprovedOriginRequest;
@@ -688,6 +709,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectClaimPhoneNumberResponse;
 @class AWSConnectClaimedPhoneNumberSummary;
 @class AWSConnectContact;
+@class AWSConnectContactFilter;
 @class AWSConnectContactFlow;
 @class AWSConnectContactFlowModule;
 @class AWSConnectContactFlowModuleSummary;
@@ -795,6 +817,8 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectGetContactAttributesResponse;
 @class AWSConnectGetCurrentMetricDataRequest;
 @class AWSConnectGetCurrentMetricDataResponse;
+@class AWSConnectGetCurrentUserDataRequest;
+@class AWSConnectGetCurrentUserDataResponse;
 @class AWSConnectGetFederationTokenRequest;
 @class AWSConnectGetFederationTokenResponse;
 @class AWSConnectGetMetricDataRequest;
@@ -804,9 +828,11 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectHierarchyGroup;
 @class AWSConnectHierarchyGroupCondition;
 @class AWSConnectHierarchyGroupSummary;
+@class AWSConnectHierarchyGroupSummaryReference;
 @class AWSConnectHierarchyLevel;
 @class AWSConnectHierarchyLevelUpdate;
 @class AWSConnectHierarchyPath;
+@class AWSConnectHierarchyPathReference;
 @class AWSConnectHierarchyStructure;
 @class AWSConnectHierarchyStructureUpdate;
 @class AWSConnectHistoricalMetric;
@@ -905,6 +931,8 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectQueueInfo;
 @class AWSConnectQueueQuickConnectConfig;
 @class AWSConnectQueueReference;
+@class AWSConnectQueueSearchCriteria;
+@class AWSConnectQueueSearchFilter;
 @class AWSConnectQueueSummary;
 @class AWSConnectQuickConnect;
 @class AWSConnectQuickConnectConfig;
@@ -920,17 +948,29 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectRoutingProfileQueueConfig;
 @class AWSConnectRoutingProfileQueueConfigSummary;
 @class AWSConnectRoutingProfileQueueReference;
+@class AWSConnectRoutingProfileReference;
+@class AWSConnectRoutingProfileSearchCriteria;
+@class AWSConnectRoutingProfileSearchFilter;
 @class AWSConnectRoutingProfileSummary;
 @class AWSConnectS3Config;
 @class AWSConnectSearchAvailablePhoneNumbersRequest;
 @class AWSConnectSearchAvailablePhoneNumbersResponse;
+@class AWSConnectSearchQueuesRequest;
+@class AWSConnectSearchQueuesResponse;
+@class AWSConnectSearchRoutingProfilesRequest;
+@class AWSConnectSearchRoutingProfilesResponse;
+@class AWSConnectSearchSecurityProfilesRequest;
+@class AWSConnectSearchSecurityProfilesResponse;
 @class AWSConnectSearchUsersRequest;
 @class AWSConnectSearchUsersResponse;
 @class AWSConnectSearchVocabulariesRequest;
 @class AWSConnectSearchVocabulariesResponse;
 @class AWSConnectSecurityKey;
 @class AWSConnectSecurityProfile;
+@class AWSConnectSecurityProfileSearchCriteria;
+@class AWSConnectSecurityProfileSearchSummary;
 @class AWSConnectSecurityProfileSummary;
+@class AWSConnectSecurityProfilesSearchFilter;
 @class AWSConnectStartChatContactRequest;
 @class AWSConnectStartChatContactResponse;
 @class AWSConnectStartContactRecordingRequest;
@@ -1006,10 +1046,13 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectUrlReference;
 @class AWSConnectUseCase;
 @class AWSConnectUser;
+@class AWSConnectUserData;
+@class AWSConnectUserDataFilters;
 @class AWSConnectUserIdentityInfo;
 @class AWSConnectUserIdentityInfoLite;
 @class AWSConnectUserPhoneConfig;
 @class AWSConnectUserQuickConnectConfig;
+@class AWSConnectUserReference;
 @class AWSConnectUserSearchCriteria;
 @class AWSConnectUserSearchFilter;
 @class AWSConnectUserSearchSummary;
@@ -1017,6 +1060,49 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectVocabulary;
 @class AWSConnectVocabularySummary;
 @class AWSConnectVoiceRecordingConfiguration;
+
+/**
+ <p>Information about the <a href="https://docs.aws.amazon.com/connect/latest/APIReference/API_Contact.html">contact</a> associated to the user.</p>
+ */
+@interface AWSConnectAgentContactReference : AWSModel
+
+
+/**
+ <p>The <a href="https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-states.html">state of the contact</a>.</p>
+ */
+@property (nonatomic, assign) AWSConnectContactState agentContactState;
+
+/**
+ <p>The channel of the contact.</p>
+ */
+@property (nonatomic, assign) AWSConnectChannel channel;
+
+/**
+ <p>The time at which the contact was connected to an agent.</p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable connectedToAgentTimestamp;
+
+/**
+ <p>The identifier of the contact in this instance of Amazon Connect. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable contactId;
+
+/**
+ <p>How the contact was initiated.</p>
+ */
+@property (nonatomic, assign) AWSConnectContactInitiationMethod initiationMethod;
+
+/**
+ <p>Contains information about a queue resource for which metrics are returned.</p>
+ */
+@property (nonatomic, strong) AWSConnectQueueReference * _Nullable queue;
+
+/**
+ <p>The epoch timestamp when the contact state started.</p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable stateStartTimestamp;
+
+@end
 
 /**
  <p>Information about the agent who accepted the contact.</p>
@@ -1073,7 +1159,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, assign) AWSConnectAgentStatusState state;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -1081,6 +1167,24 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
  <p>The type of agent status.</p>
  */
 @property (nonatomic, assign) AWSConnectAgentStatusType types;
+
+@end
+
+/**
+ <p>Information about the agent's status.</p>
+ */
+@interface AWSConnectAgentStatusReference : AWSModel
+
+
+/**
+ <p>The Amazon Resource Name (ARN) of the agent's status.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable statusArn;
+
+/**
+ <p>The start timestamp of the agent's status.</p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable statusStartTimestamp;
 
 @end
 
@@ -1281,7 +1385,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The identifier of the contact flow.</p>
+ <p>The identifier of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
@@ -1493,7 +1597,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable phoneNumberDescription;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -1564,7 +1668,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, assign) AWSConnectPhoneNumberType phoneNumberType;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -1654,55 +1758,68 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @end
 
 /**
- <p>Contains information about a contact flow.</p>
+ <p>Filters user data based on the contact information that is associated to the users. It contains a list of <a href="https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-states.html">contact states</a>.</p>
+ */
+@interface AWSConnectContactFilter : AWSModel
+
+
+/**
+ <p>A list of up to 9 <a href="https://docs.aws.amazon.com/connect/latest/adminguide/about-contact-states.html">contact states</a>.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable contactStates;
+
+@end
+
+/**
+ <p>Contains information about a flow.</p>
  */
 @interface AWSConnectContactFlow : AWSModel
 
 
 /**
- <p>The Amazon Resource Name (ARN) of the contact flow.</p>
+ <p>The Amazon Resource Name (ARN) of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable arn;
 
 /**
- <p>The content of the contact flow.</p>
+ <p>The content of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable content;
 
 /**
- <p>The description of the contact flow.</p>
+ <p>The description of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>The identifier of the contact flow.</p>
+ <p>The identifier of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable identifier;
 
 /**
- <p>The name of the contact flow.</p>
+ <p>The name of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable name;
 
 /**
- <p>The type of contact flow.</p>
+ <p>The type of flow.</p>
  */
 @property (nonatomic, assign) AWSConnectContactFlowState state;
 
 /**
- <p>One or more tags.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
 /**
- <p>The type of the contact flow. For descriptions of the available types, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/create-contact-flow.html#contact-flow-types">Choose a Contact Flow Type</a> in the <i>Amazon Connect Administrator Guide</i>.</p>
+ <p>The type of the flow. For descriptions of the available types, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/create-contact-flow.html#contact-flow-types">Choose a flow type</a> in the <i>Amazon Connect Administrator Guide</i>.</p>
  */
 @property (nonatomic, assign) AWSConnectContactFlowType types;
 
 @end
 
 /**
- <p>Contains information about a contact flow module.</p>
+ <p>Contains information about a flow module.</p>
  */
 @interface AWSConnectContactFlowModule : AWSModel
 
@@ -1713,98 +1830,98 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable arn;
 
 /**
- <p>The content of the contact flow module.</p>
+ <p>The content of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable content;
 
 /**
- <p>The description of the contact flow module.</p>
+ <p>The description of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>The identifier of the contact flow module.</p>
+ <p>The identifier of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable identifier;
 
 /**
- <p>The name of the contact flow module.</p>
+ <p>The name of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable name;
 
 /**
- <p>The type of contact flow module.</p>
+ <p>The type of flow module.</p>
  */
 @property (nonatomic, assign) AWSConnectContactFlowModuleState state;
 
 /**
- <p>The status of the contact flow module.</p>
+ <p>The status of the flow module.</p>
  */
 @property (nonatomic, assign) AWSConnectContactFlowModuleStatus status;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
 @end
 
 /**
- <p>Contains summary information about a contact flow.</p>
+ <p>Contains summary information about a flow.</p>
  */
 @interface AWSConnectContactFlowModuleSummary : AWSModel
 
 
 /**
- <p>The Amazon Resource Name (ARN) of the contact flow module.</p>
+ <p>The Amazon Resource Name (ARN) of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable arn;
 
 /**
- <p>The identifier of the contact flow module.</p>
+ <p>The identifier of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable identifier;
 
 /**
- <p>The name of the contact flow module.</p>
+ <p>The name of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable name;
 
 /**
- <p>The type of contact flow module.</p>
+ <p>The type of flow module.</p>
  */
 @property (nonatomic, assign) AWSConnectContactFlowModuleState state;
 
 @end
 
 /**
- <p>Contains summary information about a contact flow.</p><p>You can also create and update contact flows using the <a href="https://docs.aws.amazon.com/connect/latest/adminguide/flow-language.html">Amazon Connect Flow language</a>.</p>
+ <p>Contains summary information about a flow.</p><p>You can also create and update flows using the <a href="https://docs.aws.amazon.com/connect/latest/adminguide/flow-language.html">Amazon Connect Flow language</a>.</p>
  */
 @interface AWSConnectContactFlowSummary : AWSModel
 
 
 /**
- <p>The Amazon Resource Name (ARN) of the contact flow.</p>
+ <p>The Amazon Resource Name (ARN) of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable arn;
 
 /**
- <p>The type of contact flow.</p>
+ <p>The type of flow.</p>
  */
 @property (nonatomic, assign) AWSConnectContactFlowState contactFlowState;
 
 /**
- <p>The type of contact flow.</p>
+ <p>The type of flow.</p>
  */
 @property (nonatomic, assign) AWSConnectContactFlowType contactFlowType;
 
 /**
- <p>The identifier of the contact flow.</p>
+ <p>The identifier of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable identifier;
 
 /**
- <p>The name of the contact flow.</p>
+ <p>The name of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable name;
 
@@ -1865,7 +1982,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, assign) AWSConnectAgentStatusState state;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -1901,12 +2018,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>The content of the contact flow module.</p>
+ <p>The content of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable content;
 
 /**
- <p>The description of the contact flow module. </p>
+ <p>The description of the flow module. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -1916,12 +2033,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The name of the contact flow module.</p>
+ <p>The name of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable name;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -1934,12 +2051,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The Amazon Resource Name (ARN) of the contact flow module.</p>
+ <p>The Amazon Resource Name (ARN) of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable arn;
 
 /**
- <p>The identifier of the contact flow module.</p>
+ <p>The identifier of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable identifier;
 
@@ -1952,12 +2069,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The content of the contact flow. </p>
+ <p>The content of the flow. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable content;
 
 /**
- <p>The description of the contact flow. </p>
+ <p>The description of the flow. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -1967,17 +2084,17 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The name of the contact flow.</p>
+ <p>The name of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable name;
 
 /**
- <p>One or more tags.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
 /**
- <p>The type of the contact flow. For descriptions of the available types, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/create-contact-flow.html#contact-flow-types">Choose a Contact Flow Type</a> in the <i>Amazon Connect Administrator Guide</i>.</p>
+ <p>The type of the flow. For descriptions of the available types, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/create-contact-flow.html#contact-flow-types">Choose a flow type</a> in the <i>Amazon Connect Administrator Guide</i>.</p>
  */
 @property (nonatomic, assign) AWSConnectContactFlowType types;
 
@@ -1990,12 +2107,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The Amazon Resource Name (ARN) of the contact flow.</p>
+ <p>The Amazon Resource Name (ARN) of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowArn;
 
 /**
- <p>The identifier of the contact flow.</p>
+ <p>The identifier of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
@@ -2028,7 +2145,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable name;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -2125,7 +2242,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The Amazon Resource Name (ARN) of the integration.</p>
+ <p>The Amazon Resource Name (ARN) of the integration.</p><note><p>When integrating with Amazon Pinpoint, the Amazon Connect and Amazon Pinpoint instances must be in the same account.</p></note>
  */
 @property (nonatomic, strong) NSString * _Nullable integrationArn;
 
@@ -2150,7 +2267,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, assign) AWSConnectSourceType sourceType;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -2216,7 +2333,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable quickConnectIds;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -2267,7 +2384,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) AWSConnectQuickConnectConfig * _Nullable quickConnectConfig;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -2328,7 +2445,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSArray<AWSConnectRoutingProfileQueueConfig *> * _Nullable queueConfigs;
 
 /**
- <p>One or more tags.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -2369,7 +2486,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>Permissions assigned to the security profile.</p>
+ <p>Permissions assigned to the security profile. For a list of valid permissions, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/security-profile-list.html">List of security profile permissions</a>. </p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable permissions;
 
@@ -2379,7 +2496,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable securityProfileName;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -2491,7 +2608,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable integrationAssociationId;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -2542,7 +2659,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable parentGroupId;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -2613,7 +2730,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable securityProfileIds;
 
 /**
- <p>One or more tags.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -2669,7 +2786,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, assign) AWSConnectVocabularyLanguageCode languageCode;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -2839,7 +2956,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The identifier of the contact flow module.</p>
+ <p>The identifier of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowModuleId;
 
@@ -2865,7 +2982,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The identifier of the contact flow.</p>
+ <p>The identifier of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
@@ -3125,7 +3242,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The identifier of the contact flow module.</p>
+ <p>The identifier of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowModuleId;
 
@@ -3143,7 +3260,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>Information about the contact flow module.</p>
+ <p>Information about the flow module.</p>
  */
 @property (nonatomic, strong) AWSConnectContactFlowModule * _Nullable contactFlowModule;
 
@@ -3156,7 +3273,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The identifier of the contact flow.</p>
+ <p>The identifier of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
@@ -3174,7 +3291,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>Information about the contact flow.</p>
+ <p>Information about the flow.</p>
  */
 @property (nonatomic, strong) AWSConnectContactFlow * _Nullable contactFlow;
 
@@ -3959,6 +4076,52 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 /**
  
  */
+@interface AWSConnectGetCurrentUserDataRequest : AWSRequest
+
+
+/**
+ <p>Filters up to 100 <code>Queues</code>, or up to 9 <code>ContactStates</code>. The user data is retrieved only for those users who are associated with the queues and have contacts that are in the specified <code>ContactState</code>. </p>
+ */
+@property (nonatomic, strong) AWSConnectUserDataFilters * _Nullable filters;
+
+/**
+ <p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable instanceId;
+
+/**
+ <p>The maximum number of results to return per page.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
+
+/**
+ <p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+@end
+
+/**
+ 
+ */
+@interface AWSConnectGetCurrentUserDataResponse : AWSModel
+
+
+/**
+ <p>If there are additional results, this is the token for the next set of results.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+/**
+ <p>A list of the user data that is returned.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectUserData *> * _Nullable userDataList;
+
+@end
+
+/**
+ 
+ */
 @interface AWSConnectGetFederationTokenRequest : AWSRequest
 
 
@@ -4138,7 +4301,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, assign) AWSConnectTaskTemplateStatus status;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -4176,7 +4339,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable name;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -4220,6 +4383,24 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
  <p>The name of the hierarchy group.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable name;
+
+@end
+
+/**
+ <p>Information about the hierarchy group.</p>
+ */
+@interface AWSConnectHierarchyGroupSummaryReference : AWSModel
+
+
+/**
+ <p>The Amazon Resource Name (ARN) for the hierarchy group. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable arn;
+
+/**
+ <p>The unique identifier for the hierarchy group.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable identifier;
 
 @end
 
@@ -4290,6 +4471,39 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
  <p>Information about level two.</p>
  */
 @property (nonatomic, strong) AWSConnectHierarchyGroupSummary * _Nullable levelTwo;
+
+@end
+
+/**
+ <p>Information about the levels in the hierarchy group.</p>
+ */
+@interface AWSConnectHierarchyPathReference : AWSModel
+
+
+/**
+ <p>Information about level five.</p>
+ */
+@property (nonatomic, strong) AWSConnectHierarchyGroupSummaryReference * _Nullable levelFive;
+
+/**
+ <p>Information about level four.</p>
+ */
+@property (nonatomic, strong) AWSConnectHierarchyGroupSummaryReference * _Nullable levelFour;
+
+/**
+ <p>Information about level one.</p>
+ */
+@property (nonatomic, strong) AWSConnectHierarchyGroupSummaryReference * _Nullable levelOne;
+
+/**
+ <p>Information about level three.</p>
+ */
+@property (nonatomic, strong) AWSConnectHierarchyGroupSummaryReference * _Nullable levelThree;
+
+/**
+ <p>Information about level two.</p>
+ */
+@property (nonatomic, strong) AWSConnectHierarchyGroupSummaryReference * _Nullable levelTwo;
 
 @end
 
@@ -4455,7 +4669,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable name;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -4997,7 +5211,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The state of the contact flow module.</p>
+ <p>The state of the flow module.</p>
  */
 @property (nonatomic, assign) AWSConnectContactFlowModuleState contactFlowModuleState;
 
@@ -5025,7 +5239,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>Information about the contact flow module.</p>
+ <p>Information about the flow module.</p>
  */
 @property (nonatomic, strong) NSArray<AWSConnectContactFlowModuleSummary *> * _Nullable contactFlowModulesSummaryList;
 
@@ -5043,7 +5257,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The type of contact flow.</p>
+ <p>The type of flow.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable contactFlowTypes;
 
@@ -5053,7 +5267,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The maximum number of results to return per page.</p>
+ <p>The maximum number of results to return per page. The default MaxResult size is 100.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
@@ -5071,7 +5285,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>Information about the contact flows.</p>
+ <p>Information about the flows.</p>
  */
 @property (nonatomic, strong) NSArray<AWSConnectContactFlowSummary *> * _Nullable contactFlowSummaryList;
 
@@ -5122,7 +5336,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>Information about the contact flows.</p>
+ <p>Information about the flows.</p>
  */
 @property (nonatomic, strong) NSArray<AWSConnectReferenceSummary *> * _Nullable referenceSummaryList;
 
@@ -5186,7 +5400,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The maximum number of results to return per page.</p>
+ <p>The maximum number of results to return per page. The default MaxResult size is 100.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
@@ -5478,7 +5692,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The maximum number of results to return per page.</p>
+ <p>The maximum number of results to return per page. The default MaxResult size is 100.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
@@ -5623,7 +5837,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The maximum number of results to return per page.</p>
+ <p>The maximum number of results to return per page. The default MaxResult size is 100.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
@@ -5664,7 +5878,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The maximum number of results to return per page.</p>
+ <p>The maximum number of results to return per page. The default MaxResult size is 100.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
@@ -5710,7 +5924,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The maximum number of results to return per page.</p>
+ <p>The maximum number of results to return per page. The default MaxResult size is 100.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
@@ -5756,7 +5970,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The maximum number of results to return per page.</p>
+ <p>The maximum number of results to return per page. The default MaxResult size is 100.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
@@ -5802,7 +6016,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The maximum number of results to return per page.</p>
+ <p>The maximum number of results to return per page. The default MaxResult size is 100.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
@@ -5848,7 +6062,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The maximum number of results to return per page.</p>
+ <p>The maximum number of results to return per page. The default MaxResult size is 100.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
@@ -5958,7 +6172,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>The permissions granted to the security profile.</p>
+ <p>The permissions granted to the security profile. For a complete list of valid permissions, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/security-profile-list.html">List of security profile permissions</a>.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable permissions;
 
@@ -5976,7 +6190,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The maximum number of results to return per page.</p>
+ <p>The maximum number of results to return per page. The default MaxResult size is 100.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
@@ -6141,7 +6355,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The maximum number of results to return per page.</p>
+ <p>The maximum number of results to return per page. The default MaxResult size is 100.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
@@ -6182,7 +6396,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The maximum number of results to return per page.</p>
+ <p>The maximum number of results to return per page. The default MaxResult size is 100.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
@@ -6488,7 +6702,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, assign) AWSConnectQueueStatus status;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -6513,14 +6727,14 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @end
 
 /**
- <p>Contains information about a queue for a quick connect. The contact flow must be of type Transfer to Queue.</p>
+ <p>Contains information about a queue for a quick connect. The flow must be of type Transfer to Queue.</p>
  Required parameters: [QueueId, ContactFlowId]
  */
 @interface AWSConnectQueueQuickConnectConfig : AWSModel
 
 
 /**
- <p>The identifier of the contact flow.</p>
+ <p>The identifier of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
@@ -6546,6 +6760,47 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
  <p>The identifier of the queue.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable identifier;
+
+@end
+
+/**
+ <p>The search criteria to be used to return queues.</p>
+ */
+@interface AWSConnectQueueSearchCriteria : AWSModel
+
+
+/**
+ <p>A list of conditions which would be applied together with an AND condition.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectQueueSearchCriteria *> * _Nullable andConditions;
+
+/**
+ <p>A list of conditions which would be applied together with an OR condition.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectQueueSearchCriteria *> * _Nullable orConditions;
+
+/**
+ <p>The type of queue.</p>
+ */
+@property (nonatomic, assign) AWSConnectSearchableQueueType queueTypeCondition;
+
+/**
+ <p>A leaf node condition which can be used to specify a string condition, for example, <code>username = 'abc'</code>. </p>
+ */
+@property (nonatomic, strong) AWSConnectStringCondition * _Nullable stringCondition;
+
+@end
+
+/**
+ <p>Filters to be applied to search results.</p>
+ */
+@interface AWSConnectQueueSearchFilter : AWSModel
+
+
+/**
+ <p>An object that can be used to specify Tag conditions inside the <code>SearchFilter</code>. This accepts an <code>OR</code> of <code>AND</code> (List of List) input where: </p><ul><li><p>Top level list specifies conditions that need to be applied with <code>OR</code> operator</p></li><li><p>Inner list specifies conditions that need to be applied with <code>AND</code> operator.</p></li></ul>
+ */
+@property (nonatomic, strong) AWSConnectControlPlaneTagFilter * _Nullable tagFilter;
 
 @end
 
@@ -6609,7 +6864,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable quickConnectId;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -6836,6 +7091,16 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable name;
 
 /**
+ <p>The number of associated queues in routing profile.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable numberOfAssociatedQueues;
+
+/**
+ <p>The number of associated users in routing profile.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable numberOfAssociatedUsers;
+
+/**
  <p>The Amazon Resource Name (ARN) of the routing profile.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable routingProfileArn;
@@ -6846,7 +7111,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable routingProfileId;
 
 /**
- <p>One or more tags.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -6931,6 +7196,60 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
  <p>The identifier for the queue.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable queueId;
+
+@end
+
+/**
+ <p>Information about the routing profile assigned to the user.</p>
+ */
+@interface AWSConnectRoutingProfileReference : AWSModel
+
+
+/**
+ <p>The Amazon Resource Name (ARN) of the routing profile.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable arn;
+
+/**
+ <p>The identifier of the routing profile.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable identifier;
+
+@end
+
+/**
+ <p>The search criteria to be used to return routing profiles.</p>
+ */
+@interface AWSConnectRoutingProfileSearchCriteria : AWSModel
+
+
+/**
+ <p>A list of conditions which would be applied together with an AND condition.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectRoutingProfileSearchCriteria *> * _Nullable andConditions;
+
+/**
+ <p>A list of conditions which would be applied together with an OR condition.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectRoutingProfileSearchCriteria *> * _Nullable orConditions;
+
+/**
+ <p>A leaf node condition which can be used to specify a string condition, for example, <code>username = 'abc'</code>. </p>
+ */
+@property (nonatomic, strong) AWSConnectStringCondition * _Nullable stringCondition;
+
+@end
+
+/**
+ <p>Filters to be applied to search results.</p>
+ */
+@interface AWSConnectRoutingProfileSearchFilter : AWSModel
+
+
+/**
+ <p>An object that can be used to specify Tag conditions inside the <code>SearchFilter</code>. This accepts an <code>OR</code> of <code>AND</code> (List of List) input where: </p><ul><li><p>Top level list specifies conditions that need to be applied with <code>OR</code> operator</p></li><li><p>Inner list specifies conditions that need to be applied with <code>AND</code> operator.</p></li></ul>
+ */
+@property (nonatomic, strong) AWSConnectControlPlaneTagFilter * _Nullable tagFilter;
 
 @end
 
@@ -7040,6 +7359,174 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 /**
  
  */
+@interface AWSConnectSearchQueuesRequest : AWSRequest
+
+
+/**
+ <p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable instanceId;
+
+/**
+ <p>The maximum number of results to return per page.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
+
+/**
+ <p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+/**
+ <p>The search criteria to be used to return queues.</p>
+ */
+@property (nonatomic, strong) AWSConnectQueueSearchCriteria * _Nullable searchCriteria;
+
+/**
+ <p>Filters to be applied to search results.</p>
+ */
+@property (nonatomic, strong) AWSConnectQueueSearchFilter * _Nullable searchFilter;
+
+@end
+
+/**
+ 
+ */
+@interface AWSConnectSearchQueuesResponse : AWSModel
+
+
+/**
+ <p>The total number of queues which matched your search query.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable approximateTotalCount;
+
+/**
+ <p>If there are additional results, this is the token for the next set of results.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+/**
+ <p>Information about the queues.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectQueue *> * _Nullable queues;
+
+@end
+
+/**
+ 
+ */
+@interface AWSConnectSearchRoutingProfilesRequest : AWSRequest
+
+
+/**
+ <p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable instanceId;
+
+/**
+ <p>The maximum number of results to return per page.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
+
+/**
+ <p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+/**
+ <p>The search criteria to be used to return routing profiles.</p>
+ */
+@property (nonatomic, strong) AWSConnectRoutingProfileSearchCriteria * _Nullable searchCriteria;
+
+/**
+ <p>Filters to be applied to search results.</p>
+ */
+@property (nonatomic, strong) AWSConnectRoutingProfileSearchFilter * _Nullable searchFilter;
+
+@end
+
+/**
+ 
+ */
+@interface AWSConnectSearchRoutingProfilesResponse : AWSModel
+
+
+/**
+ <p>The total number of routing profiles which matched your search query.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable approximateTotalCount;
+
+/**
+ <p>If there are additional results, this is the token for the next set of results.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+/**
+ <p>Information about the routing profiles.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectRoutingProfile *> * _Nullable routingProfiles;
+
+@end
+
+/**
+ 
+ */
+@interface AWSConnectSearchSecurityProfilesRequest : AWSRequest
+
+
+/**
+ <p>The identifier of the Amazon Connect instance. You can find the instanceId in the ARN of the instance.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable instanceId;
+
+/**
+ <p>The maximum number of results to return per page.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
+
+/**
+ <p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+/**
+ <p>The search criteria to be used to return security profiles.</p>
+ */
+@property (nonatomic, strong) AWSConnectSecurityProfileSearchCriteria * _Nullable searchCriteria;
+
+/**
+ <p>Filters to be applied to search results.</p>
+ */
+@property (nonatomic, strong) AWSConnectSecurityProfilesSearchFilter * _Nullable searchFilter;
+
+@end
+
+/**
+ 
+ */
+@interface AWSConnectSearchSecurityProfilesResponse : AWSModel
+
+
+/**
+ <p>The total number of security profiles which matched your search query.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable approximateTotalCount;
+
+/**
+ <p>If there are additional results, this is the token for the next set of results.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+/**
+ <p>Information about the security profiles.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectSecurityProfileSearchSummary *> * _Nullable securityProfiles;
+
+@end
+
+/**
+ 
+ */
 @interface AWSConnectSearchUsersRequest : AWSRequest
 
 
@@ -7059,7 +7546,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>The search criteria to be used to return users.</p>
+ <p>The search criteria to be used to return users.</p><note><p>The <code>Username</code>, <code>Firstname</code>, and <code>Lastname</code> fields support "contains" queries with a minimum of 2 characters and a maximum of 25 characters. Any queries with character lengths outside of this range result in empty results. </p></note>
  */
 @property (nonatomic, strong) AWSConnectUserSearchCriteria * _Nullable searchCriteria;
 
@@ -7204,7 +7691,68 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable securityProfileName;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
+
+@end
+
+/**
+ <p>The search criteria to be used to return security profiles.</p>
+ */
+@interface AWSConnectSecurityProfileSearchCriteria : AWSModel
+
+
+/**
+ <p>A list of conditions which would be applied together with an AND condition.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectSecurityProfileSearchCriteria *> * _Nullable andConditions;
+
+/**
+ <p>A list of conditions which would be applied together with an OR condition.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectSecurityProfileSearchCriteria *> * _Nullable orConditions;
+
+/**
+ <p>A leaf node condition which can be used to specify a string condition, for example, <code>username = 'abc'</code>. </p>
+ */
+@property (nonatomic, strong) AWSConnectStringCondition * _Nullable stringCondition;
+
+@end
+
+/**
+ <p>Information about the returned security profiles.</p>
+ */
+@interface AWSConnectSecurityProfileSearchSummary : AWSModel
+
+
+/**
+ <p>The Amazon Resource Name (ARN) of the security profile.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable arn;
+
+/**
+ <p>The description of the security profile.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable detail;
+
+/**
+ <p>The identifier of the security profile.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable identifier;
+
+/**
+ <p>The organization resource identifier.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable organizationResourceId;
+
+/**
+ <p>The name of the security profile.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable securityProfileName;
+
+/**
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -7234,13 +7782,26 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @end
 
 /**
+ <p>Filters to be applied to search results.</p>
+ */
+@interface AWSConnectSecurityProfilesSearchFilter : AWSModel
+
+
+/**
+ <p>An object that can be used to specify Tag conditions inside the <code>SearchFilter</code>. This accepts an <code>OR</code> of <code>AND</code> (List of List) input where: </p><ul><li><p>Top level list specifies conditions that need to be applied with <code>OR</code> operator</p></li><li><p>Inner list specifies conditions that need to be applied with <code>AND</code> operator.</p></li></ul>
+ */
+@property (nonatomic, strong) AWSConnectControlPlaneTagFilter * _Nullable tagFilter;
+
+@end
+
+/**
  
  */
 @interface AWSConnectStartChatContactRequest : AWSRequest
 
 
 /**
- <p>A custom key-value pair using an attribute map. The attributes are standard Amazon Connect attributes. They can be accessed in contact flows just like any other contact attributes. </p><p>There can be up to 32,768 UTF-8 bytes across all key-value pairs per contact. Attribute keys can include only alphanumeric, dash, and underscore characters.</p>
+ <p>A custom key-value pair using an attribute map. The attributes are standard Amazon Connect attributes. They can be accessed in flows just like any other contact attributes. </p><p>There can be up to 32,768 UTF-8 bytes across all key-value pairs per contact. Attribute keys can include only alphanumeric, dash, and underscore characters.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable attributes;
 
@@ -7255,7 +7816,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>The identifier of the contact flow for initiating the chat. To see the ContactFlowId in the Amazon Connect console user interface, on the navigation menu go to <b>Routing</b>, <b>Contact Flows</b>. Choose the contact flow. On the contact flow page, under the name of the contact flow, choose <b>Show additional flow information</b>. The ContactFlowId is the last part of the ARN, shown here in bold: </p><p>arn:aws:connect:us-west-2:xxxxxxxxxxxx:instance/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/contact-flow/<b>846ec553-a005-41c0-8341-xxxxxxxxxxxx</b></p>
+ <p>The identifier of the flow for initiating the chat. To see the ContactFlowId in the Amazon Connect console user interface, on the navigation menu go to <b>Routing</b>, <b>Contact Flows</b>. Choose the flow. On the flow page, under the name of the flow, choose <b>Show additional flow information</b>. The ContactFlowId is the last part of the ARN, shown here in bold: </p><p>arn:aws:connect:us-west-2:xxxxxxxxxxxx:instance/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/contact-flow/<b>846ec553-a005-41c0-8341-xxxxxxxxxxxx</b></p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
@@ -7393,7 +7954,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) AWSConnectAnswerMachineDetectionConfig * _Nullable answerMachineDetectionConfig;
 
 /**
- <p>A custom key-value pair using an attribute map. The attributes are standard Amazon Connect attributes, and can be accessed in contact flows just like any other contact attributes.</p><p>There can be up to 32,768 UTF-8 bytes across all key-value pairs per contact. Attribute keys can include only alphanumeric, dash, and underscore characters.</p>
+ <p>A custom key-value pair using an attribute map. The attributes are standard Amazon Connect attributes, and can be accessed in flows just like any other contact attributes.</p><p>There can be up to 32,768 UTF-8 bytes across all key-value pairs per contact. Attribute keys can include only alphanumeric, dash, and underscore characters.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable attributes;
 
@@ -7408,7 +7969,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>The identifier of the contact flow for the outbound call. To see the ContactFlowId in the Amazon Connect console user interface, on the navigation menu go to <b>Routing</b>, <b>Contact Flows</b>. Choose the contact flow. On the contact flow page, under the name of the contact flow, choose <b>Show additional flow information</b>. The ContactFlowId is the last part of the ARN, shown here in bold: </p><p>arn:aws:connect:us-west-2:xxxxxxxxxxxx:instance/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/contact-flow/<b>846ec553-a005-41c0-8341-xxxxxxxxxxxx</b></p>
+ <p>The identifier of the flow for the outbound call. To see the ContactFlowId in the Amazon Connect console user interface, on the navigation menu go to <b>Routing</b>, <b>Contact Flows</b>. Choose the flow. On the flow page, under the name of the flow, choose <b>Show additional flow information</b>. The ContactFlowId is the last part of the ARN, shown here in bold: </p><p>arn:aws:connect:us-west-2:xxxxxxxxxxxx:instance/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/contact-flow/<b>846ec553-a005-41c0-8341-xxxxxxxxxxxx</b></p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
@@ -7423,7 +7984,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The queue for the call. If you specify a queue, the phone displayed for caller ID is the phone number specified in the queue. If you do not specify a queue, the queue defined in the contact flow is used. If you do not specify a queue, you must specify a source phone number.</p>
+ <p>The queue for the call. If you specify a queue, the phone displayed for caller ID is the phone number specified in the queue. If you do not specify a queue, the queue defined in the flow is used. If you do not specify a queue, you must specify a source phone number.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable queueId;
 
@@ -7459,7 +8020,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>A custom key-value pair using an attribute map. The attributes are standard Amazon Connect attributes, and can be accessed in contact flows just like any other contact attributes.</p><p>There can be up to 32,768 UTF-8 bytes across all key-value pairs per contact. Attribute keys can include only alphanumeric, dash, and underscore characters.</p>
+ <p>A custom key-value pair using an attribute map. The attributes are standard Amazon Connect attributes, and can be accessed in flows just like any other contact attributes.</p><p>There can be up to 32,768 UTF-8 bytes across all key-value pairs per contact. Attribute keys can include only alphanumeric, dash, and underscore characters.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable attributes;
 
@@ -7469,7 +8030,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>The identifier of the contact flow for initiating the tasks. To see the ContactFlowId in the Amazon Connect console user interface, on the navigation menu go to <b>Routing</b>, <b>Contact Flows</b>. Choose the contact flow. On the contact flow page, under the name of the contact flow, choose <b>Show additional flow information</b>. The ContactFlowId is the last part of the ARN, shown here in bold: </p><p>arn:aws:connect:us-west-2:xxxxxxxxxxxx:instance/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/contact-flow/<b>846ec553-a005-41c0-8341-xxxxxxxxxxxx</b></p>
+ <p>The identifier of the flow for initiating the tasks. To see the ContactFlowId in the Amazon Connect console user interface, on the navigation menu go to <b>Routing</b>, <b>Contact Flows</b>. Choose the flow. On the flow page, under the name of the flow, choose <b>Show additional flow information</b>. The ContactFlowId is the last part of the ARN, shown here in bold: </p><p>arn:aws:connect:us-west-2:xxxxxxxxxxxx:instance/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx/contact-flow/<b>846ec553-a005-41c0-8341-xxxxxxxxxxxx</b></p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
@@ -7504,7 +8065,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSDictionary<NSString *, AWSConnectReference *> * _Nullable references;
 
 /**
- <p>The timestamp, in Unix Epoch seconds format, at which to start running the inbound contact flow. The scheduled time cannot be in the past. It must be within up to 6 days in future. </p>
+ <p>The timestamp, in Unix Epoch seconds format, at which to start running the inbound flow. The scheduled time cannot be in the past. It must be within up to 6 days in future. </p>
  */
 @property (nonatomic, strong) NSDate * _Nullable scheduledTime;
 
@@ -7718,7 +8279,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable resourceArn;
 
 /**
- <p>One or more tags. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -7893,12 +8454,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>The identifier of the contact flow.</p>
+ <p>The identifier of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
 /**
- <p>The identifier of the contact in this instance of Amazon Connect </p>
+ <p>The identifier of the contact in this instance of Amazon Connect. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactId;
 
@@ -7931,7 +8492,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable contactArn;
 
 /**
- <p>The identifier of the contact in this instance of Amazon Connect </p>
+ <p>The identifier of the contact in this instance of Amazon Connect. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactId;
 
@@ -8005,7 +8566,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The Amazon Connect attributes. These attributes can be accessed in contact flows just like any other contact attributes.</p><p>You can have up to 32,768 UTF-8 bytes across all attributes for a contact. Attribute keys can include only alphanumeric, dash, and underscore characters.</p>
+ <p>The Amazon Connect attributes. These attributes can be accessed in flows just like any other contact attributes.</p><p>You can have up to 32,768 UTF-8 bytes across all attributes for a contact. Attribute keys can include only alphanumeric, dash, and underscore characters.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable attributes;
 
@@ -8036,12 +8597,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The identifier of the contact flow.</p>
+ <p>The identifier of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
 /**
- <p>The JSON string that represents contact flow’s content. For an example, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/flow-language-example.html">Example contact flow in Amazon Connect Flow language</a> in the <i>Amazon Connect Administrator Guide</i>. </p>
+ <p>The JSON string that represents flow's content. For an example, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/flow-language-example.html">Example contact flow in Amazon Connect Flow language</a> in the <i>Amazon Connect Administrator Guide</i>. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable content;
 
@@ -8059,17 +8620,17 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The identifier of the contact flow.</p>
+ <p>The identifier of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
 /**
- <p>The state of contact flow.</p>
+ <p>The state of flow.</p>
  */
 @property (nonatomic, assign) AWSConnectContactFlowState contactFlowState;
 
 /**
- <p>The description of the contact flow.</p>
+ <p>The description of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -8079,7 +8640,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>TThe name of the contact flow.</p>
+ <p>The name of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable name;
 
@@ -8092,12 +8653,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The identifier of the contact flow module.</p>
+ <p>The identifier of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowModuleId;
 
 /**
- <p>The content of the contact flow module.</p>
+ <p>The content of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable content;
 
@@ -8123,12 +8684,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The identifier of the contact flow module.</p>
+ <p>The identifier of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowModuleId;
 
 /**
- <p>The description of the contact flow module.</p>
+ <p>The description of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -8138,12 +8699,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The name of the contact flow module.</p>
+ <p>The name of the flow module.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable name;
 
 /**
- <p>The state of contact flow module.</p>
+ <p>The state of flow module.</p>
  */
 @property (nonatomic, assign) AWSConnectContactFlowModuleState state;
 
@@ -8164,12 +8725,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The identifier of the contact flow.</p>
+ <p>The identifier of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
 /**
- <p>The description of the contact flow.</p>
+ <p>The description of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -8179,7 +8740,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The name of the contact flow.</p>
+ <p>The name of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable name;
 
@@ -8243,7 +8804,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The timestamp, in Unix Epoch seconds format, at which to start running the inbound contact flow. The scheduled time cannot be in the past. It must be within up to 6 days in future. </p>
+ <p>The timestamp, in Unix Epoch seconds format, at which to start running the inbound flow. The scheduled time cannot be in the past. It must be within up to 6 days in future. </p>
  */
 @property (nonatomic, strong) NSDate * _Nullable scheduledTime;
 
@@ -8672,7 +9233,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSString * _Nullable instanceId;
 
 /**
- <p>The permissions granted to a security profile.</p>
+ <p>The permissions granted to a security profile. For a list of valid permissions, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/security-profile-list.html">List of security profile permissions</a>.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable permissions;
 
@@ -9060,6 +9621,72 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @end
 
 /**
+ <p>Data for a user.</p>
+ */
+@interface AWSConnectUserData : AWSModel
+
+
+/**
+ <p> A map of active slots by channel. The key is a channel name. The value is an integer: the number of active slots. </p>
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSNumber *> * _Nullable activeSlotsByChannel;
+
+/**
+ <p>A map of available slots by channel. The key is a channel name. The value is an integer: the available number of slots. </p>
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSNumber *> * _Nullable availableSlotsByChannel;
+
+/**
+ <p>A list of contact reference information.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectAgentContactReference *> * _Nullable contacts;
+
+/**
+ <p>Contains information about the levels of a hierarchy group assigned to a user.</p>
+ */
+@property (nonatomic, strong) AWSConnectHierarchyPathReference * _Nullable hierarchyPath;
+
+/**
+ <p>A map of maximum slots by channel. The key is a channel name. The value is an integer: the maximum number of slots. This is calculated from <a href="https://docs.aws.amazon.com/connect/latest/APIReference/API_MediaConcurrency.html">MediaConcurrency</a> of the RoutingProfile assigned to the agent. </p>
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSNumber *> * _Nullable maxSlotsByChannel;
+
+/**
+ <p>Information about the routing profile that is assigned to the user.</p>
+ */
+@property (nonatomic, strong) AWSConnectRoutingProfileReference * _Nullable routingProfile;
+
+/**
+ <p>The status of the agent that they manually set in their Contact Control Panel (CCP), or that the supervisor manually changes in the real-time metrics report.</p>
+ */
+@property (nonatomic, strong) AWSConnectAgentStatusReference * _Nullable status;
+
+/**
+ <p>Information about the user for the data that is returned. It contains resourceId and ARN of the user. </p>
+ */
+@property (nonatomic, strong) AWSConnectUserReference * _Nullable user;
+
+@end
+
+/**
+ <p>A filter for the user data.</p>
+ */
+@interface AWSConnectUserDataFilters : AWSModel
+
+
+/**
+ <p>A filter for the user data based on the contact information that is associated to the user. It contains a list of contact states. </p>
+ */
+@property (nonatomic, strong) AWSConnectContactFilter * _Nullable contactFilter;
+
+/**
+ <p>Contains information about a queue resource for which metrics are returned.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable queues;
+
+@end
+
+/**
  <p>Contains information about the identity of a user.</p>
  */
 @interface AWSConnectUserIdentityInfo : AWSModel
@@ -9137,7 +9764,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The identifier of the contact flow.</p>
+ <p>The identifier of the flow.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contactFlowId;
 
@@ -9149,7 +9776,25 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @end
 
 /**
- <p>The search criteria to be used to return users.</p>
+ <p>Information about the user.</p>
+ */
+@interface AWSConnectUserReference : AWSModel
+
+
+/**
+ <p>The Amazon Resource Name (ARN) for the user.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable arn;
+
+/**
+ <p>The unique identifier for the user.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable identifier;
+
+@end
+
+/**
+ <p>The search criteria to be used to return users.</p><note><p>The <code>Username</code>, <code>Firstname</code>, and <code>Lastname</code> fields support "contains" queries with a minimum of 2 characters and a maximum of 25 characters. Any queries with character lengths outside of this range result in empty results. </p></note>
  */
 @interface AWSConnectUserSearchCriteria : AWSModel
 
@@ -9236,7 +9881,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable securityProfileIds;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
@@ -9318,7 +9963,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, assign) AWSConnectVocabularyState state;
 
 /**
- <p>The tags used to organize, track, or control access for this resource.</p>
+ <p>The tags used to organize, track, or control access for this resource. For example, { "tags": {"key1":"value1", "key2":"value2"} }.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
