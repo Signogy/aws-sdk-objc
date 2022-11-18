@@ -4,9 +4,79 @@
 
 -Features for next release
 
-## 2.28.0
+## 2.28.4
 
--Features for next release
+### New features
+
+- **AWSCore**
+  - Support for `eu-south-2` - Europe (Spain) (see [AWS Regional Services List](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) for a list of services supported in the region)
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSEC2
+  - AWSAutoScaling
+
+## 2.28.3
+
+### New features
+- **AWSCore**
+  - Support for `eu-central-2` - Europe (Zurich) (see [AWS Regional Services List](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) for a list of services supported in the region)
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSAutoScaling
+  - AWSConnect
+  - AWSEC2
+  - AWSPolly
+
+## 2.28.2
+
+### Bug Fixes
+
+- **AWSCore/AWSCredentialsProvider**
+    - Fixed an issue where `getAWSCredentials` thinks it has valid credentials despite them being potentially invalidated through a concurrent call to `invalidateCachedTemporaryCredentials`. (See [PR #4379](https://github.com/aws-amplify/aws-sdk-ios/pull/4379))
+
+### Misc. Updates
+
+- Model updates for the following services
+ - AWSIoT
+ - AWSConnect
+ - AWSTextract
+ - AWSEC2
+ - AWSCloudWatchLogs
+
+## 2.28.1
+
+### Bug Fixes
+
+- **AWSAuthUI**
+  - Fixed `AWSAuthUIViewController` not being able to display its contents on landscape orientation (See [PR #4338](https://github.com/aws-amplify/aws-sdk-ios/pull/4338))
+
+- **AWSPinpoint** (See [PR #4348](https://github.com/aws-amplify/aws-sdk-ios/pull/4348) and [PR #4357](https://github.com/aws-amplify/aws-sdk-ios/pull/4357))
+  - Updated events max attributes/metrics limit and attribute value limit to align with what the Pinpoint service expects.
+  - Events that failed to submit due to connectivity errors are now considered to be retryable indefinitely, i.e. their retry counter won't be increased. 
+  - Removed warnings with `NSKeyedUnarchiver`.
+
+### Misc. Updates
+
+- Model updates for the following services
+ - AWSDynamoDB
+ - AWSComprehend
+ - AWSLocation
+ - AWSPolly
+ - AWSEC2
+ - AWSTranslate
+ - AWSConnect
+ - AWSChimeSDKMessaging
+ - AWSSageMakerRuntime
+ - AWSEC2
+ - AWSConnect
+ - AWSElasticLoadBalancingv2
+ - AWSCognitoIdentityProvider
+
+## 2.28.0
 
 ### Bug Fixes
 
