@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@
 #import "AWSLogsResources.h"
 
 static NSString *const AWSInfoLogs = @"Logs";
-NSString *const AWSLogsSDKVersion = @"2.28.4";
+NSString *const AWSLogsSDKVersion = @"2.30.1";
 
 
 @interface AWSLogsResponseSerializer : AWSJSONResponseSerializer
@@ -386,6 +386,28 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
 - (void)createLogStream:(AWSLogsCreateLogStreamRequest *)request
      completionHandler:(void (^)(NSError *error))completionHandler {
     [[self createLogStream:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask *)deleteDataProtectionPolicy:(AWSLogsDeleteDataProtectionPolicyRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"Logs_20140328"
+                 operationName:@"DeleteDataProtectionPolicy"
+                   outputClass:nil];
+}
+
+- (void)deleteDataProtectionPolicy:(AWSLogsDeleteDataProtectionPolicyRequest *)request
+     completionHandler:(void (^)(NSError *error))completionHandler {
+    [[self deleteDataProtectionPolicy:request] continueWithBlock:^id _Nullable(AWSTask * _Nonnull task) {
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -825,6 +847,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
     }];
 }
 
+- (AWSTask<AWSLogsGetDataProtectionPolicyResponse *> *)getDataProtectionPolicy:(AWSLogsGetDataProtectionPolicyRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"Logs_20140328"
+                 operationName:@"GetDataProtectionPolicy"
+                   outputClass:[AWSLogsGetDataProtectionPolicyResponse class]];
+}
+
+- (void)getDataProtectionPolicy:(AWSLogsGetDataProtectionPolicyRequest *)request
+     completionHandler:(void (^)(AWSLogsGetDataProtectionPolicyResponse *response, NSError *error))completionHandler {
+    [[self getDataProtectionPolicy:request] continueWithBlock:^id _Nullable(AWSTask<AWSLogsGetDataProtectionPolicyResponse *> * _Nonnull task) {
+        AWSLogsGetDataProtectionPolicyResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
 - (AWSTask<AWSLogsGetLogEventsResponse *> *)getLogEvents:(AWSLogsGetLogEventsRequest *)request {
     return [self invokeRequest:request
                     HTTPMethod:AWSHTTPMethodPOST
@@ -953,6 +998,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSLogsListTagsLogGroupResponse *response, NSError *error))completionHandler {
     [[self listTagsLogGroup:request] continueWithBlock:^id _Nullable(AWSTask<AWSLogsListTagsLogGroupResponse *> * _Nonnull task) {
         AWSLogsListTagsLogGroupResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSLogsPutDataProtectionPolicyResponse *> *)putDataProtectionPolicy:(AWSLogsPutDataProtectionPolicyRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@""
+                  targetPrefix:@"Logs_20140328"
+                 operationName:@"PutDataProtectionPolicy"
+                   outputClass:[AWSLogsPutDataProtectionPolicyResponse class]];
+}
+
+- (void)putDataProtectionPolicy:(AWSLogsPutDataProtectionPolicyRequest *)request
+     completionHandler:(void (^)(AWSLogsPutDataProtectionPolicyResponse *response, NSError *error))completionHandler {
+    [[self putDataProtectionPolicy:request] continueWithBlock:^id _Nullable(AWSTask<AWSLogsPutDataProtectionPolicyResponse *> * _Nonnull task) {
+        AWSLogsPutDataProtectionPolicyResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {

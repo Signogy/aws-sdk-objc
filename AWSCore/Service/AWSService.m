@@ -21,7 +21,7 @@
 #import "AWSCocoaLumberjack.h"
 #import "AWSCategory.h"
 
-NSString *const AWSiOSSDKVersion = @"2.28.4";
+NSString *const AWSiOSSDKVersion = @"2.30.1";
 NSString *const AWSServiceErrorDomain = @"com.amazonaws.AWSServiceErrorDomain";
 
 static NSString *const AWSServiceConfigurationUnknown = @"Unknown";
@@ -259,7 +259,9 @@ static NSString *const AWSRegionNameAPNortheast1 = @"ap-northeast-1";
 static NSString *const AWSRegionNameAPNortheast2 = @"ap-northeast-2";
 static NSString *const AWSRegionNameAPSoutheast2 = @"ap-southeast-2";
 static NSString *const AWSRegionNameAPSoutheast3 = @"ap-southeast-3";
+static NSString *const AWSRegionNameAPSoutheast4 = @"ap-southeast-4";
 static NSString *const AWSRegionNameAPSouth1 = @"ap-south-1";
+static NSString *const AWSRegionNameAPSouth2 = @"ap-south-2";
 static NSString *const AWSRegionNameSAEast1 = @"sa-east-1";
 static NSString *const AWSRegionNameCNNorth1 = @"cn-north-1";
 static NSString *const AWSRegionNameCNNorthWest1 = @"cn-northwest-1";
@@ -469,12 +471,16 @@ static NSString *const AWSServiceNameChimeSDKIdentity = @"chime";
             return AWSRegionNameAPSoutheast2;
         case AWSRegionAPSoutheast3:
             return AWSRegionNameAPSoutheast3;
+        case AWSRegionAPSoutheast4:
+            return AWSRegionNameAPSoutheast4;
         case AWSRegionAPNortheast1:
             return AWSRegionNameAPNortheast1;
         case AWSRegionAPNortheast2:
             return AWSRegionNameAPNortheast2;
         case AWSRegionAPSouth1:
             return AWSRegionNameAPSouth1;
+        case AWSRegionAPSouth2:
+            return AWSRegionNameAPSouth2;
         case AWSRegionSAEast1:
             return AWSRegionNameSAEast1;
         case AWSRegionCNNorth1:

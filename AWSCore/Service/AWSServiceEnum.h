@@ -80,9 +80,17 @@ typedef NS_ENUM(NSInteger, AWSRegionType) {
      */
     AWSRegionAPSoutheast3 NS_SWIFT_NAME(APSoutheast3),
     /**
+     * Asia Pacific (Melbourne)
+     */
+    AWSRegionAPSoutheast4 NS_SWIFT_NAME(APSoutheast4),
+    /**
      *  Asia Pacific (Mumbai)
      */
     AWSRegionAPSouth1 NS_SWIFT_NAME(APSouth1),
+    /**
+     *  Asia Pacific (Hyderabad)
+     */
+    AWSRegionAPSouth2 NS_SWIFT_NAME(APSouth2),
     /**
      *  South America (Sao Paulo)
      */

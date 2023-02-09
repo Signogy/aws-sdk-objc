@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -17,6 +17,51 @@
 #import <AWSCore/AWSCategory.h>
 
 NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
+
+@implementation AWSConnectActionSummary
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"actionType" : @"ActionType",
+             };
+}
+
++ (NSValueTransformer *)actionTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"CREATE_TASK"] == NSOrderedSame) {
+            return @(AWSConnectActionTypeCreateTask);
+        }
+        if ([value caseInsensitiveCompare:@"ASSIGN_CONTACT_CATEGORY"] == NSOrderedSame) {
+            return @(AWSConnectActionTypeAssignContactCategory);
+        }
+        if ([value caseInsensitiveCompare:@"GENERATE_EVENTBRIDGE_EVENT"] == NSOrderedSame) {
+            return @(AWSConnectActionTypeGenerateEventbridgeEvent);
+        }
+        if ([value caseInsensitiveCompare:@"SEND_NOTIFICATION"] == NSOrderedSame) {
+            return @(AWSConnectActionTypeSendNotification);
+        }
+        return @(AWSConnectActionTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectActionTypeCreateTask:
+                return @"CREATE_TASK";
+            case AWSConnectActionTypeAssignContactCategory:
+                return @"ASSIGN_CONTACT_CATEGORY";
+            case AWSConnectActionTypeGenerateEventbridgeEvent:
+                return @"GENERATE_EVENTBRIDGE_EVENT";
+            case AWSConnectActionTypeSendNotification:
+                return @"SEND_NOTIFICATION";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
 
 @implementation AWSConnectAgentContactReference
 
@@ -146,6 +191,12 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
         if ([value caseInsensitiveCompare:@"API"] == NSOrderedSame) {
             return @(AWSConnectContactInitiationMethodApi);
         }
+        if ([value caseInsensitiveCompare:@"DISCONNECT"] == NSOrderedSame) {
+            return @(AWSConnectContactInitiationMethodDisconnect);
+        }
+        if ([value caseInsensitiveCompare:@"MONITOR"] == NSOrderedSame) {
+            return @(AWSConnectContactInitiationMethodMonitor);
+        }
         return @(AWSConnectContactInitiationMethodUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -161,6 +212,10 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return @"CALLBACK";
             case AWSConnectContactInitiationMethodApi:
                 return @"API";
+            case AWSConnectContactInitiationMethodDisconnect:
+                return @"DISCONNECT";
+            case AWSConnectContactInitiationMethodMonitor:
+                return @"MONITOR";
             default:
                 return nil;
         }
@@ -281,6 +336,7 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"statusArn" : @"StatusArn",
+             @"statusName" : @"StatusName",
              @"statusStartTimestamp" : @"StatusStartTimestamp",
              };
 }
@@ -349,6 +405,14 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
              @"awaitAnswerMachinePrompt" : @"AwaitAnswerMachinePrompt",
              @"enableAnswerMachineDetection" : @"EnableAnswerMachineDetection",
              };
+}
+
+@end
+
+@implementation AWSConnectAssignContactCategoryActionDefinition
+
++ (BOOL)supportsSecureCoding {
+    return YES;
 }
 
 @end
@@ -471,6 +535,12 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
         if ([value caseInsensitiveCompare:@"zh-CN"] == NSOrderedSame) {
             return @(AWSConnectVocabularyLanguageCodeZhCN);
         }
+        if ([value caseInsensitiveCompare:@"en-NZ"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnNZ);
+        }
+        if ([value caseInsensitiveCompare:@"en-ZA"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnZA);
+        }
         return @(AWSConnectVocabularyLanguageCodeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -516,6 +586,10 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return @"pt-PT";
             case AWSConnectVocabularyLanguageCodeZhCN:
                 return @"zh-CN";
+            case AWSConnectVocabularyLanguageCodeEnNZ:
+                return @"en-NZ";
+            case AWSConnectVocabularyLanguageCodeEnZA:
+                return @"en-ZA";
             default:
                 return nil;
         }
@@ -806,6 +880,9 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
         if ([value caseInsensitiveCompare:@"HIGH_VOLUME_OUTBOUND"] == NSOrderedSame) {
             return @(AWSConnectInstanceAttributeTypeHighVolumeOutbound);
         }
+        if ([value caseInsensitiveCompare:@"ENHANCED_CONTACT_MONITORING"] == NSOrderedSame) {
+            return @(AWSConnectInstanceAttributeTypeEnhancedContactMonitoring);
+        }
         return @(AWSConnectInstanceAttributeTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -827,6 +904,8 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return @"MULTI_PARTY_CONFERENCE";
             case AWSConnectInstanceAttributeTypeHighVolumeOutbound:
                 return @"HIGH_VOLUME_OUTBOUND";
+            case AWSConnectInstanceAttributeTypeEnhancedContactMonitoring:
+                return @"ENHANCED_CONTACT_MONITORING";
             default:
                 return nil;
         }
@@ -2079,6 +2158,24 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
              @"content" : @"Content",
              @"contentType" : @"ContentType",
              };
+}
+
+@end
+
+@implementation AWSConnectChatParticipantRoleConfig
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"participantTimerConfigList" : @"ParticipantTimerConfigList",
+             };
+}
+
++ (NSValueTransformer *)participantTimerConfigListJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSConnectParticipantTimerConfiguration class]];
 }
 
 @end
@@ -3394,6 +3491,7 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
              @"name" : @"Name",
              @"previousContactId" : @"PreviousContactId",
              @"queueInfo" : @"QueueInfo",
+             @"relatedContactId" : @"RelatedContactId",
              @"scheduledTimestamp" : @"ScheduledTimestamp",
              };
 }
@@ -3456,6 +3554,12 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
         if ([value caseInsensitiveCompare:@"API"] == NSOrderedSame) {
             return @(AWSConnectContactInitiationMethodApi);
         }
+        if ([value caseInsensitiveCompare:@"DISCONNECT"] == NSOrderedSame) {
+            return @(AWSConnectContactInitiationMethodDisconnect);
+        }
+        if ([value caseInsensitiveCompare:@"MONITOR"] == NSOrderedSame) {
+            return @(AWSConnectContactInitiationMethodMonitor);
+        }
         return @(AWSConnectContactInitiationMethodUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -3471,6 +3575,10 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return @"CALLBACK";
             case AWSConnectContactInitiationMethodApi:
                 return @"API";
+            case AWSConnectContactInitiationMethodDisconnect:
+                return @"DISCONNECT";
+            case AWSConnectContactInitiationMethodMonitor:
+                return @"MONITOR";
             default:
                 return nil;
         }
@@ -4333,6 +4441,70 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 @end
 
+@implementation AWSConnectCreateRuleRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"actions" : @"Actions",
+             @"clientToken" : @"ClientToken",
+             @"function" : @"Function",
+             @"instanceId" : @"InstanceId",
+             @"name" : @"Name",
+             @"publishStatus" : @"PublishStatus",
+             @"triggerEventSource" : @"TriggerEventSource",
+             };
+}
+
++ (NSValueTransformer *)actionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSConnectRuleAction class]];
+}
+
++ (NSValueTransformer *)publishStatusJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"DRAFT"] == NSOrderedSame) {
+            return @(AWSConnectRulePublishStatusDraft);
+        }
+        if ([value caseInsensitiveCompare:@"PUBLISHED"] == NSOrderedSame) {
+            return @(AWSConnectRulePublishStatusPublished);
+        }
+        return @(AWSConnectRulePublishStatusUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectRulePublishStatusDraft:
+                return @"DRAFT";
+            case AWSConnectRulePublishStatusPublished:
+                return @"PUBLISHED";
+            default:
+                return nil;
+        }
+    }];
+}
+
++ (NSValueTransformer *)triggerEventSourceJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectRuleTriggerEventSource class]];
+}
+
+@end
+
+@implementation AWSConnectCreateRuleResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"ruleArn" : @"RuleArn",
+             @"ruleId" : @"RuleId",
+             };
+}
+
+@end
+
 @implementation AWSConnectCreateSecurityProfileRequest
 
 + (BOOL)supportsSecureCoding {
@@ -4341,10 +4513,12 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"allowedAccessControlTags" : @"AllowedAccessControlTags",
              @"detail" : @"Description",
              @"instanceId" : @"InstanceId",
              @"permissions" : @"Permissions",
              @"securityProfileName" : @"SecurityProfileName",
+             @"tagRestrictedResources" : @"TagRestrictedResources",
              @"tags" : @"Tags",
              };
 }
@@ -4682,6 +4856,12 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
         if ([value caseInsensitiveCompare:@"zh-CN"] == NSOrderedSame) {
             return @(AWSConnectVocabularyLanguageCodeZhCN);
         }
+        if ([value caseInsensitiveCompare:@"en-NZ"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnNZ);
+        }
+        if ([value caseInsensitiveCompare:@"en-ZA"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnZA);
+        }
         return @(AWSConnectVocabularyLanguageCodeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -4727,6 +4907,10 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return @"pt-PT";
             case AWSConnectVocabularyLanguageCodeZhCN:
                 return @"zh-CN";
+            case AWSConnectVocabularyLanguageCodeEnNZ:
+                return @"en-NZ";
+            case AWSConnectVocabularyLanguageCodeEnZA:
+                return @"en-ZA";
             default:
                 return nil;
         }
@@ -4974,6 +5158,118 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 @end
 
+@implementation AWSConnectCurrentMetricSortCriteria
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"sortByMetric" : @"SortByMetric",
+             @"sortOrder" : @"SortOrder",
+             };
+}
+
++ (NSValueTransformer *)sortByMetricJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"AGENTS_ONLINE"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameAgentsOnline);
+        }
+        if ([value caseInsensitiveCompare:@"AGENTS_AVAILABLE"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameAgentsAvailable);
+        }
+        if ([value caseInsensitiveCompare:@"AGENTS_ON_CALL"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameAgentsOnCall);
+        }
+        if ([value caseInsensitiveCompare:@"AGENTS_NON_PRODUCTIVE"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameAgentsNonProductive);
+        }
+        if ([value caseInsensitiveCompare:@"AGENTS_AFTER_CONTACT_WORK"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameAgentsAfterContactWork);
+        }
+        if ([value caseInsensitiveCompare:@"AGENTS_ERROR"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameAgentsError);
+        }
+        if ([value caseInsensitiveCompare:@"AGENTS_STAFFED"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameAgentsStaffed);
+        }
+        if ([value caseInsensitiveCompare:@"CONTACTS_IN_QUEUE"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameContactsInQueue);
+        }
+        if ([value caseInsensitiveCompare:@"OLDEST_CONTACT_AGE"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameOldestContactAge);
+        }
+        if ([value caseInsensitiveCompare:@"CONTACTS_SCHEDULED"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameContactsScheduled);
+        }
+        if ([value caseInsensitiveCompare:@"AGENTS_ON_CONTACT"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameAgentsOnContact);
+        }
+        if ([value caseInsensitiveCompare:@"SLOTS_ACTIVE"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameSlotsActive);
+        }
+        if ([value caseInsensitiveCompare:@"SLOTS_AVAILABLE"] == NSOrderedSame) {
+            return @(AWSConnectCurrentMetricNameSlotsAvailable);
+        }
+        return @(AWSConnectCurrentMetricNameUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectCurrentMetricNameAgentsOnline:
+                return @"AGENTS_ONLINE";
+            case AWSConnectCurrentMetricNameAgentsAvailable:
+                return @"AGENTS_AVAILABLE";
+            case AWSConnectCurrentMetricNameAgentsOnCall:
+                return @"AGENTS_ON_CALL";
+            case AWSConnectCurrentMetricNameAgentsNonProductive:
+                return @"AGENTS_NON_PRODUCTIVE";
+            case AWSConnectCurrentMetricNameAgentsAfterContactWork:
+                return @"AGENTS_AFTER_CONTACT_WORK";
+            case AWSConnectCurrentMetricNameAgentsError:
+                return @"AGENTS_ERROR";
+            case AWSConnectCurrentMetricNameAgentsStaffed:
+                return @"AGENTS_STAFFED";
+            case AWSConnectCurrentMetricNameContactsInQueue:
+                return @"CONTACTS_IN_QUEUE";
+            case AWSConnectCurrentMetricNameOldestContactAge:
+                return @"OLDEST_CONTACT_AGE";
+            case AWSConnectCurrentMetricNameContactsScheduled:
+                return @"CONTACTS_SCHEDULED";
+            case AWSConnectCurrentMetricNameAgentsOnContact:
+                return @"AGENTS_ON_CONTACT";
+            case AWSConnectCurrentMetricNameSlotsActive:
+                return @"SLOTS_ACTIVE";
+            case AWSConnectCurrentMetricNameSlotsAvailable:
+                return @"SLOTS_AVAILABLE";
+            default:
+                return nil;
+        }
+    }];
+}
+
++ (NSValueTransformer *)sortOrderJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"ASCENDING"] == NSOrderedSame) {
+            return @(AWSConnectSortOrderAscending);
+        }
+        if ([value caseInsensitiveCompare:@"DESCENDING"] == NSOrderedSame) {
+            return @(AWSConnectSortOrderDescending);
+        }
+        return @(AWSConnectSortOrderUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectSortOrderAscending:
+                return @"ASCENDING";
+            case AWSConnectSortOrderDescending:
+                return @"DESCENDING";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
 @implementation AWSConnectDateReference
 
 + (BOOL)supportsSecureCoding {
@@ -5069,6 +5365,12 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
         if ([value caseInsensitiveCompare:@"zh-CN"] == NSOrderedSame) {
             return @(AWSConnectVocabularyLanguageCodeZhCN);
         }
+        if ([value caseInsensitiveCompare:@"en-NZ"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnNZ);
+        }
+        if ([value caseInsensitiveCompare:@"en-ZA"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnZA);
+        }
         return @(AWSConnectVocabularyLanguageCodeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -5114,6 +5416,10 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return @"pt-PT";
             case AWSConnectVocabularyLanguageCodeZhCN:
                 return @"zh-CN";
+            case AWSConnectVocabularyLanguageCodeEnNZ:
+                return @"en-NZ";
+            case AWSConnectVocabularyLanguageCodeEnZA:
+                return @"en-ZA";
             default:
                 return nil;
         }
@@ -5156,6 +5462,14 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
              @"contactFlowId" : @"ContactFlowId",
              @"instanceId" : @"InstanceId",
              };
+}
+
+@end
+
+@implementation AWSConnectDeleteContactFlowResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
 }
 
 @end
@@ -5214,6 +5528,21 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 	return @{
              @"instanceId" : @"InstanceId",
              @"quickConnectId" : @"QuickConnectId",
+             };
+}
+
+@end
+
+@implementation AWSConnectDeleteRuleRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"instanceId" : @"InstanceId",
+             @"ruleId" : @"RuleId",
              };
 }
 
@@ -5594,6 +5923,9 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
         if ([value caseInsensitiveCompare:@"HIGH_VOLUME_OUTBOUND"] == NSOrderedSame) {
             return @(AWSConnectInstanceAttributeTypeHighVolumeOutbound);
         }
+        if ([value caseInsensitiveCompare:@"ENHANCED_CONTACT_MONITORING"] == NSOrderedSame) {
+            return @(AWSConnectInstanceAttributeTypeEnhancedContactMonitoring);
+        }
         return @(AWSConnectInstanceAttributeTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -5615,6 +5947,8 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return @"MULTI_PARTY_CONFERENCE";
             case AWSConnectInstanceAttributeTypeHighVolumeOutbound:
                 return @"HIGH_VOLUME_OUTBOUND";
+            case AWSConnectInstanceAttributeTypeEnhancedContactMonitoring:
+                return @"ENHANCED_CONTACT_MONITORING";
             default:
                 return nil;
         }
@@ -5884,6 +6218,39 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 @end
 
+@implementation AWSConnectDescribeRuleRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"instanceId" : @"InstanceId",
+             @"ruleId" : @"RuleId",
+             };
+}
+
+@end
+
+@implementation AWSConnectDescribeRuleResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"rule" : @"Rule",
+             };
+}
+
++ (NSValueTransformer *)ruleJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectRule class]];
+}
+
+@end
+
 @implementation AWSConnectDescribeSecurityProfileRequest
 
 + (BOOL)supportsSecureCoding {
@@ -6090,6 +6457,7 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 	return @{
              @"channel" : @"Channel",
              @"queue" : @"Queue",
+             @"routingProfile" : @"RoutingProfile",
              };
 }
 
@@ -6121,6 +6489,10 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 + (NSValueTransformer *)queueJSONTransformer {
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectQueueReference class]];
+}
+
++ (NSValueTransformer *)routingProfileJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectRoutingProfileReference class]];
 }
 
 @end
@@ -6408,6 +6780,20 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 @end
 
+@implementation AWSConnectEventBridgeActionDefinition
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"name" : @"Name",
+             };
+}
+
+@end
+
 @implementation AWSConnectFilters
 
 + (BOOL)supportsSecureCoding {
@@ -6418,6 +6804,7 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 	return @{
              @"channels" : @"Channels",
              @"queues" : @"Queues",
+             @"routingProfiles" : @"RoutingProfiles",
              };
 }
 
@@ -6466,6 +6853,7 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
              @"instanceId" : @"InstanceId",
              @"maxResults" : @"MaxResults",
              @"nextToken" : @"NextToken",
+             @"sortCriteria" : @"SortCriteria",
              };
 }
 
@@ -6475,6 +6863,10 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 + (NSValueTransformer *)filtersJSONTransformer {
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectFilters class]];
+}
+
++ (NSValueTransformer *)sortCriteriaJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSConnectCurrentMetricSortCriteria class]];
 }
 
 @end
@@ -6487,6 +6879,7 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"approximateTotalCount" : @"ApproximateTotalCount",
              @"dataSnapshotTime" : @"DataSnapshotTime",
              @"metricResults" : @"MetricResults",
              @"nextToken" : @"NextToken",
@@ -6536,6 +6929,7 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"approximateTotalCount" : @"ApproximateTotalCount",
              @"nextToken" : @"NextToken",
              @"userDataList" : @"UserDataList",
              };
@@ -8202,6 +8596,12 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
         if ([value caseInsensitiveCompare:@"zh-CN"] == NSOrderedSame) {
             return @(AWSConnectVocabularyLanguageCodeZhCN);
         }
+        if ([value caseInsensitiveCompare:@"en-NZ"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnNZ);
+        }
+        if ([value caseInsensitiveCompare:@"en-ZA"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnZA);
+        }
         return @(AWSConnectVocabularyLanguageCodeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -8247,6 +8647,10 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return @"pt-PT";
             case AWSConnectVocabularyLanguageCodeZhCN:
                 return @"zh-CN";
+            case AWSConnectVocabularyLanguageCodeEnNZ:
+                return @"en-NZ";
+            case AWSConnectVocabularyLanguageCodeEnZA:
+                return @"en-ZA";
             default:
                 return nil;
         }
@@ -10128,6 +10532,105 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 @end
 
+@implementation AWSConnectListRulesRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"eventSourceName" : @"EventSourceName",
+             @"instanceId" : @"InstanceId",
+             @"maxResults" : @"MaxResults",
+             @"nextToken" : @"NextToken",
+             @"publishStatus" : @"PublishStatus",
+             };
+}
+
++ (NSValueTransformer *)eventSourceNameJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"OnPostCallAnalysisAvailable"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnPostCallAnalysisAvailable);
+        }
+        if ([value caseInsensitiveCompare:@"OnRealTimeCallAnalysisAvailable"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnRealTimeCallAnalysisAvailable);
+        }
+        if ([value caseInsensitiveCompare:@"OnPostChatAnalysisAvailable"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnPostChatAnalysisAvailable);
+        }
+        if ([value caseInsensitiveCompare:@"OnZendeskTicketCreate"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnZendeskTicketCreate);
+        }
+        if ([value caseInsensitiveCompare:@"OnZendeskTicketStatusUpdate"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnZendeskTicketStatusUpdate);
+        }
+        if ([value caseInsensitiveCompare:@"OnSalesforceCaseCreate"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnSalesforceCaseCreate);
+        }
+        return @(AWSConnectEventSourceNameUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectEventSourceNameOnPostCallAnalysisAvailable:
+                return @"OnPostCallAnalysisAvailable";
+            case AWSConnectEventSourceNameOnRealTimeCallAnalysisAvailable:
+                return @"OnRealTimeCallAnalysisAvailable";
+            case AWSConnectEventSourceNameOnPostChatAnalysisAvailable:
+                return @"OnPostChatAnalysisAvailable";
+            case AWSConnectEventSourceNameOnZendeskTicketCreate:
+                return @"OnZendeskTicketCreate";
+            case AWSConnectEventSourceNameOnZendeskTicketStatusUpdate:
+                return @"OnZendeskTicketStatusUpdate";
+            case AWSConnectEventSourceNameOnSalesforceCaseCreate:
+                return @"OnSalesforceCaseCreate";
+            default:
+                return nil;
+        }
+    }];
+}
+
++ (NSValueTransformer *)publishStatusJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"DRAFT"] == NSOrderedSame) {
+            return @(AWSConnectRulePublishStatusDraft);
+        }
+        if ([value caseInsensitiveCompare:@"PUBLISHED"] == NSOrderedSame) {
+            return @(AWSConnectRulePublishStatusPublished);
+        }
+        return @(AWSConnectRulePublishStatusUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectRulePublishStatusDraft:
+                return @"DRAFT";
+            case AWSConnectRulePublishStatusPublished:
+                return @"PUBLISHED";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSConnectListRulesResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"nextToken" : @"NextToken",
+             @"ruleSummaryList" : @"RuleSummaryList",
+             };
+}
+
++ (NSValueTransformer *)ruleSummaryListJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSConnectRuleSummary class]];
+}
+
+@end
+
 @implementation AWSConnectListSecurityKeysRequest
 
 + (BOOL)supportsSecureCoding {
@@ -10498,6 +11001,54 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 @end
 
+@implementation AWSConnectMonitorContactRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"allowedMonitorCapabilities" : @"AllowedMonitorCapabilities",
+             @"clientToken" : @"ClientToken",
+             @"contactId" : @"ContactId",
+             @"instanceId" : @"InstanceId",
+             @"userId" : @"UserId",
+             };
+}
+
+@end
+
+@implementation AWSConnectMonitorContactResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"contactArn" : @"ContactArn",
+             @"contactId" : @"ContactId",
+             };
+}
+
+@end
+
+@implementation AWSConnectNotificationRecipientType
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"userIds" : @"UserIds",
+             @"userTags" : @"UserTags",
+             };
+}
+
+@end
+
 @implementation AWSConnectNumberReference
 
 + (BOOL)supportsSecureCoding {
@@ -10539,6 +11090,135 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 	return @{
              @"displayName" : @"DisplayName",
              };
+}
+
+@end
+
+@implementation AWSConnectParticipantTimerConfiguration
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"participantRole" : @"ParticipantRole",
+             @"timerType" : @"TimerType",
+             @"timerValue" : @"TimerValue",
+             };
+}
+
++ (NSValueTransformer *)participantRoleJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"CUSTOMER"] == NSOrderedSame) {
+            return @(AWSConnectTimerEligibleParticipantRolesCustomer);
+        }
+        if ([value caseInsensitiveCompare:@"AGENT"] == NSOrderedSame) {
+            return @(AWSConnectTimerEligibleParticipantRolesAgent);
+        }
+        return @(AWSConnectTimerEligibleParticipantRolesUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectTimerEligibleParticipantRolesCustomer:
+                return @"CUSTOMER";
+            case AWSConnectTimerEligibleParticipantRolesAgent:
+                return @"AGENT";
+            default:
+                return nil;
+        }
+    }];
+}
+
++ (NSValueTransformer *)timerTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"IDLE"] == NSOrderedSame) {
+            return @(AWSConnectParticipantTimerTypeIdle);
+        }
+        if ([value caseInsensitiveCompare:@"DISCONNECT_NONCUSTOMER"] == NSOrderedSame) {
+            return @(AWSConnectParticipantTimerTypeDisconnectNoncustomer);
+        }
+        return @(AWSConnectParticipantTimerTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectParticipantTimerTypeIdle:
+                return @"IDLE";
+            case AWSConnectParticipantTimerTypeDisconnectNoncustomer:
+                return @"DISCONNECT_NONCUSTOMER";
+            default:
+                return nil;
+        }
+    }];
+}
+
++ (NSValueTransformer *)timerValueJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectParticipantTimerValue class]];
+}
+
+@end
+
+@implementation AWSConnectParticipantTimerValue
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"participantTimerAction" : @"ParticipantTimerAction",
+             @"participantTimerDurationInMinutes" : @"ParticipantTimerDurationInMinutes",
+             };
+}
+
++ (NSValueTransformer *)participantTimerActionJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"Unset"] == NSOrderedSame) {
+            return @(AWSConnectParticipantTimerActionUnset);
+        }
+        return @(AWSConnectParticipantTimerActionUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectParticipantTimerActionUnset:
+                return @"Unset";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSConnectPersistentChat
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"rehydrationType" : @"RehydrationType",
+             @"sourceContactId" : @"SourceContactId",
+             };
+}
+
++ (NSValueTransformer *)rehydrationTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"ENTIRE_PAST_SESSION"] == NSOrderedSame) {
+            return @(AWSConnectRehydrationTypeEntirePastSession);
+        }
+        if ([value caseInsensitiveCompare:@"FROM_SEGMENT"] == NSOrderedSame) {
+            return @(AWSConnectRehydrationTypeFromSegment);
+        }
+        return @(AWSConnectRehydrationTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectRehydrationTypeEntirePastSession:
+                return @"ENTIRE_PAST_SESSION";
+            case AWSConnectRehydrationTypeFromSegment:
+                return @"FROM_SEGMENT";
+            default:
+                return nil;
+        }
+    }];
 }
 
 @end
@@ -12682,6 +13362,299 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 @end
 
+@implementation AWSConnectRule
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"actions" : @"Actions",
+             @"createdTime" : @"CreatedTime",
+             @"function" : @"Function",
+             @"lastUpdatedBy" : @"LastUpdatedBy",
+             @"lastUpdatedTime" : @"LastUpdatedTime",
+             @"name" : @"Name",
+             @"publishStatus" : @"PublishStatus",
+             @"ruleArn" : @"RuleArn",
+             @"ruleId" : @"RuleId",
+             @"tags" : @"Tags",
+             @"triggerEventSource" : @"TriggerEventSource",
+             };
+}
+
++ (NSValueTransformer *)actionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSConnectRuleAction class]];
+}
+
++ (NSValueTransformer *)createdTimeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+        return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
+    } reverseBlock:^id(NSDate *date) {
+        return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+    }];
+}
+
++ (NSValueTransformer *)lastUpdatedTimeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+        return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
+    } reverseBlock:^id(NSDate *date) {
+        return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+    }];
+}
+
++ (NSValueTransformer *)publishStatusJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"DRAFT"] == NSOrderedSame) {
+            return @(AWSConnectRulePublishStatusDraft);
+        }
+        if ([value caseInsensitiveCompare:@"PUBLISHED"] == NSOrderedSame) {
+            return @(AWSConnectRulePublishStatusPublished);
+        }
+        return @(AWSConnectRulePublishStatusUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectRulePublishStatusDraft:
+                return @"DRAFT";
+            case AWSConnectRulePublishStatusPublished:
+                return @"PUBLISHED";
+            default:
+                return nil;
+        }
+    }];
+}
+
++ (NSValueTransformer *)triggerEventSourceJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectRuleTriggerEventSource class]];
+}
+
+@end
+
+@implementation AWSConnectRuleAction
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"actionType" : @"ActionType",
+             @"assignContactCategoryAction" : @"AssignContactCategoryAction",
+             @"eventBridgeAction" : @"EventBridgeAction",
+             @"sendNotificationAction" : @"SendNotificationAction",
+             @"taskAction" : @"TaskAction",
+             };
+}
+
++ (NSValueTransformer *)actionTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"CREATE_TASK"] == NSOrderedSame) {
+            return @(AWSConnectActionTypeCreateTask);
+        }
+        if ([value caseInsensitiveCompare:@"ASSIGN_CONTACT_CATEGORY"] == NSOrderedSame) {
+            return @(AWSConnectActionTypeAssignContactCategory);
+        }
+        if ([value caseInsensitiveCompare:@"GENERATE_EVENTBRIDGE_EVENT"] == NSOrderedSame) {
+            return @(AWSConnectActionTypeGenerateEventbridgeEvent);
+        }
+        if ([value caseInsensitiveCompare:@"SEND_NOTIFICATION"] == NSOrderedSame) {
+            return @(AWSConnectActionTypeSendNotification);
+        }
+        return @(AWSConnectActionTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectActionTypeCreateTask:
+                return @"CREATE_TASK";
+            case AWSConnectActionTypeAssignContactCategory:
+                return @"ASSIGN_CONTACT_CATEGORY";
+            case AWSConnectActionTypeGenerateEventbridgeEvent:
+                return @"GENERATE_EVENTBRIDGE_EVENT";
+            case AWSConnectActionTypeSendNotification:
+                return @"SEND_NOTIFICATION";
+            default:
+                return nil;
+        }
+    }];
+}
+
++ (NSValueTransformer *)assignContactCategoryActionJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectAssignContactCategoryActionDefinition class]];
+}
+
++ (NSValueTransformer *)eventBridgeActionJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectEventBridgeActionDefinition class]];
+}
+
++ (NSValueTransformer *)sendNotificationActionJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectSendNotificationActionDefinition class]];
+}
+
++ (NSValueTransformer *)taskActionJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectTaskActionDefinition class]];
+}
+
+@end
+
+@implementation AWSConnectRuleSummary
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"actionSummaries" : @"ActionSummaries",
+             @"createdTime" : @"CreatedTime",
+             @"eventSourceName" : @"EventSourceName",
+             @"lastUpdatedTime" : @"LastUpdatedTime",
+             @"name" : @"Name",
+             @"publishStatus" : @"PublishStatus",
+             @"ruleArn" : @"RuleArn",
+             @"ruleId" : @"RuleId",
+             };
+}
+
++ (NSValueTransformer *)actionSummariesJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSConnectActionSummary class]];
+}
+
++ (NSValueTransformer *)createdTimeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+        return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
+    } reverseBlock:^id(NSDate *date) {
+        return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+    }];
+}
+
++ (NSValueTransformer *)eventSourceNameJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"OnPostCallAnalysisAvailable"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnPostCallAnalysisAvailable);
+        }
+        if ([value caseInsensitiveCompare:@"OnRealTimeCallAnalysisAvailable"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnRealTimeCallAnalysisAvailable);
+        }
+        if ([value caseInsensitiveCompare:@"OnPostChatAnalysisAvailable"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnPostChatAnalysisAvailable);
+        }
+        if ([value caseInsensitiveCompare:@"OnZendeskTicketCreate"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnZendeskTicketCreate);
+        }
+        if ([value caseInsensitiveCompare:@"OnZendeskTicketStatusUpdate"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnZendeskTicketStatusUpdate);
+        }
+        if ([value caseInsensitiveCompare:@"OnSalesforceCaseCreate"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnSalesforceCaseCreate);
+        }
+        return @(AWSConnectEventSourceNameUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectEventSourceNameOnPostCallAnalysisAvailable:
+                return @"OnPostCallAnalysisAvailable";
+            case AWSConnectEventSourceNameOnRealTimeCallAnalysisAvailable:
+                return @"OnRealTimeCallAnalysisAvailable";
+            case AWSConnectEventSourceNameOnPostChatAnalysisAvailable:
+                return @"OnPostChatAnalysisAvailable";
+            case AWSConnectEventSourceNameOnZendeskTicketCreate:
+                return @"OnZendeskTicketCreate";
+            case AWSConnectEventSourceNameOnZendeskTicketStatusUpdate:
+                return @"OnZendeskTicketStatusUpdate";
+            case AWSConnectEventSourceNameOnSalesforceCaseCreate:
+                return @"OnSalesforceCaseCreate";
+            default:
+                return nil;
+        }
+    }];
+}
+
++ (NSValueTransformer *)lastUpdatedTimeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+        return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
+    } reverseBlock:^id(NSDate *date) {
+        return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+    }];
+}
+
++ (NSValueTransformer *)publishStatusJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"DRAFT"] == NSOrderedSame) {
+            return @(AWSConnectRulePublishStatusDraft);
+        }
+        if ([value caseInsensitiveCompare:@"PUBLISHED"] == NSOrderedSame) {
+            return @(AWSConnectRulePublishStatusPublished);
+        }
+        return @(AWSConnectRulePublishStatusUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectRulePublishStatusDraft:
+                return @"DRAFT";
+            case AWSConnectRulePublishStatusPublished:
+                return @"PUBLISHED";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
+@implementation AWSConnectRuleTriggerEventSource
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"eventSourceName" : @"EventSourceName",
+             @"integrationAssociationId" : @"IntegrationAssociationId",
+             };
+}
+
++ (NSValueTransformer *)eventSourceNameJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"OnPostCallAnalysisAvailable"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnPostCallAnalysisAvailable);
+        }
+        if ([value caseInsensitiveCompare:@"OnRealTimeCallAnalysisAvailable"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnRealTimeCallAnalysisAvailable);
+        }
+        if ([value caseInsensitiveCompare:@"OnPostChatAnalysisAvailable"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnPostChatAnalysisAvailable);
+        }
+        if ([value caseInsensitiveCompare:@"OnZendeskTicketCreate"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnZendeskTicketCreate);
+        }
+        if ([value caseInsensitiveCompare:@"OnZendeskTicketStatusUpdate"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnZendeskTicketStatusUpdate);
+        }
+        if ([value caseInsensitiveCompare:@"OnSalesforceCaseCreate"] == NSOrderedSame) {
+            return @(AWSConnectEventSourceNameOnSalesforceCaseCreate);
+        }
+        return @(AWSConnectEventSourceNameUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectEventSourceNameOnPostCallAnalysisAvailable:
+                return @"OnPostCallAnalysisAvailable";
+            case AWSConnectEventSourceNameOnRealTimeCallAnalysisAvailable:
+                return @"OnRealTimeCallAnalysisAvailable";
+            case AWSConnectEventSourceNameOnPostChatAnalysisAvailable:
+                return @"OnPostChatAnalysisAvailable";
+            case AWSConnectEventSourceNameOnZendeskTicketCreate:
+                return @"OnZendeskTicketCreate";
+            case AWSConnectEventSourceNameOnZendeskTicketStatusUpdate:
+                return @"OnZendeskTicketStatusUpdate";
+            case AWSConnectEventSourceNameOnSalesforceCaseCreate:
+                return @"OnSalesforceCaseCreate";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
 @implementation AWSConnectS3Config
 
 + (BOOL)supportsSecureCoding {
@@ -14223,6 +15196,12 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
         if ([value caseInsensitiveCompare:@"zh-CN"] == NSOrderedSame) {
             return @(AWSConnectVocabularyLanguageCodeZhCN);
         }
+        if ([value caseInsensitiveCompare:@"en-NZ"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnNZ);
+        }
+        if ([value caseInsensitiveCompare:@"en-ZA"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnZA);
+        }
         return @(AWSConnectVocabularyLanguageCodeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -14268,6 +15247,10 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return @"pt-PT";
             case AWSConnectVocabularyLanguageCodeZhCN:
                 return @"zh-CN";
+            case AWSConnectVocabularyLanguageCodeEnNZ:
+                return @"en-NZ";
+            case AWSConnectVocabularyLanguageCodeEnZA:
+                return @"en-ZA";
             default:
                 return nil;
         }
@@ -14358,11 +15341,13 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"allowedAccessControlTags" : @"AllowedAccessControlTags",
              @"arn" : @"Arn",
              @"detail" : @"Description",
              @"identifier" : @"Id",
              @"organizationResourceId" : @"OrganizationResourceId",
              @"securityProfileName" : @"SecurityProfileName",
+             @"tagRestrictedResources" : @"TagRestrictedResources",
              @"tags" : @"Tags",
              };
 }
@@ -14450,6 +15435,60 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 @end
 
+@implementation AWSConnectSendNotificationActionDefinition
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"content" : @"Content",
+             @"contentType" : @"ContentType",
+             @"deliveryMethod" : @"DeliveryMethod",
+             @"recipient" : @"Recipient",
+             @"subject" : @"Subject",
+             };
+}
+
++ (NSValueTransformer *)contentTypeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"PLAIN_TEXT"] == NSOrderedSame) {
+            return @(AWSConnectNotificationContentTypePlainText);
+        }
+        return @(AWSConnectNotificationContentTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectNotificationContentTypePlainText:
+                return @"PLAIN_TEXT";
+            default:
+                return nil;
+        }
+    }];
+}
+
++ (NSValueTransformer *)deliveryMethodJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"EMAIL"] == NSOrderedSame) {
+            return @(AWSConnectNotificationDeliveryTypeEmail);
+        }
+        return @(AWSConnectNotificationDeliveryTypeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectNotificationDeliveryTypeEmail:
+                return @"EMAIL";
+            default:
+                return nil;
+        }
+    }];
+}
+
++ (NSValueTransformer *)recipientJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectNotificationRecipientType class]];
+}
+
+@end
+
 @implementation AWSConnectStartChatContactRequest
 
 + (BOOL)supportsSecureCoding {
@@ -14465,6 +15504,7 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
              @"initialMessage" : @"InitialMessage",
              @"instanceId" : @"InstanceId",
              @"participantDetails" : @"ParticipantDetails",
+             @"persistentChat" : @"PersistentChat",
              @"supportedMessagingContentTypes" : @"SupportedMessagingContentTypes",
              };
 }
@@ -14475,6 +15515,10 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 + (NSValueTransformer *)participantDetailsJSONTransformer {
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectParticipantDetails class]];
+}
+
++ (NSValueTransformer *)persistentChatJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectPersistentChat class]];
 }
 
 @end
@@ -14488,6 +15532,7 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"contactId" : @"ContactId",
+             @"continuedFromContactId" : @"ContinuedFromContactId",
              @"participantId" : @"ParticipantId",
              @"participantToken" : @"ParticipantToken",
              };
@@ -14853,6 +15898,31 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
              @"resourceArn" : @"resourceArn",
              @"tags" : @"tags",
              };
+}
+
+@end
+
+@implementation AWSConnectTaskActionDefinition
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"contactFlowId" : @"ContactFlowId",
+             @"detail" : @"Description",
+             @"name" : @"Name",
+             @"references" : @"References",
+             };
+}
+
++ (NSValueTransformer *)referencesJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(id JSONDictionary) {
+        return [AWSModelUtility mapMTLDictionaryFromJSONDictionary:JSONDictionary withModelClass:[AWSConnectReference class]];
+    } reverseBlock:^id(id mapMTLDictionary) {
+        return [AWSModelUtility JSONDictionaryFromMapMTLDictionary:mapMTLDictionary];
+    }];
 }
 
 @end
@@ -15384,6 +16454,14 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 @end
 
+@implementation AWSConnectUpdateContactFlowContentResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
+@end
+
 @implementation AWSConnectUpdateContactFlowMetadataRequest
 
 + (BOOL)supportsSecureCoding {
@@ -15419,6 +16497,14 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return nil;
         }
     }];
+}
+
+@end
+
+@implementation AWSConnectUpdateContactFlowMetadataResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
 }
 
 @end
@@ -15507,6 +16593,14 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
              @"instanceId" : @"InstanceId",
              @"name" : @"Name",
              };
+}
+
+@end
+
+@implementation AWSConnectUpdateContactFlowNameResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
 }
 
 @end
@@ -15643,6 +16737,9 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
         if ([value caseInsensitiveCompare:@"HIGH_VOLUME_OUTBOUND"] == NSOrderedSame) {
             return @(AWSConnectInstanceAttributeTypeHighVolumeOutbound);
         }
+        if ([value caseInsensitiveCompare:@"ENHANCED_CONTACT_MONITORING"] == NSOrderedSame) {
+            return @(AWSConnectInstanceAttributeTypeEnhancedContactMonitoring);
+        }
         return @(AWSConnectInstanceAttributeTypeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -15664,6 +16761,8 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return @"MULTI_PARTY_CONFERENCE";
             case AWSConnectInstanceAttributeTypeHighVolumeOutbound:
                 return @"HIGH_VOLUME_OUTBOUND";
+            case AWSConnectInstanceAttributeTypeEnhancedContactMonitoring:
+                return @"ENHANCED_CONTACT_MONITORING";
             default:
                 return nil;
         }
@@ -15735,6 +16834,52 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 + (NSValueTransformer *)storageConfigJSONTransformer {
     return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectInstanceStorageConfig class]];
+}
+
+@end
+
+@implementation AWSConnectUpdateParticipantRoleConfigChannelInfo
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"chat" : @"Chat",
+             };
+}
+
++ (NSValueTransformer *)chatJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectChatParticipantRoleConfig class]];
+}
+
+@end
+
+@implementation AWSConnectUpdateParticipantRoleConfigRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"channelConfiguration" : @"ChannelConfiguration",
+             @"contactId" : @"ContactId",
+             @"instanceId" : @"InstanceId",
+             };
+}
+
++ (NSValueTransformer *)channelConfigurationJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSConnectUpdateParticipantRoleConfigChannelInfo class]];
+}
+
+@end
+
+@implementation AWSConnectUpdateParticipantRoleConfigResponse
+
++ (BOOL)supportsSecureCoding {
+    return YES;
 }
 
 @end
@@ -15986,6 +17131,50 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 @end
 
+@implementation AWSConnectUpdateRuleRequest
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"actions" : @"Actions",
+             @"function" : @"Function",
+             @"instanceId" : @"InstanceId",
+             @"name" : @"Name",
+             @"publishStatus" : @"PublishStatus",
+             @"ruleId" : @"RuleId",
+             };
+}
+
++ (NSValueTransformer *)actionsJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONArrayTransformerWithModelClass:[AWSConnectRuleAction class]];
+}
+
++ (NSValueTransformer *)publishStatusJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"DRAFT"] == NSOrderedSame) {
+            return @(AWSConnectRulePublishStatusDraft);
+        }
+        if ([value caseInsensitiveCompare:@"PUBLISHED"] == NSOrderedSame) {
+            return @(AWSConnectRulePublishStatusPublished);
+        }
+        return @(AWSConnectRulePublishStatusUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSConnectRulePublishStatusDraft:
+                return @"DRAFT";
+            case AWSConnectRulePublishStatusPublished:
+                return @"PUBLISHED";
+            default:
+                return nil;
+        }
+    }];
+}
+
+@end
+
 @implementation AWSConnectUpdateSecurityProfileRequest
 
 + (BOOL)supportsSecureCoding {
@@ -15994,10 +17183,12 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"allowedAccessControlTags" : @"AllowedAccessControlTags",
              @"detail" : @"Description",
              @"instanceId" : @"InstanceId",
              @"permissions" : @"Permissions",
              @"securityProfileId" : @"SecurityProfileId",
+             @"tagRestrictedResources" : @"TagRestrictedResources",
              };
 }
 
@@ -16378,6 +17569,7 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
              @"contacts" : @"Contacts",
              @"hierarchyPath" : @"HierarchyPath",
              @"maxSlotsByChannel" : @"MaxSlotsByChannel",
+             @"nextStatus" : @"NextStatus",
              @"routingProfile" : @"RoutingProfile",
              @"status" : @"Status",
              @"user" : @"User",
@@ -16414,8 +17606,11 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"agents" : @"Agents",
              @"contactFilter" : @"ContactFilter",
              @"queues" : @"Queues",
+             @"routingProfiles" : @"RoutingProfiles",
+             @"userHierarchyGroups" : @"UserHierarchyGroups",
              };
 }
 
@@ -16709,6 +17904,12 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
         if ([value caseInsensitiveCompare:@"zh-CN"] == NSOrderedSame) {
             return @(AWSConnectVocabularyLanguageCodeZhCN);
         }
+        if ([value caseInsensitiveCompare:@"en-NZ"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnNZ);
+        }
+        if ([value caseInsensitiveCompare:@"en-ZA"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnZA);
+        }
         return @(AWSConnectVocabularyLanguageCodeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -16754,6 +17955,10 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return @"pt-PT";
             case AWSConnectVocabularyLanguageCodeZhCN:
                 return @"zh-CN";
+            case AWSConnectVocabularyLanguageCodeEnNZ:
+                return @"en-NZ";
+            case AWSConnectVocabularyLanguageCodeEnZA:
+                return @"en-ZA";
             default:
                 return nil;
         }
@@ -16884,6 +18089,12 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
         if ([value caseInsensitiveCompare:@"zh-CN"] == NSOrderedSame) {
             return @(AWSConnectVocabularyLanguageCodeZhCN);
         }
+        if ([value caseInsensitiveCompare:@"en-NZ"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnNZ);
+        }
+        if ([value caseInsensitiveCompare:@"en-ZA"] == NSOrderedSame) {
+            return @(AWSConnectVocabularyLanguageCodeEnZA);
+        }
         return @(AWSConnectVocabularyLanguageCodeUnknown);
     } reverseBlock:^NSString *(NSNumber *value) {
         switch ([value integerValue]) {
@@ -16929,6 +18140,10 @@ NSString *const AWSConnectErrorDomain = @"com.amazonaws.AWSConnectErrorDomain";
                 return @"pt-PT";
             case AWSConnectVocabularyLanguageCodeZhCN:
                 return @"zh-CN";
+            case AWSConnectVocabularyLanguageCodeEnNZ:
+                return @"en-NZ";
+            case AWSConnectVocabularyLanguageCodeEnZA:
+                return @"en-ZA";
             default:
                 return nil;
         }

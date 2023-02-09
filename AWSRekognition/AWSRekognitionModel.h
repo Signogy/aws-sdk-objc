@@ -101,6 +101,12 @@ typedef NS_ENUM(NSInteger, AWSRekognitionDatasetType) {
     AWSRekognitionDatasetTypeTest,
 };
 
+typedef NS_ENUM(NSInteger, AWSRekognitionDetectLabelsFeatureName) {
+    AWSRekognitionDetectLabelsFeatureNameUnknown,
+    AWSRekognitionDetectLabelsFeatureNameGeneralLabels,
+    AWSRekognitionDetectLabelsFeatureNameImageProperties,
+};
+
 typedef NS_ENUM(NSInteger, AWSRekognitionEmotionName) {
     AWSRekognitionEmotionNameUnknown,
     AWSRekognitionEmotionNameHappy,
@@ -137,6 +143,17 @@ typedef NS_ENUM(NSInteger, AWSRekognitionKnownGenderType) {
     AWSRekognitionKnownGenderTypeFemale,
     AWSRekognitionKnownGenderTypeNonbinary,
     AWSRekognitionKnownGenderTypeUnlisted,
+};
+
+typedef NS_ENUM(NSInteger, AWSRekognitionLabelDetectionAggregateBy) {
+    AWSRekognitionLabelDetectionAggregateByUnknown,
+    AWSRekognitionLabelDetectionAggregateByTimestamps,
+    AWSRekognitionLabelDetectionAggregateBySegments,
+};
+
+typedef NS_ENUM(NSInteger, AWSRekognitionLabelDetectionFeatureName) {
+    AWSRekognitionLabelDetectionFeatureNameUnknown,
+    AWSRekognitionLabelDetectionFeatureNameGeneralLabels,
 };
 
 typedef NS_ENUM(NSInteger, AWSRekognitionLabelDetectionSortBy) {
@@ -361,8 +378,14 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @class AWSRekognitionDetectCustomLabelsResponse;
 @class AWSRekognitionDetectFacesRequest;
 @class AWSRekognitionDetectFacesResponse;
+@class AWSRekognitionDetectLabelsImageBackground;
+@class AWSRekognitionDetectLabelsImageForeground;
+@class AWSRekognitionDetectLabelsImageProperties;
+@class AWSRekognitionDetectLabelsImagePropertiesSettings;
+@class AWSRekognitionDetectLabelsImageQuality;
 @class AWSRekognitionDetectLabelsRequest;
 @class AWSRekognitionDetectLabelsResponse;
+@class AWSRekognitionDetectLabelsSettings;
 @class AWSRekognitionDetectModerationLabelsRequest;
 @class AWSRekognitionDetectModerationLabelsResponse;
 @class AWSRekognitionDetectProtectiveEquipmentRequest;
@@ -374,6 +397,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @class AWSRekognitionDistributeDataset;
 @class AWSRekognitionDistributeDatasetEntriesRequest;
 @class AWSRekognitionDistributeDatasetEntriesResponse;
+@class AWSRekognitionDominantColor;
 @class AWSRekognitionEmotion;
 @class AWSRekognitionEquipmentDetection;
 @class AWSRekognitionEvaluationResult;
@@ -386,6 +410,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @class AWSRekognitionFaceRecord;
 @class AWSRekognitionFaceSearchSettings;
 @class AWSRekognitionGender;
+@class AWSRekognitionGeneralLabelsSettings;
 @class AWSRekognitionGeometry;
 @class AWSRekognitionGetCelebrityInfoRequest;
 @class AWSRekognitionGetCelebrityInfoResponse;
@@ -419,7 +444,10 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @class AWSRekognitionKinesisVideoStreamStartSelector;
 @class AWSRekognitionKnownGender;
 @class AWSRekognitionLabel;
+@class AWSRekognitionLabelAlias;
+@class AWSRekognitionLabelCategory;
 @class AWSRekognitionLabelDetection;
+@class AWSRekognitionLabelDetectionSettings;
 @class AWSRekognitionLandmark;
 @class AWSRekognitionListCollectionsRequest;
 @class AWSRekognitionListCollectionsResponse;
@@ -743,7 +771,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) AWSRekognitionCelebrityDetail * _Nullable celebrity;
 
 /**
- <p>The time, in milliseconds from the start of the video, that the celebrity was recognized.</p>
+ <p>The time, in milliseconds from the start of the video, that the celebrity was recognized. Note that <code>Timestamp</code> is not guaranteed to be accurate to the individual frame where the celebrity first appears.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable timestamp;
 
@@ -938,7 +966,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) AWSRekognitionModerationLabel * _Nullable moderationLabel;
 
 /**
- <p>Time, in milliseconds from the beginning of the video, that the content moderation label was detected.</p>
+ <p>Time, in milliseconds from the beginning of the video, that the content moderation label was detected. Note that <code>Timestamp</code> is not guaranteed to be accurate to the individual frame where the moderated content first appears.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable timestamp;
 
@@ -1948,10 +1976,115 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @end
 
 /**
+ <p>The background of the image with regard to image quality and dominant colors.</p>
+ */
+@interface AWSRekognitionDetectLabelsImageBackground : AWSModel
+
+
+/**
+ <p>The dominant colors found in the background of an image, defined with RGB values, CSS color name, simplified color name, and PixelPercentage (the percentage of image pixels that have a particular color).</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionDominantColor *> * _Nullable dominantColors;
+
+/**
+ <p>The quality of the image background as defined by brightness and sharpness.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionDetectLabelsImageQuality * _Nullable quality;
+
+@end
+
+/**
+ <p>The foreground of the image with regard to image quality and dominant colors.</p>
+ */
+@interface AWSRekognitionDetectLabelsImageForeground : AWSModel
+
+
+/**
+ <p>The dominant colors found in the foreground of an image, defined with RGB values, CSS color name, simplified color name, and PixelPercentage (the percentage of image pixels that have a particular color).</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionDominantColor *> * _Nullable dominantColors;
+
+/**
+ <p>The quality of the image foreground as defined by brightness and sharpness.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionDetectLabelsImageQuality * _Nullable quality;
+
+@end
+
+/**
+ <p>Information about the quality and dominant colors of an input image. Quality and color information is returned for the entire image, foreground, and background.</p>
+ */
+@interface AWSRekognitionDetectLabelsImageProperties : AWSModel
+
+
+/**
+ <p>Information about the properties of an image’s background, including the background’s quality and dominant colors, including the quality and dominant colors of the image.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionDetectLabelsImageBackground * _Nullable background;
+
+/**
+ <p>Information about the dominant colors found in an image, described with RGB values, CSS color name, simplified color name, and PixelPercentage (the percentage of image pixels that have a particular color).</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionDominantColor *> * _Nullable dominantColors;
+
+/**
+ <p>Information about the properties of an image’s foreground, including the foreground’s quality and dominant colors, including the quality and dominant colors of the image.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionDetectLabelsImageForeground * _Nullable foreground;
+
+/**
+ <p>Information about the quality of the image foreground as defined by brightness, sharpness, and contrast. The higher the value the greater the brightness, sharpness, and contrast respectively.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionDetectLabelsImageQuality * _Nullable quality;
+
+@end
+
+/**
+ <p>Settings for the IMAGE_PROPERTIES feature type.</p>
+ */
+@interface AWSRekognitionDetectLabelsImagePropertiesSettings : AWSModel
+
+
+/**
+ <p>The maximum number of dominant colors to return when detecting labels in an image. The default value is 10.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable maxDominantColors;
+
+@end
+
+/**
+ <p>The quality of an image provided for label detection, with regard to brightness, sharpness, and contrast.</p>
+ */
+@interface AWSRekognitionDetectLabelsImageQuality : AWSModel
+
+
+/**
+ <p>The brightness of an image provided for label detection.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable brightness;
+
+/**
+ <p>The contrast of an image provided for label detection.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable contrast;
+
+/**
+ <p>The sharpness of an image provided for label detection.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable sharpness;
+
+@end
+
+/**
  
  */
 @interface AWSRekognitionDetectLabelsRequest : AWSRequest
 
+
+/**
+ <p>A list of the types of analysis to perform. Specifying GENERAL_LABELS uses the label detection feature, while specifying IMAGE_PROPERTIES returns information regarding image color and quality. If no option is specified GENERAL_LABELS is used by default.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable features;
 
 /**
  <p>The input image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing image bytes is not supported. Images stored in an S3 Bucket do not need to be base64-encoded.</p><p>If you are using an AWS SDK to call Amazon Rekognition, you might not need to base64-encode image bytes passed using the <code>Bytes</code> field. For more information, see Images in the Amazon Rekognition developer guide.</p>
@@ -1968,6 +2101,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  */
 @property (nonatomic, strong) NSNumber * _Nullable minConfidence;
 
+/**
+ <p>A list of the filters to be applied to returned detected labels and image properties. Specified filters can be inclusive, exclusive, or a combination of both. Filters can be used for individual labels or label categories. The exact label names or label categories must be supplied. For a full list of labels and label categories, see LINK HERE.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionDetectLabelsSettings * _Nullable settings;
+
 @end
 
 /**
@@ -1975,6 +2113,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  */
 @interface AWSRekognitionDetectLabelsResponse : AWSModel
 
+
+/**
+ <p>Information about the properties of the input image, such as brightness, sharpness, contrast, and dominant colors.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionDetectLabelsImageProperties * _Nullable imageProperties;
 
 /**
  <p>Version number of the label detection model that was used to detect labels.</p>
@@ -1990,6 +2133,24 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p>The value of <code>OrientationCorrection</code> is always null.</p><p>If the input image is in .jpeg format, it might contain exchangeable image file format (Exif) metadata that includes the image's orientation. Amazon Rekognition uses this orientation information to perform image correction. The bounding box coordinates are translated to represent object locations after the orientation information in the Exif metadata is used to correct the image orientation. Images in .png format don't contain Exif metadata.</p><p>Amazon Rekognition doesn’t perform image correction for images in .png format and .jpeg images without orientation information in the image Exif metadata. The bounding box coordinates aren't translated and represent the object locations before the image is rotated. </p>
  */
 @property (nonatomic, assign) AWSRekognitionOrientationCorrection orientationCorrection;
+
+@end
+
+/**
+ <p>Settings for the DetectLabels request. Settings can include filters for both GENERAL_LABELS and IMAGE_PROPERTIES. GENERAL_LABELS filters can be inclusive or exclusive and applied to individual labels or label categories. IMAGE_PROPERTIES filters allow specification of a maximum number of dominant colors.</p>
+ */
+@interface AWSRekognitionDetectLabelsSettings : AWSModel
+
+
+/**
+ <p>Contains the specified filters for GENERAL_LABELS.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionGeneralLabelsSettings * _Nullable generalLabels;
+
+/**
+ <p>Contains the chosen number of maximum dominant colors in an image.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionDetectLabelsImagePropertiesSettings * _Nullable imageProperties;
 
 @end
 
@@ -2193,6 +2354,49 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @end
 
 /**
+ <p>A description of the dominant colors in an image.</p>
+ */
+@interface AWSRekognitionDominantColor : AWSModel
+
+
+/**
+ <p>The Blue RGB value for a dominant color.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable blue;
+
+/**
+ <p>The CSS color name of a dominant color.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable CSSColor;
+
+/**
+ <p>The Green RGB value for a dominant color.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable green;
+
+/**
+ <p>The Hex code equivalent of the RGB values for a dominant color.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable hexCode;
+
+/**
+ <p>The percentage of image pixels that have a given dominant color.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable pixelPercent;
+
+/**
+ <p>The Red RGB value for a dominant color.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable red;
+
+/**
+ <p>One of 12 simplified color names applied to a dominant color.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable simplifiedColor;
+
+@end
+
+/**
  <p>The emotions that appear to be expressed on the face, and the confidence level in the determination. The API is only making a determination of the physical appearance of a person's face. It is not a determination of the person’s internal emotional state and should not be used in such a way. For example, a person pretending to have a sad face might not be sad emotionally.</p>
  */
 @interface AWSRekognitionEmotion : AWSModel
@@ -2331,7 +2535,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @end
 
 /**
- <p>Structure containing attributes of the face that the algorithm detected.</p><p>A <code>FaceDetail</code> object contains either the default facial attributes or all facial attributes. The default attributes are <code>BoundingBox</code>, <code>Confidence</code>, <code>Landmarks</code>, <code>Pose</code>, and <code>Quality</code>.</p><p><a>GetFaceDetection</a> is the only Amazon Rekognition Video stored video operation that can return a <code>FaceDetail</code> object with all attributes. To specify which attributes to return, use the <code>FaceAttributes</code> input parameter for <a>StartFaceDetection</a>. The following Amazon Rekognition Video operations return only the default attributes. The corresponding Start operations don't have a <code>FaceAttributes</code> input parameter.</p><ul><li><p>GetCelebrityRecognition</p></li><li><p>GetPersonTracking</p></li><li><p>GetFaceSearch</p></li></ul><p>The Amazon Rekognition Image <a>DetectFaces</a> and <a>IndexFaces</a> operations can return all facial attributes. To specify which attributes to return, use the <code>Attributes</code> input parameter for <code>DetectFaces</code>. For <code>IndexFaces</code>, use the <code>DetectAttributes</code> input parameter.</p>
+ <p>Structure containing attributes of the face that the algorithm detected.</p><p>A <code>FaceDetail</code> object contains either the default facial attributes or all facial attributes. The default attributes are <code>BoundingBox</code>, <code>Confidence</code>, <code>Landmarks</code>, <code>Pose</code>, and <code>Quality</code>.</p><p><a>GetFaceDetection</a> is the only Amazon Rekognition Video stored video operation that can return a <code>FaceDetail</code> object with all attributes. To specify which attributes to return, use the <code>FaceAttributes</code> input parameter for <a>StartFaceDetection</a>. The following Amazon Rekognition Video operations return only the default attributes. The corresponding Start operations don't have a <code>FaceAttributes</code> input parameter:</p><ul><li><p>GetCelebrityRecognition</p></li><li><p>GetPersonTracking</p></li><li><p>GetFaceSearch</p></li></ul><p>The Amazon Rekognition Image <a>DetectFaces</a> and <a>IndexFaces</a> operations can return all facial attributes. To specify which attributes to return, use the <code>Attributes</code> input parameter for <code>DetectFaces</code>. For <code>IndexFaces</code>, use the <code>DetectAttributes</code> input parameter.</p>
  */
 @interface AWSRekognitionFaceDetail : AWSModel
 
@@ -2425,7 +2629,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) AWSRekognitionFaceDetail * _Nullable face;
 
 /**
- <p>Time, in milliseconds from the start of the video, that the face was detected.</p>
+ <p>Time, in milliseconds from the start of the video, that the face was detected. Note that <code>Timestamp</code> is not guaranteed to be accurate to the individual frame where the face first appears.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable timestamp;
 
@@ -2500,6 +2704,34 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p>The predicted gender of the face.</p>
  */
 @property (nonatomic, assign) AWSRekognitionGenderType value;
+
+@end
+
+/**
+ <p>Contains filters for the object labels returned by DetectLabels. Filters can be inclusive, exclusive, or a combination of both and can be applied to individual l abels or entire label categories.</p>
+ */
+@interface AWSRekognitionGeneralLabelsSettings : AWSModel
+
+
+/**
+ <p>The label categories that should be excluded from the return from DetectLabels.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable labelCategoryExclusionFilters;
+
+/**
+ <p>The label categories that should be included in the return from DetectLabels.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable labelCategoryInclusionFilters;
+
+/**
+ <p>The labels that should be excluded from the return from DetectLabels.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable labelExclusionFilters;
+
+/**
+ <p>The labels that should be included in the return from DetectLabels.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable labelInclusionFilters;
 
 @end
 
@@ -2806,6 +3038,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  */
 @interface AWSRekognitionGetLabelDetectionRequest : AWSRequest
 
+
+/**
+ <p>Defines how to aggregate the returned results. Results can be aggregated by timestamps or segments.</p>
+ */
+@property (nonatomic, assign) AWSRekognitionLabelDetectionAggregateBy aggregateBy;
 
 /**
  <p>Job identifier for the label detection operation for which you want results returned. You get the job identifer from an initial call to <code>StartlabelDetection</code>.</p>
@@ -3246,6 +3483,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  */
 @property (nonatomic, strong) NSNumber * _Nullable confidence;
 
+/**
+ <p>The dominant colors found in an individual instance of a label.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionDominantColor *> * _Nullable dominantColors;
+
 @end
 
 /**
@@ -3275,7 +3517,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @end
 
 /**
- <p> Specifies the starting point in a Kinesis stream to start processing. You can use the producer timestamp or the fragment number. For more information, see <a href="https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/API_reader_Fragment.html">Fragment</a>. </p>
+ <p>Specifies the starting point in a Kinesis stream to start processing. You can use the producer timestamp or the fragment number. One of either producer timestamp or fragment number is required. If you use the producer timestamp, you must put the time in milliseconds. For more information about fragment numbers, see <a href="https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/API_reader_Fragment.html">Fragment</a>. </p>
  */
 @interface AWSRekognitionKinesisVideoStreamStartSelector : AWSModel
 
@@ -3286,7 +3528,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) NSString * _Nullable fragmentNumber;
 
 /**
- <p> The timestamp from the producer corresponding to the fragment. </p>
+ <p> The timestamp from the producer corresponding to the fragment, in milliseconds, expressed in unix time format. </p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable producerTimestamp;
 
@@ -3312,6 +3554,16 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
+ <p>A list of potential aliases for a given label.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionLabelAlias *> * _Nullable aliases;
+
+/**
+ <p>A list of the categories associated with a given label.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionLabelCategory *> * _Nullable categories;
+
+/**
  <p>Level of confidence.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable confidence;
@@ -3334,10 +3586,46 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @end
 
 /**
+ <p>A potential alias of for a given label.</p>
+ */
+@interface AWSRekognitionLabelAlias : AWSModel
+
+
+/**
+ <p>The name of an alias for a given label.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable name;
+
+@end
+
+/**
+ <p>The category that applies to a given label.</p>
+ */
+@interface AWSRekognitionLabelCategory : AWSModel
+
+
+/**
+ <p>The name of a category that applies to a given label.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable name;
+
+@end
+
+/**
  <p>Information about a label detected in a video analysis request and the time the label was detected in the video. </p>
  */
 @interface AWSRekognitionLabelDetection : AWSModel
 
+
+/**
+ <p>The time duration of a segment in milliseconds, I.e. time elapsed from StartTimestampMillis to EndTimestampMillis.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable durationMillis;
+
+/**
+ <p>The time in milliseconds defining the end of the timeline segment containing a continuously detected label.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable endTimestampMillis;
 
 /**
  <p>Details about the detected label.</p>
@@ -3345,9 +3633,27 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) AWSRekognitionLabel * _Nullable label;
 
 /**
- <p>Time, in milliseconds from the start of the video, that the label was detected.</p>
+ <p>The time in milliseconds defining the start of the timeline segment containing a continuously detected label.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable startTimestampMillis;
+
+/**
+ <p>Time, in milliseconds from the start of the video, that the label was detected. Note that <code>Timestamp</code> is not guaranteed to be accurate to the individual frame where the label first appears.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable timestamp;
+
+@end
+
+/**
+ <p>Contains the specified filters that should be applied to a list of returned GENERAL_LABELS.</p>
+ */
+@interface AWSRekognitionLabelDetectionSettings : AWSModel
+
+
+/**
+ <p>Contains filters for the object labels returned by DetectLabels. Filters can be inclusive, exclusive, or a combination of both and can be applied to individual l abels or entire label categories.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionGeneralLabelsSettings * _Nullable generalLabels;
 
 @end
 
@@ -3810,7 +4116,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) AWSRekognitionPersonDetail * _Nullable person;
 
 /**
- <p>The time, in milliseconds from the start of the video, that the person's path was tracked.</p>
+ <p>The time, in milliseconds from the start of the video, that the person's path was tracked. Note that <code>Timestamp</code> is not guaranteed to be accurate to the individual frame where the person's path first appears.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable timestamp;
 
@@ -4688,12 +4994,17 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) NSString * _Nullable clientRequestToken;
 
 /**
+ <p>The features to return after video analysis. You can specify that GENERAL_LABELS are returned.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable features;
+
+/**
  <p>An identifier you specify that's returned in the completion notification that's published to your Amazon Simple Notification Service topic. For example, you can use <code>JobTag</code> to group related jobs and identify them in the completion notification.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable jobTag;
 
 /**
- <p>Specifies the minimum confidence that Amazon Rekognition Video must have in order to return a detected label. Confidence represents how certain Amazon Rekognition is that a label is correctly identified.0 is the lowest confidence. 100 is the highest confidence. Amazon Rekognition Video doesn't return any labels with a confidence level lower than this specified value.</p><p>If you don't specify <code>MinConfidence</code>, the operation returns labels with confidence values greater than or equal to 50 percent.</p>
+ <p>Specifies the minimum confidence that Amazon Rekognition Video must have in order to return a detected label. Confidence represents how certain Amazon Rekognition is that a label is correctly identified.0 is the lowest confidence. 100 is the highest confidence. Amazon Rekognition Video doesn't return any labels with a confidence level lower than this specified value.</p><p>If you don't specify <code>MinConfidence</code>, the operation returns labels and bounding boxes (if detected) with confidence values greater than or equal to 50 percent.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable minConfidence;
 
@@ -4701,6 +5012,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p>The Amazon SNS topic ARN you want Amazon Rekognition Video to publish the completion status of the label detection operation to. The Amazon SNS topic must have a topic name that begins with <i>AmazonRekognition</i> if you are using the AmazonRekognitionServiceRole permissions policy.</p>
  */
 @property (nonatomic, strong) AWSRekognitionNotificationChannel * _Nullable notificationChannel;
+
+/**
+ <p>The settings for a StartLabelDetection request.Contains the specified parameters for the label detection request of an asynchronous label analysis operation. Settings can include filters for GENERAL_LABELS.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionLabelDetectionSettings * _Nullable settings;
 
 /**
  <p>The video in which you want to detect labels. The video must be stored in an Amazon S3 bucket.</p>
@@ -4893,7 +5209,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) NSString * _Nullable name;
 
 /**
- <p> Specifies the starting point in the Kinesis stream to start processing. You can use the producer timestamp or the fragment number. For more information, see <a href="https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/API_reader_Fragment.html">Fragment</a>. </p><p>This is a required parameter for label detection stream processors and should not be used to start a face search stream processor.</p>
+ <p> Specifies the starting point in the Kinesis stream to start processing. You can use the producer timestamp or the fragment number. If you use the producer timestamp, you must put the time in milliseconds. For more information about fragment numbers, see <a href="https://docs.aws.amazon.com/kinesisvideostreams/latest/dg/API_reader_Fragment.html">Fragment</a>. </p><p>This is a required parameter for label detection stream processors and should not be used to start a face search stream processor.</p>
  */
 @property (nonatomic, strong) AWSRekognitionStreamProcessingStartSelector * _Nullable startSelector;
 
@@ -5047,13 +5363,13 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @end
 
 /**
- <p/>
+ <p>This is a required parameter for label detection stream processors and should not be used to start a face search stream processor.</p>
  */
 @interface AWSRekognitionStreamProcessingStartSelector : AWSModel
 
 
 /**
- <p> Specifies the starting point in the stream to start processing. This can be done with a timestamp or a fragment number in a Kinesis stream. </p>
+ <p> Specifies the starting point in the stream to start processing. This can be done with a producer timestamp or a fragment number in a Kinesis stream. </p>
  */
 @property (nonatomic, strong) AWSRekognitionKinesisVideoStreamStartSelector * _Nullable KVSStreamStartSelector;
 
@@ -5346,7 +5662,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) AWSRekognitionTextDetection * _Nullable textDetection;
 
 /**
- <p>The time, in milliseconds from the start of the video, that the text was detected.</p>
+ <p>The time, in milliseconds from the start of the video, that the text was detected. Note that <code>Timestamp</code> is not guaranteed to be accurate to the individual frame where the text first appears.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable timestamp;
 

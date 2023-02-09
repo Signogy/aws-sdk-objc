@@ -477,7 +477,9 @@
         \"en-ZA\",\
         \"ca-ES\",\
         \"de-AT\",\
-        \"yue-CN\"\
+        \"yue-CN\",\
+        \"ar-AE\",\
+        \"fi-FI\"\
       ]\
     },\
     \"LanguageCodeList\":{\
@@ -1146,7 +1148,9 @@
         \"Laura\",\
         \"Elin\",\
         \"Ida\",\
-        \"Suvi\"\
+        \"Suvi\",\
+        \"Ola\",\
+        \"Hala\"\
       ]\
     },\
     \"VoiceList\":{\
