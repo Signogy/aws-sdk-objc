@@ -484,6 +484,7 @@
 - (void) test_AWSIoTLogTargetConfiguration API_AVAILABLE(ios(11));
 - (void) test_AWSIoTLoggingOptionsPayload API_AVAILABLE(ios(11));
 - (void) test_AWSIoTMachineLearningDetectionConfig API_AVAILABLE(ios(11));
+- (void) test_AWSIoTMaintenanceWindow API_AVAILABLE(ios(11));
 - (void) test_AWSIoTManagedJobTemplateSummary API_AVAILABLE(ios(11));
 - (void) test_AWSIoTMetricDatum API_AVAILABLE(ios(11));
 - (void) test_AWSIoTMetricDimension API_AVAILABLE(ios(11));
@@ -540,6 +541,7 @@
 - (void) test_AWSIoTS3Location API_AVAILABLE(ios(11));
 - (void) test_AWSIoTSalesforceAction API_AVAILABLE(ios(11));
 - (void) test_AWSIoTScheduledAuditMetadata API_AVAILABLE(ios(11));
+- (void) test_AWSIoTScheduledJobRollout API_AVAILABLE(ios(11));
 - (void) test_AWSIoTSchedulingConfig API_AVAILABLE(ios(11));
 - (void) test_AWSIoTSearchIndexRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTSearchIndexResponse API_AVAILABLE(ios(11));
@@ -600,6 +602,7 @@
 - (void) test_AWSIoTTimestreamAction API_AVAILABLE(ios(11));
 - (void) test_AWSIoTTimestreamDimension API_AVAILABLE(ios(11));
 - (void) test_AWSIoTTimestreamTimestamp API_AVAILABLE(ios(11));
+- (void) test_AWSIoTTlsConfig API_AVAILABLE(ios(11));
 - (void) test_AWSIoTTlsContext API_AVAILABLE(ios(11));
 - (void) test_AWSIoTTopicRule API_AVAILABLE(ios(11));
 - (void) test_AWSIoTTopicRuleDestination API_AVAILABLE(ios(11));
@@ -2533,6 +2536,10 @@
     [self validateSecureCodingForClass:[AWSIoTMachineLearningDetectionConfig class]];
 }
 
+- (void) test_AWSIoTMaintenanceWindow {
+    [self validateSecureCodingForClass:[AWSIoTMaintenanceWindow class]];
+}
+
 - (void) test_AWSIoTManagedJobTemplateSummary {
     [self validateSecureCodingForClass:[AWSIoTManagedJobTemplateSummary class]];
 }
@@ -2755,6 +2762,10 @@
 
 - (void) test_AWSIoTScheduledAuditMetadata {
     [self validateSecureCodingForClass:[AWSIoTScheduledAuditMetadata class]];
+}
+
+- (void) test_AWSIoTScheduledJobRollout {
+    [self validateSecureCodingForClass:[AWSIoTScheduledJobRollout class]];
 }
 
 - (void) test_AWSIoTSchedulingConfig {
@@ -2995,6 +3006,10 @@
 
 - (void) test_AWSIoTTimestreamTimestamp {
     [self validateSecureCodingForClass:[AWSIoTTimestreamTimestamp class]];
+}
+
+- (void) test_AWSIoTTlsConfig {
+    [self validateSecureCodingForClass:[AWSIoTTlsConfig class]];
 }
 
 - (void) test_AWSIoTTlsContext {

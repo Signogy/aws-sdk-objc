@@ -25,7 +25,7 @@
 #import "AWSConnectResources.h"
 
 static NSString *const AWSInfoConnect = @"Connect";
-NSString *const AWSConnectSDKVersion = @"2.30.4";
+NSString *const AWSConnectSDKVersion = @"2.31.1";
 
 
 @interface AWSConnectResponseSerializer : AWSJSONResponseSerializer
@@ -670,6 +670,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSConnectCreateIntegrationAssociationResponse *response, NSError *error))completionHandler {
     [[self createIntegrationAssociation:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectCreateIntegrationAssociationResponse *> * _Nonnull task) {
         AWSConnectCreateIntegrationAssociationResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSConnectCreateParticipantResponse *> *)createParticipant:(AWSConnectCreateParticipantRequest *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/contact/create-participant"
+                  targetPrefix:@""
+                 operationName:@"CreateParticipant"
+                   outputClass:[AWSConnectCreateParticipantResponse class]];
+}
+
+- (void)createParticipant:(AWSConnectCreateParticipantRequest *)request
+     completionHandler:(void (^)(AWSConnectCreateParticipantResponse *response, NSError *error))completionHandler {
+    [[self createParticipant:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectCreateParticipantResponse *> * _Nonnull task) {
+        AWSConnectCreateParticipantResponse *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {
@@ -2009,6 +2032,29 @@ static AWSSynchronizedMutableDictionary *_serviceClients = nil;
      completionHandler:(void (^)(AWSConnectGetMetricDataResponse *response, NSError *error))completionHandler {
     [[self getMetricData:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectGetMetricDataResponse *> * _Nonnull task) {
         AWSConnectGetMetricDataResponse *result = task.result;
+        NSError *error = task.error;
+
+        if (completionHandler) {
+            completionHandler(result, error);
+        }
+
+        return nil;
+    }];
+}
+
+- (AWSTask<AWSConnectGetMetricDataV2Response *> *)getMetricDataV2:(AWSConnectGetMetricDataV2Request *)request {
+    return [self invokeRequest:request
+                    HTTPMethod:AWSHTTPMethodPOST
+                     URLString:@"/metrics/data"
+                  targetPrefix:@""
+                 operationName:@"GetMetricDataV2"
+                   outputClass:[AWSConnectGetMetricDataV2Response class]];
+}
+
+- (void)getMetricDataV2:(AWSConnectGetMetricDataV2Request *)request
+     completionHandler:(void (^)(AWSConnectGetMetricDataV2Response *response, NSError *error))completionHandler {
+    [[self getMetricDataV2:request] continueWithBlock:^id _Nullable(AWSTask<AWSConnectGetMetricDataV2Response *> * _Nonnull task) {
+        AWSConnectGetMetricDataV2Response *result = task.result;
         NSError *error = task.error;
 
         if (completionHandler) {

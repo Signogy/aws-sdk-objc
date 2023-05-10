@@ -68,6 +68,8 @@
 - (void) test_AWSConnectCreateInstanceResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectCreateIntegrationAssociationRequest API_AVAILABLE(ios(11));
 - (void) test_AWSConnectCreateIntegrationAssociationResponse API_AVAILABLE(ios(11));
+- (void) test_AWSConnectCreateParticipantRequest API_AVAILABLE(ios(11));
+- (void) test_AWSConnectCreateParticipantResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectCreateQueueRequest API_AVAILABLE(ios(11));
 - (void) test_AWSConnectCreateQueueResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectCreateQuickConnectRequest API_AVAILABLE(ios(11));
@@ -91,6 +93,7 @@
 - (void) test_AWSConnectCreateVocabularyRequest API_AVAILABLE(ios(11));
 - (void) test_AWSConnectCreateVocabularyResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectCredentials API_AVAILABLE(ios(11));
+- (void) test_AWSConnectCrossChannelBehavior API_AVAILABLE(ios(11));
 - (void) test_AWSConnectCurrentMetric API_AVAILABLE(ios(11));
 - (void) test_AWSConnectCurrentMetricData API_AVAILABLE(ios(11));
 - (void) test_AWSConnectCurrentMetricResult API_AVAILABLE(ios(11));
@@ -170,6 +173,7 @@
 - (void) test_AWSConnectEmailReference API_AVAILABLE(ios(11));
 - (void) test_AWSConnectEncryptionConfig API_AVAILABLE(ios(11));
 - (void) test_AWSConnectEventBridgeActionDefinition API_AVAILABLE(ios(11));
+- (void) test_AWSConnectFilterV2 API_AVAILABLE(ios(11));
 - (void) test_AWSConnectFilters API_AVAILABLE(ios(11));
 - (void) test_AWSConnectGetContactAttributesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSConnectGetContactAttributesResponse API_AVAILABLE(ios(11));
@@ -181,6 +185,8 @@
 - (void) test_AWSConnectGetFederationTokenResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectGetMetricDataRequest API_AVAILABLE(ios(11));
 - (void) test_AWSConnectGetMetricDataResponse API_AVAILABLE(ios(11));
+- (void) test_AWSConnectGetMetricDataV2Request API_AVAILABLE(ios(11));
+- (void) test_AWSConnectGetMetricDataV2Response API_AVAILABLE(ios(11));
 - (void) test_AWSConnectGetTaskTemplateRequest API_AVAILABLE(ios(11));
 - (void) test_AWSConnectGetTaskTemplateResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectGetTrafficDistributionRequest API_AVAILABLE(ios(11));
@@ -280,14 +286,20 @@
 - (void) test_AWSConnectListUsersRequest API_AVAILABLE(ios(11));
 - (void) test_AWSConnectListUsersResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectMediaConcurrency API_AVAILABLE(ios(11));
+- (void) test_AWSConnectMetricDataV2 API_AVAILABLE(ios(11));
+- (void) test_AWSConnectMetricFilterV2 API_AVAILABLE(ios(11));
+- (void) test_AWSConnectMetricResultV2 API_AVAILABLE(ios(11));
+- (void) test_AWSConnectMetricV2 API_AVAILABLE(ios(11));
 - (void) test_AWSConnectMonitorContactRequest API_AVAILABLE(ios(11));
 - (void) test_AWSConnectMonitorContactResponse API_AVAILABLE(ios(11));
 - (void) test_AWSConnectNotificationRecipientType API_AVAILABLE(ios(11));
 - (void) test_AWSConnectNumberReference API_AVAILABLE(ios(11));
 - (void) test_AWSConnectOutboundCallerConfig API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantDetails API_AVAILABLE(ios(11));
+- (void) test_AWSConnectParticipantDetailsToAdd API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantTimerConfiguration API_AVAILABLE(ios(11));
 - (void) test_AWSConnectParticipantTimerValue API_AVAILABLE(ios(11));
+- (void) test_AWSConnectParticipantTokenCredentials API_AVAILABLE(ios(11));
 - (void) test_AWSConnectPersistentChat API_AVAILABLE(ios(11));
 - (void) test_AWSConnectPhoneNumberQuickConnectConfig API_AVAILABLE(ios(11));
 - (void) test_AWSConnectPhoneNumberStatus API_AVAILABLE(ios(11));
@@ -379,6 +391,7 @@
 - (void) test_AWSConnectTaskTemplateMetadata API_AVAILABLE(ios(11));
 - (void) test_AWSConnectTelephonyConfig API_AVAILABLE(ios(11));
 - (void) test_AWSConnectThreshold API_AVAILABLE(ios(11));
+- (void) test_AWSConnectThresholdV2 API_AVAILABLE(ios(11));
 - (void) test_AWSConnectTrafficDistributionGroup API_AVAILABLE(ios(11));
 - (void) test_AWSConnectTrafficDistributionGroupSummary API_AVAILABLE(ios(11));
 - (void) test_AWSConnectTransferContactRequest API_AVAILABLE(ios(11));
@@ -652,6 +665,14 @@
     [self validateSecureCodingForClass:[AWSConnectCreateIntegrationAssociationResponse class]];
 }
 
+- (void) test_AWSConnectCreateParticipantRequest {
+    [self validateSecureCodingForClass:[AWSConnectCreateParticipantRequest class]];
+}
+
+- (void) test_AWSConnectCreateParticipantResponse {
+    [self validateSecureCodingForClass:[AWSConnectCreateParticipantResponse class]];
+}
+
 - (void) test_AWSConnectCreateQueueRequest {
     [self validateSecureCodingForClass:[AWSConnectCreateQueueRequest class]];
 }
@@ -742,6 +763,10 @@
 
 - (void) test_AWSConnectCredentials {
     [self validateSecureCodingForClass:[AWSConnectCredentials class]];
+}
+
+- (void) test_AWSConnectCrossChannelBehavior {
+    [self validateSecureCodingForClass:[AWSConnectCrossChannelBehavior class]];
 }
 
 - (void) test_AWSConnectCurrentMetric {
@@ -1060,6 +1085,10 @@
     [self validateSecureCodingForClass:[AWSConnectEventBridgeActionDefinition class]];
 }
 
+- (void) test_AWSConnectFilterV2 {
+    [self validateSecureCodingForClass:[AWSConnectFilterV2 class]];
+}
+
 - (void) test_AWSConnectFilters {
     [self validateSecureCodingForClass:[AWSConnectFilters class]];
 }
@@ -1102,6 +1131,14 @@
 
 - (void) test_AWSConnectGetMetricDataResponse {
     [self validateSecureCodingForClass:[AWSConnectGetMetricDataResponse class]];
+}
+
+- (void) test_AWSConnectGetMetricDataV2Request {
+    [self validateSecureCodingForClass:[AWSConnectGetMetricDataV2Request class]];
+}
+
+- (void) test_AWSConnectGetMetricDataV2Response {
+    [self validateSecureCodingForClass:[AWSConnectGetMetricDataV2Response class]];
 }
 
 - (void) test_AWSConnectGetTaskTemplateRequest {
@@ -1500,6 +1537,22 @@
     [self validateSecureCodingForClass:[AWSConnectMediaConcurrency class]];
 }
 
+- (void) test_AWSConnectMetricDataV2 {
+    [self validateSecureCodingForClass:[AWSConnectMetricDataV2 class]];
+}
+
+- (void) test_AWSConnectMetricFilterV2 {
+    [self validateSecureCodingForClass:[AWSConnectMetricFilterV2 class]];
+}
+
+- (void) test_AWSConnectMetricResultV2 {
+    [self validateSecureCodingForClass:[AWSConnectMetricResultV2 class]];
+}
+
+- (void) test_AWSConnectMetricV2 {
+    [self validateSecureCodingForClass:[AWSConnectMetricV2 class]];
+}
+
 - (void) test_AWSConnectMonitorContactRequest {
     [self validateSecureCodingForClass:[AWSConnectMonitorContactRequest class]];
 }
@@ -1524,12 +1577,20 @@
     [self validateSecureCodingForClass:[AWSConnectParticipantDetails class]];
 }
 
+- (void) test_AWSConnectParticipantDetailsToAdd {
+    [self validateSecureCodingForClass:[AWSConnectParticipantDetailsToAdd class]];
+}
+
 - (void) test_AWSConnectParticipantTimerConfiguration {
     [self validateSecureCodingForClass:[AWSConnectParticipantTimerConfiguration class]];
 }
 
 - (void) test_AWSConnectParticipantTimerValue {
     [self validateSecureCodingForClass:[AWSConnectParticipantTimerValue class]];
+}
+
+- (void) test_AWSConnectParticipantTokenCredentials {
+    [self validateSecureCodingForClass:[AWSConnectParticipantTokenCredentials class]];
 }
 
 - (void) test_AWSConnectPersistentChat {
@@ -1894,6 +1955,10 @@
 
 - (void) test_AWSConnectThreshold {
     [self validateSecureCodingForClass:[AWSConnectThreshold class]];
+}
+
+- (void) test_AWSConnectThresholdV2 {
+    [self validateSecureCodingForClass:[AWSConnectThresholdV2 class]];
 }
 
 - (void) test_AWSConnectTrafficDistributionGroup {

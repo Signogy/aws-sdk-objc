@@ -475,6 +475,8 @@ typedef NS_ENUM(NSInteger, AWSIoTOTAUpdateStatus) {
     AWSIoTOTAUpdateStatusCreateInProgress,
     AWSIoTOTAUpdateStatusCreateComplete,
     AWSIoTOTAUpdateStatusCreateFailed,
+    AWSIoTOTAUpdateStatusDeleteInProgress,
+    AWSIoTOTAUpdateStatusDeleteFailed,
 };
 
 typedef NS_ENUM(NSInteger, AWSIoTPolicyTemplateName) {
@@ -1055,6 +1057,7 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
 @class AWSIoTLogTargetConfiguration;
 @class AWSIoTLoggingOptionsPayload;
 @class AWSIoTMachineLearningDetectionConfig;
+@class AWSIoTMaintenanceWindow;
 @class AWSIoTManagedJobTemplateSummary;
 @class AWSIoTMetricDatum;
 @class AWSIoTMetricDimension;
@@ -1111,6 +1114,7 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
 @class AWSIoTS3Location;
 @class AWSIoTSalesforceAction;
 @class AWSIoTScheduledAuditMetadata;
+@class AWSIoTScheduledJobRollout;
 @class AWSIoTSchedulingConfig;
 @class AWSIoTSearchIndexRequest;
 @class AWSIoTSearchIndexResponse;
@@ -1171,6 +1175,7 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
 @class AWSIoTTimestreamAction;
 @class AWSIoTTimestreamDimension;
 @class AWSIoTTimestreamTimestamp;
+@class AWSIoTTlsConfig;
 @class AWSIoTTlsContext;
 @class AWSIoTTopicRule;
 @class AWSIoTTopicRuleDestination;
@@ -3526,6 +3531,11 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
 @property (nonatomic, strong) NSArray<AWSIoTTag *> * _Nullable tags;
 
 /**
+ <p>An object that specifies the TLS configuration for a domain.</p>
+ */
+@property (nonatomic, strong) AWSIoTTlsConfig * _Nullable tlsConfig;
+
+/**
  <p>The certificate used to validate the server certificate and prove domain name ownership. This certificate must be signed by a public certificate authority. This value is not required for Amazon Web Services-managed domains.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable validationCertificateArn;
@@ -3678,7 +3688,7 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
 @property (nonatomic, strong) NSArray<AWSIoTTag *> * _Nullable tags;
 
 /**
- <p>Used to support unit transformation such as milliseconds to seconds. The unit must be supported by <a href="https://docs.aws.amazon.com/https:/docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDatum.html">CW metric</a>. Default to null.</p>
+ <p>Used to support unit transformation such as milliseconds to seconds. The unit must be supported by <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDatum.html">CW metric</a>. Default to null.</p>
  */
 @property (nonatomic, assign) AWSIoTFleetMetricUnit unit;
 
@@ -3858,6 +3868,11 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
  <p>A unique identifier for the job template. We recommend using a UUID. Alpha-numeric characters, "-", and "_" are valid for use here.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable jobTemplateId;
+
+/**
+ <p>Allows you to configure an optional maintenance window for the rollout of a job document to all devices in the target group for a job.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSIoTMaintenanceWindow *> * _Nullable maintenanceWindows;
 
 /**
  <p>Configuration for pre-signed S3 URLs.</p>
@@ -6086,6 +6101,11 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
  */
 @property (nonatomic, assign) AWSIoTServiceType serviceType;
 
+/**
+ <p>An object that specifies the TLS configuration for a domain.</p>
+ */
+@property (nonatomic, strong) AWSIoTTlsConfig * _Nullable tlsConfig;
+
 @end
 
 /**
@@ -6220,7 +6240,7 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
 @property (nonatomic, strong) NSString * _Nullable queryVersion;
 
 /**
- <p>Used to support unit transformation such as milliseconds to seconds. The unit must be supported by <a href="https://docs.aws.amazon.com/https:/docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDatum.html">CW metric</a>.</p>
+ <p>Used to support unit transformation such as milliseconds to seconds. The unit must be supported by <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDatum.html">CW metric</a>.</p>
  */
 @property (nonatomic, assign) AWSIoTFleetMetricUnit unit;
 
@@ -6397,6 +6417,11 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
  <p>The unique identifier of the job template.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable jobTemplateId;
+
+/**
+ <p>Allows you to configure an optional maintenance window for the rollout of a job document to all devices in the target group for a job.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSIoTMaintenanceWindow *> * _Nullable maintenanceWindows;
 
 /**
  <p>Configuration for pre-signed S3 URLs.</p>
@@ -8676,6 +8701,11 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
  <p>If the job was updated, provides the reason code for the update.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable reasonCode;
+
+/**
+ <p>Displays the next seven maintenance window occurrences and their start times.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSIoTScheduledJobRollout *> * _Nullable scheduledJobRollouts;
 
 /**
  <p>The configuration that allows you to schedule a job for a future date and time in addition to specifying the end behavior for each job execution.</p>
@@ -11827,6 +11857,25 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
 @end
 
 /**
+ <p>An optional configuration within the <code>SchedulingConfig</code> to setup a recurring maintenance window with a predetermined start time and duration for the rollout of a job document to all devices in a target group for a job.</p>
+ Required parameters: [startTime, durationInMinutes]
+ */
+@interface AWSIoTMaintenanceWindow : AWSModel
+
+
+/**
+ <p>Displays the duration of the next maintenance window.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable durationInMinutes;
+
+/**
+ <p>Displays the start time of the next maintenance window.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable startTime;
+
+@end
+
+/**
  <p>An object that contains information about the managed template.</p>
  */
 @interface AWSIoTManagedJobTemplateSummary : AWSModel
@@ -13261,6 +13310,19 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
 @end
 
 /**
+ <p>Displays the next seven maintenance window occurrences and their start times.</p>
+ */
+@interface AWSIoTScheduledJobRollout : AWSModel
+
+
+/**
+ <p>Displays the start times of the next seven maintenance window occurrences.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable startTime;
+
+@end
+
+/**
  <p>Specifies the date and time that a job will begin the rollout of the job document to all devices in the target group. Additionally, you can specify the end behavior for each job execution when it reaches the scheduled end time.</p>
  */
 @interface AWSIoTSchedulingConfig : AWSModel
@@ -13272,12 +13334,17 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
 @property (nonatomic, assign) AWSIoTJobEndBehavior endBehavior;
 
 /**
- <p>The time a job will stop rollout of the job document to all devices in the target group for a job. The <code>endTime</code> must take place no later than two years from the current time and be scheduled a minimum of thirty minutes from the current time. The minimum duration between <code>startTime</code> and <code>endTime</code> is thirty minutes. The maximum duration between <code>startTime</code> and <code>endTime</code> is two years. </p>
+ <p>The time a job will stop rollout of the job document to all devices in the target group for a job. The <code>endTime</code> must take place no later than two years from the current time and be scheduled a minimum of thirty minutes from the current time. The minimum duration between <code>startTime</code> and <code>endTime</code> is thirty minutes. The maximum duration between <code>startTime</code> and <code>endTime</code> is two years. The date and time format for the <code>endTime</code> is YYYY-MM-DD for the date and HH:MM for the time.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable endTime;
 
 /**
- <p>The time a job will begin rollout of the job document to all devices in the target group for a job. The <code>startTime</code> can be scheduled up to a year in advance and must be scheduled a minimum of thirty minutes from the current time.</p>
+ <p>An optional configuration within the <code>SchedulingConfig</code> to setup a recurring maintenance window with a predetermined start time and duration for the rollout of a job document to all devices in a target group for a job.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSIoTMaintenanceWindow *> * _Nullable maintenanceWindows;
+
+/**
+ <p>The time a job will begin rollout of the job document to all devices in the target group for a job. The <code>startTime</code> can be scheduled up to a year in advance and must be scheduled a minimum of thirty minutes from the current time. The date and time format for the <code>startTime</code> is YYYY-MM-DD for the date and HH:MM for the time.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable startTime;
 
@@ -14675,6 +14742,19 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
 @end
 
 /**
+ <p>An object that specifies the TLS configuration for a domain.</p>
+ */
+@interface AWSIoTTlsConfig : AWSModel
+
+
+/**
+ <p>The security policy for a domain configuration. For more information, see <a href="https://docs.aws.amazon.com/iot/latest/developerguide/transport-security.html#tls-policy-table">Security policies </a> in the <i>Amazon Web Services IoT Core developer guide</i>.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable securityPolicy;
+
+@end
+
+/**
  <p>Specifies the TLS context to use for the test authorizer request.</p>
  */
 @interface AWSIoTTlsContext : AWSModel
@@ -15389,6 +15469,11 @@ typedef NS_ENUM(NSInteger, AWSIoTViolationEventType) {
  <p>Removes the authorization configuration from a domain.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable removeAuthorizerConfig;
+
+/**
+ <p>An object that specifies the TLS configuration for a domain.</p>
+ */
+@property (nonatomic, strong) AWSIoTTlsConfig * _Nullable tlsConfig;
 
 @end
 

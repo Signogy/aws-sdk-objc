@@ -1,5 +1,46 @@
 # AWS Mobile SDK for iOS CHANGELOG
 
+## Unreleased
+
+-Features for next release
+
+## 2.31.1
+
+### Bug Fixes
+- **AWSS3**
+  - Increase speed of foreground uploads by specifying `NetworkServiceType`   
+
+## 2.31.0
+
+### Bug Fixes
+
+- **AWSMobileClient**
+  - Handling AWSMobileClient state issues gracefully handled gracefully
+  
+- **AWSIot**
+  - Include the certificate tag in Keychain query to look up identity
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSAutoScaling
+  - AWSComprehend
+  - AWSConnect
+  - AWSDynamoDB
+  - AWSEC2  
+  - AWSIoT
+  - AWSLambda
+  - AWSLocation
+  - AWSTranscribe
+  - AWSChimeSDKIdentity
+  - AWSChimeSDKMessaging
+  - AWSKinesisVideoWebRTCStorage
+  - AWSRekognition
+  - AWSSageMakerRuntime
+  - AWSTextract
+  - AWSConnectParticipant
+  - AWSIoTDataPlane
+
 ## 2.30.4
 
 ### Bug Fixes

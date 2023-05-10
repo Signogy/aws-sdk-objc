@@ -67,6 +67,12 @@ typedef NS_ENUM(NSInteger, AWSConnectAgentStatusType) {
     AWSConnectAgentStatusTypeOffline,
 };
 
+typedef NS_ENUM(NSInteger, AWSConnectBehaviorType) {
+    AWSConnectBehaviorTypeUnknown,
+    AWSConnectBehaviorTypeRouteCurrentChannelOnly,
+    AWSConnectBehaviorTypeRouteAnyChannel,
+};
+
 typedef NS_ENUM(NSInteger, AWSConnectChannel) {
     AWSConnectChannelUnknown,
     AWSConnectChannelVoice,
@@ -291,6 +297,14 @@ typedef NS_ENUM(NSInteger, AWSConnectNotificationContentType) {
 typedef NS_ENUM(NSInteger, AWSConnectNotificationDeliveryType) {
     AWSConnectNotificationDeliveryTypeUnknown,
     AWSConnectNotificationDeliveryTypeEmail,
+};
+
+typedef NS_ENUM(NSInteger, AWSConnectParticipantRole) {
+    AWSConnectParticipantRoleUnknown,
+    AWSConnectParticipantRoleAgent,
+    AWSConnectParticipantRoleCustomer,
+    AWSConnectParticipantRoleSystem,
+    AWSConnectParticipantRoleCustomBot,
 };
 
 typedef NS_ENUM(NSInteger, AWSConnectParticipantTimerAction) {
@@ -819,6 +833,8 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectCreateInstanceResponse;
 @class AWSConnectCreateIntegrationAssociationRequest;
 @class AWSConnectCreateIntegrationAssociationResponse;
+@class AWSConnectCreateParticipantRequest;
+@class AWSConnectCreateParticipantResponse;
 @class AWSConnectCreateQueueRequest;
 @class AWSConnectCreateQueueResponse;
 @class AWSConnectCreateQuickConnectRequest;
@@ -842,6 +858,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectCreateVocabularyRequest;
 @class AWSConnectCreateVocabularyResponse;
 @class AWSConnectCredentials;
+@class AWSConnectCrossChannelBehavior;
 @class AWSConnectCurrentMetric;
 @class AWSConnectCurrentMetricData;
 @class AWSConnectCurrentMetricResult;
@@ -921,6 +938,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectEmailReference;
 @class AWSConnectEncryptionConfig;
 @class AWSConnectEventBridgeActionDefinition;
+@class AWSConnectFilterV2;
 @class AWSConnectFilters;
 @class AWSConnectGetContactAttributesRequest;
 @class AWSConnectGetContactAttributesResponse;
@@ -932,6 +950,8 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectGetFederationTokenResponse;
 @class AWSConnectGetMetricDataRequest;
 @class AWSConnectGetMetricDataResponse;
+@class AWSConnectGetMetricDataV2Request;
+@class AWSConnectGetMetricDataV2Response;
 @class AWSConnectGetTaskTemplateRequest;
 @class AWSConnectGetTaskTemplateResponse;
 @class AWSConnectGetTrafficDistributionRequest;
@@ -1031,14 +1051,20 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectListUsersRequest;
 @class AWSConnectListUsersResponse;
 @class AWSConnectMediaConcurrency;
+@class AWSConnectMetricDataV2;
+@class AWSConnectMetricFilterV2;
+@class AWSConnectMetricResultV2;
+@class AWSConnectMetricV2;
 @class AWSConnectMonitorContactRequest;
 @class AWSConnectMonitorContactResponse;
 @class AWSConnectNotificationRecipientType;
 @class AWSConnectNumberReference;
 @class AWSConnectOutboundCallerConfig;
 @class AWSConnectParticipantDetails;
+@class AWSConnectParticipantDetailsToAdd;
 @class AWSConnectParticipantTimerConfiguration;
 @class AWSConnectParticipantTimerValue;
+@class AWSConnectParticipantTokenCredentials;
 @class AWSConnectPersistentChat;
 @class AWSConnectPhoneNumberQuickConnectConfig;
 @class AWSConnectPhoneNumberStatus;
@@ -1130,6 +1156,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @class AWSConnectTaskTemplateMetadata;
 @class AWSConnectTelephonyConfig;
 @class AWSConnectThreshold;
+@class AWSConnectThresholdV2;
 @class AWSConnectTrafficDistributionGroup;
 @class AWSConnectTrafficDistributionGroupSummary;
 @class AWSConnectTransferContactRequest;
@@ -1719,12 +1746,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 
 /**
- <p>The content of the chat message. </p><ul><li><p>For <code>text/plain</code> and <code>text/markdown</code>, the Length Constraints are Minimum of 1, Maximum of 1024. </p></li><li><p>For <code>application/json</code>, the Length Constraints are Minimum of 1, Maximum of 12000. </p></li></ul>
+ <p>The content of the chat message. </p><ul><li><p>For <code>text/plain</code> and <code>text/markdown</code>, the Length Constraints are Minimum of 1, Maximum of 1024. </p></li><li><p>For <code>application/json</code>, the Length Constraints are Minimum of 1, Maximum of 12000. </p></li><li><p>For <code>application/vnd.amazonaws.connect.message.interactive.response</code>, the Length Constraints are Minimum of 1, Maximum of 12288.</p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable content;
 
 /**
- <p>The type of the content. Supported types are <code>text/plain</code>, <code>text/markdown</code>, and <code>application/json</code>.</p>
+ <p>The type of the content. Supported types are <code>text/plain</code>, <code>text/markdown</code>, <code>application/json</code>, and <code>application/vnd.amazonaws.connect.message.interactive.response</code>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable contentType;
 
@@ -2487,6 +2514,52 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 /**
  
  */
+@interface AWSConnectCreateParticipantRequest : AWSRequest
+
+
+/**
+ <p>A unique, case-sensitive identifier that you provide to ensure the idempotency of the request. If not provided, the Amazon Web Services SDK populates this field. For more information about idempotency, see <a href="https://aws.amazon.com/builders-library/making-retries-safe-with-idempotent-APIs/">Making retries safe with idempotent APIs</a>.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable clientToken;
+
+/**
+ <p>The identifier of the contact in this instance of Amazon Connect. Only contacts in the CHAT channel are supported.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable contactId;
+
+/**
+ <p>The identifier of the Amazon Connect instance. You can <a href="https://docs.aws.amazon.com/connect/latest/adminguide/find-instance-arn.html">find the instance ID</a> in the Amazon Resource Name (ARN) of the instance. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable instanceId;
+
+/**
+ <p>Information identifying the participant.</p><important><p>The only Valid value for <code>ParticipantRole</code> is <code>CUSTOM_BOT</code>. </p><p><code>DisplayName</code> is <b>Required</b>.</p></important>
+ */
+@property (nonatomic, strong) AWSConnectParticipantDetailsToAdd * _Nullable participantDetails;
+
+@end
+
+/**
+ 
+ */
+@interface AWSConnectCreateParticipantResponse : AWSModel
+
+
+/**
+ <p>The token used by the chat participant to call <code>CreateParticipantConnection</code>. The participant token is valid for the lifetime of a chat participant.</p>
+ */
+@property (nonatomic, strong) AWSConnectParticipantTokenCredentials * _Nullable participantCredentials;
+
+/**
+ <p>The identifier for a chat participant. The participantId for a chat participant is the same throughout the chat lifecycle.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable participantId;
+
+@end
+
+/**
+ 
+ */
 @interface AWSConnectCreateQueueRequest : AWSRequest
 
 
@@ -3160,6 +3233,20 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
  <p>Renews the expiration timer for a generated token.</p>
  */
 @property (nonatomic, strong) NSDate * _Nullable refreshTokenExpiration;
+
+@end
+
+/**
+ <p>Defines the cross-channel routing behavior that allows an agent working on a contact in one channel to be offered a contact from a different channel.</p>
+ Required parameters: [BehaviorType]
+ */
+@interface AWSConnectCrossChannelBehavior : AWSModel
+
+
+/**
+ <p>Specifies the other channels that can be routed to an agent handling their current channel.</p>
+ */
+@property (nonatomic, assign) AWSConnectBehaviorType behaviorType;
 
 @end
 
@@ -4470,6 +4557,24 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @end
 
 /**
+ <p>Contains the filter to apply when retrieving metrics with the <a href="https://docs.aws.amazon.com/connect/latest/APIReference/API_GetMetricDataV2.html">GetMetricDataV2</a> API.</p>
+ */
+@interface AWSConnectFilterV2 : AWSModel
+
+
+/**
+ <p>The key to use for filtering data. For example, <code>QUEUE</code>, <code>ROUTING_PROFILE, AGENT</code>, <code>CHANNEL</code>, <code>AGENT_HIERARCHY_LEVEL_ONE</code>, <code>AGENT_HIERARCHY_LEVEL_TWO</code>, <code>AGENT_HIERARCHY_LEVEL_THREE</code>, <code>AGENT_HIERARCHY_LEVEL_FOUR</code>, <code>AGENT_HIERARCHY_LEVEL_FIVE</code>. There must be at least 1 key and a maximum 5 keys. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable filterKey;
+
+/**
+ <p>The identifiers to use for filtering data. For example, if you have a filter key of <code>QUEUE</code>, you would add queue IDs or ARNs in <code>FilterValues</code>. </p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable filterValues;
+
+@end
+
+/**
  <p>Contains the filter to apply when retrieving metrics.</p>
  */
 @interface AWSConnectFilters : AWSModel
@@ -4747,6 +4852,72 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 
 /**
  <p>If there are additional results, this is the token for the next set of results.</p><p>The token expires after 5 minutes from the time it is created. Subsequent requests that use the token must use the same request parameters as the request that generated the token.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+@end
+
+/**
+ 
+ */
+@interface AWSConnectGetMetricDataV2Request : AWSRequest
+
+
+/**
+ <p>The timestamp, in UNIX Epoch time format, at which to end the reporting interval for the retrieval of historical metrics data. The time must be later than the start time timestamp. It cannot be later than the current timestamp.</p><p>The time range between the start and end time must be less than 24 hours.</p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable endTime;
+
+/**
+ <p>The filters to apply to returned metrics. You can filter on the following resources:</p><ul><li><p>Queues</p></li><li><p>Routing profiles</p></li><li><p>Agents</p></li><li><p>Channels</p></li><li><p>User hierarchy groups</p></li></ul><p>At least one filter must be passed from queues, routing profiles, agents, or user hierarchy groups.</p><p>To filter by phone number, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/create-historical-metrics-report.html">Create a historical metrics report</a> in the <i>Amazon Connect Administrator's Guide</i>.</p><p>Note the following limits:</p><ul><li><p><b>Filter keys</b>: A maximum of 5 filter keys are supported in a single request. Valid filter keys: <code>QUEUE</code> | <code>ROUTING_PROFILE</code> | <code>AGENT</code> | <code>CHANNEL</code> | <code>AGENT_HIERARCHY_LEVEL_ONE</code> | <code>AGENT_HIERARCHY_LEVEL_TWO</code> | <code>AGENT_HIERARCHY_LEVEL_THREE</code> | <code>AGENT_HIERARCHY_LEVEL_FOUR</code> | <code>AGENT_HIERARCHY_LEVEL_FIVE</code></p></li><li><p><b>Filter values</b>: A maximum of 100 filter values are supported in a single request. For example, a <code>GetMetricDataV2</code> request can filter by 50 queues, 35 agents, and 15 routing profiles for a total of 100 filter values. <code>VOICE</code>, <code>CHAT</code>, and <code>TASK</code> are valid <code>filterValue</code> for the <code>CHANNEL</code> filter key.</p></li></ul>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectFilterV2 *> * _Nullable filters;
+
+/**
+ <p>The grouping applied to the metrics that are returned. For example, when results are grouped by queue, the metrics returned are grouped by queue. The values that are returned apply to the metrics for each queue. They are not aggregated for all queues.</p><p>If no grouping is specified, a summary of all metrics is returned.</p><p>Valid grouping keys: <code>QUEUE</code> | <code>ROUTING_PROFILE</code> | <code>AGENT</code> | <code>CHANNEL</code> | <code>AGENT_HIERARCHY_LEVEL_ONE</code> | <code>AGENT_HIERARCHY_LEVEL_TWO</code> | <code>AGENT_HIERARCHY_LEVEL_THREE</code> | <code>AGENT_HIERARCHY_LEVEL_FOUR</code> | <code>AGENT_HIERARCHY_LEVEL_FIVE</code></p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable groupings;
+
+/**
+ <p>The maximum number of results to return per page.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
+
+/**
+ <p>The metrics to retrieve. Specify the name, groupings, and filters for each metric. The following historical metrics are available. For a description of each metric, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/historical-metrics-definitions.html">Historical metrics definitions</a> in the <i>Amazon Connect Administrator's Guide</i>.</p><dl><dt>AGENT_ADHERENT_TIME</dt><dd><p>This metric is available only in Amazon Web Services Regions where <a href="https://docs.aws.amazon.com/connect/latest/adminguide/regions.html#optimization_region">Forecasting, capacity planning, and scheduling</a> is available.</p><p>Unit: Seconds</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy </p></dd><dt>AGENT_NON_RESPONSE</dt><dd><p>Unit: Count</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy </p></dd><dt>AGENT_OCCUPANCY</dt><dd><p>Unit: Percentage</p><p>Valid groupings and filters: Routing Profile, Agent, Agent Hierarchy </p></dd><dt>AGENT_SCHEDULE_ADHERENCE</dt><dd><p>This metric is available only in Amazon Web Services Regions where <a href="https://docs.aws.amazon.com/connect/latest/adminguide/regions.html#optimization_region">Forecasting, capacity planning, and scheduling</a> is available.</p><p>Unit: Percent</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>AGENT_SCHEDULED_TIME</dt><dd><p>This metric is available only in Amazon Web Services Regions where <a href="https://docs.aws.amazon.com/connect/latest/adminguide/regions.html#optimization_region">Forecasting, capacity planning, and scheduling</a> is available.</p><p>Unit: Seconds</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>AVG_ABANDON_TIME</dt><dd><p>Unit: Seconds</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>AVG_AFTER_CONTACT_WORK_TIME</dt><dd><p>Unit: Seconds</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>AVG_AGENT_CONNECTING_TIME</dt><dd><p>Unit: Seconds</p><p>Valid metric filter key: <code>INITIATION_METHOD</code>. For now, this metric only supports the following as <code>INITIATION_METHOD</code>: <code>INBOUND</code> | <code>OUTBOUND</code> | <code>CALLBACK</code> | <code>API</code></p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>AVG_HANDLE_TIME</dt><dd><p>Unit: Seconds</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>AVG_HOLD_TIME</dt><dd><p>Unit: Seconds</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>AVG_INTERACTION_AND_HOLD_TIME</dt><dd><p>Unit: Seconds</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>AVG_INTERACTION_TIME</dt><dd><p>Unit: Seconds</p><p>Valid groupings and filters: Queue, Channel, Routing Profile</p></dd><dt>AVG_QUEUE_ANSWER_TIME</dt><dd><p>Unit: Seconds</p><p>Valid groupings and filters: Queue, Channel, Routing Profile</p></dd><dt>CONTACTS_ABANDONED</dt><dd><p>Unit: Count</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>CONTACTS_CREATED</dt><dd><p>Unit: Count</p><p>Valid metric filter key: <code>INITIATION_METHOD</code></p><p>Valid groupings and filters: Queue, Channel, Routing Profile</p></dd><dt>CONTACTS_HANDLED</dt><dd><p>Unit: Count</p><p>Valid metric filter key: <code>INITIATION_METHOD</code>, <code>DISCONNECT_REASON</code></p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>CONTACTS_HOLD_ABANDONS</dt><dd><p>Unit: Count</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>CONTACTS_QUEUED</dt><dd><p>Unit: Count</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>CONTACTS_TRANSFERRED_OUT</dt><dd><p>Unit: Count</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>CONTACTS_TRANSFERRED_OUT_BY_AGENT</dt><dd><p>Unit: Count</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>CONTACTS_TRANSFERRED_OUT_FROM_QUEUE</dt><dd><p>Unit: Count</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>MAX_QUEUED_TIME</dt><dd><p>Unit: Seconds</p><p>Valid groupings and filters: Queue, Channel, Routing Profile, Agent, Agent Hierarchy</p></dd><dt>SERVICE_LEVEL</dt><dd><p>You can include up to 20 SERVICE_LEVEL metrics in a request.</p><p>Unit: Percent</p><p>Valid groupings and filters: Queue, Channel, Routing Profile</p><p>Threshold: For <code>ThresholdValue</code>, enter any whole number from 1 to 604800 (inclusive), in seconds. For <code>Comparison</code>, you must enter <code>LT</code> (for "Less than"). </p></dd><dt>SUM_CONTACTS_ANSWERED_IN_X</dt><dd><p>Unit: Count</p><p>Valid groupings and filters: Queue, Channel, Routing Profile</p><p>Threshold: For <code>ThresholdValue</code>, enter any whole number from 1 to 604800 (inclusive), in seconds. For <code>Comparison</code>, you must enter <code>LT</code> (for "Less than"). </p></dd><dt>SUM_CONTACTS_ABANDONED_IN_X</dt><dd><p>Unit: Count</p><p>Valid groupings and filters: Queue, Channel, Routing Profile</p><p>Threshold: For <code>ThresholdValue</code>, enter any whole number from 1 to 604800 (inclusive), in seconds. For <code>Comparison</code>, you must enter <code>LT</code> (for "Less than"). </p></dd><dt>SUM_CONTACTS_DISCONNECTED </dt><dd><p>Valid metric filter key: <code>DISCONNECT_REASON</code></p><p>Unit: Count</p><p>Valid groupings and filters: Queue, Channel, Routing Profile</p></dd><dt>SUM_RETRY_CALLBACK_ATTEMPTS</dt><dd><p>Unit: Count</p><p>Valid groupings and filters: Queue, Channel, Routing Profile</p></dd></dl>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectMetricV2 *> * _Nullable metrics;
+
+/**
+ <p>The token for the next set of results. Use the value returned in the previous response in the next request to retrieve the next set of results.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+/**
+ <p>The Amazon Resource Name (ARN) of the resource. This includes the <code>instanceId</code> an Amazon Connect instance.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable resourceArn;
+
+/**
+ <p>The timestamp, in UNIX Epoch time format, at which to start the reporting interval for the retrieval of historical metrics data. The time must be before the end time timestamp. The time range between the start and end time must be less than 24 hours. The start time cannot be earlier than 14 days before the time of the request. Historical metrics are available for 14 days.</p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable startTime;
+
+@end
+
+/**
+ 
+ */
+@interface AWSConnectGetMetricDataV2Response : AWSModel
+
+
+/**
+ <p>Information about the metrics requested in the API request If no grouping is specified, a summary of metric data is returned. </p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectMetricResultV2 *> * _Nullable metricResults;
+
+/**
+ <p>If there are additional results, this is the token for the next set of results.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
@@ -7112,6 +7283,88 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
  */
 @property (nonatomic, strong) NSNumber * _Nullable concurrency;
 
+/**
+ <p>Defines the cross-channel routing behavior for each channel that is enabled for this Routing Profile. For example, this allows you to offer an agent a different contact from another channel when they are currently working with a contact from a Voice channel.</p>
+ */
+@property (nonatomic, strong) AWSConnectCrossChannelBehavior * _Nullable crossChannelBehavior;
+
+@end
+
+/**
+ <p>Contains the name, thresholds, and metric filters.</p>
+ */
+@interface AWSConnectMetricDataV2 : AWSModel
+
+
+/**
+ <p>The metric name, thresholds, and metric filters of the returned metric.</p>
+ */
+@property (nonatomic, strong) AWSConnectMetricV2 * _Nullable metric;
+
+/**
+ <p>The corresponding value of the metric returned in the response.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable value;
+
+@end
+
+/**
+ <p>Contains information about the filter used when retrieving metrics. <code>MetricFiltersV2</code> can be used on the following metrics: <code>AVG_AGENT_CONNECTING_TIME</code>, <code>CONTACTS_CREATED</code>, <code>CONTACTS_HANDLED</code>, <code>SUM_CONTACTS_DISCONNECTED</code>.</p>
+ */
+@interface AWSConnectMetricFilterV2 : AWSModel
+
+
+/**
+ <p>The key to use for filtering data. </p><p>Valid metric filter keys: <code>INITIATION_METHOD</code>, <code>DISCONNECT_REASON</code>. These are the same values as the <code>InitiationMethod</code> and <code>DisconnectReason</code> in the contact record. For more information, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/ctr-data-model.html#ctr-ContactTraceRecord">ContactTraceRecord</a> in the <i>Amazon Connect Administrator's Guide</i>. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable metricFilterKey;
+
+/**
+ <p>The values to use for filtering data. </p><p>Valid metric filter values for <code>INITIATION_METHOD</code>: <code>INBOUND</code> | <code>OUTBOUND</code> | <code>TRANSFER</code> | <code>QUEUE_TRANSFER</code> | <code>CALLBACK</code> | <code>API</code></p><p>Valid metric filter values for <code>DISCONNECT_REASON</code>: <code>CUSTOMER_DISCONNECT</code> | <code>AGENT_DISCONNECT</code> | <code>THIRD_PARTY_DISCONNECT</code> | <code>TELECOM_PROBLEM</code> | <code>BARGED</code> | <code>CONTACT_FLOW_DISCONNECT</code> | <code>OTHER</code> | <code>EXPIRED</code> | <code>API</code></p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable metricFilterValues;
+
+@end
+
+/**
+ <p>Contains information about the metric results.</p>
+ */
+@interface AWSConnectMetricResultV2 : AWSModel
+
+
+/**
+ <p>The set of metrics.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectMetricDataV2 *> * _Nullable collections;
+
+/**
+ <p>The dimension for the metrics.</p>
+ */
+@property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable dimensions;
+
+@end
+
+/**
+ <p>Contains information about the metric.</p>
+ */
+@interface AWSConnectMetricV2 : AWSModel
+
+
+/**
+ <p>Contains the filters to be used when returning data.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectMetricFilterV2 *> * _Nullable metricFilters;
+
+/**
+ <p>The name of the metric.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable name;
+
+/**
+ <p>Contains information about the threshold for service level metrics.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSConnectThresholdV2 *> * _Nullable threshold;
+
 @end
 
 /**
@@ -7239,6 +7492,24 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @end
 
 /**
+ <p>The details to add for the participant.</p>
+ */
+@interface AWSConnectParticipantDetailsToAdd : AWSModel
+
+
+/**
+ <p>The display name of the participant.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable displayName;
+
+/**
+ <p>The role of the participant being added.</p>
+ */
+@property (nonatomic, assign) AWSConnectParticipantRole participantRole;
+
+@end
+
+/**
  <p>Configuration information for the timer. After the timer configuration is set, it persists for the duration of the chat. It persists across new contacts in the chain, for example, transfer contacts.</p><p>For more information about how chat timeouts work, see <a href="https://docs.aws.amazon.com/connect/latest/adminguide/setup-chat-timeouts.html">Set up chat timeouts for human participants</a>. </p>
  Required parameters: [ParticipantRole, TimerType, TimerValue]
  */
@@ -7277,6 +7548,24 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
  <p>The duration of a timer, in minutes. </p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable participantTimerDurationInMinutes;
+
+@end
+
+/**
+ <p>The credentials used by the participant.</p>
+ */
+@interface AWSConnectParticipantTokenCredentials : AWSModel
+
+
+/**
+ <p>The expiration of the token. It's specified in ISO 8601 format: yyyy-MM-ddThh:mm:ss.SSSZ. For example, 2019-11-08T02:41:28.172Z.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable expiry;
+
+/**
+ <p>The token used by the chat participant to call <a href="https://docs.aws.amazon.com/connect-participant/latest/APIReference/API_CreateParticipantConnection.html">CreateParticipantConnection</a>. The participant token is valid for the lifetime of a chat participant. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable participantToken;
 
 @end
 
@@ -8861,7 +9150,7 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable attributes;
 
 /**
- <p>The total duration of the newly started chat session. If not specified, the chat session duration defaults to 25 hour. The minumum configurable time is 60 minutes. The maximum configurable time is 10,080 minutes (7 days).</p>
+ <p>The total duration of the newly started chat session. If not specified, the chat session duration defaults to 25 hour. The minimum configurable time is 60 minutes. The maximum configurable time is 10,080 minutes (7 days).</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable chatDurationInMinutes;
 
@@ -8896,7 +9185,12 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
 @property (nonatomic, strong) AWSConnectPersistentChat * _Nullable persistentChat;
 
 /**
- <p>The supported chat message content types. Content types must always contain <code>text/plain</code>. You can then put any other supported type in the list. For example, all the following lists are valid because they contain <code>text/plain</code>: <code>[text/plain, text/markdown, application/json]</code>, <code>[text/markdown, text/plain]</code>, <code>[text/plain, application/json]</code>.</p>
+ <p>The unique identifier for an Amazon Connect contact. This identifier is related to the chat starting.</p><note><p>You cannot provide data for both RelatedContactId and PersistentChat. </p></note>
+ */
+@property (nonatomic, strong) NSString * _Nullable relatedContactId;
+
+/**
+ <p>The supported chat message content types. Supported types are <code>text/plain</code>, <code>text/markdown</code>, <code>application/json</code>, <code>application/vnd.amazonaws.connect.message.interactive</code>, and <code>application/vnd.amazonaws.connect.message.interactive.response</code>. </p><p>Content types must always contain <code>text/plain</code>. You can then put any other supported type in the list. For example, all the following lists are valid because they contain <code>text/plain</code>: <code>[text/plain, text/markdown, application/json]</code>, <code>[text/markdown, text/plain]</code>, <code>[text/plain, application/json, application/vnd.amazonaws.connect.message.interactive.response]</code>. </p><note><p>The type <code>application/vnd.amazonaws.connect.message.interactive</code> is required to use the <a href="https://docs.aws.amazon.com/connect/latest/adminguide/show-view-block.html">Show view</a> flow block.</p></note>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable supportedMessagingContentTypes;
 
@@ -9547,6 +9841,24 @@ typedef NS_ENUM(NSInteger, AWSConnectVoiceRecordingTrack) {
  <p>The type of comparison. Only "less than" (LT) comparisons are supported.</p>
  */
 @property (nonatomic, assign) AWSConnectComparison comparison;
+
+/**
+ <p>The threshold value to compare.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable thresholdValue;
+
+@end
+
+/**
+ <p>Contains information about the threshold for service level metrics.</p>
+ */
+@interface AWSConnectThresholdV2 : AWSModel
+
+
+/**
+ <p>The type of comparison. Only "less than" (LT) comparisons are supported.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable comparison;
 
 /**
  <p>The threshold value to compare.</p>

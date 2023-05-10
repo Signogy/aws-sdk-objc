@@ -241,6 +241,7 @@ typedef NS_ENUM(NSInteger, AWSEC2BootModeValues) {
     AWSEC2BootModeValuesUnknown,
     AWSEC2BootModeValuesLegacyBios,
     AWSEC2BootModeValuesUefi,
+    AWSEC2BootModeValuesUefiPreferred,
 };
 
 typedef NS_ENUM(NSInteger, AWSEC2BundleTaskState) {
@@ -890,6 +891,12 @@ typedef NS_ENUM(NSInteger, AWSEC2InstanceAutoRecoveryState) {
     AWSEC2InstanceAutoRecoveryStateUnknown,
     AWSEC2InstanceAutoRecoveryStateDisabled,
     AWSEC2InstanceAutoRecoveryStateDefault,
+};
+
+typedef NS_ENUM(NSInteger, AWSEC2InstanceBootModeValues) {
+    AWSEC2InstanceBootModeValuesUnknown,
+    AWSEC2InstanceBootModeValuesLegacyBios,
+    AWSEC2InstanceBootModeValuesUefi,
 };
 
 typedef NS_ENUM(NSInteger, AWSEC2InstanceEventWindowState) {
@@ -1598,6 +1605,30 @@ typedef NS_ENUM(NSInteger, AWSEC2InstanceType) {
     AWSEC2InstanceTypeR6Idn_16xlarge,
     AWSEC2InstanceTypeR6Idn_24xlarge,
     AWSEC2InstanceTypeR6Idn_32xlarge,
+    AWSEC2InstanceTypeC7G_metal,
+    AWSEC2InstanceTypeM7G_medium,
+    AWSEC2InstanceTypeM7G_large,
+    AWSEC2InstanceTypeM7G_xlarge,
+    AWSEC2InstanceTypeM7G_2xlarge,
+    AWSEC2InstanceTypeM7G_4xlarge,
+    AWSEC2InstanceTypeM7G_8xlarge,
+    AWSEC2InstanceTypeM7G_12xlarge,
+    AWSEC2InstanceTypeM7G_16xlarge,
+    AWSEC2InstanceTypeM7G_metal,
+    AWSEC2InstanceTypeR7G_medium,
+    AWSEC2InstanceTypeR7G_large,
+    AWSEC2InstanceTypeR7G_xlarge,
+    AWSEC2InstanceTypeR7G_2xlarge,
+    AWSEC2InstanceTypeR7G_4xlarge,
+    AWSEC2InstanceTypeR7G_8xlarge,
+    AWSEC2InstanceTypeR7G_12xlarge,
+    AWSEC2InstanceTypeR7G_16xlarge,
+    AWSEC2InstanceTypeR7G_metal,
+    AWSEC2InstanceTypeC6In_metal,
+    AWSEC2InstanceTypeM6In_metal,
+    AWSEC2InstanceTypeM6Idn_metal,
+    AWSEC2InstanceTypeR6In_metal,
+    AWSEC2InstanceTypeR6Idn_metal,
 };
 
 typedef NS_ENUM(NSInteger, AWSEC2InstanceTypeHypervisor) {
@@ -3951,6 +3982,9 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @class AWSEC2FederatedAuthentication;
 @class AWSEC2FederatedAuthenticationRequest;
 @class AWSEC2Filter;
+@class AWSEC2FilterPortRange;
+@class AWSEC2FirewallStatefulRule;
+@class AWSEC2FirewallStatelessRule;
 @class AWSEC2FleetCapacityReservation;
 @class AWSEC2FleetData;
 @class AWSEC2FleetLaunchTemplateConfig;
@@ -4054,6 +4088,8 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @class AWSEC2GetVpnConnectionDeviceSampleConfigurationResult;
 @class AWSEC2GetVpnConnectionDeviceTypesRequest;
 @class AWSEC2GetVpnConnectionDeviceTypesResult;
+@class AWSEC2GetVpnTunnelReplacementStatusRequest;
+@class AWSEC2GetVpnTunnelReplacementStatusResult;
 @class AWSEC2GpuDeviceInfo;
 @class AWSEC2GpuDeviceMemoryInfo;
 @class AWSEC2GpuInfo;
@@ -4244,6 +4280,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @class AWSEC2LocalGatewayRouteTableVpcAssociation;
 @class AWSEC2LocalGatewayVirtualInterface;
 @class AWSEC2LocalGatewayVirtualInterfaceGroup;
+@class AWSEC2MaintenanceDetails;
 @class AWSEC2ManagedPrefixList;
 @class AWSEC2MemoryGiBPerVCpu;
 @class AWSEC2MemoryGiBPerVCpuRequest;
@@ -4415,6 +4452,8 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @class AWSEC2PacketHeaderStatement;
 @class AWSEC2PacketHeaderStatementRequest;
 @class AWSEC2PathComponent;
+@class AWSEC2PathFilter;
+@class AWSEC2PathRequestFilter;
 @class AWSEC2PathStatement;
 @class AWSEC2PathStatementRequest;
 @class AWSEC2PciId;
@@ -4516,7 +4555,10 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @class AWSEC2ReplaceRouteTableAssociationResult;
 @class AWSEC2ReplaceTransitGatewayRouteRequest;
 @class AWSEC2ReplaceTransitGatewayRouteResult;
+@class AWSEC2ReplaceVpnTunnelRequest;
+@class AWSEC2ReplaceVpnTunnelResult;
 @class AWSEC2ReportInstanceStatusRequest;
+@class AWSEC2RequestFilterPortRange;
 @class AWSEC2RequestIpamResourceTag;
 @class AWSEC2RequestLaunchTemplateData;
 @class AWSEC2RequestSpotFleetRequest;
@@ -4570,6 +4612,9 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @class AWSEC2RouteTable;
 @class AWSEC2RouteTableAssociation;
 @class AWSEC2RouteTableAssociationState;
+@class AWSEC2RuleGroupRuleOptionsPair;
+@class AWSEC2RuleGroupTypePair;
+@class AWSEC2RuleOption;
 @class AWSEC2RunInstancesMonitoringEnabled;
 @class AWSEC2RunInstancesRequest;
 @class AWSEC2RunScheduledInstancesRequest;
@@ -5311,13 +5356,13 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @end
 
 /**
- <p>Describes an additional detail for a path analysis.</p>
+ <p>Describes an additional detail for a path analysis. For more information, see <a href="https://docs.aws.amazon.com/vpc/latest/reachability/additional-detail-codes.html">Reachability Analyzer additional detail codes</a>.</p>
  */
 @interface AWSEC2AdditionalDetail : AWSModel
 
 
 /**
- <p>The information type.</p>
+ <p>The additional detail code.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable additionalDetailType;
 
@@ -5325,6 +5370,36 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
  <p>The path component.</p>
  */
 @property (nonatomic, strong) AWSEC2AnalysisComponent * _Nullable component;
+
+/**
+ <p>The load balancers.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSEC2AnalysisComponent *> * _Nullable loadBalancers;
+
+/**
+ <p>The rule options.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSEC2RuleGroupRuleOptionsPair *> * _Nullable ruleGroupRuleOptionsPairs;
+
+/**
+ <p>The rule group type.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSEC2RuleGroupTypePair *> * _Nullable ruleGroupTypePairs;
+
+/**
+ <p>The rule options.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSEC2RuleOption *> * _Nullable ruleOptions;
+
+/**
+ <p>The name of the VPC endpoint service.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable serviceName;
+
+/**
+ <p>The VPC endpoint service.</p>
+ */
+@property (nonatomic, strong) AWSEC2AnalysisComponent * _Nullable vpcEndpointService;
 
 @end
 
@@ -5924,6 +5999,16 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
+ <p>The ID of a carrier gateway.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable carrierGatewayId;
+
+/**
+ <p>The Amazon Resource Name (ARN) of a core network.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable coreNetworkArn;
+
+/**
  <p>The destination IPv4 address, in CIDR notation.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable destinationCidr;
@@ -5947,6 +6032,11 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
  <p>The ID of the instance, such as a NAT instance.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable instanceId;
+
+/**
+ <p>The ID of a local gateway.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable localGatewayId;
 
 /**
  <p>The ID of a NAT gateway.</p>
@@ -7129,12 +7219,12 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessInstanceId;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access trust provider.</p>
+ <p>The ID of the Verified Access trust provider.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessTrustProviderId;
 
@@ -7147,12 +7237,12 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessInstance * _Nullable verifiedAccessInstance;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access trust provider.</p>
+ <p>The ID of the Verified Access trust provider.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessTrustProvider * _Nullable verifiedAccessTrustProvider;
 
@@ -10307,7 +10397,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 /**
  <p>Contains the parameters for CreateCustomerGateway.</p>
- Required parameters: [BgpAsn, Type]
+ Required parameters: [Type]
  */
 @interface AWSEC2CreateCustomerGatewayRequest : AWSRequest
 
@@ -11871,12 +11961,12 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>The Amazon Web Services resource that is the destination of the path.</p>
+ <p>The ID or ARN of the destination. If the resource is in another account, you must specify an ARN.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable destination;
 
 /**
- <p>The IP address of the Amazon Web Services resource that is the destination of the path.</p>
+ <p>The IP address of the destination.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable destinationIp;
 
@@ -11891,17 +11981,27 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
+ <p>Scopes the analysis to network paths that match specific filters at the destination. If you specify this parameter, you can't specify the parameter for the destination IP address.</p>
+ */
+@property (nonatomic, strong) AWSEC2PathRequestFilter * _Nullable filterAtDestination;
+
+/**
+ <p>Scopes the analysis to network paths that match specific filters at the source. If you specify this parameter, you can't specify the parameters for the source IP address or the destination port.</p>
+ */
+@property (nonatomic, strong) AWSEC2PathRequestFilter * _Nullable filterAtSource;
+
+/**
  <p>The protocol.</p>
  */
 @property (nonatomic, assign) AWSEC2Protocols protocols;
 
 /**
- <p>The Amazon Web Services resource that is the source of the path.</p>
+ <p>The ID or ARN of the source. If the resource is in another account, you must specify an ARN.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable source;
 
 /**
- <p>The IP address of the Amazon Web Services resource that is the source of the path.</p>
+ <p>The IP address of the source.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable sourceIp;
 
@@ -12448,7 +12548,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>A description for the security group. This is informational only.</p><p>Constraints: Up to 255 characters in length</p><p>Constraints for EC2-Classic: ASCII characters</p><p>Constraints for EC2-VPC: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&amp;;{}!$*</p>
+ <p>A description for the security group.</p><p>Constraints: Up to 255 characters in length</p><p>Constraints for EC2-Classic: ASCII characters</p><p>Constraints for EC2-VPC: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&amp;;{}!$*</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -13628,7 +13728,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @end
 
 /**
- <p>Options for a network interface-type endpoint.</p>
+ <p>Describes the network interface options when creating an Amazon Web Services Verified Access endpoint using the <code>network-interface</code> type.</p>
  */
 @interface AWSEC2CreateVerifiedAccessEndpointEniOptions : AWSModel
 
@@ -13651,7 +13751,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @end
 
 /**
- <p>Describes a load balancer when creating an Amazon Web Services Verified Access endpoint using the <code>load-balancer</code> type.</p>
+ <p>Describes the load balancer options when creating an Amazon Web Services Verified Access endpoint using the <code>load-balancer</code> type.</p>
  */
 @interface AWSEC2CreateVerifiedAccessEndpointLoadBalancerOptions : AWSModel
 
@@ -13690,7 +13790,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable applicationDomain;
 
 /**
- <p>The Amazon Web Services network component Verified Access attaches to.</p>
+ <p>The type of attachment.</p>
  */
 @property (nonatomic, assign) AWSEC2VerifiedAccessEndpointAttachmentType attachmentType;
 
@@ -13700,7 +13800,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>A description for the Amazon Web Services Verified Access endpoint.</p>
+ <p>A description for the Verified Access endpoint.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -13715,37 +13815,37 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>A custom identifier that gets prepended to a DNS name that is generated for the endpoint.</p>
+ <p>A custom identifier that is prepended to the DNS name that is generated for the endpoint.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable endpointDomainPrefix;
 
 /**
- <p>The type of Amazon Web Services Verified Access endpoint to create.</p>
+ <p>The type of Verified Access endpoint to create.</p>
  */
 @property (nonatomic, assign) AWSEC2VerifiedAccessEndpointType endpointType;
 
 /**
- <p>The load balancer details if creating the Amazon Web Services Verified Access endpoint as <code>load-balancer</code>type.</p>
+ <p>The load balancer details. This parameter is required if the endpoint type is <code>load-balancer</code>.</p>
  */
 @property (nonatomic, strong) AWSEC2CreateVerifiedAccessEndpointLoadBalancerOptions * _Nullable loadBalancerOptions;
 
 /**
- <p>The network interface details if creating the Amazon Web Services Verified Access endpoint as <code>network-interface</code>type.</p>
+ <p>The network interface details. This parameter is required if the endpoint type is <code>network-interface</code>.</p>
  */
 @property (nonatomic, strong) AWSEC2CreateVerifiedAccessEndpointEniOptions * _Nullable networkInterfaceOptions;
 
 /**
- <p>The Amazon Web Services Verified Access policy document.</p>
+ <p>The Verified Access policy document.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable policyDocument;
 
 /**
- <p>The Amazon EC2 security groups to associate with the Amazon Web Services Verified Access endpoint.</p>
+ <p>The IDs of the security groups to associate with the Verified Access endpoint.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable securityGroupIds;
 
 /**
- <p>The tags to assign to the Amazon Web Services Verified Access endpoint.</p>
+ <p>The tags to assign to the Verified Access endpoint.</p>
  */
 @property (nonatomic, strong) NSArray<AWSEC2TagSpecification *> * _Nullable tagSpecifications;
 
@@ -13763,7 +13863,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The ID of the Amazon Web Services Verified Access endpoint.</p>
+ <p>The ID of the Verified Access endpoint.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessEndpoint * _Nullable verifiedAccessEndpoint;
 
@@ -13781,7 +13881,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>A description for the Amazon Web Services Verified Access group.</p>
+ <p>A description for the Verified Access group.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -13791,17 +13891,17 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The Amazon Web Services Verified Access policy document.</p>
+ <p>The Verified Access policy document.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable policyDocument;
 
 /**
- <p>The tags to assign to the Amazon Web Services Verified Access group.</p>
+ <p>The tags to assign to the Verified Access group.</p>
  */
 @property (nonatomic, strong) NSArray<AWSEC2TagSpecification *> * _Nullable tagSpecifications;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessInstanceId;
 
@@ -13832,7 +13932,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>A description for the Amazon Web Services Verified Access instance.</p>
+ <p>A description for the Verified Access instance.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -13842,7 +13942,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The tags to assign to the Amazon Web Services Verified Access instance.</p>
+ <p>The tags to assign to the Verified Access instance.</p>
  */
 @property (nonatomic, strong) NSArray<AWSEC2TagSpecification *> * _Nullable tagSpecifications;
 
@@ -13855,14 +13955,14 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessInstance * _Nullable verifiedAccessInstance;
 
 @end
 
 /**
- <p>Options for a device-identity type trust provider.</p>
+ <p>Describes the options when creating an Amazon Web Services Verified Access trust provider using the <code>device</code> type.</p>
  */
 @interface AWSEC2CreateVerifiedAccessTrustProviderDeviceOptions : AWSModel
 
@@ -13875,7 +13975,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @end
 
 /**
- <p>Options for an OIDC-based, user-identity type trust provider.</p>
+ <p>Describes the options when creating an Amazon Web Services Verified Access trust provider using the <code>user</code> type.</p>
  */
 @interface AWSEC2CreateVerifiedAccessTrustProviderOidcOptions : AWSModel
 
@@ -13929,17 +14029,17 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>A description for the Amazon Web Services Verified Access trust provider.</p>
+ <p>A description for the Verified Access trust provider.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>The options for device identity based trust providers.</p>
+ <p>The options for a device-based trust provider. This parameter is required when the provider type is <code>device</code>.</p>
  */
 @property (nonatomic, strong) AWSEC2CreateVerifiedAccessTrustProviderDeviceOptions * _Nullable deviceOptions;
 
 /**
- <p>The type of device-based trust provider.</p>
+ <p>The type of device-based trust provider. This parameter is required when the provider type is <code>device</code>.</p>
  */
 @property (nonatomic, assign) AWSEC2DeviceTrustProviderType deviceTrustProviderType;
 
@@ -13949,7 +14049,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The OpenID Connect details for an <code>oidc</code>-type, user-identity based trust provider.</p>
+ <p>The options for a OpenID Connect-compatible user-identity trust provider. This parameter is required when the provider type is <code>user</code>.</p>
  */
 @property (nonatomic, strong) AWSEC2CreateVerifiedAccessTrustProviderOidcOptions * _Nullable oidcOptions;
 
@@ -13959,17 +14059,17 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable policyReferenceName;
 
 /**
- <p>The tags to assign to the Amazon Web Services Verified Access trust provider.</p>
+ <p>The tags to assign to the Verified Access trust provider.</p>
  */
 @property (nonatomic, strong) NSArray<AWSEC2TagSpecification *> * _Nullable tagSpecifications;
 
 /**
- <p>The type of trust provider can be either user or device-based.</p>
+ <p>The type of trust provider.</p>
  */
 @property (nonatomic, assign) AWSEC2TrustProviderType trustProviderType;
 
 /**
- <p>The type of user-based trust provider.</p>
+ <p>The type of user-based trust provider. This parameter is required when the provider type is <code>user</code>.</p>
  */
 @property (nonatomic, assign) AWSEC2UserTrustProviderType userTrustProviderType;
 
@@ -13982,7 +14082,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The ID of the Amazon Web Services Verified Access trust provider.</p>
+ <p>The ID of the Verified Access trust provider.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessTrustProvider * _Nullable verifiedAccessTrustProvider;
 
@@ -16654,7 +16754,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access endpoint.</p>
+ <p>The ID of the Verified Access endpoint.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessEndpointId;
 
@@ -16667,7 +16767,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The ID of the Amazon Web Services Verified Access endpoint.</p>
+ <p>The ID of the Verified Access endpoint.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessEndpoint * _Nullable verifiedAccessEndpoint;
 
@@ -16690,7 +16790,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access group.</p>
+ <p>The ID of the Verified Access group.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessGroupId;
 
@@ -16703,7 +16803,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The ID of the Amazon Web Services Verified Access group.</p>
+ <p>The ID of the Verified Access group.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessGroup * _Nullable verifiedAccessGroup;
 
@@ -16726,7 +16826,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessInstanceId;
 
@@ -16739,7 +16839,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessInstance * _Nullable verifiedAccessInstance;
 
@@ -16762,7 +16862,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access trust provider.</p>
+ <p>The ID of the Verified Access trust provider.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessTrustProviderId;
 
@@ -16775,7 +16875,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The ID of the Amazon Web Services Verified Access trust provider.</p>
+ <p>The ID of the Verified Access trust provider.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessTrustProvider * _Nullable verifiedAccessTrustProvider;
 
@@ -21085,7 +21185,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The filters. The following are the possible values:</p><ul><li><p>destination - The ID of the resource.</p></li><li><p>destination-port - The destination port.</p></li><li><p>protocol - The protocol.</p></li><li><p>source - The ID of the resource.</p></li></ul>
+ <p>The filters. The following are the possible values:</p><ul><li><p>destination - The ID of the resource.</p></li><li><p>filter-at-source.source-address - The source IPv4 address at the source.</p></li><li><p>filter-at-source.source-port-range - The source port range at the source.</p></li><li><p>filter-at-source.destination-address - The destination IPv4 address at the source.</p></li><li><p>filter-at-source.destination-port-range - The destination port range at the source.</p></li><li><p>filter-at-destination.source-address - The source IPv4 address at the destination.</p></li><li><p>filter-at-destination.source-port-range - The source port range at the destination.</p></li><li><p>filter-at-destination.destination-address - The destination IPv4 address at the destination.</p></li><li><p>filter-at-destination.destination-port-range - The destination port range at the destination.</p></li><li><p>protocol - The protocol.</p></li><li><p>source - The ID of the resource.</p></li></ul>
  */
 @property (nonatomic, strong) NSArray<AWSEC2Filter *> * _Nullable filters;
 
@@ -23496,17 +23596,17 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access endpoint.</p>
+ <p>The ID of the Verified Access endpoint.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable verifiedAccessEndpointIds;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access group.</p>
+ <p>The ID of the Verified Access group.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessGroupId;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessInstanceId;
 
@@ -23524,7 +23624,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access endpoint.</p>
+ <p>The ID of the Verified Access endpoint.</p>
  */
 @property (nonatomic, strong) NSArray<AWSEC2VerifiedAccessEndpoint *> * _Nullable verifiedAccessEndpoints;
 
@@ -23557,12 +23657,12 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access groups.</p>
+ <p>The ID of the Verified Access groups.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable verifiedAccessGroupIds;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessInstanceId;
 
@@ -23613,7 +23713,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>The IDs of the Amazon Web Services Verified Access instances.</p>
+ <p>The IDs of the Verified Access instances.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable verifiedAccessInstanceIds;
 
@@ -23626,7 +23726,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The current logging configuration for the Amazon Web Services Verified Access instances.</p>
+ <p>The current logging configuration for the Verified Access instances.</p>
  */
 @property (nonatomic, strong) NSArray<AWSEC2VerifiedAccessInstanceLoggingConfiguration *> * _Nullable loggingConfigurations;
 
@@ -23664,7 +23764,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>The IDs of the Amazon Web Services Verified Access instances.</p>
+ <p>The IDs of the Verified Access instances.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable verifiedAccessInstanceIds;
 
@@ -23682,7 +23782,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>The IDs of the Amazon Web Services Verified Access instances.</p>
+ <p>The IDs of the Verified Access instances.</p>
  */
 @property (nonatomic, strong) NSArray<AWSEC2VerifiedAccessInstance *> * _Nullable verifiedAccessInstances;
 
@@ -23715,7 +23815,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>The IDs of the Amazon Web Services Verified Access trust providers.</p>
+ <p>The IDs of the Verified Access trust providers.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable verifiedAccessTrustProviderIds;
 
@@ -23733,7 +23833,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>The IDs of the Amazon Web Services Verified Access trust providers.</p>
+ <p>The IDs of the Verified Access trust providers.</p>
  */
 @property (nonatomic, strong) NSArray<AWSEC2VerifiedAccessTrustProvider *> * _Nullable verifiedAccessTrustProviders;
 
@@ -24692,12 +24792,12 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessInstanceId;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access trust provider.</p>
+ <p>The ID of the Verified Access trust provider.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessTrustProviderId;
 
@@ -24710,12 +24810,12 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessInstance * _Nullable verifiedAccessInstance;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access trust provider.</p>
+ <p>The ID of the Verified Access trust provider.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessTrustProvider * _Nullable verifiedAccessTrustProvider;
 
@@ -24779,7 +24879,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @end
 
 /**
- <p>Options for an Amazon Web Services Verified Access device-identity based trust provider.</p>
+ <p>Describes the options for an Amazon Web Services Verified Access device-identity based trust provider.</p>
  */
 @interface AWSEC2DeviceOptions : AWSModel
 
@@ -26033,6 +26133,11 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
  */
 @property (nonatomic, assign) AWSEC2DnsRecordIpType dnsRecordIpType;
 
+/**
+ <p>Indicates whether to enable private DNS only for inbound endpoints.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable privateDnsOnlyForInboundResolverEndpoint;
+
 @end
 
 /**
@@ -26045,6 +26150,11 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
  <p>The DNS records created for the endpoint.</p>
  */
 @property (nonatomic, assign) AWSEC2DnsRecordIpType dnsRecordIpType;
+
+/**
+ <p>Indicates whether to enable private DNS only for inbound endpoints. This option is available only for services that support both gateway and interface endpoints. It routes traffic that originates from the VPC to the gateway endpoint and traffic that originates from on-premises to the interface endpoint.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable privateDnsOnlyForInboundResolverEndpoint;
 
 @end
 
@@ -27213,6 +27323,16 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable explanationCode;
 
 /**
+ <p>The Network Firewall stateful rule.</p>
+ */
+@property (nonatomic, strong) AWSEC2FirewallStatefulRule * _Nullable firewallStatefulRule;
+
+/**
+ <p>The Network Firewall stateless rule.</p>
+ */
+@property (nonatomic, strong) AWSEC2FirewallStatelessRule * _Nullable firewallStatelessRule;
+
+/**
  <p>The route table.</p>
  */
 @property (nonatomic, strong) AWSEC2AnalysisComponent * _Nullable ingressRouteTable;
@@ -27942,6 +28062,120 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
  <p>The filter values. Filter values are case-sensitive. If you specify multiple values for a filter, the values are joined with an <code>OR</code>, and the request returns all results that match any of the specified values.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable values;
+
+@end
+
+/**
+ <p>Describes a port range.</p>
+ */
+@interface AWSEC2FilterPortRange : AWSModel
+
+
+/**
+ <p>The first port in the range.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable fromPort;
+
+/**
+ <p>The last port in the range.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable toPort;
+
+@end
+
+/**
+ <p>Describes a stateful rule.</p>
+ */
+@interface AWSEC2FirewallStatefulRule : AWSModel
+
+
+/**
+ <p>The destination ports.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSEC2PortRange *> * _Nullable destinationPorts;
+
+/**
+ <p>The destination IP addresses, in CIDR notation.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable destinations;
+
+/**
+ <p>The direction. The possible values are <code>FORWARD</code> and <code>ANY</code>.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable direction;
+
+/**
+ <p>The protocol.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable protocols;
+
+/**
+ <p>The rule action. The possible values are <code>pass</code>, <code>drop</code>, and <code>alert</code>.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable ruleAction;
+
+/**
+ <p>The ARN of the stateful rule group.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable ruleGroupArn;
+
+/**
+ <p>The source ports.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSEC2PortRange *> * _Nullable sourcePorts;
+
+/**
+ <p>The source IP addresses, in CIDR notation.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable sources;
+
+@end
+
+/**
+ <p>Describes a stateless rule.</p>
+ */
+@interface AWSEC2FirewallStatelessRule : AWSModel
+
+
+/**
+ <p>The destination ports.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSEC2PortRange *> * _Nullable destinationPorts;
+
+/**
+ <p>The destination IP addresses, in CIDR notation.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable destinations;
+
+/**
+ <p>The rule priority.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable priority;
+
+/**
+ <p>The protocols.</p>
+ */
+@property (nonatomic, strong) NSArray<NSNumber *> * _Nullable protocols;
+
+/**
+ <p>The rule action. The possible values are <code>pass</code>, <code>drop</code>, and <code>forward_to_site</code>.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable ruleAction;
+
+/**
+ <p>The ARN of the stateless rule group.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable ruleGroupArn;
+
+/**
+ <p>The source ports.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSEC2PortRange *> * _Nullable sourcePorts;
+
+/**
+ <p>The source IP addresses, in CIDR notation.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable sources;
 
 @end
 
@@ -29135,7 +29369,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The ID of the Capacity Reservation.</p>
+ <p>The ID of the Capacity Reservation. If you specify a Capacity Reservation that is shared with you, the operation returns only Capacity Reservation groups that you own.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable capacityReservationId;
 
@@ -30523,7 +30757,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access endpoint.</p>
+ <p>The ID of the Verified Access endpoint.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessEndpointId;
 
@@ -30536,7 +30770,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The Amazon Web Services Verified Access policy document.</p>
+ <p>The Verified Access policy document.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable policyDocument;
 
@@ -30559,7 +30793,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access group.</p>
+ <p>The ID of the Verified Access group.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessGroupId;
 
@@ -30572,7 +30806,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The Amazon Web Services Verified Access policy document.</p>
+ <p>The Verified Access policy document.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable policyDocument;
 
@@ -30662,6 +30896,67 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
  <p>List of customer gateway devices that have a sample configuration file available for use.</p>
  */
 @property (nonatomic, strong) NSArray<AWSEC2VpnConnectionDeviceType *> * _Nullable vpnConnectionDeviceTypes;
+
+@end
+
+/**
+ 
+ */
+@interface AWSEC2GetVpnTunnelReplacementStatusRequest : AWSRequest
+
+
+/**
+ <p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
+
+/**
+ <p>The ID of the Site-to-Site VPN connection. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable vpnConnectionId;
+
+/**
+ <p>The external IP address of the VPN tunnel.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable vpnTunnelOutsideIpAddress;
+
+@end
+
+/**
+ 
+ */
+@interface AWSEC2GetVpnTunnelReplacementStatusResult : AWSModel
+
+
+/**
+ <p>The ID of the customer gateway.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable customerGatewayId;
+
+/**
+ <p>Get details of pending tunnel endpoint maintenance.</p>
+ */
+@property (nonatomic, strong) AWSEC2MaintenanceDetails * _Nullable maintenanceDetails;
+
+/**
+ <p>The ID of the transit gateway associated with the VPN connection.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable transitGatewayId;
+
+/**
+ <p>The ID of the Site-to-Site VPN connection. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable vpnConnectionId;
+
+/**
+ <p>The ID of the virtual private gateway.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable vpnGatewayId;
+
+/**
+ <p>The external IP address of the VPN tunnel.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable vpnTunnelOutsideIpAddress;
 
 @end
 
@@ -32345,7 +32640,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSArray<AWSEC2InstanceBlockDeviceMapping *> * _Nullable blockDeviceMappings;
 
 /**
- <p>The boot mode of the instance. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-boot.html">Boot modes</a> in the <i>Amazon EC2 User Guide</i>.</p>
+ <p>The boot mode that was specified by the AMI. If the value is <code>uefi-preferred</code>, the AMI supports both UEFI and Legacy BIOS. The <code>currentInstanceBootMode</code> parameter is the boot mode that is used to boot the instance at launch or start.</p><note><p>The operating system contained in the AMI must be configured to support the specified boot mode.</p></note><p>For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-boot.html">Boot modes</a> in the <i>Amazon EC2 User Guide</i>.</p>
  */
 @property (nonatomic, assign) AWSEC2BootModeValues bootMode;
 
@@ -32370,6 +32665,11 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) AWSEC2CpuOptions * _Nullable cpuOptions;
 
 /**
+ <p>The boot mode that is used to boot the instance at launch or start. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-boot.html">Boot modes</a> in the <i>Amazon EC2 User Guide</i>.</p>
+ */
+@property (nonatomic, assign) AWSEC2InstanceBootModeValues currentInstanceBootMode;
+
+/**
  <p>Indicates whether the instance is optimized for Amazon EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable ebsOptimized;
@@ -32380,7 +32680,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSArray<AWSEC2ElasticGpuAssociation *> * _Nullable elasticGpuAssociations;
 
 /**
- <p> The elastic inference accelerator associated with the instance.</p>
+ <p>The elastic inference accelerator associated with the instance.</p>
  */
 @property (nonatomic, strong) NSArray<AWSEC2ElasticInferenceAcceleratorAssociation *> * _Nullable elasticInferenceAcceleratorAssociations;
 
@@ -37205,6 +37505,29 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @end
 
 /**
+ <p>Details for Site-to-Site VPN tunnel endpoint maintenance events.</p>
+ */
+@interface AWSEC2MaintenanceDetails : AWSModel
+
+
+/**
+ <p>Timestamp of last applied maintenance.</p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable lastMaintenanceApplied;
+
+/**
+ <p>The timestamp after which Amazon Web Services will automatically apply maintenance.</p>
+ */
+@property (nonatomic, strong) NSDate * _Nullable maintenanceAutoAppliedAfter;
+
+/**
+ <p>Verify existence of a pending maintenance.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable pendingMaintenance;
+
+@end
+
+/**
  <p>Describes a managed prefix list.</p>
  */
 @interface AWSEC2ManagedPrefixList : AWSModel
@@ -39594,7 +39917,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @end
 
 /**
- <p>Options for a network-interface type Verified Access endpoint.</p>
+ <p>Describes the options when modifying a Verified Access endpoint with the <code>network-interface</code> type.</p>
  */
 @interface AWSEC2ModifyVerifiedAccessEndpointEniOptions : AWSModel
 
@@ -39651,7 +39974,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The Amazon Web Services Verified Access policy document.</p>
+ <p>The Verified Access policy document.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable policyDocument;
 
@@ -39661,7 +39984,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable policyEnabled;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access endpoint.</p>
+ <p>The ID of the Verified Access endpoint.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessEndpointId;
 
@@ -39674,7 +39997,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The Amazon Web Services Verified Access policy document.</p>
+ <p>The Verified Access policy document.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable policyDocument;
 
@@ -39697,7 +40020,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>A description for the Amazon Web Services Verified Access endpoint.</p>
+ <p>A description for the Verified Access endpoint.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -39707,7 +40030,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The load balancer details if creating the Amazon Web Services Verified Access endpoint as <code>load-balancer</code>type.</p>
+ <p>The load balancer details if creating the Verified Access endpoint as <code>load-balancer</code>type.</p>
  */
 @property (nonatomic, strong) AWSEC2ModifyVerifiedAccessEndpointLoadBalancerOptions * _Nullable loadBalancerOptions;
 
@@ -39717,12 +40040,12 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) AWSEC2ModifyVerifiedAccessEndpointEniOptions * _Nullable networkInterfaceOptions;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access endpoint.</p>
+ <p>The ID of the Verified Access endpoint.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessEndpointId;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access group.</p>
+ <p>The ID of the Verified Access group.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessGroupId;
 
@@ -39735,7 +40058,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The Amazon Web Services Verified Access endpoint details.</p>
+ <p>The Verified Access endpoint details.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessEndpoint * _Nullable verifiedAccessEndpoint;
 
@@ -39758,7 +40081,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The Amazon Web Services Verified Access policy document.</p>
+ <p>The Verified Access policy document.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable policyDocument;
 
@@ -39768,7 +40091,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable policyEnabled;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access group.</p>
+ <p>The ID of the Verified Access group.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessGroupId;
 
@@ -39781,7 +40104,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The Amazon Web Services Verified Access policy document.</p>
+ <p>The Verified Access policy document.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable policyDocument;
 
@@ -39804,7 +40127,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>A description for the Amazon Web Services Verified Access group.</p>
+ <p>A description for the Verified Access group.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -39814,12 +40137,12 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access group.</p>
+ <p>The ID of the Verified Access group.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessGroupId;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessInstanceId;
 
@@ -39832,7 +40155,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>Details of Amazon Web Services Verified Access group.</p>
+ <p>Details of Verified Access group.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessGroup * _Nullable verifiedAccessGroup;
 
@@ -39845,7 +40168,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The configuration options for Amazon Web Services Verified Access instances.</p>
+ <p>The configuration options for Verified Access instances.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessLogOptions * _Nullable accessLogs;
 
@@ -39860,7 +40183,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessInstanceId;
 
@@ -39873,7 +40196,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The logging configuration for Amazon Web Services Verified Access instance.</p>
+ <p>The logging configuration for the Verified Access instance.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessInstanceLoggingConfiguration * _Nullable loggingConfiguration;
 
@@ -39891,7 +40214,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>A description for the Amazon Web Services Verified Access instance.</p>
+ <p>A description for the Verified Access instance.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -39901,7 +40224,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessInstanceId;
 
@@ -39914,22 +40237,52 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The ID of the Amazon Web Services Verified Access instance.</p>
+ <p>The ID of the Verified Access instance.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessInstance * _Nullable verifiedAccessInstance;
 
 @end
 
 /**
- <p>OpenID Connect options for an <code>oidc</code>-type, user-identity based trust provider.</p>
+ <p>Options for an OpenID Connect-compatible user-identity trust provider.</p>
  */
 @interface AWSEC2ModifyVerifiedAccessTrustProviderOidcOptions : AWSModel
 
 
 /**
+ <p>The OIDC authorization endpoint.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable authorizationEndpoint;
+
+/**
+ <p>The client identifier.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable clientId;
+
+/**
+ <p>The client secret.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable clientSecret;
+
+/**
+ <p>The OIDC issuer.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable issuer;
+
+/**
  <p>OpenID Connect (OIDC) scopes are used by an application during authentication to authorize access to a user's details. Each scope returns a specific set of user attributes.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable scope;
+
+/**
+ <p>The OIDC token endpoint.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable tokenEndpoint;
+
+/**
+ <p>The OIDC user info endpoint.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userInfoEndpoint;
 
 @end
 
@@ -39945,7 +40298,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable clientToken;
 
 /**
- <p>A description for the Amazon Web Services Verified Access trust provider.</p>
+ <p>A description for the Verified Access trust provider.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable detail;
 
@@ -39955,12 +40308,12 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
- <p>The OpenID Connect details for an <code>oidc</code>-type, user-identity based trust provider.</p>
+ <p>The options for an OpenID Connect-compatible user-identity trust provider.</p>
  */
 @property (nonatomic, strong) AWSEC2ModifyVerifiedAccessTrustProviderOidcOptions * _Nullable oidcOptions;
 
 /**
- <p>The ID of the Amazon Web Services Verified Access trust provider.</p>
+ <p>The ID of the Verified Access trust provider.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable verifiedAccessTrustProviderId;
 
@@ -39973,7 +40326,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 
 
 /**
- <p>The ID of the Amazon Web Services Verified Access trust provider.</p>
+ <p>The ID of the Verified Access trust provider.</p>
  */
 @property (nonatomic, strong) AWSEC2VerifiedAccessTrustProvider * _Nullable verifiedAccessTrustProvider;
 
@@ -40598,6 +40951,11 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
+ <p>Choose whether or not to trigger immediate tunnel replacement.</p><p>Valid values: <code>True</code> | <code>False</code></p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable skipTunnelReplacement;
+
+/**
  <p>The tunnel options to modify.</p>
  */
 @property (nonatomic, strong) AWSEC2ModifyVpnTunnelOptionsSpecification * _Nullable tunnelOptions;
@@ -40642,6 +41000,11 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
  <p>The number of seconds after which a DPD timeout occurs.</p><p>Constraints: A value greater than or equal to 30.</p><p>Default: <code>30</code></p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable DPDTimeoutSeconds;
+
+/**
+ <p>Turn on or off tunnel endpoint lifecycle control feature.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable enableTunnelLifecycleControl;
 
 /**
  <p>The IKE versions that are permitted for the VPN tunnel.</p><p>Valid values: <code>ikev1</code> | <code>ikev2</code></p>
@@ -41372,7 +41735,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSArray<AWSEC2Explanation *> * _Nullable explanations;
 
 /**
- <p>The Amazon Resource Names (ARN) of the Amazon Web Services resources that the path must traverse.</p>
+ <p>The Amazon Resource Names (ARN) of the resources that the path must traverse.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable filterInArns;
 
@@ -41450,7 +41813,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSDate * _Nullable createdDate;
 
 /**
- <p>The Amazon Web Services resource that is the destination of the path.</p>
+ <p>The ID of the destination.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable destination;
 
@@ -41460,7 +41823,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable destinationArn;
 
 /**
- <p>The IP address of the Amazon Web Services resource that is the destination of the path.</p>
+ <p>The IP address of the destination.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable destinationIp;
 
@@ -41468,6 +41831,16 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
  <p>The destination port.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable destinationPort;
+
+/**
+ <p>Scopes the analysis to network paths that match specific filters at the destination.</p>
+ */
+@property (nonatomic, strong) AWSEC2PathFilter * _Nullable filterAtDestination;
+
+/**
+ <p>Scopes the analysis to network paths that match specific filters at the source.</p>
+ */
+@property (nonatomic, strong) AWSEC2PathFilter * _Nullable filterAtSource;
 
 /**
  <p>The Amazon Resource Name (ARN) of the path.</p>
@@ -41485,7 +41858,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, assign) AWSEC2Protocols protocols;
 
 /**
- <p>The Amazon Web Services resource that is the source of the path.</p>
+ <p>The ID of the source.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable source;
 
@@ -41495,7 +41868,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable sourceArn;
 
 /**
- <p>The IP address of the Amazon Web Services resource that is the source of the path.</p>
+ <p>The IP address of the source.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable sourceIp;
 
@@ -41910,7 +42283,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @end
 
 /**
- <p>Options for OIDC-based, user-identity type trust provider.</p>
+ <p>Describes the options for an OpenID Connect-compatible user-identity trust provider.</p>
  */
 @interface AWSEC2OidcOptions : AWSModel
 
@@ -42156,6 +42529,16 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSArray<AWSEC2Explanation *> * _Nullable explanations;
 
 /**
+ <p>The Network Firewall stateful rule.</p>
+ */
+@property (nonatomic, strong) AWSEC2FirewallStatefulRule * _Nullable firewallStatefulRule;
+
+/**
+ <p>The Network Firewall stateless rule.</p>
+ */
+@property (nonatomic, strong) AWSEC2FirewallStatelessRule * _Nullable firewallStatelessRule;
+
+/**
  <p>The inbound header.</p>
  */
 @property (nonatomic, strong) AWSEC2AnalysisPacketHeader * _Nullable inboundHeader;
@@ -42181,6 +42564,11 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable sequenceNumber;
 
 /**
+ <p>The name of the VPC endpoint service.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable serviceName;
+
+/**
  <p>The source VPC.</p>
  */
 @property (nonatomic, strong) AWSEC2AnalysisComponent * _Nullable sourceVpc;
@@ -42204,6 +42592,62 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
  <p>The component VPC.</p>
  */
 @property (nonatomic, strong) AWSEC2AnalysisComponent * _Nullable vpc;
+
+@end
+
+/**
+ <p>Describes a set of filters for a path analysis. Use path filters to scope the analysis when there can be multiple resulting paths.</p>
+ */
+@interface AWSEC2PathFilter : AWSModel
+
+
+/**
+ <p>The destination IPv4 address.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable destinationAddress;
+
+/**
+ <p>The destination port range.</p>
+ */
+@property (nonatomic, strong) AWSEC2FilterPortRange * _Nullable destinationPortRange;
+
+/**
+ <p>The source IPv4 address.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable sourceAddress;
+
+/**
+ <p>The source port range.</p>
+ */
+@property (nonatomic, strong) AWSEC2FilterPortRange * _Nullable sourcePortRange;
+
+@end
+
+/**
+ <p>Describes a set of filters for a path analysis. Use path filters to scope the analysis when there can be multiple resulting paths.</p>
+ */
+@interface AWSEC2PathRequestFilter : AWSModel
+
+
+/**
+ <p>The destination IPv4 address.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable destinationAddress;
+
+/**
+ <p>The destination port range.</p>
+ */
+@property (nonatomic, strong) AWSEC2RequestFilterPortRange * _Nullable destinationPortRange;
+
+/**
+ <p>The source IPv4 address.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable sourceAddress;
+
+/**
+ <p>The source port range.</p>
+ */
+@property (nonatomic, strong) AWSEC2RequestFilterPortRange * _Nullable sourcePortRange;
 
 @end
 
@@ -43635,7 +44079,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSArray<AWSEC2BlockDeviceMapping *> * _Nullable blockDeviceMappings;
 
 /**
- <p>The boot mode of the AMI. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-boot.html">Boot modes</a> in the <i>Amazon EC2 User Guide</i>.</p>
+ <p>The boot mode of the AMI. A value of <code>uefi-preferred</code> indicates that the AMI supports both UEFI and Legacy BIOS.</p><note><p>The operating system contained in the AMI must be configured to support the specified boot mode.</p></note><p>For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ami-boot.html">Boot modes</a> in the <i>Amazon EC2 User Guide</i>.</p>
  */
 @property (nonatomic, assign) AWSEC2BootModeValues bootMode;
 
@@ -44508,6 +44952,47 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 /**
  
  */
+@interface AWSEC2ReplaceVpnTunnelRequest : AWSRequest
+
+
+/**
+ <p>Trigger pending tunnel endpoint maintenance.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable applyPendingMaintenance;
+
+/**
+ <p>Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is <code>DryRunOperation</code>. Otherwise, it is <code>UnauthorizedOperation</code>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
+
+/**
+ <p>The ID of the Site-to-Site VPN connection. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable vpnConnectionId;
+
+/**
+ <p>The external IP address of the VPN tunnel.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable vpnTunnelOutsideIpAddress;
+
+@end
+
+/**
+ 
+ */
+@interface AWSEC2ReplaceVpnTunnelResult : AWSModel
+
+
+/**
+ <p>Confirmation of replace tunnel operation.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable returned;
+
+@end
+
+/**
+ 
+ */
 @interface AWSEC2ReportInstanceStatusRequest : AWSRequest
 
 
@@ -44545,6 +45030,24 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
  <p>The status of all instances listed.</p>
  */
 @property (nonatomic, assign) AWSEC2ReportStatusType status;
+
+@end
+
+/**
+ <p>Describes a port range.</p>
+ */
+@interface AWSEC2RequestFilterPortRange : AWSModel
+
+
+/**
+ <p>The first port in the range.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable fromPort;
+
+/**
+ <p>The last port in the range.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable toPort;
 
 @end
 
@@ -46466,6 +46969,60 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @end
 
 /**
+ <p>Describes the rule options for a stateful rule group.</p>
+ */
+@interface AWSEC2RuleGroupRuleOptionsPair : AWSModel
+
+
+/**
+ <p>The ARN of the rule group.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable ruleGroupArn;
+
+/**
+ <p>The rule options.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSEC2RuleOption *> * _Nullable ruleOptions;
+
+@end
+
+/**
+ <p>Describes the type of a stateful rule group.</p>
+ */
+@interface AWSEC2RuleGroupTypePair : AWSModel
+
+
+/**
+ <p>The ARN of the rule group.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable ruleGroupArn;
+
+/**
+ <p>The rule group type. The possible values are <code>Domain List</code> and <code>Suricata</code>.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable ruleGroupType;
+
+@end
+
+/**
+ <p>Describes additional settings for a stateful rule.</p>
+ */
+@interface AWSEC2RuleOption : AWSModel
+
+
+/**
+ <p>The Suricata keyword.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable keyword;
+
+/**
+ <p>The settings for the keyword.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable settings;
+
+@end
+
+/**
  <p>Describes the monitoring of an instance.</p>
  Required parameters: [Enabled]
  */
@@ -46541,7 +47098,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSArray<AWSEC2ElasticGpuSpecification *> * _Nullable elasticGpuSpecification;
 
 /**
- <p>An elastic inference accelerator to associate with the instance. Elastic inference accelerators are a resource you can attach to your Amazon EC2 instances to accelerate your Deep Learning (DL) inference workloads.</p><p>You cannot specify accelerators from different generations in the same request.</p>
+ <p>An elastic inference accelerator to associate with the instance. Elastic inference accelerators are a resource you can attach to your Amazon EC2 instances to accelerate your Deep Learning (DL) inference workloads.</p><p>You cannot specify accelerators from different generations in the same request.</p><note><p>Starting April 15, 2023, Amazon Web Services will not onboard new customers to Amazon Elastic Inference (EI), and will help current customers migrate their workloads to options that offer better price and performance. After April 15, 2023, new customers will not be able to launch instances with Amazon EI accelerators in Amazon SageMaker, Amazon ECS, or Amazon EC2. However, customers who have used Amazon EI at least once during the past 30-day period are considered current customers and will be able to continue using the service.</p></note>
  */
 @property (nonatomic, strong) NSArray<AWSEC2ElasticInferenceAccelerator *> * _Nullable elasticInferenceAccelerators;
 
@@ -51832,6 +52389,11 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSNumber * _Nullable dpdTimeoutSeconds;
 
 /**
+ <p>Status of tunnel endpoint lifecycle control feature.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable enableTunnelLifecycleControl;
+
+/**
  <p>The IKE versions that are permitted for the VPN tunnel.</p>
  */
 @property (nonatomic, strong) NSArray<AWSEC2IKEVersionsListValue *> * _Nullable ikeVersions;
@@ -52930,7 +53492,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable detail;
 
 /**
- <p>The options for device-identity type trust provider.</p>
+ <p>The options for device-identity trust provider.</p>
  */
 @property (nonatomic, strong) AWSEC2DeviceOptions * _Nullable deviceOptions;
 
@@ -52945,7 +53507,7 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
 @property (nonatomic, strong) NSString * _Nullable lastUpdatedTime;
 
 /**
- <p>The OpenID Connect details for an <code>oidc</code>-type, user-identity based trust provider.</p>
+ <p>The options for an OpenID Connect-compatible user-identity trust provider.</p>
  */
 @property (nonatomic, strong) AWSEC2OidcOptions * _Nullable oidcOptions;
 
@@ -54233,6 +54795,11 @@ typedef NS_ENUM(NSInteger, AWSEC2scope) {
  <p>The number of seconds after which a DPD timeout occurs.</p><p>Constraints: A value greater than or equal to 30.</p><p>Default: <code>30</code></p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable DPDTimeoutSeconds;
+
+/**
+ <p>Turn on or off tunnel endpoint lifecycle control feature.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable enableTunnelLifecycleControl;
 
 /**
  <p>The IKE versions that are permitted for the VPN tunnel.</p><p>Valid values: <code>ikev1</code> | <code>ikev2</code></p>

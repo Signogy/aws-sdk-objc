@@ -425,7 +425,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)allocateHosts:(AWSEC2AllocateHostsRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2AllocateHostsResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Allocate a CIDR from an IPAM pool. In IPAM, an allocation is a CIDR assignment from an IPAM pool to another IPAM pool or to a resource. For more information, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/allocate-cidrs-ipam.html">Allocate CIDRs</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>
+ <p>Allocate a CIDR from an IPAM pool. In IPAM, an allocation is a CIDR assignment from an IPAM pool to another IPAM pool or to a resource. For more information, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/allocate-cidrs-ipam.html">Allocate CIDRs</a> in the <i>Amazon VPC IPAM User Guide</i>.</p><note><p>This action creates an allocation with strong consistency. The returned CIDR will not overlap with any other allocations from the same pool.</p></note>
  
  @param request A container for the necessary parameters to execute the AllocateIpamPoolCidr service method.
 
@@ -437,7 +437,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2AllocateIpamPoolCidrResult *> *)allocateIpamPoolCidr:(AWSEC2AllocateIpamPoolCidrRequest *)request;
 
 /**
- <p>Allocate a CIDR from an IPAM pool. In IPAM, an allocation is a CIDR assignment from an IPAM pool to another IPAM pool or to a resource. For more information, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/allocate-cidrs-ipam.html">Allocate CIDRs</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>
+ <p>Allocate a CIDR from an IPAM pool. In IPAM, an allocation is a CIDR assignment from an IPAM pool to another IPAM pool or to a resource. For more information, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/allocate-cidrs-ipam.html">Allocate CIDRs</a> in the <i>Amazon VPC IPAM User Guide</i>.</p><note><p>This action creates an allocation with strong consistency. The returned CIDR will not overlap with any other allocations from the same pool.</p></note>
  
  @param request A container for the necessary parameters to execute the AllocateIpamPoolCidr service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -994,7 +994,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)attachNetworkInterface:(AWSEC2AttachNetworkInterfaceRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2AttachNetworkInterfaceResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>A trust provider is a third-party entity that creates, maintains, and manages identity information for users and devices. One or more trust providers can be attached to an Amazon Web Services Verified Access instance.</p>
+ <p>Attaches the specified Amazon Web Services Verified Access trust provider to the specified Amazon Web Services Verified Access instance.</p>
  
  @param request A container for the necessary parameters to execute the AttachVerifiedAccessTrustProvider service method.
 
@@ -1006,7 +1006,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2AttachVerifiedAccessTrustProviderResult *> *)attachVerifiedAccessTrustProvider:(AWSEC2AttachVerifiedAccessTrustProviderRequest *)request;
 
 /**
- <p>A trust provider is a third-party entity that creates, maintains, and manages identity information for users and devices. One or more trust providers can be attached to an Amazon Web Services Verified Access instance.</p>
+ <p>Attaches the specified Amazon Web Services Verified Access trust provider to the specified Amazon Web Services Verified Access instance.</p>
  
  @param request A container for the necessary parameters to execute the AttachVerifiedAccessTrustProvider service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -2385,7 +2385,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)createNetworkInsightsAccessScope:(AWSEC2CreateNetworkInsightsAccessScopeRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2CreateNetworkInsightsAccessScopeResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Creates a path to analyze for reachability.</p><p>Reachability Analyzer enables you to analyze and debug network reachability between two resources in your virtual private cloud (VPC). For more information, see <a href="https://docs.aws.amazon.com/vpc/latest/reachability/">What is Reachability Analyzer</a>.</p>
+ <p>Creates a path to analyze for reachability.</p><p>Reachability Analyzer enables you to analyze and debug network reachability between two resources in your virtual private cloud (VPC). For more information, see the <a href="https://docs.aws.amazon.com/vpc/latest/reachability/">Reachability Analyzer Guide</a>.</p>
  
  @param request A container for the necessary parameters to execute the CreateNetworkInsightsPath service method.
 
@@ -2397,7 +2397,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2CreateNetworkInsightsPathResult *> *)createNetworkInsightsPath:(AWSEC2CreateNetworkInsightsPathRequest *)request;
 
 /**
- <p>Creates a path to analyze for reachability.</p><p>Reachability Analyzer enables you to analyze and debug network reachability between two resources in your virtual private cloud (VPC). For more information, see <a href="https://docs.aws.amazon.com/vpc/latest/reachability/">What is Reachability Analyzer</a>.</p>
+ <p>Creates a path to analyze for reachability.</p><p>Reachability Analyzer enables you to analyze and debug network reachability between two resources in your virtual private cloud (VPC). For more information, see the <a href="https://docs.aws.amazon.com/vpc/latest/reachability/">Reachability Analyzer Guide</a>.</p>
  
  @param request A container for the necessary parameters to execute the CreateNetworkInsightsPath service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -2660,7 +2660,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)createSecurityGroup:(AWSEC2CreateSecurityGroupRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2CreateSecurityGroupResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Creates a snapshot of an EBS volume and stores it in Amazon S3. You can use snapshots for backups, to make copies of EBS volumes, and to save data before shutting down an instance.</p><p>You can create snapshots of volumes in a Region and volumes on an Outpost. If you create a snapshot of a volume in a Region, the snapshot must be stored in the same Region as the volume. If you create a snapshot of a volume on an Outpost, the snapshot can be stored on the same Outpost as the volume, or in the Region for that Outpost.</p><p>When a snapshot is created, any Amazon Web Services Marketplace product codes that are associated with the source volume are propagated to the snapshot.</p><p>You can take a snapshot of an attached volume that is in use. However, snapshots only capture data that has been written to your Amazon EBS volume at the time the snapshot command is issued; this might exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the volume long enough to take a snapshot, your snapshot should be complete. However, if you cannot pause all file writes to the volume, you should unmount the volume from within the instance, issue the snapshot command, and then remount the volume to ensure a consistent and complete snapshot. You may remount and use your volume while the snapshot status is <code>pending</code>.</p><p>To create a snapshot for Amazon EBS volumes that serve as root devices, you should stop the instance before taking the snapshot.</p><p>Snapshots that are taken from encrypted volumes are automatically encrypted. Volumes that are created from encrypted snapshots are also automatically encrypted. Your encrypted volumes and any associated snapshots always remain protected.</p><p>You can tag your snapshots during creation. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tag your Amazon EC2 resources</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p><p>For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html">Amazon Elastic Block Store</a> and <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html">Amazon EBS encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>
+ <p>Creates a snapshot of an EBS volume and stores it in Amazon S3. You can use snapshots for backups, to make copies of EBS volumes, and to save data before shutting down an instance.</p><p>You can create snapshots of volumes in a Region and volumes on an Outpost. If you create a snapshot of a volume in a Region, the snapshot must be stored in the same Region as the volume. If you create a snapshot of a volume on an Outpost, the snapshot can be stored on the same Outpost as the volume, or in the Region for that Outpost.</p><p>When a snapshot is created, any Amazon Web Services Marketplace product codes that are associated with the source volume are propagated to the snapshot.</p><p>You can take a snapshot of an attached volume that is in use. However, snapshots only capture data that has been written to your Amazon EBS volume at the time the snapshot command is issued; this might exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the volume long enough to take a snapshot, your snapshot should be complete. However, if you cannot pause all file writes to the volume, you should unmount the volume from within the instance, issue the snapshot command, and then remount the volume to ensure a consistent and complete snapshot. You may remount and use your volume while the snapshot status is <code>pending</code>.</p><p>When you create a snapshot for an EBS volume that serves as a root device, we recommend that you stop the instance before taking the snapshot.</p><p>Snapshots that are taken from encrypted volumes are automatically encrypted. Volumes that are created from encrypted snapshots are also automatically encrypted. Your encrypted volumes and any associated snapshots always remain protected.</p><p>You can tag your snapshots during creation. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tag your Amazon EC2 resources</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p><p>For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html">Amazon Elastic Block Store</a> and <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html">Amazon EBS encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>
  
  @param request A container for the necessary parameters to execute the CreateSnapshot service method.
 
@@ -2672,7 +2672,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2Snapshot *> *)createSnapshot:(AWSEC2CreateSnapshotRequest *)request;
 
 /**
- <p>Creates a snapshot of an EBS volume and stores it in Amazon S3. You can use snapshots for backups, to make copies of EBS volumes, and to save data before shutting down an instance.</p><p>You can create snapshots of volumes in a Region and volumes on an Outpost. If you create a snapshot of a volume in a Region, the snapshot must be stored in the same Region as the volume. If you create a snapshot of a volume on an Outpost, the snapshot can be stored on the same Outpost as the volume, or in the Region for that Outpost.</p><p>When a snapshot is created, any Amazon Web Services Marketplace product codes that are associated with the source volume are propagated to the snapshot.</p><p>You can take a snapshot of an attached volume that is in use. However, snapshots only capture data that has been written to your Amazon EBS volume at the time the snapshot command is issued; this might exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the volume long enough to take a snapshot, your snapshot should be complete. However, if you cannot pause all file writes to the volume, you should unmount the volume from within the instance, issue the snapshot command, and then remount the volume to ensure a consistent and complete snapshot. You may remount and use your volume while the snapshot status is <code>pending</code>.</p><p>To create a snapshot for Amazon EBS volumes that serve as root devices, you should stop the instance before taking the snapshot.</p><p>Snapshots that are taken from encrypted volumes are automatically encrypted. Volumes that are created from encrypted snapshots are also automatically encrypted. Your encrypted volumes and any associated snapshots always remain protected.</p><p>You can tag your snapshots during creation. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tag your Amazon EC2 resources</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p><p>For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html">Amazon Elastic Block Store</a> and <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html">Amazon EBS encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>
+ <p>Creates a snapshot of an EBS volume and stores it in Amazon S3. You can use snapshots for backups, to make copies of EBS volumes, and to save data before shutting down an instance.</p><p>You can create snapshots of volumes in a Region and volumes on an Outpost. If you create a snapshot of a volume in a Region, the snapshot must be stored in the same Region as the volume. If you create a snapshot of a volume on an Outpost, the snapshot can be stored on the same Outpost as the volume, or in the Region for that Outpost.</p><p>When a snapshot is created, any Amazon Web Services Marketplace product codes that are associated with the source volume are propagated to the snapshot.</p><p>You can take a snapshot of an attached volume that is in use. However, snapshots only capture data that has been written to your Amazon EBS volume at the time the snapshot command is issued; this might exclude any data that has been cached by any applications or the operating system. If you can pause any file systems on the volume long enough to take a snapshot, your snapshot should be complete. However, if you cannot pause all file writes to the volume, you should unmount the volume from within the instance, issue the snapshot command, and then remount the volume to ensure a consistent and complete snapshot. You may remount and use your volume while the snapshot status is <code>pending</code>.</p><p>When you create a snapshot for an EBS volume that serves as a root device, we recommend that you stop the instance before taking the snapshot.</p><p>Snapshots that are taken from encrypted volumes are automatically encrypted. Volumes that are created from encrypted snapshots are also automatically encrypted. Your encrypted volumes and any associated snapshots always remain protected.</p><p>You can tag your snapshots during creation. For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html">Tag your Amazon EC2 resources</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p><p>For more information, see <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html">Amazon Elastic Block Store</a> and <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html">Amazon EBS encryption</a> in the <i>Amazon Elastic Compute Cloud User Guide</i>.</p>
  
  @param request A container for the necessary parameters to execute the CreateSnapshot service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -3232,7 +3232,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)createVerifiedAccessEndpoint:(AWSEC2CreateVerifiedAccessEndpointRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2CreateVerifiedAccessEndpointResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>An Amazon Web Services Verified Access group is a collection of Amazon Web Services Verified Access endpoints who's associated applications have similar security requirements. Each instance within an Amazon Web Services Verified Access group shares an Amazon Web Services Verified Access policy. For example, you can group all Amazon Web Services Verified Access instances associated with “sales” applications together and use one common Amazon Web Services Verified Access policy.</p>
+ <p>An Amazon Web Services Verified Access group is a collection of Amazon Web Services Verified Access endpoints who's associated applications have similar security requirements. Each instance within a Verified Access group shares an Verified Access policy. For example, you can group all Verified Access instances associated with "sales" applications together and use one common Verified Access policy.</p>
  
  @param request A container for the necessary parameters to execute the CreateVerifiedAccessGroup service method.
 
@@ -3244,7 +3244,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2CreateVerifiedAccessGroupResult *> *)createVerifiedAccessGroup:(AWSEC2CreateVerifiedAccessGroupRequest *)request;
 
 /**
- <p>An Amazon Web Services Verified Access group is a collection of Amazon Web Services Verified Access endpoints who's associated applications have similar security requirements. Each instance within an Amazon Web Services Verified Access group shares an Amazon Web Services Verified Access policy. For example, you can group all Amazon Web Services Verified Access instances associated with “sales” applications together and use one common Amazon Web Services Verified Access policy.</p>
+ <p>An Amazon Web Services Verified Access group is a collection of Amazon Web Services Verified Access endpoints who's associated applications have similar security requirements. Each instance within a Verified Access group shares an Verified Access policy. For example, you can group all Verified Access instances associated with "sales" applications together and use one common Verified Access policy.</p>
  
  @param request A container for the necessary parameters to execute the CreateVerifiedAccessGroup service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -3282,7 +3282,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)createVerifiedAccessInstance:(AWSEC2CreateVerifiedAccessInstanceRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2CreateVerifiedAccessInstanceResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>A trust provider is a third-party entity that creates, maintains, and manages identity information for users and devices. When an application request is made, the identity information sent by the trust provider will be evaluated by Amazon Web Services Verified Access, before allowing or denying the application request.</p>
+ <p>A trust provider is a third-party entity that creates, maintains, and manages identity information for users and devices. When an application request is made, the identity information sent by the trust provider is evaluated by Verified Access before allowing or denying the application request.</p>
  
  @param request A container for the necessary parameters to execute the CreateVerifiedAccessTrustProvider service method.
 
@@ -3294,7 +3294,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2CreateVerifiedAccessTrustProviderResult *> *)createVerifiedAccessTrustProvider:(AWSEC2CreateVerifiedAccessTrustProviderRequest *)request;
 
 /**
- <p>A trust provider is a third-party entity that creates, maintains, and manages identity information for users and devices. When an application request is made, the identity information sent by the trust provider will be evaluated by Amazon Web Services Verified Access, before allowing or denying the application request.</p>
+ <p>A trust provider is a third-party entity that creates, maintains, and manages identity information for users and devices. When an application request is made, the identity information sent by the trust provider is evaluated by Verified Access before allowing or denying the application request.</p>
  
  @param request A container for the necessary parameters to execute the CreateVerifiedAccessTrustProvider service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -8516,7 +8516,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)describeTrunkInterfaceAssociations:(AWSEC2DescribeTrunkInterfaceAssociationsRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2DescribeTrunkInterfaceAssociationsResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Describe Amazon Web Services Verified Access endpoints.</p>
+ <p>Describes the specified Amazon Web Services Verified Access endpoints.</p>
  
  @param request A container for the necessary parameters to execute the DescribeVerifiedAccessEndpoints service method.
 
@@ -8528,7 +8528,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2DescribeVerifiedAccessEndpointsResult *> *)describeVerifiedAccessEndpoints:(AWSEC2DescribeVerifiedAccessEndpointsRequest *)request;
 
 /**
- <p>Describe Amazon Web Services Verified Access endpoints.</p>
+ <p>Describes the specified Amazon Web Services Verified Access endpoints.</p>
  
  @param request A container for the necessary parameters to execute the DescribeVerifiedAccessEndpoints service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -8541,7 +8541,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)describeVerifiedAccessEndpoints:(AWSEC2DescribeVerifiedAccessEndpointsRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2DescribeVerifiedAccessEndpointsResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Describe details of existing Verified Access groups.</p>
+ <p>Describes the specified Verified Access groups.</p>
  
  @param request A container for the necessary parameters to execute the DescribeVerifiedAccessGroups service method.
 
@@ -8553,7 +8553,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2DescribeVerifiedAccessGroupsResult *> *)describeVerifiedAccessGroups:(AWSEC2DescribeVerifiedAccessGroupsRequest *)request;
 
 /**
- <p>Describe details of existing Verified Access groups.</p>
+ <p>Describes the specified Verified Access groups.</p>
  
  @param request A container for the necessary parameters to execute the DescribeVerifiedAccessGroups service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -8566,7 +8566,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)describeVerifiedAccessGroups:(AWSEC2DescribeVerifiedAccessGroupsRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2DescribeVerifiedAccessGroupsResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Describes the current logging configuration for the Amazon Web Services Verified Access instances.</p>
+ <p>Describes the specified Amazon Web Services Verified Access instances.</p>
  
  @param request A container for the necessary parameters to execute the DescribeVerifiedAccessInstanceLoggingConfigurations service method.
 
@@ -8578,7 +8578,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2DescribeVerifiedAccessInstanceLoggingConfigurationsResult *> *)describeVerifiedAccessInstanceLoggingConfigurations:(AWSEC2DescribeVerifiedAccessInstanceLoggingConfigurationsRequest *)request;
 
 /**
- <p>Describes the current logging configuration for the Amazon Web Services Verified Access instances.</p>
+ <p>Describes the specified Amazon Web Services Verified Access instances.</p>
  
  @param request A container for the necessary parameters to execute the DescribeVerifiedAccessInstanceLoggingConfigurations service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -8591,7 +8591,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)describeVerifiedAccessInstanceLoggingConfigurations:(AWSEC2DescribeVerifiedAccessInstanceLoggingConfigurationsRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2DescribeVerifiedAccessInstanceLoggingConfigurationsResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Describe Verified Access instances.</p>
+ <p>Describes the specified Amazon Web Services Verified Access instances.</p>
  
  @param request A container for the necessary parameters to execute the DescribeVerifiedAccessInstances service method.
 
@@ -8603,7 +8603,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2DescribeVerifiedAccessInstancesResult *> *)describeVerifiedAccessInstances:(AWSEC2DescribeVerifiedAccessInstancesRequest *)request;
 
 /**
- <p>Describe Verified Access instances.</p>
+ <p>Describes the specified Amazon Web Services Verified Access instances.</p>
  
  @param request A container for the necessary parameters to execute the DescribeVerifiedAccessInstances service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -8616,7 +8616,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)describeVerifiedAccessInstances:(AWSEC2DescribeVerifiedAccessInstancesRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2DescribeVerifiedAccessInstancesResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Describe details of existing Verified Access trust providers.</p>
+ <p>Describes the specified Amazon Web Services Verified Access trust providers.</p>
  
  @param request A container for the necessary parameters to execute the DescribeVerifiedAccessTrustProviders service method.
 
@@ -8628,7 +8628,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2DescribeVerifiedAccessTrustProvidersResult *> *)describeVerifiedAccessTrustProviders:(AWSEC2DescribeVerifiedAccessTrustProvidersRequest *)request;
 
 /**
- <p>Describe details of existing Verified Access trust providers.</p>
+ <p>Describes the specified Amazon Web Services Verified Access trust providers.</p>
  
  @param request A container for the necessary parameters to execute the DescribeVerifiedAccessTrustProviders service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -9135,7 +9135,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)detachNetworkInterface:(AWSEC2DetachNetworkInterfaceRequest *)request completionHandler:(void (^ _Nullable)(NSError * _Nullable error))completionHandler;
 
 /**
- <p>Detach a trust provider from an Amazon Web Services Verified Access instance.</p>
+ <p>Detaches the specified Amazon Web Services Verified Access trust provider from the specified Amazon Web Services Verified Access instance.</p>
  
  @param request A container for the necessary parameters to execute the DetachVerifiedAccessTrustProvider service method.
 
@@ -9147,7 +9147,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2DetachVerifiedAccessTrustProviderResult *> *)detachVerifiedAccessTrustProvider:(AWSEC2DetachVerifiedAccessTrustProviderRequest *)request;
 
 /**
- <p>Detach a trust provider from an Amazon Web Services Verified Access instance.</p>
+ <p>Detaches the specified Amazon Web Services Verified Access trust provider from the specified Amazon Web Services Verified Access instance.</p>
  
  @param request A container for the necessary parameters to execute the DetachVerifiedAccessTrustProvider service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -10742,7 +10742,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)getIpamDiscoveredResourceCidrs:(AWSEC2GetIpamDiscoveredResourceCidrsRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2GetIpamDiscoveredResourceCidrsResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Get a list of all the CIDR allocations in an IPAM pool.</p>
+ <p>Get a list of all the CIDR allocations in an IPAM pool.</p><note><p>If you use this action after <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AllocateIpamPoolCidr.html">AllocateIpamPoolCidr</a> or <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ReleaseIpamPoolAllocation.html">ReleaseIpamPoolAllocation</a>, note that all EC2 API actions follow an <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/query-api-troubleshooting.html#eventual-consistency">eventual consistency</a> model.</p></note>
  
  @param request A container for the necessary parameters to execute the GetIpamPoolAllocations service method.
 
@@ -10754,7 +10754,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2GetIpamPoolAllocationsResult *> *)getIpamPoolAllocations:(AWSEC2GetIpamPoolAllocationsRequest *)request;
 
 /**
- <p>Get a list of all the CIDR allocations in an IPAM pool.</p>
+ <p>Get a list of all the CIDR allocations in an IPAM pool.</p><note><p>If you use this action after <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_AllocateIpamPoolCidr.html">AllocateIpamPoolCidr</a> or <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ReleaseIpamPoolAllocation.html">ReleaseIpamPoolAllocation</a>, note that all EC2 API actions follow an <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/query-api-troubleshooting.html#eventual-consistency">eventual consistency</a> model.</p></note>
  
  @param request A container for the necessary parameters to execute the GetIpamPoolAllocations service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -11340,6 +11340,31 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
  @see AWSEC2GetVpnConnectionDeviceTypesResult
  */
 - (void)getVpnConnectionDeviceTypes:(AWSEC2GetVpnConnectionDeviceTypesRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2GetVpnConnectionDeviceTypesResult * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Get details of available tunnel endpoint maintenance.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetVpnTunnelReplacementStatus service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSEC2GetVpnTunnelReplacementStatusResult`.
+ 
+ @see AWSEC2GetVpnTunnelReplacementStatusRequest
+ @see AWSEC2GetVpnTunnelReplacementStatusResult
+ */
+- (AWSTask<AWSEC2GetVpnTunnelReplacementStatusResult *> *)getVpnTunnelReplacementStatus:(AWSEC2GetVpnTunnelReplacementStatusRequest *)request;
+
+/**
+ <p>Get details of available tunnel endpoint maintenance.</p>
+ 
+ @param request A container for the necessary parameters to execute the GetVpnTunnelReplacementStatus service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful.
+ 
+ @see AWSEC2GetVpnTunnelReplacementStatusRequest
+ @see AWSEC2GetVpnTunnelReplacementStatusResult
+ */
+- (void)getVpnTunnelReplacementStatus:(AWSEC2GetVpnTunnelReplacementStatusRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2GetVpnTunnelReplacementStatusResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
  <p>Uploads a client certificate revocation list to the specified Client VPN endpoint. Uploading a client certificate revocation list overwrites the existing client certificate revocation list.</p><p>Uploading a client certificate revocation list resets existing client connections.</p>
@@ -12596,7 +12621,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)modifyTransitGatewayVpcAttachment:(AWSEC2ModifyTransitGatewayVpcAttachmentRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2ModifyTransitGatewayVpcAttachmentResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Modifies the configuration of an Amazon Web Services Verified Access endpoint.</p>
+ <p>Modifies the configuration of the specified Amazon Web Services Verified Access endpoint.</p>
  
  @param request A container for the necessary parameters to execute the ModifyVerifiedAccessEndpoint service method.
 
@@ -12608,7 +12633,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2ModifyVerifiedAccessEndpointResult *> *)modifyVerifiedAccessEndpoint:(AWSEC2ModifyVerifiedAccessEndpointRequest *)request;
 
 /**
- <p>Modifies the configuration of an Amazon Web Services Verified Access endpoint.</p>
+ <p>Modifies the configuration of the specified Amazon Web Services Verified Access endpoint.</p>
  
  @param request A container for the necessary parameters to execute the ModifyVerifiedAccessEndpoint service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -12621,7 +12646,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)modifyVerifiedAccessEndpoint:(AWSEC2ModifyVerifiedAccessEndpointRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2ModifyVerifiedAccessEndpointResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Modifies the specified Verified Access endpoint policy.</p>
+ <p>Modifies the specified Amazon Web Services Verified Access endpoint policy.</p>
  
  @param request A container for the necessary parameters to execute the ModifyVerifiedAccessEndpointPolicy service method.
 
@@ -12633,7 +12658,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2ModifyVerifiedAccessEndpointPolicyResult *> *)modifyVerifiedAccessEndpointPolicy:(AWSEC2ModifyVerifiedAccessEndpointPolicyRequest *)request;
 
 /**
- <p>Modifies the specified Verified Access endpoint policy.</p>
+ <p>Modifies the specified Amazon Web Services Verified Access endpoint policy.</p>
  
  @param request A container for the necessary parameters to execute the ModifyVerifiedAccessEndpointPolicy service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -12646,7 +12671,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)modifyVerifiedAccessEndpointPolicy:(AWSEC2ModifyVerifiedAccessEndpointPolicyRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2ModifyVerifiedAccessEndpointPolicyResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Modifies the specified Verified Access group configuration.</p>
+ <p>Modifies the specified Amazon Web Services Verified Access group configuration.</p>
  
  @param request A container for the necessary parameters to execute the ModifyVerifiedAccessGroup service method.
 
@@ -12658,7 +12683,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2ModifyVerifiedAccessGroupResult *> *)modifyVerifiedAccessGroup:(AWSEC2ModifyVerifiedAccessGroupRequest *)request;
 
 /**
- <p>Modifies the specified Verified Access group configuration.</p>
+ <p>Modifies the specified Amazon Web Services Verified Access group configuration.</p>
  
  @param request A container for the necessary parameters to execute the ModifyVerifiedAccessGroup service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -12671,7 +12696,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)modifyVerifiedAccessGroup:(AWSEC2ModifyVerifiedAccessGroupRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2ModifyVerifiedAccessGroupResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Modifies the specified Verified Access group policy.</p>
+ <p>Modifies the specified Amazon Web Services Verified Access group policy.</p>
  
  @param request A container for the necessary parameters to execute the ModifyVerifiedAccessGroupPolicy service method.
 
@@ -12683,7 +12708,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2ModifyVerifiedAccessGroupPolicyResult *> *)modifyVerifiedAccessGroupPolicy:(AWSEC2ModifyVerifiedAccessGroupPolicyRequest *)request;
 
 /**
- <p>Modifies the specified Verified Access group policy.</p>
+ <p>Modifies the specified Amazon Web Services Verified Access group policy.</p>
  
  @param request A container for the necessary parameters to execute the ModifyVerifiedAccessGroupPolicy service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -12696,7 +12721,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)modifyVerifiedAccessGroupPolicy:(AWSEC2ModifyVerifiedAccessGroupPolicyRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2ModifyVerifiedAccessGroupPolicyResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Modifies the configuration of the specified Verified Access instance.</p>
+ <p>Modifies the configuration of the specified Amazon Web Services Verified Access instance.</p>
  
  @param request A container for the necessary parameters to execute the ModifyVerifiedAccessInstance service method.
 
@@ -12708,7 +12733,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2ModifyVerifiedAccessInstanceResult *> *)modifyVerifiedAccessInstance:(AWSEC2ModifyVerifiedAccessInstanceRequest *)request;
 
 /**
- <p>Modifies the configuration of the specified Verified Access instance.</p>
+ <p>Modifies the configuration of the specified Amazon Web Services Verified Access instance.</p>
  
  @param request A container for the necessary parameters to execute the ModifyVerifiedAccessInstance service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -13634,7 +13659,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (void)releaseHosts:(AWSEC2ReleaseHostsRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2ReleaseHostsResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
- <p>Release an allocation within an IPAM pool. You can only use this action to release manual allocations. To remove an allocation for a resource without deleting the resource, set its monitored state to false using <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyIpamResourceCidr.html">ModifyIpamResourceCidr</a>. For more information, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/release-pool-alloc-ipam.html">Release an allocation</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>
+ <p>Release an allocation within an IPAM pool. You can only use this action to release manual allocations. To remove an allocation for a resource without deleting the resource, set its monitored state to false using <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyIpamResourceCidr.html">ModifyIpamResourceCidr</a>. For more information, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/release-pool-alloc-ipam.html">Release an allocation</a> in the <i>Amazon VPC IPAM User Guide</i>. </p><note><p>All EC2 API actions follow an <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/query-api-troubleshooting.html#eventual-consistency">eventual consistency</a> model.</p></note>
  
  @param request A container for the necessary parameters to execute the ReleaseIpamPoolAllocation service method.
 
@@ -13646,7 +13671,7 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
 - (AWSTask<AWSEC2ReleaseIpamPoolAllocationResult *> *)releaseIpamPoolAllocation:(AWSEC2ReleaseIpamPoolAllocationRequest *)request;
 
 /**
- <p>Release an allocation within an IPAM pool. You can only use this action to release manual allocations. To remove an allocation for a resource without deleting the resource, set its monitored state to false using <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyIpamResourceCidr.html">ModifyIpamResourceCidr</a>. For more information, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/release-pool-alloc-ipam.html">Release an allocation</a> in the <i>Amazon VPC IPAM User Guide</i>. </p>
+ <p>Release an allocation within an IPAM pool. You can only use this action to release manual allocations. To remove an allocation for a resource without deleting the resource, set its monitored state to false using <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_ModifyIpamResourceCidr.html">ModifyIpamResourceCidr</a>. For more information, see <a href="https://docs.aws.amazon.com/vpc/latest/ipam/release-pool-alloc-ipam.html">Release an allocation</a> in the <i>Amazon VPC IPAM User Guide</i>. </p><note><p>All EC2 API actions follow an <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/query-api-troubleshooting.html#eventual-consistency">eventual consistency</a> model.</p></note>
  
  @param request A container for the necessary parameters to execute the ReleaseIpamPoolAllocation service method.
  @param completionHandler The completion handler to call when the load request is complete.
@@ -13801,6 +13826,31 @@ FOUNDATION_EXPORT NSString *const AWSEC2SDKVersion;
  @see AWSEC2ReplaceTransitGatewayRouteResult
  */
 - (void)replaceTransitGatewayRoute:(AWSEC2ReplaceTransitGatewayRouteRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2ReplaceTransitGatewayRouteResult * _Nullable response, NSError * _Nullable error))completionHandler;
+
+/**
+ <p>Trigger replacement of specified VPN tunnel.</p>
+ 
+ @param request A container for the necessary parameters to execute the ReplaceVpnTunnel service method.
+
+ @return An instance of `AWSTask`. On successful execution, `task.result` will contain an instance of `AWSEC2ReplaceVpnTunnelResult`.
+ 
+ @see AWSEC2ReplaceVpnTunnelRequest
+ @see AWSEC2ReplaceVpnTunnelResult
+ */
+- (AWSTask<AWSEC2ReplaceVpnTunnelResult *> *)replaceVpnTunnel:(AWSEC2ReplaceVpnTunnelRequest *)request;
+
+/**
+ <p>Trigger replacement of specified VPN tunnel.</p>
+ 
+ @param request A container for the necessary parameters to execute the ReplaceVpnTunnel service method.
+ @param completionHandler The completion handler to call when the load request is complete.
+                          `response` - A response object, or `nil` if the request failed.
+                          `error` - An error object that indicates why the request failed, or `nil` if the request was successful.
+ 
+ @see AWSEC2ReplaceVpnTunnelRequest
+ @see AWSEC2ReplaceVpnTunnelResult
+ */
+- (void)replaceVpnTunnel:(AWSEC2ReplaceVpnTunnelRequest *)request completionHandler:(void (^ _Nullable)(AWSEC2ReplaceVpnTunnelResult * _Nullable response, NSError * _Nullable error))completionHandler;
 
 /**
  <p>Submits feedback about the status of an instance. The instance must be in the <code>running</code> state. If your experience with the instance differs from the instance status returned by <a>DescribeInstanceStatus</a>, use <a>ReportInstanceStatus</a> to report your experience with the instance. Amazon EC2 collects this information to improve the accuracy of status checks.</p><p>Use of this action does not change the value returned by <a>DescribeInstanceStatus</a>.</p>
