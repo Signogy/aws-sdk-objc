@@ -1,8 +1,57 @@
+---
+
+MOVE THIS SECTION TO THE CORRECT LOCATION
+
+### Misc. Updates
+
+- Model updates for the following services
+---AWSConnect
+---
+
+MOVE THIS SECTION TO THE CORRECT LOCATION
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSTranslate
+  - AWSPinpoint
+  - AWSEC2
+  - AWSConnect
+  - AWSSTS
+  - AWSRekognition
+
 # AWS Mobile SDK for iOS CHANGELOG
 
 ## Unreleased
 
 -Features for next release
+
+## 2.33.0
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSConnect
+  - AWSSTS
+
+## 2.32.0
+
+### New features
+- **AWSKinesisVideoWebRTCStorage**
+  - Adding new framework for Kinesis Video WebRTC Storage
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSSQS
+  - AWSEC2
+  - **Breaking Changes** to AWSChimeSDKMessaging
+  - AWSConnect
+  - AWSPinpoint
+  - AWSLambda
+  - AWSRekognition
+  - AWSIoT
+  - AWSKMS
 
 ## 2.31.1
 
