@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -86,6 +86,7 @@
 - (void) test_AWSIoTCancelJobResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCertificate API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCertificateDescription API_AVAILABLE(ios(11));
+- (void) test_AWSIoTCertificateProviderSummary API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCertificateValidity API_AVAILABLE(ios(11));
 - (void) test_AWSIoTClearDefaultAuthorizerRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTClearDefaultAuthorizerResponse API_AVAILABLE(ios(11));
@@ -106,6 +107,8 @@
 - (void) test_AWSIoTCreateBillingGroupResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCreateCertificateFromCsrRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCreateCertificateFromCsrResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTCreateCertificateProviderRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTCreateCertificateProviderResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCreateCustomMetricRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCreateCustomMetricResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCreateDimensionRequest API_AVAILABLE(ios(11));
@@ -126,6 +129,10 @@
 - (void) test_AWSIoTCreateMitigationActionResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCreateOTAUpdateRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCreateOTAUpdateResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTCreatePackageRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTCreatePackageResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTCreatePackageVersionRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTCreatePackageVersionResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCreatePolicyRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCreatePolicyResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTCreatePolicyVersionRequest API_AVAILABLE(ios(11));
@@ -164,6 +171,8 @@
 - (void) test_AWSIoTDeleteBillingGroupResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDeleteCACertificateRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDeleteCACertificateResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTDeleteCertificateProviderRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTDeleteCertificateProviderResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDeleteCertificateRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDeleteCustomMetricRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDeleteCustomMetricResponse API_AVAILABLE(ios(11));
@@ -181,6 +190,10 @@
 - (void) test_AWSIoTDeleteMitigationActionResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDeleteOTAUpdateRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDeleteOTAUpdateResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTDeletePackageRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTDeletePackageResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTDeletePackageVersionRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTDeletePackageVersionResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDeletePolicyRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDeletePolicyVersionRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDeleteProvisioningTemplateRequest API_AVAILABLE(ios(11));
@@ -226,6 +239,8 @@
 - (void) test_AWSIoTDescribeBillingGroupResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDescribeCACertificateRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDescribeCACertificateResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTDescribeCertificateProviderRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTDescribeCertificateProviderResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDescribeCertificateRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDescribeCertificateResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTDescribeCustomMetricRequest API_AVAILABLE(ios(11));
@@ -303,6 +318,7 @@
 - (void) test_AWSIoTFileLocation API_AVAILABLE(ios(11));
 - (void) test_AWSIoTFirehoseAction API_AVAILABLE(ios(11));
 - (void) test_AWSIoTFleetMetricNameAndArn API_AVAILABLE(ios(11));
+- (void) test_AWSIoTGeoLocationTarget API_AVAILABLE(ios(11));
 - (void) test_AWSIoTGetBehaviorModelTrainingSummariesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTGetBehaviorModelTrainingSummariesResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTGetBucketsAggregationRequest API_AVAILABLE(ios(11));
@@ -319,6 +335,12 @@
 - (void) test_AWSIoTGetLoggingOptionsResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTGetOTAUpdateRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTGetOTAUpdateResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTGetPackageConfigurationRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTGetPackageConfigurationResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTGetPackageRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTGetPackageResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTGetPackageVersionRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTGetPackageVersionResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTGetPercentilesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTGetPercentilesResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTGetPolicyRequest API_AVAILABLE(ios(11));
@@ -361,6 +383,7 @@
 - (void) test_AWSIoTJobSummary API_AVAILABLE(ios(11));
 - (void) test_AWSIoTJobTemplateSummary API_AVAILABLE(ios(11));
 - (void) test_AWSIoTKafkaAction API_AVAILABLE(ios(11));
+- (void) test_AWSIoTKafkaActionHeader API_AVAILABLE(ios(11));
 - (void) test_AWSIoTKeyPair API_AVAILABLE(ios(11));
 - (void) test_AWSIoTKinesisAction API_AVAILABLE(ios(11));
 - (void) test_AWSIoTLambdaAction API_AVAILABLE(ios(11));
@@ -384,6 +407,8 @@
 - (void) test_AWSIoTListBillingGroupsResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTListCACertificatesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTListCACertificatesResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTListCertificateProvidersRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTListCertificateProvidersResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTListCertificatesByCARequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTListCertificatesByCAResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTListCertificatesRequest API_AVAILABLE(ios(11));
@@ -420,6 +445,10 @@
 - (void) test_AWSIoTListOTAUpdatesResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTListOutgoingCertificatesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTListOutgoingCertificatesResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTListPackageVersionsRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTListPackageVersionsResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTListPackagesRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTListPackagesResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTListPoliciesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTListPoliciesResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTListPolicyPrincipalsRequest API_AVAILABLE(ios(11));
@@ -490,6 +519,7 @@
 - (void) test_AWSIoTMetricDimension API_AVAILABLE(ios(11));
 - (void) test_AWSIoTMetricToRetain API_AVAILABLE(ios(11));
 - (void) test_AWSIoTMetricValue API_AVAILABLE(ios(11));
+- (void) test_AWSIoTMetricsExportConfig API_AVAILABLE(ios(11));
 - (void) test_AWSIoTMitigationAction API_AVAILABLE(ios(11));
 - (void) test_AWSIoTMitigationActionIdentifier API_AVAILABLE(ios(11));
 - (void) test_AWSIoTMitigationActionParams API_AVAILABLE(ios(11));
@@ -501,6 +531,8 @@
 - (void) test_AWSIoTOTAUpdateSummary API_AVAILABLE(ios(11));
 - (void) test_AWSIoTOpenSearchAction API_AVAILABLE(ios(11));
 - (void) test_AWSIoTOutgoingCertificate API_AVAILABLE(ios(11));
+- (void) test_AWSIoTPackageSummary API_AVAILABLE(ios(11));
+- (void) test_AWSIoTPackageVersionSummary API_AVAILABLE(ios(11));
 - (void) test_AWSIoTPercentPair API_AVAILABLE(ios(11));
 - (void) test_AWSIoTPolicy API_AVAILABLE(ios(11));
 - (void) test_AWSIoTPolicyVersion API_AVAILABLE(ios(11));
@@ -548,6 +580,7 @@
 - (void) test_AWSIoTSecurityProfileIdentifier API_AVAILABLE(ios(11));
 - (void) test_AWSIoTSecurityProfileTarget API_AVAILABLE(ios(11));
 - (void) test_AWSIoTSecurityProfileTargetMapping API_AVAILABLE(ios(11));
+- (void) test_AWSIoTServerCertificateConfig API_AVAILABLE(ios(11));
 - (void) test_AWSIoTServerCertificateSummary API_AVAILABLE(ios(11));
 - (void) test_AWSIoTSetDefaultAuthorizerRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTSetDefaultAuthorizerResponse API_AVAILABLE(ios(11));
@@ -625,6 +658,8 @@
 - (void) test_AWSIoTUpdateBillingGroupResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTUpdateCACertificateParams API_AVAILABLE(ios(11));
 - (void) test_AWSIoTUpdateCACertificateRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTUpdateCertificateProviderRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTUpdateCertificateProviderResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTUpdateCertificateRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTUpdateCustomMetricRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTUpdateCustomMetricResponse API_AVAILABLE(ios(11));
@@ -643,6 +678,12 @@
 - (void) test_AWSIoTUpdateJobRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTUpdateMitigationActionRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTUpdateMitigationActionResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTUpdatePackageConfigurationRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTUpdatePackageConfigurationResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTUpdatePackageRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTUpdatePackageResponse API_AVAILABLE(ios(11));
+- (void) test_AWSIoTUpdatePackageVersionRequest API_AVAILABLE(ios(11));
+- (void) test_AWSIoTUpdatePackageVersionResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTUpdateProvisioningTemplateRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTUpdateProvisioningTemplateResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTUpdateRoleAliasRequest API_AVAILABLE(ios(11));
@@ -665,6 +706,7 @@
 - (void) test_AWSIoTValidateSecurityProfileBehaviorsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSIoTValidateSecurityProfileBehaviorsResponse API_AVAILABLE(ios(11));
 - (void) test_AWSIoTValidationError API_AVAILABLE(ios(11));
+- (void) test_AWSIoTVersionUpdateByJobsConfig API_AVAILABLE(ios(11));
 - (void) test_AWSIoTViolationEvent API_AVAILABLE(ios(11));
 - (void) test_AWSIoTViolationEventAdditionalInfo API_AVAILABLE(ios(11));
 - (void) test_AWSIoTViolationEventOccurrenceRange API_AVAILABLE(ios(11));
@@ -944,6 +986,10 @@
     [self validateSecureCodingForClass:[AWSIoTCertificateDescription class]];
 }
 
+- (void) test_AWSIoTCertificateProviderSummary {
+    [self validateSecureCodingForClass:[AWSIoTCertificateProviderSummary class]];
+}
+
 - (void) test_AWSIoTCertificateValidity {
     [self validateSecureCodingForClass:[AWSIoTCertificateValidity class]];
 }
@@ -1024,6 +1070,14 @@
     [self validateSecureCodingForClass:[AWSIoTCreateCertificateFromCsrResponse class]];
 }
 
+- (void) test_AWSIoTCreateCertificateProviderRequest {
+    [self validateSecureCodingForClass:[AWSIoTCreateCertificateProviderRequest class]];
+}
+
+- (void) test_AWSIoTCreateCertificateProviderResponse {
+    [self validateSecureCodingForClass:[AWSIoTCreateCertificateProviderResponse class]];
+}
+
 - (void) test_AWSIoTCreateCustomMetricRequest {
     [self validateSecureCodingForClass:[AWSIoTCreateCustomMetricRequest class]];
 }
@@ -1102,6 +1156,22 @@
 
 - (void) test_AWSIoTCreateOTAUpdateResponse {
     [self validateSecureCodingForClass:[AWSIoTCreateOTAUpdateResponse class]];
+}
+
+- (void) test_AWSIoTCreatePackageRequest {
+    [self validateSecureCodingForClass:[AWSIoTCreatePackageRequest class]];
+}
+
+- (void) test_AWSIoTCreatePackageResponse {
+    [self validateSecureCodingForClass:[AWSIoTCreatePackageResponse class]];
+}
+
+- (void) test_AWSIoTCreatePackageVersionRequest {
+    [self validateSecureCodingForClass:[AWSIoTCreatePackageVersionRequest class]];
+}
+
+- (void) test_AWSIoTCreatePackageVersionResponse {
+    [self validateSecureCodingForClass:[AWSIoTCreatePackageVersionResponse class]];
 }
 
 - (void) test_AWSIoTCreatePolicyRequest {
@@ -1256,6 +1326,14 @@
     [self validateSecureCodingForClass:[AWSIoTDeleteCACertificateResponse class]];
 }
 
+- (void) test_AWSIoTDeleteCertificateProviderRequest {
+    [self validateSecureCodingForClass:[AWSIoTDeleteCertificateProviderRequest class]];
+}
+
+- (void) test_AWSIoTDeleteCertificateProviderResponse {
+    [self validateSecureCodingForClass:[AWSIoTDeleteCertificateProviderResponse class]];
+}
+
 - (void) test_AWSIoTDeleteCertificateRequest {
     [self validateSecureCodingForClass:[AWSIoTDeleteCertificateRequest class]];
 }
@@ -1322,6 +1400,22 @@
 
 - (void) test_AWSIoTDeleteOTAUpdateResponse {
     [self validateSecureCodingForClass:[AWSIoTDeleteOTAUpdateResponse class]];
+}
+
+- (void) test_AWSIoTDeletePackageRequest {
+    [self validateSecureCodingForClass:[AWSIoTDeletePackageRequest class]];
+}
+
+- (void) test_AWSIoTDeletePackageResponse {
+    [self validateSecureCodingForClass:[AWSIoTDeletePackageResponse class]];
+}
+
+- (void) test_AWSIoTDeletePackageVersionRequest {
+    [self validateSecureCodingForClass:[AWSIoTDeletePackageVersionRequest class]];
+}
+
+- (void) test_AWSIoTDeletePackageVersionResponse {
+    [self validateSecureCodingForClass:[AWSIoTDeletePackageVersionResponse class]];
 }
 
 - (void) test_AWSIoTDeletePolicyRequest {
@@ -1502,6 +1596,14 @@
 
 - (void) test_AWSIoTDescribeCACertificateResponse {
     [self validateSecureCodingForClass:[AWSIoTDescribeCACertificateResponse class]];
+}
+
+- (void) test_AWSIoTDescribeCertificateProviderRequest {
+    [self validateSecureCodingForClass:[AWSIoTDescribeCertificateProviderRequest class]];
+}
+
+- (void) test_AWSIoTDescribeCertificateProviderResponse {
+    [self validateSecureCodingForClass:[AWSIoTDescribeCertificateProviderResponse class]];
 }
 
 - (void) test_AWSIoTDescribeCertificateRequest {
@@ -1812,6 +1914,10 @@
     [self validateSecureCodingForClass:[AWSIoTFleetMetricNameAndArn class]];
 }
 
+- (void) test_AWSIoTGeoLocationTarget {
+    [self validateSecureCodingForClass:[AWSIoTGeoLocationTarget class]];
+}
+
 - (void) test_AWSIoTGetBehaviorModelTrainingSummariesRequest {
     [self validateSecureCodingForClass:[AWSIoTGetBehaviorModelTrainingSummariesRequest class]];
 }
@@ -1874,6 +1980,30 @@
 
 - (void) test_AWSIoTGetOTAUpdateResponse {
     [self validateSecureCodingForClass:[AWSIoTGetOTAUpdateResponse class]];
+}
+
+- (void) test_AWSIoTGetPackageConfigurationRequest {
+    [self validateSecureCodingForClass:[AWSIoTGetPackageConfigurationRequest class]];
+}
+
+- (void) test_AWSIoTGetPackageConfigurationResponse {
+    [self validateSecureCodingForClass:[AWSIoTGetPackageConfigurationResponse class]];
+}
+
+- (void) test_AWSIoTGetPackageRequest {
+    [self validateSecureCodingForClass:[AWSIoTGetPackageRequest class]];
+}
+
+- (void) test_AWSIoTGetPackageResponse {
+    [self validateSecureCodingForClass:[AWSIoTGetPackageResponse class]];
+}
+
+- (void) test_AWSIoTGetPackageVersionRequest {
+    [self validateSecureCodingForClass:[AWSIoTGetPackageVersionRequest class]];
+}
+
+- (void) test_AWSIoTGetPackageVersionResponse {
+    [self validateSecureCodingForClass:[AWSIoTGetPackageVersionResponse class]];
 }
 
 - (void) test_AWSIoTGetPercentilesRequest {
@@ -2044,6 +2174,10 @@
     [self validateSecureCodingForClass:[AWSIoTKafkaAction class]];
 }
 
+- (void) test_AWSIoTKafkaActionHeader {
+    [self validateSecureCodingForClass:[AWSIoTKafkaActionHeader class]];
+}
+
 - (void) test_AWSIoTKeyPair {
     [self validateSecureCodingForClass:[AWSIoTKeyPair class]];
 }
@@ -2134,6 +2268,14 @@
 
 - (void) test_AWSIoTListCACertificatesResponse {
     [self validateSecureCodingForClass:[AWSIoTListCACertificatesResponse class]];
+}
+
+- (void) test_AWSIoTListCertificateProvidersRequest {
+    [self validateSecureCodingForClass:[AWSIoTListCertificateProvidersRequest class]];
+}
+
+- (void) test_AWSIoTListCertificateProvidersResponse {
+    [self validateSecureCodingForClass:[AWSIoTListCertificateProvidersResponse class]];
 }
 
 - (void) test_AWSIoTListCertificatesByCARequest {
@@ -2278,6 +2420,22 @@
 
 - (void) test_AWSIoTListOutgoingCertificatesResponse {
     [self validateSecureCodingForClass:[AWSIoTListOutgoingCertificatesResponse class]];
+}
+
+- (void) test_AWSIoTListPackageVersionsRequest {
+    [self validateSecureCodingForClass:[AWSIoTListPackageVersionsRequest class]];
+}
+
+- (void) test_AWSIoTListPackageVersionsResponse {
+    [self validateSecureCodingForClass:[AWSIoTListPackageVersionsResponse class]];
+}
+
+- (void) test_AWSIoTListPackagesRequest {
+    [self validateSecureCodingForClass:[AWSIoTListPackagesRequest class]];
+}
+
+- (void) test_AWSIoTListPackagesResponse {
+    [self validateSecureCodingForClass:[AWSIoTListPackagesResponse class]];
 }
 
 - (void) test_AWSIoTListPoliciesRequest {
@@ -2560,6 +2718,10 @@
     [self validateSecureCodingForClass:[AWSIoTMetricValue class]];
 }
 
+- (void) test_AWSIoTMetricsExportConfig {
+    [self validateSecureCodingForClass:[AWSIoTMetricsExportConfig class]];
+}
+
 - (void) test_AWSIoTMitigationAction {
     [self validateSecureCodingForClass:[AWSIoTMitigationAction class]];
 }
@@ -2602,6 +2764,14 @@
 
 - (void) test_AWSIoTOutgoingCertificate {
     [self validateSecureCodingForClass:[AWSIoTOutgoingCertificate class]];
+}
+
+- (void) test_AWSIoTPackageSummary {
+    [self validateSecureCodingForClass:[AWSIoTPackageSummary class]];
+}
+
+- (void) test_AWSIoTPackageVersionSummary {
+    [self validateSecureCodingForClass:[AWSIoTPackageVersionSummary class]];
 }
 
 - (void) test_AWSIoTPercentPair {
@@ -2790,6 +2960,10 @@
 
 - (void) test_AWSIoTSecurityProfileTargetMapping {
     [self validateSecureCodingForClass:[AWSIoTSecurityProfileTargetMapping class]];
+}
+
+- (void) test_AWSIoTServerCertificateConfig {
+    [self validateSecureCodingForClass:[AWSIoTServerCertificateConfig class]];
 }
 
 - (void) test_AWSIoTServerCertificateSummary {
@@ -3100,6 +3274,14 @@
     [self validateSecureCodingForClass:[AWSIoTUpdateCACertificateRequest class]];
 }
 
+- (void) test_AWSIoTUpdateCertificateProviderRequest {
+    [self validateSecureCodingForClass:[AWSIoTUpdateCertificateProviderRequest class]];
+}
+
+- (void) test_AWSIoTUpdateCertificateProviderResponse {
+    [self validateSecureCodingForClass:[AWSIoTUpdateCertificateProviderResponse class]];
+}
+
 - (void) test_AWSIoTUpdateCertificateRequest {
     [self validateSecureCodingForClass:[AWSIoTUpdateCertificateRequest class]];
 }
@@ -3170,6 +3352,30 @@
 
 - (void) test_AWSIoTUpdateMitigationActionResponse {
     [self validateSecureCodingForClass:[AWSIoTUpdateMitigationActionResponse class]];
+}
+
+- (void) test_AWSIoTUpdatePackageConfigurationRequest {
+    [self validateSecureCodingForClass:[AWSIoTUpdatePackageConfigurationRequest class]];
+}
+
+- (void) test_AWSIoTUpdatePackageConfigurationResponse {
+    [self validateSecureCodingForClass:[AWSIoTUpdatePackageConfigurationResponse class]];
+}
+
+- (void) test_AWSIoTUpdatePackageRequest {
+    [self validateSecureCodingForClass:[AWSIoTUpdatePackageRequest class]];
+}
+
+- (void) test_AWSIoTUpdatePackageResponse {
+    [self validateSecureCodingForClass:[AWSIoTUpdatePackageResponse class]];
+}
+
+- (void) test_AWSIoTUpdatePackageVersionRequest {
+    [self validateSecureCodingForClass:[AWSIoTUpdatePackageVersionRequest class]];
+}
+
+- (void) test_AWSIoTUpdatePackageVersionResponse {
+    [self validateSecureCodingForClass:[AWSIoTUpdatePackageVersionResponse class]];
 }
 
 - (void) test_AWSIoTUpdateProvisioningTemplateRequest {
@@ -3258,6 +3464,10 @@
 
 - (void) test_AWSIoTValidationError {
     [self validateSecureCodingForClass:[AWSIoTValidationError class]];
+}
+
+- (void) test_AWSIoTVersionUpdateByJobsConfig {
+    [self validateSecureCodingForClass:[AWSIoTVersionUpdateByJobsConfig class]];
 }
 
 - (void) test_AWSIoTViolationEvent {

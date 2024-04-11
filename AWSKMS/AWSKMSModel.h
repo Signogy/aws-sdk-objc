@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger, AWSKMSErrorType) {
     AWSKMSErrorCustomKeyStoreNotFound,
     AWSKMSErrorDependencyTimeout,
     AWSKMSErrorDisabled,
+    AWSKMSErrorDryRunOperation,
     AWSKMSErrorExpiredImportToken,
     AWSKMSErrorIncorrectKey,
     AWSKMSErrorIncorrectKeyMaterial,
@@ -76,6 +77,8 @@ typedef NS_ENUM(NSInteger, AWSKMSAlgorithmSpec) {
     AWSKMSAlgorithmSpecRsaesPkcs1V15,
     AWSKMSAlgorithmSpecRsaesOaepSha1,
     AWSKMSAlgorithmSpecRsaesOaepSha256,
+    AWSKMSAlgorithmSpecRsaAesKeyWrapSha1,
+    AWSKMSAlgorithmSpecRsaAesKeyWrapSha256,
 };
 
 typedef NS_ENUM(NSInteger, AWSKMSConnectionErrorCodeType) {
@@ -276,6 +279,8 @@ typedef NS_ENUM(NSInteger, AWSKMSSigningAlgorithmSpec) {
 typedef NS_ENUM(NSInteger, AWSKMSWrappingKeySpec) {
     AWSKMSWrappingKeySpecUnknown,
     AWSKMSWrappingKeySpecRsa2048,
+    AWSKMSWrappingKeySpecRsa3072,
+    AWSKMSWrappingKeySpecRsa4096,
 };
 
 typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
@@ -522,7 +527,7 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 @property (nonatomic, assign) AWSKMSXksProxyConnectivityType xksProxyConnectivity;
 
 /**
- <p>Specifies the endpoint that KMS uses to send requests to the external key store proxy (XKS proxy). This parameter is required for custom key stores with a <code>CustomKeyStoreType</code> of <code>EXTERNAL_KEY_STORE</code>.</p><p>The protocol must be HTTPS. KMS communicates on port 443. Do not specify the port in the <code>XksProxyUriEndpoint</code> value.</p><p>For external key stores with <code>XksProxyConnectivity</code> value of <code>VPC_ENDPOINT_SERVICE</code>, specify <code>https://</code> followed by the private DNS name of the VPC endpoint service.</p><p>For external key stores with <code>PUBLIC_ENDPOINT</code> connectivity, this endpoint must be reachable before you create the custom key store. KMS connects to the external key store proxy while creating the custom key store. For external key stores with <code>VPC_ENDPOINT_SERVICE</code> connectivity, KMS connects when you call the <a>ConnectCustomKeyStore</a> operation.</p><p>The value of this parameter must begin with <code>https://</code>. The remainder can contain upper and lower case letters (A-Z and a-z), numbers (0-9), dots (<code>.</code>), and hyphens (<code>-</code>). Additional slashes (<code>/</code> and <code>\</code>) are not permitted.</p><p><b>Uniqueness requirements: </b></p><ul><li><p>The combined <code>XksProxyUriEndpoint</code> and <code>XksProxyUriPath</code> values must be unique in the Amazon Web Services account and Region.</p></li><li><p>An external key store with <code>PUBLIC_ENDPOINT</code> connectivity cannot use the same <code>XksProxyUriEndpoint</code> value as an external key store with <code>VPC_ENDPOINT_SERVICE</code> connectivity in the same Amazon Web Services Region.</p></li><li><p>Each external key store with <code>VPC_ENDPOINT_SERVICE</code> connectivity must have its own private DNS name. The <code>XksProxyUriEndpoint</code> value for external key stores with <code>VPC_ENDPOINT_SERVICE</code> connectivity (private DNS name) must be unique in the Amazon Web Services account and Region.</p></li></ul>
+ <p>Specifies the endpoint that KMS uses to send requests to the external key store proxy (XKS proxy). This parameter is required for custom key stores with a <code>CustomKeyStoreType</code> of <code>EXTERNAL_KEY_STORE</code>.</p><p>The protocol must be HTTPS. KMS communicates on port 443. Do not specify the port in the <code>XksProxyUriEndpoint</code> value.</p><p>For external key stores with <code>XksProxyConnectivity</code> value of <code>VPC_ENDPOINT_SERVICE</code>, specify <code>https://</code> followed by the private DNS name of the VPC endpoint service.</p><p>For external key stores with <code>PUBLIC_ENDPOINT</code> connectivity, this endpoint must be reachable before you create the custom key store. KMS connects to the external key store proxy while creating the custom key store. For external key stores with <code>VPC_ENDPOINT_SERVICE</code> connectivity, KMS connects when you call the <a>ConnectCustomKeyStore</a> operation.</p><p>The value of this parameter must begin with <code>https://</code>. The remainder can contain upper and lower case letters (A-Z and a-z), numbers (0-9), dots (<code>.</code>), and hyphens (<code>-</code>). Additional slashes (<code>/</code> and <code>\</code>) are not permitted.</p><p><b>Uniqueness requirements: </b></p><ul><li><p>The combined <code>XksProxyUriEndpoint</code> and <code>XksProxyUriPath</code> values must be unique in the Amazon Web Services account and Region.</p></li><li><p>An external key store with <code>PUBLIC_ENDPOINT</code> connectivity cannot use the same <code>XksProxyUriEndpoint</code> value as an external key store with <code>VPC_ENDPOINT_SERVICE</code> connectivity in this Amazon Web Services Region.</p></li><li><p>Each external key store with <code>VPC_ENDPOINT_SERVICE</code> connectivity must have its own private DNS name. The <code>XksProxyUriEndpoint</code> value for external key stores with <code>VPC_ENDPOINT_SERVICE</code> connectivity (private DNS name) must be unique in the Amazon Web Services account and Region.</p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable xksProxyUriEndpoint;
 
@@ -561,6 +566,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
  <p>Specifies a grant constraint.</p><important><p>Do not include confidential or sensitive information in this field. This field may be displayed in plaintext in CloudTrail logs and other output.</p></important><p>KMS supports the <code>EncryptionContextEquals</code> and <code>EncryptionContextSubset</code> grant constraints, which allow the permissions in the grant only when the encryption context in the request matches (<code>EncryptionContextEquals</code>) or includes (<code>EncryptionContextSubset</code>) the encryption context specified in the constraint. </p><p>The encryption context grant constraints are supported only on <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#terms-grant-operations">grant operations</a> that include an <code>EncryptionContext</code> parameter, such as cryptographic operations on symmetric encryption KMS keys. Grants with grant constraints can include the <a>DescribeKey</a> and <a>RetireGrant</a> operations, but the constraint doesn't apply to these operations. If a grant with a grant constraint includes the <code>CreateGrant</code> operation, the constraint requires that any grants created with the <code>CreateGrant</code> permission have an equally strict or stricter encryption context constraint.</p><p>You cannot use an encryption context grant constraint for cryptographic operations with asymmetric KMS keys or HMAC KMS keys. Operations with these keys don't support an encryption context.</p><p>Each constraint value can include up to 8 encryption context pairs. The encryption context value in each constraint cannot exceed 384 characters. For information about grant constraints, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/create-grant-overview.html#grant-constraints">Using grant constraints</a> in the <i>Key Management Service Developer Guide</i>. For more information about encryption context, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context">Encryption context</a> in the <i><i>Key Management Service Developer Guide</i></i>. </p>
  */
 @property (nonatomic, strong) AWSKMSGrantConstraints * _Nullable constraints;
+
+/**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
  <p>A list of grant tokens. </p><p>Use a grant token when your permission to call this operation comes from a new grant that has not yet achieved <i>eventual consistency</i>. For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token">Grant token</a> and <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token">Using a grant token</a> in the <i>Key Management Service Developer Guide</i>.</p>
@@ -619,7 +629,7 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 
 
 /**
- <p>Skips ("bypasses") the key policy lockout safety check. The default value is false.</p><important><p>Setting this value to true increases the risk that the KMS key becomes unmanageable. Do not set this value to true indiscriminately.</p><p>For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#prevent-unmanageable-key">Default key policy</a> in the <i>Key Management Service Developer Guide</i>.</p></important><p>Use this parameter only when you intend to prevent the principal that is making the request from making a subsequent <a>PutKeyPolicy</a> request on the KMS key.</p>
+ <p>Skips ("bypasses") the key policy lockout safety check. The default value is false.</p><important><p>Setting this value to true increases the risk that the KMS key becomes unmanageable. Do not set this value to true indiscriminately.</p><p>For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#prevent-unmanageable-key">Default key policy</a> in the <i>Key Management Service Developer Guide</i>.</p></important><p>Use this parameter only when you intend to prevent the principal that is making the request from making a subsequent <a href="https://docs.aws.amazon.com/kms/latest/APIReference/API_PutKeyPolicy.html">PutKeyPolicy</a> request on the KMS key.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable bypassPolicyLockoutSafetyCheck;
 
@@ -753,6 +763,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 @property (nonatomic, strong) NSData * _Nullable ciphertextBlob;
 
 /**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
+
+/**
  <p>Specifies the encryption algorithm that will be used to decrypt the ciphertext. Specify the same algorithm that was used to encrypt the data. If you specify a different algorithm, the <code>Decrypt</code> operation fails.</p><p>This parameter is required only when the ciphertext was encrypted under an asymmetric KMS key. The default value, <code>SYMMETRIC_DEFAULT</code>, represents the only supported algorithm that is valid for symmetric encryption KMS keys.</p>
  */
 @property (nonatomic, assign) AWSKMSEncryptionAlgorithmSpec encryptionAlgorithm;
@@ -773,7 +788,7 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 @property (nonatomic, strong) NSString * _Nullable keyId;
 
 /**
- <p>A signed <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/nitro-enclave-how.html#term-attestdoc">attestation document</a> from an Amazon Web Services Nitro enclave and the encryption algorithm to use with the enclave's public key. The only valid encryption algorithm is <code>RSAES_OAEP_SHA_256</code>. </p><p>This parameter only supports attestation documents for Amazon Web Services Nitro Enclaves. To include this parameter, use the <a href="https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk">Amazon Web Services Nitro Enclaves SDK</a> or any Amazon Web Services SDK.</p><p>When you use this parameter, instead of returning the plaintext data, KMS encrypts the plaintext data with the public key in the attestation document, and returns the resulting ciphertext in the <code>CiphertextForRecipient</code> field in the response. This ciphertext can be decrypted only with the private key in the enclave. The <code>Plaintext</code> field in the response is null or empty.</p><p>For information about the interaction between KMS and Amazon Web Services Nitro Enclaves, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html">How Amazon Web Services Nitro Enclaves uses KMS</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ <p>A signed <a href="https://docs.aws.amazon.com/enclaves/latest/user/nitro-enclave-concepts.html#term-attestdoc">attestation document</a> from an Amazon Web Services Nitro enclave and the encryption algorithm to use with the enclave's public key. The only valid encryption algorithm is <code>RSAES_OAEP_SHA_256</code>. </p><p>This parameter only supports attestation documents for Amazon Web Services Nitro Enclaves. To include this parameter, use the <a href="https://docs.aws.amazon.com/enclaves/latest/user/developing-applications.html#sdk">Amazon Web Services Nitro Enclaves SDK</a> or any Amazon Web Services SDK.</p><p>When you use this parameter, instead of returning the plaintext data, KMS encrypts the plaintext data with the public key in the attestation document, and returns the resulting ciphertext in the <code>CiphertextForRecipient</code> field in the response. This ciphertext can be decrypted only with the private key in the enclave. The <code>Plaintext</code> field in the response is null or empty.</p><p>For information about the interaction between KMS and Amazon Web Services Nitro Enclaves, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/services-nitro-enclaves.html">How Amazon Web Services Nitro Enclaves uses KMS</a> in the <i>Key Management Service Developer Guide</i>.</p>
  */
 @property (nonatomic, strong) AWSKMSRecipientInfo * _Nullable recipient;
 
@@ -1016,6 +1031,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 
 
 /**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
+
+/**
  <p>Specifies the encryption algorithm that KMS will use to encrypt the plaintext message. The algorithm must be compatible with the KMS key that you specify.</p><p>This parameter is required only for asymmetric KMS keys. The default value, <code>SYMMETRIC_DEFAULT</code>, is the algorithm used for symmetric encryption KMS keys. If you are using an asymmetric KMS key, we recommend RSAES_OAEP_SHA_256.</p><p>The SM2PKE algorithm is only available in China Regions.</p>
  */
 @property (nonatomic, assign) AWSKMSEncryptionAlgorithmSpec encryptionAlgorithm;
@@ -1070,6 +1090,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
  */
 @interface AWSKMSGenerateDataKeyPairRequest : AWSRequest
 
+
+/**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
  <p>Specifies the encryption context that will be used when encrypting the private key in the data key pair.</p><important><p>Do not include confidential or sensitive information in this field. This field may be displayed in plaintext in CloudTrail logs and other output.</p></important><p>An <i>encryption context</i> is a collection of non-secret key-value pairs that represent additional authenticated data. When you use an encryption context to encrypt data, you must specify the same (an exact case-sensitive match) encryption context to decrypt the data. An encryption context is supported only on operations with symmetric encryption KMS keys. On operations with symmetric encryption KMS keys, an encryption context is optional, but it is strongly recommended.</p><p>For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context">Encryption context</a> in the <i>Key Management Service Developer Guide</i>.</p>
@@ -1143,6 +1168,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 
 
 /**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
+
+/**
  <p>Specifies the encryption context that will be used when encrypting the private key in the data key pair.</p><important><p>Do not include confidential or sensitive information in this field. This field may be displayed in plaintext in CloudTrail logs and other output.</p></important><p>An <i>encryption context</i> is a collection of non-secret key-value pairs that represent additional authenticated data. When you use an encryption context to encrypt data, you must specify the same (an exact case-sensitive match) encryption context to decrypt the data. An encryption context is supported only on operations with symmetric encryption KMS keys. On operations with symmetric encryption KMS keys, an encryption context is optional, but it is strongly recommended.</p><p>For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context">Encryption context</a> in the <i>Key Management Service Developer Guide</i>.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable encryptionContext;
@@ -1197,6 +1227,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
  */
 @interface AWSKMSGenerateDataKeyRequest : AWSRequest
 
+
+/**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
  <p>Specifies the encryption context that will be used when encrypting the data key.</p><important><p>Do not include confidential or sensitive information in this field. This field may be displayed in plaintext in CloudTrail logs and other output.</p></important><p>An <i>encryption context</i> is a collection of non-secret key-value pairs that represent additional authenticated data. When you use an encryption context to encrypt data, you must specify the same (an exact case-sensitive match) encryption context to decrypt the data. An encryption context is supported only on operations with symmetric encryption KMS keys. On operations with symmetric encryption KMS keys, an encryption context is optional, but it is strongly recommended.</p><p>For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context">Encryption context</a> in the <i>Key Management Service Developer Guide</i>.</p>
@@ -1265,6 +1300,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 
 
 /**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
+
+/**
  <p>Specifies the encryption context that will be used when encrypting the data key.</p><important><p>Do not include confidential or sensitive information in this field. This field may be displayed in plaintext in CloudTrail logs and other output.</p></important><p>An <i>encryption context</i> is a collection of non-secret key-value pairs that represent additional authenticated data. When you use an encryption context to encrypt data, you must specify the same (an exact case-sensitive match) encryption context to decrypt the data. An encryption context is supported only on operations with symmetric encryption KMS keys. On operations with symmetric encryption KMS keys, an encryption context is optional, but it is strongly recommended.</p><p>For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/concepts.html#encrypt_context">Encryption context</a> in the <i>Key Management Service Developer Guide</i>.</p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable encryptionContext;
@@ -1314,6 +1354,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
  */
 @interface AWSKMSGenerateMacRequest : AWSRequest
 
+
+/**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
  <p>A list of grant tokens.</p><p>Use a grant token when your permission to call this operation comes from a new grant that has not yet achieved <i>eventual consistency</i>. For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token">Grant token</a> and <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token">Using a grant token</a> in the <i>Key Management Service Developer Guide</i>.</p>
@@ -1413,7 +1458,7 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 @property (nonatomic, strong) NSString * _Nullable keyId;
 
 /**
- <p>Specifies the name of the key policy. The only valid name is <code>default</code>. To get the names of key policies, use <a>ListKeyPolicies</a>.</p>
+ <p>Specifies the name of the key policy. If no policy name is specified, the default value is <code>default</code>. The only valid name is <code>default</code>. To get the names of key policies, use <a>ListKeyPolicies</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable policyName;
 
@@ -1429,6 +1474,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
  <p>A key policy document in JSON format.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable policy;
+
+/**
+ <p>The name of the key policy. The only valid value is <code>default</code>.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable policyName;
 
 @end
 
@@ -1465,17 +1515,17 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 
 
 /**
- <p>The identifier of the symmetric encryption KMS key into which you will import key material. The <code>Origin</code> of the KMS key must be <code>EXTERNAL</code>.</p><p>Specify the key ID or key ARN of the KMS key.</p><p>For example:</p><ul><li><p>Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code></p></li><li><p>Key ARN: <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code></p></li></ul><p>To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or <a>DescribeKey</a>.</p>
+ <p>The identifier of the KMS key that will be associated with the imported key material. The <code>Origin</code> of the KMS key must be <code>EXTERNAL</code>.</p><p>All KMS key types are supported, including multi-Region keys. However, you cannot import key material into a KMS key in a custom key store.</p><p>Specify the key ID or key ARN of the KMS key.</p><p>For example:</p><ul><li><p>Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code></p></li><li><p>Key ARN: <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code></p></li></ul><p>To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or <a>DescribeKey</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable keyId;
 
 /**
- <p>The algorithm you will use to encrypt the key material before using the <a>ImportKeyMaterial</a> operation to import it. For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/importing-keys-encrypt-key-material.html">Encrypt the key material</a> in the <i>Key Management Service Developer Guide</i>.</p><important><p>The <code>RSAES_PKCS1_V1_5</code> wrapping algorithm is deprecated. We recommend that you begin using a different wrapping algorithm immediately. KMS will end support for <code>RSAES_PKCS1_V1_5</code> by October 1, 2023 pursuant to <a href="https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-131Ar2.pdf">cryptographic key management guidance</a> from the National Institute of Standards and Technology (NIST).</p></important>
+ <p>The algorithm you will use with the RSA public key (<code>PublicKey</code>) in the response to protect your key material during import. For more information, see <a href="kms/latest/developerguide/importing-keys-get-public-key-and-token.html#select-wrapping-algorithm">Select a wrapping algorithm</a> in the <i>Key Management Service Developer Guide</i>.</p><p>For RSA_AES wrapping algorithms, you encrypt your key material with an AES key that you generate, then encrypt your AES key with the RSA public key from KMS. For RSAES wrapping algorithms, you encrypt your key material directly with the RSA public key from KMS.</p><p>The wrapping algorithms that you can use depend on the type of key material that you are importing. To import an RSA private key, you must use an RSA_AES wrapping algorithm.</p><ul><li><p><b>RSA_AES_KEY_WRAP_SHA_256</b> — Supported for wrapping RSA and ECC key material.</p></li><li><p><b>RSA_AES_KEY_WRAP_SHA_1</b> — Supported for wrapping RSA and ECC key material.</p></li><li><p><b>RSAES_OAEP_SHA_256</b> — Supported for all types of key material, except RSA key material (private key).</p><p>You cannot use the RSAES_OAEP_SHA_256 wrapping algorithm with the RSA_2048 wrapping key spec to wrap ECC_NIST_P521 key material.</p></li><li><p><b>RSAES_OAEP_SHA_1</b> — Supported for all types of key material, except RSA key material (private key).</p><p>You cannot use the RSAES_OAEP_SHA_1 wrapping algorithm with the RSA_2048 wrapping key spec to wrap ECC_NIST_P521 key material.</p></li><li><p><b>RSAES_PKCS1_V1_5</b> (Deprecated) — As of October 10, 2023, KMS does not support the RSAES_PKCS1_V1_5 wrapping algorithm.</p></li></ul>
  */
 @property (nonatomic, assign) AWSKMSAlgorithmSpec wrappingAlgorithm;
 
 /**
- <p>The type of wrapping key (public key) to return in the response. Only 2048-bit RSA public keys are supported.</p>
+ <p>The type of RSA public key to return in the response. You will use this wrapping key with the specified wrapping algorithm to protect your key material during import. </p><p>Use the longest RSA wrapping key that is practical. </p><p>You cannot use an RSA_2048 public key to directly wrap an ECC_NIST_P521 private key. Instead, use an RSA_AES wrapping algorithm or choose a longer RSA public key.</p>
  */
 @property (nonatomic, assign) AWSKMSWrappingKeySpec wrappingKeySpec;
 
@@ -1648,12 +1698,12 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 
 
 /**
- <p>The encrypted key material to import. The key material must be encrypted with the public wrapping key that <a>GetParametersForImport</a> returned, using the wrapping algorithm that you specified in the same <code>GetParametersForImport</code> request.</p>
+ <p>The encrypted key material to import. The key material must be encrypted under the public wrapping key that <a>GetParametersForImport</a> returned, using the wrapping algorithm that you specified in the same <code>GetParametersForImport</code> request.</p>
  */
 @property (nonatomic, strong) NSData * _Nullable encryptedKeyMaterial;
 
 /**
- <p>Specifies whether the key material expires. The default is <code>KEY_MATERIAL_EXPIRES</code>.</p><p>When the value of <code>ExpirationModel</code> is <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value for the <code>ValidTo</code> parameter. When value is <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the <code>ValidTo</code> parameter.</p><p>You cannot change the <code>ExpirationModel</code> or <code>ValidTo</code> values for the current import after the request completes. To change either value, you must delete (<a>DeleteImportedKeyMaterial</a>) and reimport the key material.</p>
+ <p>Specifies whether the key material expires. The default is <code>KEY_MATERIAL_EXPIRES</code>. For help with this choice, see <a href="https://docs.aws.amazon.com/en_us/kms/latest/developerguide/importing-keys.html#importing-keys-expiration">Setting an expiration time</a> in the <i>Key Management Service Developer Guide</i>.</p><p>When the value of <code>ExpirationModel</code> is <code>KEY_MATERIAL_EXPIRES</code>, you must specify a value for the <code>ValidTo</code> parameter. When value is <code>KEY_MATERIAL_DOES_NOT_EXPIRE</code>, you must omit the <code>ValidTo</code> parameter.</p><p>You cannot change the <code>ExpirationModel</code> or <code>ValidTo</code> values for the current import after the request completes. To change either value, you must reimport the key material.</p>
  */
 @property (nonatomic, assign) AWSKMSExpirationModelType expirationModel;
 
@@ -1663,7 +1713,7 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 @property (nonatomic, strong) NSData * _Nullable importToken;
 
 /**
- <p>The identifier of the symmetric encryption KMS key that receives the imported key material. This must be the same KMS key specified in the <code>KeyID</code> parameter of the corresponding <a>GetParametersForImport</a> request. The <code>Origin</code> of the KMS key must be <code>EXTERNAL</code>. You cannot perform this operation on an asymmetric KMS key, an HMAC KMS key, a KMS key in a custom key store, or on a KMS key in a different Amazon Web Services account</p><p>Specify the key ID or key ARN of the KMS key.</p><p>For example:</p><ul><li><p>Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code></p></li><li><p>Key ARN: <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code></p></li></ul><p>To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or <a>DescribeKey</a>.</p>
+ <p>The identifier of the KMS key that will be associated with the imported key material. This must be the same KMS key specified in the <code>KeyID</code> parameter of the corresponding <a>GetParametersForImport</a> request. The <code>Origin</code> of the KMS key must be <code>EXTERNAL</code> and its <code>KeyState</code> must be <code>PendingImport</code>. </p><p>The KMS key can be a symmetric encryption KMS key, HMAC KMS key, asymmetric encryption KMS key, or asymmetric signing KMS key, including a <a href="kms/latest/developerguide/multi-region-keys-overview.html">multi-Region key</a> of any supported type. You cannot perform this operation on a KMS key in a custom key store, or on a KMS key in a different Amazon Web Services account.</p><p>Specify the key ID or key ARN of the KMS key.</p><p>For example:</p><ul><li><p>Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code></p></li><li><p>Key ARN: <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code></p></li></ul><p>To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or <a>DescribeKey</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable keyId;
 
@@ -2135,7 +2185,7 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 
 
 /**
- <p>Skips ("bypasses") the key policy lockout safety check. The default value is false.</p><important><p>Setting this value to true increases the risk that the KMS key becomes unmanageable. Do not set this value to true indiscriminately.</p><p>For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#prevent-unmanageable-key">Default key policy</a> in the <i>Key Management Service Developer Guide</i>.</p></important><p>Use this parameter only when you intend to prevent the principal that is making the request from making a subsequent <a>PutKeyPolicy</a> request on the KMS key.</p>
+ <p>Skips ("bypasses") the key policy lockout safety check. The default value is false.</p><important><p>Setting this value to true increases the risk that the KMS key becomes unmanageable. Do not set this value to true indiscriminately.</p><p>For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#prevent-unmanageable-key">Default key policy</a> in the <i>Key Management Service Developer Guide</i>.</p></important><p>Use this parameter only when you intend to prevent the principal that is making the request from making a subsequent <a href="https://docs.aws.amazon.com/kms/latest/APIReference/API_PutKeyPolicy.html">PutKeyPolicy</a> request on the KMS key.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable bypassPolicyLockoutSafetyCheck;
 
@@ -2150,7 +2200,7 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 @property (nonatomic, strong) NSString * _Nullable policy;
 
 /**
- <p>The name of the key policy. The only valid value is <code>default</code>.</p>
+ <p>The name of the key policy. If no policy name is specified, the default value is <code>default</code>. The only valid value is <code>default</code>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable policyName;
 
@@ -2181,6 +2231,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
  <p>A unique identifier for the KMS key that is used to reencrypt the data. Specify a symmetric encryption KMS key or an asymmetric KMS key with a <code>KeyUsage</code> value of <code>ENCRYPT_DECRYPT</code>. To find the <code>KeyUsage</code> value of a KMS key, use the <a>DescribeKey</a> operation.</p><p>To specify a KMS key, use its key ID, key ARN, alias name, or alias ARN. When using an alias name, prefix it with <code>"alias/"</code>. To specify a KMS key in a different Amazon Web Services account, you must use the key ARN or alias ARN.</p><p>For example:</p><ul><li><p>Key ID: <code>1234abcd-12ab-34cd-56ef-1234567890ab</code></p></li><li><p>Key ARN: <code>arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab</code></p></li><li><p>Alias name: <code>alias/ExampleAlias</code></p></li><li><p>Alias ARN: <code>arn:aws:kms:us-east-2:111122223333:alias/ExampleAlias</code></p></li></ul><p>To get the key ID and key ARN for a KMS key, use <a>ListKeys</a> or <a>DescribeKey</a>. To get the alias name and alias ARN, use <a>ListAliases</a>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable destinationKeyId;
+
+/**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
  <p>A list of grant tokens.</p><p>Use a grant token when your permission to call this operation comes from a new grant that has not yet achieved <i>eventual consistency</i>. For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token">Grant token</a> and <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token">Using a grant token</a> in the <i>Key Management Service Developer Guide</i>.</p>
@@ -2262,7 +2317,7 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 
 
 /**
- <p>Skips ("bypasses") the key policy lockout safety check. The default value is false.</p><important><p>Setting this value to true increases the risk that the KMS key becomes unmanageable. Do not set this value to true indiscriminately.</p><p>For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#prevent-unmanageable-key">Default key policy</a> in the <i>Key Management Service Developer Guide</i>.</p></important><p>Use this parameter only when you intend to prevent the principal that is making the request from making a subsequent <a>PutKeyPolicy</a> request on the KMS key.</p>
+ <p>Skips ("bypasses") the key policy lockout safety check. The default value is false.</p><important><p>Setting this value to true increases the risk that the KMS key becomes unmanageable. Do not set this value to true indiscriminately.</p><p>For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/key-policy-default.html#prevent-unmanageable-key">Default key policy</a> in the <i>Key Management Service Developer Guide</i>.</p></important><p>Use this parameter only when you intend to prevent the principal that is making the request from making a subsequent <a href="https://docs.aws.amazon.com/kms/latest/APIReference/API_PutKeyPolicy.html">PutKeyPolicy</a> request on the KMS key.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable bypassPolicyLockoutSafetyCheck;
 
@@ -2323,6 +2378,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 
 
 /**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
+
+/**
  <p>Identifies the grant to retire. To get the grant ID, use <a>CreateGrant</a>, <a>ListGrants</a>, or <a>ListRetirableGrants</a>.</p><ul><li><p>Grant ID Example - 0123456789012345678901234567890123456789012345678901234567890123</p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable grantId;
@@ -2344,6 +2404,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
  */
 @interface AWSKMSRevokeGrantRequest : AWSRequest
 
+
+/**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
  <p>Identifies the grant to revoke. To get the grant ID, use <a>CreateGrant</a>, <a>ListGrants</a>, or <a>ListRetirableGrants</a>.</p>
@@ -2369,7 +2434,7 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 @property (nonatomic, strong) NSString * _Nullable keyId;
 
 /**
- <p>The waiting period, specified in number of days. After the waiting period ends, KMS deletes the KMS key.</p><p>If the KMS key is a multi-Region primary key with replica keys, the waiting period begins when the last of its replica keys is deleted. Otherwise, the waiting period begins immediately.</p><p>This value is optional. If you include a value, it must be between 7 and 30, inclusive. If you do not include a value, it defaults to 30.</p>
+ <p>The waiting period, specified in number of days. After the waiting period ends, KMS deletes the KMS key.</p><p>If the KMS key is a multi-Region primary key with replica keys, the waiting period begins when the last of its replica keys is deleted. Otherwise, the waiting period begins immediately.</p><p>This value is optional. If you include a value, it must be between 7 and 30, inclusive. If you do not include a value, it defaults to 30. You can use the <a href="https://docs.aws.amazon.com/kms/latest/developerguide/conditions-kms.html#conditions-kms-schedule-key-deletion-pending-window-in-days"><code>kms:ScheduleKeyDeletionPendingWindowInDays</code></a> condition key to further constrain the values that principals can specify in the <code>PendingWindowInDays</code> parameter.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable pendingWindowInDays;
 
@@ -2410,6 +2475,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 
 
 /**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
+
+/**
  <p>A list of grant tokens.</p><p>Use a grant token when your permission to call this operation comes from a new grant that has not yet achieved <i>eventual consistency</i>. For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token">Grant token</a> and <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token">Using a grant token</a> in the <i>Key Management Service Developer Guide</i>.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable grantTokens;
@@ -2448,7 +2518,7 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 @property (nonatomic, strong) NSString * _Nullable keyId;
 
 /**
- <p>The cryptographic signature that was generated for the message. </p><ul><li><p>When used with the supported RSA signing algorithms, the encoding of this value is defined by <a href="https://tools.ietf.org/html/rfc8017">PKCS #1 in RFC 8017</a>.</p></li><li><p>When used with the <code>ECDSA_SHA_256</code>, <code>ECDSA_SHA_384</code>, or <code>ECDSA_SHA_512</code> signing algorithms, this value is a DER-encoded object as defined by ANS X9.62–2005 and <a href="https://tools.ietf.org/html/rfc3279#section-2.2.3">RFC 3279 Section 2.2.3</a>. This is the most commonly used signature format and is appropriate for most uses. </p></li></ul><p>When you use the HTTP API or the Amazon Web Services CLI, the value is Base64-encoded. Otherwise, it is not Base64-encoded.</p>
+ <p>The cryptographic signature that was generated for the message. </p><ul><li><p>When used with the supported RSA signing algorithms, the encoding of this value is defined by <a href="https://tools.ietf.org/html/rfc8017">PKCS #1 in RFC 8017</a>.</p></li><li><p>When used with the <code>ECDSA_SHA_256</code>, <code>ECDSA_SHA_384</code>, or <code>ECDSA_SHA_512</code> signing algorithms, this value is a DER-encoded object as defined by ANSI X9.62–2005 and <a href="https://tools.ietf.org/html/rfc3279#section-2.2.3">RFC 3279 Section 2.2.3</a>. This is the most commonly used signature format and is appropriate for most uses. </p></li></ul><p>When you use the HTTP API or the Amazon Web Services CLI, the value is Base64-encoded. Otherwise, it is not Base64-encoded.</p>
  */
 @property (nonatomic, strong) NSData * _Nullable signature;
 
@@ -2636,6 +2706,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
 
 
 /**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
+
+/**
  <p>A list of grant tokens.</p><p>Use a grant token when your permission to call this operation comes from a new grant that has not yet achieved <i>eventual consistency</i>. For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token">Grant token</a> and <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token">Using a grant token</a> in the <i>Key Management Service Developer Guide</i>.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable grantTokens;
@@ -2690,6 +2765,11 @@ typedef NS_ENUM(NSInteger, AWSKMSXksProxyConnectivityType) {
  */
 @interface AWSKMSVerifyRequest : AWSRequest
 
+
+/**
+ <p>Checks if your request will succeed. <code>DryRun</code> is an optional parameter. </p><p>To learn more about how to use this parameter, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/programming-dryrun.html">Testing your KMS API calls</a> in the <i>Key Management Service Developer Guide</i>.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dryRun;
 
 /**
  <p>A list of grant tokens.</p><p>Use a grant token when your permission to call this operation comes from a new grant that has not yet achieved <i>eventual consistency</i>. For more information, see <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grants.html#grant_token">Grant token</a> and <a href="https://docs.aws.amazon.com/kms/latest/developerguide/grant-manage.html#using-grant-token">Using a grant token</a> in the <i>Key Management Service Developer Guide</i>.</p>

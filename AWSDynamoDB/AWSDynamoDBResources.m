@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -99,7 +99,7 @@
         {\"shape\":\"RequestLimitExceeded\"},\
         {\"shape\":\"InternalServerError\"}\
       ],\
-      \"documentation\":\"<p>The <code>BatchGetItem</code> operation returns the attributes of one or more items from one or more tables. You identify requested items by primary key.</p> <p>A single operation can retrieve up to 16 MB of data, which can contain as many as 100 items. <code>BatchGetItem</code> returns a partial result if the response size limit is exceeded, the table's provisioned throughput is exceeded, or an internal processing failure occurs. If a partial result is returned, the operation returns a value for <code>UnprocessedKeys</code>. You can use this value to retry the operation starting with the next item to get.</p> <important> <p>If you request more than 100 items, <code>BatchGetItem</code> returns a <code>ValidationException</code> with the message \\\"Too many items requested for the BatchGetItem call.\\\"</p> </important> <p>For example, if you ask to retrieve 100 items, but each individual item is 300 KB in size, the system returns 52 items (so as not to exceed the 16 MB limit). It also returns an appropriate <code>UnprocessedKeys</code> value so you can get the next page of results. If desired, your application can include its own logic to assemble the pages of results into one dataset.</p> <p>If <i>none</i> of the items can be processed due to insufficient provisioned throughput on all of the tables in the request, then <code>BatchGetItem</code> returns a <code>ProvisionedThroughputExceededException</code>. If <i>at least one</i> of the items is successfully processed, then <code>BatchGetItem</code> completes successfully, while returning the keys of the unread items in <code>UnprocessedKeys</code>.</p> <important> <p>If DynamoDB returns any unprocessed items, you should retry the batch operation on those items. However, <i>we strongly recommend that you use an exponential backoff algorithm</i>. If you retry the batch operation immediately, the underlying read or write requests can still fail due to throttling on the individual tables. If you delay the batch operation using exponential backoff, the individual requests in the batch are much more likely to succeed.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#BatchOperations\\\">Batch Operations and Error Handling</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> </important> <p>By default, <code>BatchGetItem</code> performs eventually consistent reads on every table in the request. If you want strongly consistent reads instead, you can set <code>ConsistentRead</code> to <code>true</code> for any or all tables.</p> <p>In order to minimize response latency, <code>BatchGetItem</code> may retrieve items in parallel.</p> <p>When designing your application, keep in mind that DynamoDB does not return items in any particular order. To help parse the response by item, include the primary key values for the items in your request in the <code>ProjectionExpression</code> parameter.</p> <p>If a requested item does not exist, it is not returned in the result. Requests for nonexistent items consume the minimum read capacity units according to the type of read. For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#CapacityUnitCalculations\\\">Working with Tables</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>\",\
+      \"documentation\":\"<p>The <code>BatchGetItem</code> operation returns the attributes of one or more items from one or more tables. You identify requested items by primary key.</p> <p>A single operation can retrieve up to 16 MB of data, which can contain as many as 100 items. <code>BatchGetItem</code> returns a partial result if the response size limit is exceeded, the table's provisioned throughput is exceeded, more than 1MB per partition is requested, or an internal processing failure occurs. If a partial result is returned, the operation returns a value for <code>UnprocessedKeys</code>. You can use this value to retry the operation starting with the next item to get.</p> <important> <p>If you request more than 100 items, <code>BatchGetItem</code> returns a <code>ValidationException</code> with the message \\\"Too many items requested for the BatchGetItem call.\\\"</p> </important> <p>For example, if you ask to retrieve 100 items, but each individual item is 300 KB in size, the system returns 52 items (so as not to exceed the 16 MB limit). It also returns an appropriate <code>UnprocessedKeys</code> value so you can get the next page of results. If desired, your application can include its own logic to assemble the pages of results into one dataset.</p> <p>If <i>none</i> of the items can be processed due to insufficient provisioned throughput on all of the tables in the request, then <code>BatchGetItem</code> returns a <code>ProvisionedThroughputExceededException</code>. If <i>at least one</i> of the items is successfully processed, then <code>BatchGetItem</code> completes successfully, while returning the keys of the unread items in <code>UnprocessedKeys</code>.</p> <important> <p>If DynamoDB returns any unprocessed items, you should retry the batch operation on those items. However, <i>we strongly recommend that you use an exponential backoff algorithm</i>. If you retry the batch operation immediately, the underlying read or write requests can still fail due to throttling on the individual tables. If you delay the batch operation using exponential backoff, the individual requests in the batch are much more likely to succeed.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ErrorHandling.html#BatchOperations\\\">Batch Operations and Error Handling</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> </important> <p>By default, <code>BatchGetItem</code> performs eventually consistent reads on every table in the request. If you want strongly consistent reads instead, you can set <code>ConsistentRead</code> to <code>true</code> for any or all tables.</p> <p>In order to minimize response latency, <code>BatchGetItem</code> may retrieve items in parallel.</p> <p>When designing your application, keep in mind that DynamoDB does not return items in any particular order. To help parse the response by item, include the primary key values for the items in your request in the <code>ProjectionExpression</code> parameter.</p> <p>If a requested item does not exist, it is not returned in the result. Requests for nonexistent items consume the minimum read capacity units according to the type of read. For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#CapacityUnitCalculations\\\">Working with Tables</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>\",\
       \"endpointdiscovery\":{\
       }\
     },\
@@ -216,6 +216,25 @@
       \"endpointdiscovery\":{\
       }\
     },\
+    \"DeleteResourcePolicy\":{\
+      \"name\":\"DeleteResourcePolicy\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"DeleteResourcePolicyInput\"},\
+      \"output\":{\"shape\":\"DeleteResourcePolicyOutput\"},\
+      \"errors\":[\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"InternalServerError\"},\
+        {\"shape\":\"PolicyNotFoundException\"},\
+        {\"shape\":\"ResourceInUseException\"},\
+        {\"shape\":\"LimitExceededException\"}\
+      ],\
+      \"documentation\":\"<p>Deletes the resource-based policy attached to the resource, which can be a table or stream.</p> <p> <code>DeleteResourcePolicy</code> is an idempotent operation; running it multiple times on the same resource <i>doesn't</i> result in an error response, unless you specify an <code>ExpectedRevisionId</code>, which will then return a <code>PolicyNotFoundException</code>.</p> <important> <p>To make sure that you don't inadvertently lock yourself out of your own resources, the root principal in your Amazon Web Services account can perform <code>DeleteResourcePolicy</code> requests, even if your resource-based policy explicitly denies the root principal's access. </p> </important> <note> <p> <code>DeleteResourcePolicy</code> is an asynchronous operation. If you issue a <code>GetResourcePolicy</code> request immediately after running the <code>DeleteResourcePolicy</code> request, DynamoDB might still return the deleted policy. This is because the policy for your resource might not have been deleted yet. Wait for a few seconds, and then try the <code>GetResourcePolicy</code> request again.</p> </note>\",\
+      \"endpointdiscovery\":{\
+      }\
+    },\
     \"DeleteTable\":{\
       \"name\":\"DeleteTable\",\
       \"http\":{\
@@ -288,7 +307,7 @@
       },\
       \"input\":{\"shape\":\"DescribeEndpointsRequest\"},\
       \"output\":{\"shape\":\"DescribeEndpointsResponse\"},\
-      \"documentation\":\"<p>Returns the regional endpoint information. This action must be included in your VPC endpoint policies, or access to the DescribeEndpoints API will be denied. For more information on policy permissions, please see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/inter-network-traffic-privacy.html#inter-network-traffic-DescribeEndpoints\\\">Internetwork traffic privacy</a>.</p>\",\
+      \"documentation\":\"<p>Returns the regional endpoint information. For more information on policy permissions, please see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/inter-network-traffic-privacy.html#inter-network-traffic-DescribeEndpoints\\\">Internetwork traffic privacy</a>.</p>\",\
       \"endpointoperation\":true\
     },\
     \"DescribeExport\":{\
@@ -539,6 +558,23 @@
       \"endpointdiscovery\":{\
       }\
     },\
+    \"GetResourcePolicy\":{\
+      \"name\":\"GetResourcePolicy\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"GetResourcePolicyInput\"},\
+      \"output\":{\"shape\":\"GetResourcePolicyOutput\"},\
+      \"errors\":[\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"InternalServerError\"},\
+        {\"shape\":\"PolicyNotFoundException\"}\
+      ],\
+      \"documentation\":\"<p>Returns the resource-based policy document attached to the resource, which can be a table or stream, in JSON format.</p> <p> <code>GetResourcePolicy</code> follows an <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html\\\"> <i>eventually consistent</i> </a> model. The following list describes the outcomes when you issue the <code>GetResourcePolicy</code> request immediately after issuing another request:</p> <ul> <li> <p>If you issue a <code>GetResourcePolicy</code> request immediately after a <code>PutResourcePolicy</code> request, DynamoDB might return a <code>PolicyNotFoundException</code>.</p> </li> <li> <p>If you issue a <code>GetResourcePolicy</code>request immediately after a <code>DeleteResourcePolicy</code> request, DynamoDB might return the policy that was present before the deletion request.</p> </li> <li> <p>If you issue a <code>GetResourcePolicy</code> request immediately after a <code>CreateTable</code> request, which includes a resource-based policy, DynamoDB might return a <code>ResourceNotFoundException</code> or a <code>PolicyNotFoundException</code>.</p> </li> </ul> <p>Because <code>GetResourcePolicy</code> uses an <i>eventually consistent</i> query, the metadata for your policy or table might not be available at that moment. Wait for a few seconds, and then retry the <code>GetResourcePolicy</code> request.</p> <p>After a <code>GetResourcePolicy</code> request returns a policy created using the <code>PutResourcePolicy</code> request, you can assume the policy will start getting applied in the authorization of requests to the resource. Because this process is eventually consistent, it will take some time to apply the policy to all requests to a resource. Policies that you attach while creating a table using the <code>CreateTable</code> request will always be applied to all requests for that table.</p>\",\
+      \"endpointdiscovery\":{\
+      }\
+    },\
     \"ImportTable\":{\
       \"name\":\"ImportTable\",\
       \"http\":{\
@@ -565,7 +601,7 @@
       \"errors\":[\
         {\"shape\":\"InternalServerError\"}\
       ],\
-      \"documentation\":\"<p>List backups associated with an Amazon Web Services account. To list backups for a given table, specify <code>TableName</code>. <code>ListBackups</code> returns a paginated list of results with at most 1 MB worth of items in a page. You can also specify a maximum number of entries to be returned in a page.</p> <p>In the request, start time is inclusive, but end time is exclusive. Note that these boundaries are for the time at which the original backup was requested.</p> <p>You can call <code>ListBackups</code> a maximum of five times per second.</p>\",\
+      \"documentation\":\"<p>List DynamoDB backups that are associated with an Amazon Web Services account and weren't made with Amazon Web Services Backup. To list these backups for a given table, specify <code>TableName</code>. <code>ListBackups</code> returns a paginated list of results with at most 1 MB worth of items in a page. You can also specify a maximum number of entries to be returned in a page.</p> <p>In the request, start time is inclusive, but end time is exclusive. Note that these boundaries are for the time at which the original backup was requested.</p> <p>You can call <code>ListBackups</code> a maximum of five times per second.</p> <p>If you want to retrieve the complete list of backups made with Amazon Web Services Backup, use the <a href=\\\"https://docs.aws.amazon.com/aws-backup/latest/devguide/API_ListBackupJobs.html\\\">Amazon Web Services Backup list API.</a> </p>\",\
       \"endpointdiscovery\":{\
       }\
     },\
@@ -677,6 +713,25 @@
       \"endpointdiscovery\":{\
       }\
     },\
+    \"PutResourcePolicy\":{\
+      \"name\":\"PutResourcePolicy\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"PutResourcePolicyInput\"},\
+      \"output\":{\"shape\":\"PutResourcePolicyOutput\"},\
+      \"errors\":[\
+        {\"shape\":\"ResourceNotFoundException\"},\
+        {\"shape\":\"InternalServerError\"},\
+        {\"shape\":\"LimitExceededException\"},\
+        {\"shape\":\"PolicyNotFoundException\"},\
+        {\"shape\":\"ResourceInUseException\"}\
+      ],\
+      \"documentation\":\"<p>Attaches a resource-based policy document to the resource, which can be a table or stream. When you attach a resource-based policy using this API, the policy application is <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/HowItWorks.ReadConsistency.html\\\"> <i>eventually consistent</i> </a>.</p> <p> <code>PutResourcePolicy</code> is an idempotent operation; running it multiple times on the same resource using the same policy document will return the same revision ID. If you specify an <code>ExpectedRevisionId</code> which doesn't match the current policy's <code>RevisionId</code>, the <code>PolicyNotFoundException</code> will be returned.</p> <note> <p> <code>PutResourcePolicy</code> is an asynchronous operation. If you issue a <code>GetResourcePolicy</code> request immediately after a <code>PutResourcePolicy</code> request, DynamoDB might return your previous policy, if there was one, or return the <code>PolicyNotFoundException</code>. This is because <code>GetResourcePolicy</code> uses an eventually consistent query, and the metadata for your policy or table might not be available at that moment. Wait for a few seconds, and then try the <code>GetResourcePolicy</code> request again.</p> </note>\",\
+      \"endpointdiscovery\":{\
+      }\
+    },\
     \"Query\":{\
       \"name\":\"Query\",\
       \"http\":{\
@@ -732,7 +787,7 @@
         {\"shape\":\"PointInTimeRecoveryUnavailableException\"},\
         {\"shape\":\"InternalServerError\"}\
       ],\
-      \"documentation\":\"<p>Restores the specified table to the specified point in time within <code>EarliestRestorableDateTime</code> and <code>LatestRestorableDateTime</code>. You can restore your table to any point in time during the last 35 days. Any number of users can execute up to 4 concurrent restores (any type of restore) in a given account. </p> <p> When you restore using point in time recovery, DynamoDB restores your table data to the state based on the selected date and time (day:hour:minute:second) to a new table. </p> <p> Along with data, the following are also included on the new restored table using point in time recovery: </p> <ul> <li> <p>Global secondary indexes (GSIs)</p> </li> <li> <p>Local secondary indexes (LSIs)</p> </li> <li> <p>Provisioned read and write capacity</p> </li> <li> <p>Encryption settings</p> <important> <p> All these settings come from the current settings of the source table at the time of restore. </p> </important> </li> </ul> <p>You must manually set up the following on the restored table:</p> <ul> <li> <p>Auto scaling policies</p> </li> <li> <p>IAM policies</p> </li> <li> <p>Amazon CloudWatch metrics and alarms</p> </li> <li> <p>Tags</p> </li> <li> <p>Stream settings</p> </li> <li> <p>Time to Live (TTL) settings</p> </li> <li> <p>Point in time recovery settings</p> </li> </ul>\",\
+      \"documentation\":\"<p>Restores the specified table to the specified point in time within <code>EarliestRestorableDateTime</code> and <code>LatestRestorableDateTime</code>. You can restore your table to any point in time during the last 35 days. Any number of users can execute up to 50 concurrent restores (any type of restore) in a given account. </p> <p>When you restore using point in time recovery, DynamoDB restores your table data to the state based on the selected date and time (day:hour:minute:second) to a new table. </p> <p>Along with data, the following are also included on the new restored table using point in time recovery: </p> <ul> <li> <p>Global secondary indexes (GSIs)</p> </li> <li> <p>Local secondary indexes (LSIs)</p> </li> <li> <p>Provisioned read and write capacity</p> </li> <li> <p>Encryption settings</p> <important> <p> All these settings come from the current settings of the source table at the time of restore. </p> </important> </li> </ul> <p>You must manually set up the following on the restored table:</p> <ul> <li> <p>Auto scaling policies</p> </li> <li> <p>IAM policies</p> </li> <li> <p>Amazon CloudWatch metrics and alarms</p> </li> <li> <p>Tags</p> </li> <li> <p>Stream settings</p> </li> <li> <p>Time to Live (TTL) settings</p> </li> <li> <p>Point in time recovery settings</p> </li> </ul>\",\
       \"endpointdiscovery\":{\
       }\
     },\
@@ -750,7 +805,7 @@
         {\"shape\":\"RequestLimitExceeded\"},\
         {\"shape\":\"InternalServerError\"}\
       ],\
-      \"documentation\":\"<p>The <code>Scan</code> operation returns one or more items and item attributes by accessing every item in a table or a secondary index. To have DynamoDB return fewer items, you can provide a <code>FilterExpression</code> operation.</p> <p>If the total number of scanned items exceeds the maximum dataset size limit of 1 MB, the scan stops and results are returned to the user as a <code>LastEvaluatedKey</code> value to continue the scan in a subsequent operation. The results also include the number of items exceeding the limit. A scan can result in no table data meeting the filter criteria. </p> <p>A single <code>Scan</code> operation reads up to the maximum number of items set (if using the <code>Limit</code> parameter) or a maximum of 1 MB of data and then apply any filtering to the results using <code>FilterExpression</code>. If <code>LastEvaluatedKey</code> is present in the response, you need to paginate the result set. For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.Pagination\\\">Paginating the Results</a> in the <i>Amazon DynamoDB Developer Guide</i>. </p> <p> <code>Scan</code> operations proceed sequentially; however, for faster performance on a large table or secondary index, applications can request a parallel <code>Scan</code> operation by providing the <code>Segment</code> and <code>TotalSegments</code> parameters. For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.ParallelScan\\\">Parallel Scan</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p> <code>Scan</code> uses eventually consistent reads when accessing the data in a table; therefore, the result set might not include the changes to data in the table immediately before the operation began. If you need a consistent copy of the data, as of the time that the <code>Scan</code> begins, you can set the <code>ConsistentRead</code> parameter to <code>true</code>.</p>\",\
+      \"documentation\":\"<p>The <code>Scan</code> operation returns one or more items and item attributes by accessing every item in a table or a secondary index. To have DynamoDB return fewer items, you can provide a <code>FilterExpression</code> operation.</p> <p>If the total size of scanned items exceeds the maximum dataset size limit of 1 MB, the scan completes and results are returned to the user. The <code>LastEvaluatedKey</code> value is also returned and the requestor can use the <code>LastEvaluatedKey</code> to continue the scan in a subsequent operation. Each scan response also includes number of items that were scanned (ScannedCount) as part of the request. If using a <code>FilterExpression</code>, a scan result can result in no items meeting the criteria and the <code>Count</code> will result in zero. If you did not use a <code>FilterExpression</code> in the scan request, then <code>Count</code> is the same as <code>ScannedCount</code>.</p> <note> <p> <code>Count</code> and <code>ScannedCount</code> only return the count of items specific to a single scan request and, unless the table is less than 1MB, do not represent the total number of items in the table. </p> </note> <p>A single <code>Scan</code> operation first reads up to the maximum number of items set (if using the <code>Limit</code> parameter) or a maximum of 1 MB of data and then applies any filtering to the results if a <code>FilterExpression</code> is provided. If <code>LastEvaluatedKey</code> is present in the response, pagination is required to complete the full table scan. For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.Pagination\\\">Paginating the Results</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p> <code>Scan</code> operations proceed sequentially; however, for faster performance on a large table or secondary index, applications can request a parallel <code>Scan</code> operation by providing the <code>Segment</code> and <code>TotalSegments</code> parameters. For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.ParallelScan\\\">Parallel Scan</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>By default, a <code>Scan</code> uses eventually consistent reads when accessing the items in a table. Therefore, the results from an eventually consistent <code>Scan</code> may not include the latest item changes at the time the scan iterates through each item in the table. If you require a strongly consistent read of each item as the scan iterates through the items in the table, you can set the <code>ConsistentRead</code> parameter to true. Strong consistency only relates to the consistency of the read at the item level.</p> <note> <p> DynamoDB does not provide snapshot isolation for a scan operation when the <code>ConsistentRead</code> parameter is set to true. Thus, a DynamoDB scan operation does not guarantee that all reads in a scan see a consistent snapshot of the table when the scan operation was requested. </p> </note>\",\
       \"endpointdiscovery\":{\
       }\
     },\
@@ -874,7 +929,7 @@
         {\"shape\":\"ReplicaNotFoundException\"},\
         {\"shape\":\"TableNotFoundException\"}\
       ],\
-      \"documentation\":\"<p>Adds or removes replicas in the specified global table. The global table must already exist to be able to use this operation. Any replica to be added must be empty, have the same name as the global table, have the same key schema, have DynamoDB Streams enabled, and have the same provisioned and maximum write capacity units.</p> <important> <p>This operation only applies to <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V1.html\\\">Version 2017.11.29 (Legacy)</a> of global tables. We recommend using <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html\\\">Version 2019.11.21 (Current)</a> when creating new global tables, as it provides greater flexibility, higher efficiency and consumes less write capacity than 2017.11.29 (Legacy). To determine which version you are using, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html\\\">Determining the version</a>. To update existing global tables from version 2017.11.29 (Legacy) to version 2019.11.21 (Current), see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html\\\"> Updating global tables</a>. </p> </important> <note> <p> This operation only applies to <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V1.html\\\">Version 2017.11.29</a> of global tables. If you are using global tables <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html\\\">Version 2019.11.21</a> you can use <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_DescribeTable.html\\\">DescribeTable</a> instead. </p> <p> Although you can use <code>UpdateGlobalTable</code> to add replicas and remove replicas in a single request, for simplicity we recommend that you issue separate requests for adding or removing replicas. </p> </note> <p> If global secondary indexes are specified, then the following conditions must also be met: </p> <ul> <li> <p> The global secondary indexes must have the same name. </p> </li> <li> <p> The global secondary indexes must have the same hash key and sort key (if present). </p> </li> <li> <p> The global secondary indexes must have the same provisioned and maximum write capacity units. </p> </li> </ul>\",\
+      \"documentation\":\"<p>Adds or removes replicas in the specified global table. The global table must already exist to be able to use this operation. Any replica to be added must be empty, have the same name as the global table, have the same key schema, have DynamoDB Streams enabled, and have the same provisioned and maximum write capacity units.</p> <important> <p>This operation only applies to <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V1.html\\\">Version 2017.11.29 (Legacy)</a> of global tables. We recommend using <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html\\\">Version 2019.11.21 (Current)</a> when creating new global tables, as it provides greater flexibility, higher efficiency and consumes less write capacity than 2017.11.29 (Legacy). To determine which version you are using, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.DetermineVersion.html\\\">Determining the version</a>. To update existing global tables from version 2017.11.29 (Legacy) to version 2019.11.21 (Current), see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/V2globaltables_upgrade.html\\\"> Updating global tables</a>. </p> </important> <note> <p> This operation only applies to <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V1.html\\\">Version 2017.11.29</a> of global tables. If you are using global tables <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html\\\">Version 2019.11.21</a> you can use <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_UpdateTable.html\\\">UpdateTable</a> instead. </p> <p> Although you can use <code>UpdateGlobalTable</code> to add replicas and remove replicas in a single request, for simplicity we recommend that you issue separate requests for adding or removing replicas. </p> </note> <p> If global secondary indexes are specified, then the following conditions must also be met: </p> <ul> <li> <p> The global secondary indexes must have the same name. </p> </li> <li> <p> The global secondary indexes must have the same hash key and sort key (if present). </p> </li> <li> <p> The global secondary indexes must have the same provisioned and maximum write capacity units. </p> </li> </ul>\",\
       \"endpointdiscovery\":{\
       }\
     },\
@@ -919,6 +974,24 @@
       \"endpointdiscovery\":{\
       }\
     },\
+    \"UpdateKinesisStreamingDestination\":{\
+      \"name\":\"UpdateKinesisStreamingDestination\",\
+      \"http\":{\
+        \"method\":\"POST\",\
+        \"requestUri\":\"/\"\
+      },\
+      \"input\":{\"shape\":\"UpdateKinesisStreamingDestinationInput\"},\
+      \"output\":{\"shape\":\"UpdateKinesisStreamingDestinationOutput\"},\
+      \"errors\":[\
+        {\"shape\":\"InternalServerError\"},\
+        {\"shape\":\"LimitExceededException\"},\
+        {\"shape\":\"ResourceInUseException\"},\
+        {\"shape\":\"ResourceNotFoundException\"}\
+      ],\
+      \"documentation\":\"<p>The command to update the Kinesis stream destination.</p>\",\
+      \"endpointdiscovery\":{\
+      }\
+    },\
     \"UpdateTable\":{\
       \"name\":\"UpdateTable\",\
       \"http\":{\
@@ -933,7 +1006,7 @@
         {\"shape\":\"LimitExceededException\"},\
         {\"shape\":\"InternalServerError\"}\
       ],\
-      \"documentation\":\"<p>Modifies the provisioned throughput settings, global secondary indexes, or DynamoDB Streams settings for a given table.</p> <important> <p>This operation only applies to <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html\\\">Version 2019.11.21 (Current)</a> of global tables. </p> </important> <p>You can only perform one of the following operations at once:</p> <ul> <li> <p>Modify the provisioned throughput settings of the table.</p> </li> <li> <p>Remove a global secondary index from the table.</p> </li> <li> <p>Create a new global secondary index on the table. After the index begins backfilling, you can use <code>UpdateTable</code> to perform other operations.</p> </li> </ul> <p> <code>UpdateTable</code> is an asynchronous operation; while it is executing, the table status changes from <code>ACTIVE</code> to <code>UPDATING</code>. While it is <code>UPDATING</code>, you cannot issue another <code>UpdateTable</code> request. When the table returns to the <code>ACTIVE</code> state, the <code>UpdateTable</code> operation is complete.</p>\",\
+      \"documentation\":\"<p>Modifies the provisioned throughput settings, global secondary indexes, or DynamoDB Streams settings for a given table.</p> <important> <p>This operation only applies to <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/globaltables.V2.html\\\">Version 2019.11.21 (Current)</a> of global tables. </p> </important> <p>You can only perform one of the following operations at once:</p> <ul> <li> <p>Modify the provisioned throughput settings of the table.</p> </li> <li> <p>Remove a global secondary index from the table.</p> </li> <li> <p>Create a new global secondary index on the table. After the index begins backfilling, you can use <code>UpdateTable</code> to perform other operations.</p> </li> </ul> <p> <code>UpdateTable</code> is an asynchronous operation; while it's executing, the table status changes from <code>ACTIVE</code> to <code>UPDATING</code>. While it's <code>UPDATING</code>, you can't issue another <code>UpdateTable</code> request. When the table returns to the <code>ACTIVE</code> state, the <code>UpdateTable</code> operation is complete.</p>\",\
       \"endpointdiscovery\":{\
       }\
     },\
@@ -973,6 +1046,13 @@
     }\
   },\
   \"shapes\":{\
+    \"ApproximateCreationDateTimePrecision\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"MILLISECOND\",\
+        \"MICROSECOND\"\
+      ]\
+    },\
     \"ArchivalReason\":{\"type\":\"string\"},\
     \"ArchivalSummary\":{\
       \"type\":\"structure\",\
@@ -1016,7 +1096,7 @@
           \"documentation\":\"<p>The data type for the attribute, where:</p> <ul> <li> <p> <code>S</code> - the attribute is of type String</p> </li> <li> <p> <code>N</code> - the attribute is of type Number</p> </li> <li> <p> <code>B</code> - the attribute is of type Binary</p> </li> </ul>\"\
         }\
       },\
-      \"documentation\":\"<p>Represents an attribute for describing the key schema for the table and indexes.</p>\"\
+      \"documentation\":\"<p>Represents an attribute for describing the schema for the table and indexes.</p>\"\
     },\
     \"AttributeDefinitions\":{\
       \"type\":\"list\",\
@@ -1436,7 +1516,7 @@
       \"members\":{\
         \"Responses\":{\
           \"shape\":\"PartiQLBatchResponse\",\
-          \"documentation\":\"<p>The response to each PartiQL statement in the batch.</p>\"\
+          \"documentation\":\"<p>The response to each PartiQL statement in the batch. The values of the list are ordered according to the ordering of the request statements.</p>\"\
         },\
         \"ConsumedCapacity\":{\
           \"shape\":\"ConsumedCapacityMultiple\",\
@@ -1450,7 +1530,7 @@
       \"members\":{\
         \"RequestItems\":{\
           \"shape\":\"BatchGetRequestMap\",\
-          \"documentation\":\"<p>A map of one or more table names and, for each table, a map that describes one or more items to retrieve from that table. Each table name can be used only once per <code>BatchGetItem</code> request.</p> <p>Each element in the map of items to retrieve consists of the following:</p> <ul> <li> <p> <code>ConsistentRead</code> - If <code>true</code>, a strongly consistent read is used; if <code>false</code> (the default), an eventually consistent read is used.</p> </li> <li> <p> <code>ExpressionAttributeNames</code> - One or more substitution tokens for attribute names in the <code>ProjectionExpression</code> parameter. The following are some use cases for using <code>ExpressionAttributeNames</code>:</p> <ul> <li> <p>To access an attribute whose name conflicts with a DynamoDB reserved word.</p> </li> <li> <p>To create a placeholder for repeating occurrences of an attribute name in an expression.</p> </li> <li> <p>To prevent special characters in an attribute name from being misinterpreted in an expression.</p> </li> </ul> <p>Use the <b>#</b> character in an expression to dereference an attribute name. For example, consider the following attribute name:</p> <ul> <li> <p> <code>Percentile</code> </p> </li> </ul> <p>The name of this attribute conflicts with a reserved word, so it cannot be used directly in an expression. (For the complete list of reserved words, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ReservedWords.html\\\">Reserved Words</a> in the <i>Amazon DynamoDB Developer Guide</i>). To work around this, you could specify the following for <code>ExpressionAttributeNames</code>:</p> <ul> <li> <p> <code>{\\\"#P\\\":\\\"Percentile\\\"}</code> </p> </li> </ul> <p>You could then use this substitution in an expression, as in this example:</p> <ul> <li> <p> <code>#P = :val</code> </p> </li> </ul> <note> <p>Tokens that begin with the <b>:</b> character are <i>expression attribute values</i>, which are placeholders for the actual value at runtime.</p> </note> <p>For more information about expression attribute names, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.AccessingItemAttributes.html\\\">Accessing Item Attributes</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> </li> <li> <p> <code>Keys</code> - An array of primary key attribute values that define specific items in the table. For each primary key, you must provide <i>all</i> of the key attributes. For example, with a simple primary key, you only need to provide the partition key value. For a composite key, you must provide <i>both</i> the partition key value and the sort key value.</p> </li> <li> <p> <code>ProjectionExpression</code> - A string that identifies one or more attributes to retrieve from the table. These attributes can include scalars, sets, or elements of a JSON document. The attributes in the expression must be separated by commas.</p> <p>If no attribute names are specified, then all attributes are returned. If any of the requested attributes are not found, they do not appear in the result.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.AccessingItemAttributes.html\\\">Accessing Item Attributes</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> </li> <li> <p> <code>AttributesToGet</code> - This is a legacy parameter. Use <code>ProjectionExpression</code> instead. For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LegacyConditionalParameters.AttributesToGet.html\\\">AttributesToGet</a> in the <i>Amazon DynamoDB Developer Guide</i>. </p> </li> </ul>\"\
+          \"documentation\":\"<p>A map of one or more table names or table ARNs and, for each table, a map that describes one or more items to retrieve from that table. Each table name or ARN can be used only once per <code>BatchGetItem</code> request.</p> <p>Each element in the map of items to retrieve consists of the following:</p> <ul> <li> <p> <code>ConsistentRead</code> - If <code>true</code>, a strongly consistent read is used; if <code>false</code> (the default), an eventually consistent read is used.</p> </li> <li> <p> <code>ExpressionAttributeNames</code> - One or more substitution tokens for attribute names in the <code>ProjectionExpression</code> parameter. The following are some use cases for using <code>ExpressionAttributeNames</code>:</p> <ul> <li> <p>To access an attribute whose name conflicts with a DynamoDB reserved word.</p> </li> <li> <p>To create a placeholder for repeating occurrences of an attribute name in an expression.</p> </li> <li> <p>To prevent special characters in an attribute name from being misinterpreted in an expression.</p> </li> </ul> <p>Use the <b>#</b> character in an expression to dereference an attribute name. For example, consider the following attribute name:</p> <ul> <li> <p> <code>Percentile</code> </p> </li> </ul> <p>The name of this attribute conflicts with a reserved word, so it cannot be used directly in an expression. (For the complete list of reserved words, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ReservedWords.html\\\">Reserved Words</a> in the <i>Amazon DynamoDB Developer Guide</i>). To work around this, you could specify the following for <code>ExpressionAttributeNames</code>:</p> <ul> <li> <p> <code>{\\\"#P\\\":\\\"Percentile\\\"}</code> </p> </li> </ul> <p>You could then use this substitution in an expression, as in this example:</p> <ul> <li> <p> <code>#P = :val</code> </p> </li> </ul> <note> <p>Tokens that begin with the <b>:</b> character are <i>expression attribute values</i>, which are placeholders for the actual value at runtime.</p> </note> <p>For more information about expression attribute names, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.AccessingItemAttributes.html\\\">Accessing Item Attributes</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> </li> <li> <p> <code>Keys</code> - An array of primary key attribute values that define specific items in the table. For each primary key, you must provide <i>all</i> of the key attributes. For example, with a simple primary key, you only need to provide the partition key value. For a composite key, you must provide <i>both</i> the partition key value and the sort key value.</p> </li> <li> <p> <code>ProjectionExpression</code> - A string that identifies one or more attributes to retrieve from the table. These attributes can include scalars, sets, or elements of a JSON document. The attributes in the expression must be separated by commas.</p> <p>If no attribute names are specified, then all attributes are returned. If any of the requested attributes are not found, they do not appear in the result.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.AccessingItemAttributes.html\\\">Accessing Item Attributes</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> </li> <li> <p> <code>AttributesToGet</code> - This is a legacy parameter. Use <code>ProjectionExpression</code> instead. For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/LegacyConditionalParameters.AttributesToGet.html\\\">AttributesToGet</a> in the <i>Amazon DynamoDB Developer Guide</i>. </p> </li> </ul>\"\
         },\
         \"ReturnConsumedCapacity\":{\"shape\":\"ReturnConsumedCapacity\"}\
       },\
@@ -1461,7 +1541,7 @@
       \"members\":{\
         \"Responses\":{\
           \"shape\":\"BatchGetResponseMap\",\
-          \"documentation\":\"<p>A map of table name to a list of items. Each object in <code>Responses</code> consists of a table name, along with a map of attribute data consisting of the data type and attribute value.</p>\"\
+          \"documentation\":\"<p>A map of table name or table ARN to a list of items. Each object in <code>Responses</code> consists of a table name or ARN, along with a map of attribute data consisting of the data type and attribute value.</p>\"\
         },\
         \"UnprocessedKeys\":{\
           \"shape\":\"BatchGetRequestMap\",\
@@ -1476,14 +1556,14 @@
     },\
     \"BatchGetRequestMap\":{\
       \"type\":\"map\",\
-      \"key\":{\"shape\":\"TableName\"},\
+      \"key\":{\"shape\":\"TableArn\"},\
       \"value\":{\"shape\":\"KeysAndAttributes\"},\
       \"max\":100,\
       \"min\":1\
     },\
     \"BatchGetResponseMap\":{\
       \"type\":\"map\",\
-      \"key\":{\"shape\":\"TableName\"},\
+      \"key\":{\"shape\":\"TableArn\"},\
       \"value\":{\"shape\":\"ItemList\"}\
     },\
     \"BatchStatementError\":{\
@@ -1496,6 +1576,10 @@
         \"Message\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p> The error message associated with the PartiQL batch response. </p>\"\
+        },\
+        \"Item\":{\
+          \"shape\":\"AttributeMap\",\
+          \"documentation\":\"<p>The item which caused the condition check to fail. This will be set if ReturnValuesOnConditionCheckFailure is specified as <code>ALL_OLD</code>.</p>\"\
         }\
       },\
       \"documentation\":\"<p> An error associated with a statement in a PartiQL batch that was run. </p>\"\
@@ -1531,6 +1615,10 @@
         \"ConsistentRead\":{\
           \"shape\":\"ConsistentRead\",\
           \"documentation\":\"<p> The read consistency of the PartiQL batch request. </p>\"\
+        },\
+        \"ReturnValuesOnConditionCheckFailure\":{\
+          \"shape\":\"ReturnValuesOnConditionCheckFailure\",\
+          \"documentation\":\"<p>An optional parameter that returns the item attributes for a PartiQL batch request operation that failed a condition check.</p> <p>There is no additional cost associated with requesting a return value aside from the small network and processing overhead of receiving a larger response. No read capacity units are consumed.</p>\"\
         }\
       },\
       \"documentation\":\"<p> A PartiQL batch statement request. </p>\"\
@@ -1559,7 +1647,7 @@
       \"members\":{\
         \"RequestItems\":{\
           \"shape\":\"BatchWriteItemRequestMap\",\
-          \"documentation\":\"<p>A map of one or more table names and, for each table, a list of operations to be performed (<code>DeleteRequest</code> or <code>PutRequest</code>). Each element in the map consists of the following:</p> <ul> <li> <p> <code>DeleteRequest</code> - Perform a <code>DeleteItem</code> operation on the specified item. The item to be deleted is identified by a <code>Key</code> subelement:</p> <ul> <li> <p> <code>Key</code> - A map of primary key attribute values that uniquely identify the item. Each entry in this map consists of an attribute name and an attribute value. For each primary key, you must provide <i>all</i> of the key attributes. For example, with a simple primary key, you only need to provide a value for the partition key. For a composite primary key, you must provide values for <i>both</i> the partition key and the sort key.</p> </li> </ul> </li> <li> <p> <code>PutRequest</code> - Perform a <code>PutItem</code> operation on the specified item. The item to be put is identified by an <code>Item</code> subelement:</p> <ul> <li> <p> <code>Item</code> - A map of attributes and their values. Each entry in this map consists of an attribute name and an attribute value. Attribute values must not be null; string and binary type attributes must have lengths greater than zero; and set type attributes must not be empty. Requests that contain empty values are rejected with a <code>ValidationException</code> exception.</p> <p>If you specify any attributes that are part of an index key, then the data types for those attributes must match those of the schema in the table's attribute definition.</p> </li> </ul> </li> </ul>\"\
+          \"documentation\":\"<p>A map of one or more table names or table ARNs and, for each table, a list of operations to be performed (<code>DeleteRequest</code> or <code>PutRequest</code>). Each element in the map consists of the following:</p> <ul> <li> <p> <code>DeleteRequest</code> - Perform a <code>DeleteItem</code> operation on the specified item. The item to be deleted is identified by a <code>Key</code> subelement:</p> <ul> <li> <p> <code>Key</code> - A map of primary key attribute values that uniquely identify the item. Each entry in this map consists of an attribute name and an attribute value. For each primary key, you must provide <i>all</i> of the key attributes. For example, with a simple primary key, you only need to provide a value for the partition key. For a composite primary key, you must provide values for <i>both</i> the partition key and the sort key.</p> </li> </ul> </li> <li> <p> <code>PutRequest</code> - Perform a <code>PutItem</code> operation on the specified item. The item to be put is identified by an <code>Item</code> subelement:</p> <ul> <li> <p> <code>Item</code> - A map of attributes and their values. Each entry in this map consists of an attribute name and an attribute value. Attribute values must not be null; string and binary type attributes must have lengths greater than zero; and set type attributes must not be empty. Requests that contain empty values are rejected with a <code>ValidationException</code> exception.</p> <p>If you specify any attributes that are part of an index key, then the data types for those attributes must match those of the schema in the table's attribute definition.</p> </li> </ul> </li> </ul>\"\
         },\
         \"ReturnConsumedCapacity\":{\"shape\":\"ReturnConsumedCapacity\"},\
         \"ReturnItemCollectionMetrics\":{\
@@ -1574,7 +1662,7 @@
       \"members\":{\
         \"UnprocessedItems\":{\
           \"shape\":\"BatchWriteItemRequestMap\",\
-          \"documentation\":\"<p>A map of tables and requests against those tables that were not processed. The <code>UnprocessedItems</code> value is in the same form as <code>RequestItems</code>, so you can provide this value directly to a subsequent <code>BatchWriteItem</code> operation. For more information, see <code>RequestItems</code> in the Request Parameters section.</p> <p>Each <code>UnprocessedItems</code> entry consists of a table name and, for that table, a list of operations to perform (<code>DeleteRequest</code> or <code>PutRequest</code>).</p> <ul> <li> <p> <code>DeleteRequest</code> - Perform a <code>DeleteItem</code> operation on the specified item. The item to be deleted is identified by a <code>Key</code> subelement:</p> <ul> <li> <p> <code>Key</code> - A map of primary key attribute values that uniquely identify the item. Each entry in this map consists of an attribute name and an attribute value.</p> </li> </ul> </li> <li> <p> <code>PutRequest</code> - Perform a <code>PutItem</code> operation on the specified item. The item to be put is identified by an <code>Item</code> subelement:</p> <ul> <li> <p> <code>Item</code> - A map of attributes and their values. Each entry in this map consists of an attribute name and an attribute value. Attribute values must not be null; string and binary type attributes must have lengths greater than zero; and set type attributes must not be empty. Requests that contain empty values will be rejected with a <code>ValidationException</code> exception.</p> <p>If you specify any attributes that are part of an index key, then the data types for those attributes must match those of the schema in the table's attribute definition.</p> </li> </ul> </li> </ul> <p>If there are no unprocessed items remaining, the response contains an empty <code>UnprocessedItems</code> map.</p>\"\
+          \"documentation\":\"<p>A map of tables and requests against those tables that were not processed. The <code>UnprocessedItems</code> value is in the same form as <code>RequestItems</code>, so you can provide this value directly to a subsequent <code>BatchWriteItem</code> operation. For more information, see <code>RequestItems</code> in the Request Parameters section.</p> <p>Each <code>UnprocessedItems</code> entry consists of a table name or table ARN and, for that table, a list of operations to perform (<code>DeleteRequest</code> or <code>PutRequest</code>).</p> <ul> <li> <p> <code>DeleteRequest</code> - Perform a <code>DeleteItem</code> operation on the specified item. The item to be deleted is identified by a <code>Key</code> subelement:</p> <ul> <li> <p> <code>Key</code> - A map of primary key attribute values that uniquely identify the item. Each entry in this map consists of an attribute name and an attribute value.</p> </li> </ul> </li> <li> <p> <code>PutRequest</code> - Perform a <code>PutItem</code> operation on the specified item. The item to be put is identified by an <code>Item</code> subelement:</p> <ul> <li> <p> <code>Item</code> - A map of attributes and their values. Each entry in this map consists of an attribute name and an attribute value. Attribute values must not be null; string and binary type attributes must have lengths greater than zero; and set type attributes must not be empty. Requests that contain empty values will be rejected with a <code>ValidationException</code> exception.</p> <p>If you specify any attributes that are part of an index key, then the data types for those attributes must match those of the schema in the table's attribute definition.</p> </li> </ul> </li> </ul> <p>If there are no unprocessed items remaining, the response contains an empty <code>UnprocessedItems</code> map.</p>\"\
         },\
         \"ItemCollectionMetrics\":{\
           \"shape\":\"ItemCollectionMetricsPerTable\",\
@@ -1589,7 +1677,7 @@
     },\
     \"BatchWriteItemRequestMap\":{\
       \"type\":\"map\",\
-      \"key\":{\"shape\":\"TableName\"},\
+      \"key\":{\"shape\":\"TableArn\"},\
       \"value\":{\"shape\":\"WriteRequests\"},\
       \"max\":25,\
       \"min\":1\
@@ -1729,8 +1817,8 @@
           \"documentation\":\"<p>The primary key of the item to be checked. Each element consists of an attribute name and a value for that attribute.</p>\"\
         },\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>Name of the table for the check item request.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>Name of the table for the check item request. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"ConditionExpression\":{\
           \"shape\":\"ConditionExpression\",\
@@ -1758,6 +1846,10 @@
         \"message\":{\
           \"shape\":\"ErrorMessage\",\
           \"documentation\":\"<p>The conditional request failed.</p>\"\
+        },\
+        \"Item\":{\
+          \"shape\":\"AttributeMap\",\
+          \"documentation\":\"<p>Item which caused the <code>ConditionalCheckFailedException</code>.</p>\"\
         }\
       },\
       \"documentation\":\"<p>A condition specified in the operation could not be evaluated.</p>\",\
@@ -1770,13 +1862,14 @@
         \"OR\"\
       ]\
     },\
+    \"ConfirmRemoveSelfResourceAccess\":{\"type\":\"boolean\"},\
     \"ConsistentRead\":{\"type\":\"boolean\"},\
     \"ConsumedCapacity\":{\
       \"type\":\"structure\",\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table that was affected by the operation.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table that was affected by the operation. If you had specified the Amazon Resource Name (ARN) of a table in the input, you'll see the table ARN in the response.</p>\"\
         },\
         \"CapacityUnits\":{\
           \"shape\":\"ConsumedCapacityUnits\",\
@@ -1895,8 +1988,8 @@
       ],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"BackupName\":{\
           \"shape\":\"BackupName\",\
@@ -2017,8 +2110,8 @@
           \"documentation\":\"<p>An array of attributes that describe the key schema for the table and indexes.</p>\"\
         },\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table to create.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table to create. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"KeySchema\":{\
           \"shape\":\"KeySchema\",\
@@ -2059,6 +2152,10 @@
         \"DeletionProtectionEnabled\":{\
           \"shape\":\"DeletionProtectionEnabled\",\
           \"documentation\":\"<p>Indicates whether deletion protection is to be enabled (true) or disabled (false) on the table.</p>\"\
+        },\
+        \"ResourcePolicy\":{\
+          \"shape\":\"ResourcePolicy\",\
+          \"documentation\":\"<p>An Amazon Web Services resource-based policy document in JSON format that will be attached to the table.</p> <p>When you attach a resource-based policy while creating a table, the policy creation is <i>strongly consistent</i>.</p> <p>The maximum size supported for a resource-based policy document is 20 KB. DynamoDB counts whitespaces when calculating the size of a policy against this limit. You canât request an increase for this limit. For a full list of all considerations that you should keep in mind while attaching a resource-based policy, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/rbac-considerations.html\\\">Resource-based policy considerations</a>.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the input of a <code>CreateTable</code> operation.</p>\"\
@@ -2118,8 +2215,8 @@
           \"documentation\":\"<p>The primary key of the item to be deleted. Each element consists of an attribute name and a value for that attribute.</p>\"\
         },\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>Name of the table in which the item to be deleted resides.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>Name of the table in which the item to be deleted resides. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"ConditionExpression\":{\
           \"shape\":\"ConditionExpression\",\
@@ -2178,8 +2275,8 @@
       ],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table from which to delete the item.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table from which to delete the item. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"Key\":{\
           \"shape\":\"Key\",\
@@ -2213,6 +2310,10 @@
         \"ExpressionAttributeValues\":{\
           \"shape\":\"ExpressionAttributeValueMap\",\
           \"documentation\":\"<p>One or more values that can be substituted in an expression.</p> <p>Use the <b>:</b> (colon) character in an expression to dereference an attribute value. For example, suppose that you wanted to check whether the value of the <i>ProductStatus</i> attribute was one of the following: </p> <p> <code>Available | Backordered | Discontinued</code> </p> <p>You would first need to specify <code>ExpressionAttributeValues</code> as follows:</p> <p> <code>{ \\\":avail\\\":{\\\"S\\\":\\\"Available\\\"}, \\\":back\\\":{\\\"S\\\":\\\"Backordered\\\"}, \\\":disc\\\":{\\\"S\\\":\\\"Discontinued\\\"} }</code> </p> <p>You could then use these values in an expression, such as this:</p> <p> <code>ProductStatus IN (:avail, :back, :disc)</code> </p> <p>For more information on expression attribute values, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.SpecifyingConditions.html\\\">Condition Expressions</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>\"\
+        },\
+        \"ReturnValuesOnConditionCheckFailure\":{\
+          \"shape\":\"ReturnValuesOnConditionCheckFailure\",\
+          \"documentation\":\"<p>An optional parameter that returns the item attributes for a <code>DeleteItem</code> operation that failed a condition check.</p> <p>There is no additional cost associated with requesting a return value aside from the small network and processing overhead of receiving a larger response. No read capacity units are consumed.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the input of a <code>DeleteItem</code> operation.</p>\"\
@@ -2268,13 +2369,36 @@
       },\
       \"documentation\":\"<p>Represents a request to perform a <code>DeleteItem</code> operation on an item.</p>\"\
     },\
+    \"DeleteResourcePolicyInput\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"ResourceArn\"],\
+      \"members\":{\
+        \"ResourceArn\":{\
+          \"shape\":\"ResourceArnString\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) of the DynamoDB resource from which the policy will be removed. The resources you can specify include tables and streams. If you remove the policy of a table, it will also remove the permissions for the table's indexes defined in that policy document. This is because index permissions are defined in the table's policy.</p>\"\
+        },\
+        \"ExpectedRevisionId\":{\
+          \"shape\":\"PolicyRevisionId\",\
+          \"documentation\":\"<p>A string value that you can use to conditionally delete your policy. When you provide an expected revision ID, if the revision ID of the existing policy on the resource doesn't match or if there's no policy attached to the resource, the request will fail and return a <code>PolicyNotFoundException</code>.</p>\"\
+        }\
+      }\
+    },\
+    \"DeleteResourcePolicyOutput\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"RevisionId\":{\
+          \"shape\":\"PolicyRevisionId\",\
+          \"documentation\":\"<p>A unique string that represents the revision ID of the policy. If you are comparing revision IDs, make sure to always use string comparison logic.</p> <p>This value will be empty if you make a request against a resource without a policy.</p>\"\
+        }\
+      }\
+    },\
     \"DeleteTableInput\":{\
       \"type\":\"structure\",\
       \"required\":[\"TableName\"],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table to delete.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table to delete. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the input of a <code>DeleteTable</code> operation.</p>\"\
@@ -2314,8 +2438,8 @@
       \"required\":[\"TableName\"],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>Name of the table for which the customer wants to check the continuous backups and point in time recovery settings.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>Name of the table for which the customer wants to check the continuous backups and point in time recovery settings.</p> <p>You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         }\
       }\
     },\
@@ -2333,8 +2457,8 @@
       \"required\":[\"TableName\"],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table to describe.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table to describe. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"IndexName\":{\
           \"shape\":\"IndexName\",\
@@ -2472,8 +2596,8 @@
       \"required\":[\"TableName\"],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table being described.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table being described. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         }\
       }\
     },\
@@ -2523,8 +2647,8 @@
       \"required\":[\"TableName\"],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table to describe.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table to describe. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the input of a <code>DescribeTable</code> operation.</p>\"\
@@ -2544,8 +2668,8 @@
       \"required\":[\"TableName\"],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         }\
       }\
     },\
@@ -2563,8 +2687,8 @@
       \"required\":[\"TableName\"],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table to be described.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table to be described. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         }\
       }\
     },\
@@ -2584,7 +2708,8 @@
         \"ACTIVE\",\
         \"DISABLING\",\
         \"DISABLED\",\
-        \"ENABLE_FAILED\"\
+        \"ENABLE_FAILED\",\
+        \"UPDATING\"\
       ]\
     },\
     \"DoubleObject\":{\"type\":\"double\"},\
@@ -2595,6 +2720,16 @@
       },\
       \"documentation\":\"<p> There was an attempt to insert an item with the same primary key as an item that already exists in the DynamoDB table.</p>\",\
       \"exception\":true\
+    },\
+    \"EnableKinesisStreamingConfiguration\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ApproximateCreationDateTimePrecision\":{\
+          \"shape\":\"ApproximateCreationDateTimePrecision\",\
+          \"documentation\":\"<p>Toggle for the precision of Kinesis data stream timestamp. The values are either <code>MILLISECOND</code> or <code>MICROSECOND</code>.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Enables setting the configuration for Kinesis Streaming.</p>\"\
     },\
     \"Endpoint\":{\
       \"type\":\"structure\",\
@@ -2649,6 +2784,10 @@
         \"Limit\":{\
           \"shape\":\"PositiveIntegerObject\",\
           \"documentation\":\"<p>The maximum number of items to evaluate (not necessarily the number of matching items). If DynamoDB processes the number of items up to the limit while processing the results, it stops the operation and returns the matching values up to that point, along with a key in <code>LastEvaluatedKey</code> to apply in a subsequent operation so you can pick up where you left off. Also, if the processed dataset size exceeds 1 MB before DynamoDB reaches this limit, it stops the operation and returns the matching values up to the limit, and a key in <code>LastEvaluatedKey</code> to apply in a subsequent operation to continue the operation. </p>\"\
+        },\
+        \"ReturnValuesOnConditionCheckFailure\":{\
+          \"shape\":\"ReturnValuesOnConditionCheckFailure\",\
+          \"documentation\":\"<p>An optional parameter that returns the item attributes for an <code>ExecuteStatement</code> operation that failed a condition check.</p> <p>There is no additional cost associated with requesting a return value aside from the small network and processing overhead of receiving a larger response. No read capacity units are consumed.</p>\"\
         }\
       }\
     },\
@@ -2820,6 +2959,14 @@
         \"ItemCount\":{\
           \"shape\":\"ItemCount\",\
           \"documentation\":\"<p>The number of items exported.</p>\"\
+        },\
+        \"ExportType\":{\
+          \"shape\":\"ExportType\",\
+          \"documentation\":\"<p>The type of export that was performed. Valid values are <code>FULL_EXPORT</code> or <code>INCREMENTAL_EXPORT</code>.</p>\"\
+        },\
+        \"IncrementalExportSpecification\":{\
+          \"shape\":\"IncrementalExportSpecification\",\
+          \"documentation\":\"<p>Optional object containing the parameters specific to an incremental export.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the properties of the exported table.</p>\"\
@@ -2832,6 +2979,7 @@
         \"ION\"\
       ]\
     },\
+    \"ExportFromTime\":{\"type\":\"timestamp\"},\
     \"ExportManifest\":{\"type\":\"string\"},\
     \"ExportNextToken\":{\"type\":\"string\"},\
     \"ExportNotFoundException\":{\
@@ -2865,6 +3013,10 @@
         \"ExportStatus\":{\
           \"shape\":\"ExportStatus\",\
           \"documentation\":\"<p>Export can be in one of the following states: IN_PROGRESS, COMPLETED, or FAILED.</p>\"\
+        },\
+        \"ExportType\":{\
+          \"shape\":\"ExportType\",\
+          \"documentation\":\"<p>The type of export that was performed. Valid values are <code>FULL_EXPORT</code> or <code>INCREMENTAL_EXPORT</code>.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Summary information about an export task.</p>\"\
@@ -2895,7 +3047,7 @@
         },\
         \"S3BucketOwner\":{\
           \"shape\":\"S3BucketOwner\",\
-          \"documentation\":\"<p>The ID of the Amazon Web Services account that owns the bucket the export will be stored in.</p>\"\
+          \"documentation\":\"<p>The ID of the Amazon Web Services account that owns the bucket the export will be stored in.</p> <note> <p>S3BucketOwner is a required parameter when exporting to a S3 bucket in another account.</p> </note>\"\
         },\
         \"S3Prefix\":{\
           \"shape\":\"S3Prefix\",\
@@ -2912,6 +3064,14 @@
         \"ExportFormat\":{\
           \"shape\":\"ExportFormat\",\
           \"documentation\":\"<p>The format for the exported data. Valid values for <code>ExportFormat</code> are <code>DYNAMODB_JSON</code> or <code>ION</code>.</p>\"\
+        },\
+        \"ExportType\":{\
+          \"shape\":\"ExportType\",\
+          \"documentation\":\"<p>Choice of whether to execute as a full export or incremental export. Valid values are FULL_EXPORT or INCREMENTAL_EXPORT. The default value is FULL_EXPORT. If INCREMENTAL_EXPORT is provided, the IncrementalExportSpecification must also be used.</p>\"\
+        },\
+        \"IncrementalExportSpecification\":{\
+          \"shape\":\"IncrementalExportSpecification\",\
+          \"documentation\":\"<p>Optional object containing the parameters specific to an incremental export.</p>\"\
         }\
       }\
     },\
@@ -2925,6 +3085,21 @@
       }\
     },\
     \"ExportTime\":{\"type\":\"timestamp\"},\
+    \"ExportToTime\":{\"type\":\"timestamp\"},\
+    \"ExportType\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"FULL_EXPORT\",\
+        \"INCREMENTAL_EXPORT\"\
+      ]\
+    },\
+    \"ExportViewType\":{\
+      \"type\":\"string\",\
+      \"enum\":[\
+        \"NEW_IMAGE\",\
+        \"NEW_AND_OLD_IMAGES\"\
+      ]\
+    },\
     \"ExpressionAttributeNameMap\":{\
       \"type\":\"map\",\
       \"key\":{\"shape\":\"ExpressionAttributeNameVariable\"},\
@@ -2970,8 +3145,8 @@
           \"documentation\":\"<p>A map of attribute names to <code>AttributeValue</code> objects that specifies the primary key of the item to retrieve.</p>\"\
         },\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table from which to retrieve the specified item.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table from which to retrieve the specified item. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"ProjectionExpression\":{\
           \"shape\":\"ProjectionExpression\",\
@@ -2992,8 +3167,8 @@
       ],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table containing the requested item.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table containing the requested item. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"Key\":{\
           \"shape\":\"Key\",\
@@ -3032,6 +3207,29 @@
         }\
       },\
       \"documentation\":\"<p>Represents the output of a <code>GetItem</code> operation.</p>\"\
+    },\
+    \"GetResourcePolicyInput\":{\
+      \"type\":\"structure\",\
+      \"required\":[\"ResourceArn\"],\
+      \"members\":{\
+        \"ResourceArn\":{\
+          \"shape\":\"ResourceArnString\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) of the DynamoDB resource to which the policy is attached. The resources you can specify include tables and streams.</p>\"\
+        }\
+      }\
+    },\
+    \"GetResourcePolicyOutput\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Policy\":{\
+          \"shape\":\"ResourcePolicy\",\
+          \"documentation\":\"<p>The resource-based policy document attached to the resource, which can be a table or stream, in JSON format.</p>\"\
+        },\
+        \"RevisionId\":{\
+          \"shape\":\"PolicyRevisionId\",\
+          \"documentation\":\"<p>A unique string that represents the revision ID of the policy. If you are comparing revision IDs, make sure to always use string comparison logic.</p>\"\
+        }\
+      }\
     },\
     \"GlobalSecondaryIndex\":{\
       \"type\":\"structure\",\
@@ -3489,6 +3687,24 @@
       \"type\":\"long\",\
       \"min\":0\
     },\
+    \"IncrementalExportSpecification\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ExportFromTime\":{\
+          \"shape\":\"ExportFromTime\",\
+          \"documentation\":\"<p>Time in the past which provides the inclusive start range for the export table's data, counted in seconds from the start of the Unix epoch. The incremental export will reflect the table's state including and after this point in time.</p>\"\
+        },\
+        \"ExportToTime\":{\
+          \"shape\":\"ExportToTime\",\
+          \"documentation\":\"<p>Time in the past which provides the exclusive end range for the export table's data, counted in seconds from the start of the Unix epoch. The incremental export will reflect the table's state just prior to this point in time. If this is not provided, the latest time with data available will be used.</p>\"\
+        },\
+        \"ExportViewType\":{\
+          \"shape\":\"ExportViewType\",\
+          \"documentation\":\"<p>The view type that was chosen for the export. Valid values are <code>NEW_AND_OLD_IMAGES</code> and <code>NEW_IMAGES</code>. The default value is <code>NEW_AND_OLD_IMAGES</code>.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Optional object containing the parameters specific to an incremental export.</p>\"\
+    },\
     \"IndexName\":{\
       \"type\":\"string\",\
       \"max\":255,\
@@ -3593,7 +3809,7 @@
     },\
     \"ItemCollectionMetricsPerTable\":{\
       \"type\":\"map\",\
-      \"key\":{\"shape\":\"TableName\"},\
+      \"key\":{\"shape\":\"TableArn\"},\
       \"value\":{\"shape\":\"ItemCollectionMetricsMultiple\"}\
     },\
     \"ItemCollectionSizeEstimateBound\":{\"type\":\"double\"},\
@@ -3732,6 +3948,10 @@
         \"DestinationStatusDescription\":{\
           \"shape\":\"String\",\
           \"documentation\":\"<p>The human-readable string that corresponds to the replica status.</p>\"\
+        },\
+        \"ApproximateCreationDateTimePrecision\":{\
+          \"shape\":\"ApproximateCreationDateTimePrecision\",\
+          \"documentation\":\"<p>The precision of the Kinesis data stream timestamp. The values are either <code>MILLISECOND</code> or <code>MICROSECOND</code>.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Describes a Kinesis data stream destination.</p>\"\
@@ -3748,12 +3968,16 @@
       ],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the DynamoDB table.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the DynamoDB table. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"StreamArn\":{\
           \"shape\":\"StreamArn\",\
           \"documentation\":\"<p>The ARN for a Kinesis data stream.</p>\"\
+        },\
+        \"EnableKinesisStreamingConfiguration\":{\
+          \"shape\":\"EnableKinesisStreamingConfiguration\",\
+          \"documentation\":\"<p>The source for the Kinesis streaming information that is being enabled.</p>\"\
         }\
       }\
     },\
@@ -3771,6 +3995,10 @@
         \"DestinationStatus\":{\
           \"shape\":\"DestinationStatus\",\
           \"documentation\":\"<p>The current status of the replication.</p>\"\
+        },\
+        \"EnableKinesisStreamingConfiguration\":{\
+          \"shape\":\"EnableKinesisStreamingConfiguration\",\
+          \"documentation\":\"<p>The destination for the Kinesis streaming information that is being enabled.</p>\"\
         }\
       }\
     },\
@@ -3783,7 +4011,7 @@
           \"documentation\":\"<p>Too many operations for a given subscriber.</p>\"\
         }\
       },\
-      \"documentation\":\"<p>There is no limit to the number of daily on-demand backups that can be taken. </p> <p>For most purposes, up to 500 simultaneous table operations are allowed per account. These operations include <code>CreateTable</code>, <code>UpdateTable</code>, <code>DeleteTable</code>,<code>UpdateTimeToLive</code>, <code>RestoreTableFromBackup</code>, and <code>RestoreTableToPointInTime</code>. </p> <p>When you are creating a table with one or more secondary indexes, you can have up to 250 such requests running at a time. However, if the table or index specifications are complex, then DynamoDB might temporarily reduce the number of concurrent operations.</p> <p>When importing into DynamoDB, up to 50 simultaneous import table operations are allowed per account.</p> <p>There is a soft account quota of 2,500 tables.</p>\",\
+      \"documentation\":\"<p>There is no limit to the number of daily on-demand backups that can be taken. </p> <p>For most purposes, up to 500 simultaneous table operations are allowed per account. These operations include <code>CreateTable</code>, <code>UpdateTable</code>, <code>DeleteTable</code>,<code>UpdateTimeToLive</code>, <code>RestoreTableFromBackup</code>, and <code>RestoreTableToPointInTime</code>. </p> <p>When you are creating a table with one or more secondary indexes, you can have up to 250 such requests running at a time. However, if the table or index specifications are complex, then DynamoDB might temporarily reduce the number of concurrent operations.</p> <p>When importing into DynamoDB, up to 50 simultaneous import table operations are allowed per account.</p> <p>There is a soft account quota of 2,500 tables.</p> <p>GetRecords was called with a value of more than 1000 for the limit request parameter.</p> <p>More than 2 processes are reading from the same streams shard at the same time. Exceeding this limit may result in request throttling.</p>\",\
       \"exception\":true\
     },\
     \"ListAttributeValue\":{\
@@ -3794,8 +4022,8 @@
       \"type\":\"structure\",\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The backups from the table specified by <code>TableName</code> are listed. </p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>Lists the backups from the table specified in <code>TableName</code>. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"Limit\":{\
           \"shape\":\"BackupsInputLimit\",\
@@ -3836,8 +4064,8 @@
       \"type\":\"structure\",\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"NextToken\":{\
           \"shape\":\"NextTokenString\",\
@@ -4144,14 +4372,18 @@
       \"members\":{\
         \"Statement\":{\
           \"shape\":\"PartiQLStatement\",\
-          \"documentation\":\"<p> A PartiQL statment that uses parameters. </p>\"\
+          \"documentation\":\"<p> A PartiQL statement that uses parameters. </p>\"\
         },\
         \"Parameters\":{\
           \"shape\":\"PreparedStatementParameters\",\
           \"documentation\":\"<p> The parameter values. </p>\"\
+        },\
+        \"ReturnValuesOnConditionCheckFailure\":{\
+          \"shape\":\"ReturnValuesOnConditionCheckFailure\",\
+          \"documentation\":\"<p>An optional parameter that returns the item attributes for a PartiQL <code>ParameterizedStatement</code> operation that failed a condition check.</p> <p>There is no additional cost associated with requesting a return value aside from the small network and processing overhead of receiving a larger response. No read capacity units are consumed.</p>\"\
         }\
       },\
-      \"documentation\":\"<p> Represents a PartiQL statment that uses parameters. </p>\"\
+      \"documentation\":\"<p> Represents a PartiQL statement that uses parameters. </p>\"\
     },\
     \"ParameterizedStatements\":{\
       \"type\":\"list\",\
@@ -4223,6 +4455,19 @@
       \"documentation\":\"<p>Point in time recovery has not yet been enabled for this source table.</p>\",\
       \"exception\":true\
     },\
+    \"PolicyNotFoundException\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"message\":{\"shape\":\"ErrorMessage\"}\
+      },\
+      \"documentation\":\"<p>The operation tried to access a nonexistent resource-based policy.</p> <p>If you specified an <code>ExpectedRevisionId</code>, it's possible that a policy is present for the resource but its revision ID didn't match the expected value.</p>\",\
+      \"exception\":true\
+    },\
+    \"PolicyRevisionId\":{\
+      \"type\":\"string\",\
+      \"max\":255,\
+      \"min\":1\
+    },\
     \"PositiveIntegerObject\":{\
       \"type\":\"integer\",\
       \"min\":1\
@@ -4245,7 +4490,7 @@
       \"members\":{\
         \"ProjectionType\":{\
           \"shape\":\"ProjectionType\",\
-          \"documentation\":\"<p>The set of attributes that are projected into the index:</p> <ul> <li> <p> <code>KEYS_ONLY</code> - Only the index and primary keys are projected into the index.</p> </li> <li> <p> <code>INCLUDE</code> - In addition to the attributes described in <code>KEYS_ONLY</code>, the secondary index will include other non-key attributes that you specify.</p> </li> <li> <p> <code>ALL</code> - All of the table attributes are projected into the index.</p> </li> </ul>\"\
+          \"documentation\":\"<p>The set of attributes that are projected into the index:</p> <ul> <li> <p> <code>KEYS_ONLY</code> - Only the index and primary keys are projected into the index.</p> </li> <li> <p> <code>INCLUDE</code> - In addition to the attributes described in <code>KEYS_ONLY</code>, the secondary index will include other non-key attributes that you specify.</p> </li> <li> <p> <code>ALL</code> - All of the table attributes are projected into the index.</p> </li> </ul> <p>When using the DynamoDB console, <code>ALL</code> is selected by default.</p>\"\
         },\
         \"NonKeyAttributes\":{\
           \"shape\":\"NonKeyAttributeNameList\",\
@@ -4272,11 +4517,11 @@
       \"members\":{\
         \"ReadCapacityUnits\":{\
           \"shape\":\"PositiveLongObject\",\
-          \"documentation\":\"<p>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a <code>ThrottlingException</code>. For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#ProvisionedThroughput\\\">Specifying Read and Write Requirements</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>If read/write capacity mode is <code>PAY_PER_REQUEST</code> the value is set to 0.</p>\"\
+          \"documentation\":\"<p>The maximum number of strongly consistent reads consumed per second before DynamoDB returns a <code>ThrottlingException</code>. For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughput.html\\\">Specifying Read and Write Requirements</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>If read/write capacity mode is <code>PAY_PER_REQUEST</code> the value is set to 0.</p>\"\
         },\
         \"WriteCapacityUnits\":{\
           \"shape\":\"PositiveLongObject\",\
-          \"documentation\":\"<p>The maximum number of writes consumed per second before DynamoDB returns a <code>ThrottlingException</code>. For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#ProvisionedThroughput\\\">Specifying Read and Write Requirements</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>If read/write capacity mode is <code>PAY_PER_REQUEST</code> the value is set to 0.</p>\"\
+          \"documentation\":\"<p>The maximum number of writes consumed per second before DynamoDB returns a <code>ThrottlingException</code>. For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/ProvisionedThroughput.html\\\">Specifying Read and Write Requirements</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p> <p>If read/write capacity mode is <code>PAY_PER_REQUEST</code> the value is set to 0.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the provisioned throughput settings for a specified table or index. The settings can be modified using the <code>UpdateTable</code> operation.</p> <p>For current minimum and maximum provisioned throughput values, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Limits.html\\\">Service, Account, and Table Quotas</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>\"\
@@ -4340,8 +4585,8 @@
           \"documentation\":\"<p>A map of attribute name to attribute values, representing the primary key of the item to be written by <code>PutItem</code>. All of the table's primary key attributes must be specified, and their data types must match those of the table's key schema. If any attributes are present in the item that are part of an index key schema for the table, their types must match the index key schema. </p>\"\
         },\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>Name of the table in which to write the item.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>Name of the table in which to write the item. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"ConditionExpression\":{\
           \"shape\":\"ConditionExpression\",\
@@ -4370,8 +4615,8 @@
       ],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table to contain the item.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table to contain the item. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"Item\":{\
           \"shape\":\"PutItemInputAttributeMap\",\
@@ -4405,6 +4650,10 @@
         \"ExpressionAttributeValues\":{\
           \"shape\":\"ExpressionAttributeValueMap\",\
           \"documentation\":\"<p>One or more values that can be substituted in an expression.</p> <p>Use the <b>:</b> (colon) character in an expression to dereference an attribute value. For example, suppose that you wanted to check whether the value of the <i>ProductStatus</i> attribute was one of the following: </p> <p> <code>Available | Backordered | Discontinued</code> </p> <p>You would first need to specify <code>ExpressionAttributeValues</code> as follows:</p> <p> <code>{ \\\":avail\\\":{\\\"S\\\":\\\"Available\\\"}, \\\":back\\\":{\\\"S\\\":\\\"Backordered\\\"}, \\\":disc\\\":{\\\"S\\\":\\\"Discontinued\\\"} }</code> </p> <p>You could then use these values in an expression, such as this:</p> <p> <code>ProductStatus IN (:avail, :back, :disc)</code> </p> <p>For more information on expression attribute values, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.SpecifyingConditions.html\\\">Condition Expressions</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>\"\
+        },\
+        \"ReturnValuesOnConditionCheckFailure\":{\
+          \"shape\":\"ReturnValuesOnConditionCheckFailure\",\
+          \"documentation\":\"<p>An optional parameter that returns the item attributes for a <code>PutItem</code> operation that failed a condition check.</p> <p>There is no additional cost associated with requesting a return value aside from the small network and processing overhead of receiving a larger response. No read capacity units are consumed.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the input of a <code>PutItem</code> operation.</p>\"\
@@ -4443,13 +4692,47 @@
       },\
       \"documentation\":\"<p>Represents a request to perform a <code>PutItem</code> operation on an item.</p>\"\
     },\
+    \"PutResourcePolicyInput\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"ResourceArn\",\
+        \"Policy\"\
+      ],\
+      \"members\":{\
+        \"ResourceArn\":{\
+          \"shape\":\"ResourceArnString\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) of the DynamoDB resource to which the policy will be attached. The resources you can specify include tables and streams.</p> <p>You can control index permissions using the base table's policy. To specify the same permission level for your table and its indexes, you can provide both the table and index Amazon Resource Name (ARN)s in the <code>Resource</code> field of a given <code>Statement</code> in your policy document. Alternatively, to specify different permissions for your table, indexes, or both, you can define multiple <code>Statement</code> fields in your policy document.</p>\"\
+        },\
+        \"Policy\":{\
+          \"shape\":\"ResourcePolicy\",\
+          \"documentation\":\"<p>An Amazon Web Services resource-based policy document in JSON format.</p> <p>The maximum size supported for a resource-based policy document is 20 KB. DynamoDB counts whitespaces when calculating the size of a policy against this limit. For a full list of all considerations that you should keep in mind while attaching a resource-based policy, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/rbac-considerations.html\\\">Resource-based policy considerations</a>.</p>\"\
+        },\
+        \"ExpectedRevisionId\":{\
+          \"shape\":\"PolicyRevisionId\",\
+          \"documentation\":\"<p>A string value that you can use to conditionally update your policy. You can provide the revision ID of your existing policy to make mutating requests against that policy. When you provide an expected revision ID, if the revision ID of the existing policy on the resource doesn't match or if there's no policy attached to the resource, your request will be rejected with a <code>PolicyNotFoundException</code>.</p> <p>To conditionally put a policy when no policy exists for the resource, specify <code>NO_POLICY</code> for the revision ID.</p>\"\
+        },\
+        \"ConfirmRemoveSelfResourceAccess\":{\
+          \"shape\":\"ConfirmRemoveSelfResourceAccess\",\
+          \"documentation\":\"<p>Set this parameter to <code>true</code> to confirm that you want to remove your permissions to change the policy of this resource in the future.</p>\"\
+        }\
+      }\
+    },\
+    \"PutResourcePolicyOutput\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"RevisionId\":{\
+          \"shape\":\"PolicyRevisionId\",\
+          \"documentation\":\"<p>A unique string that represents the revision ID of the policy. If you are comparing revision IDs, make sure to always use string comparison logic.</p>\"\
+        }\
+      }\
+    },\
     \"QueryInput\":{\
       \"type\":\"structure\",\
       \"required\":[\"TableName\"],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table containing the requested items.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table containing the requested items. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"IndexName\":{\
           \"shape\":\"IndexName\",\
@@ -4498,7 +4781,7 @@
         },\
         \"FilterExpression\":{\
           \"shape\":\"ConditionExpression\",\
-          \"documentation\":\"<p>A string that contains conditions that DynamoDB applies after the <code>Query</code> operation, but before the data is returned to you. Items that do not satisfy the <code>FilterExpression</code> criteria are not returned.</p> <p>A <code>FilterExpression</code> does not allow key attributes. You cannot define a filter expression based on a partition key or a sort key.</p> <note> <p>A <code>FilterExpression</code> is applied after the items have already been read; the process of filtering does not consume any additional read capacity units.</p> </note> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/QueryAndScan.html#Query.FilterExpression\\\">Filter Expressions</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>\"\
+          \"documentation\":\"<p>A string that contains conditions that DynamoDB applies after the <code>Query</code> operation, but before the data is returned to you. Items that do not satisfy the <code>FilterExpression</code> criteria are not returned.</p> <p>A <code>FilterExpression</code> does not allow key attributes. You cannot define a filter expression based on a partition key or a sort key.</p> <note> <p>A <code>FilterExpression</code> is applied after the items have already been read; the process of filtering does not consume any additional read capacity units.</p> </note> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Query.FilterExpression.html\\\">Filter Expressions</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>\"\
         },\
         \"KeyConditionExpression\":{\
           \"shape\":\"KeyExpression\",\
@@ -4960,6 +5243,7 @@
       \"documentation\":\"<p>The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be <code>ACTIVE</code>.</p>\",\
       \"exception\":true\
     },\
+    \"ResourcePolicy\":{\"type\":\"string\"},\
     \"RestoreInProgress\":{\"type\":\"boolean\"},\
     \"RestoreSummary\":{\
       \"type\":\"structure\",\
@@ -5236,8 +5520,8 @@
       \"required\":[\"TableName\"],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table containing the requested items; or, if you provide <code>IndexName</code>, the name of the table to which that index belongs.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table containing the requested items or if you provide <code>IndexName</code>, the name of the table to which that index belongs.</p> <p>You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"IndexName\":{\
           \"shape\":\"IndexName\",\
@@ -5282,7 +5566,7 @@
         },\
         \"FilterExpression\":{\
           \"shape\":\"ConditionExpression\",\
-          \"documentation\":\"<p>A string that contains conditions that DynamoDB applies after the <code>Scan</code> operation, but before the data is returned to you. Items that do not satisfy the <code>FilterExpression</code> criteria are not returned.</p> <note> <p>A <code>FilterExpression</code> is applied after the items have already been read; the process of filtering does not consume any additional read capacity units.</p> </note> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/QueryAndScan.html#Query.FilterExpression\\\">Filter Expressions</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>\"\
+          \"documentation\":\"<p>A string that contains conditions that DynamoDB applies after the <code>Scan</code> operation, but before the data is returned to you. Items that do not satisfy the <code>FilterExpression</code> criteria are not returned.</p> <note> <p>A <code>FilterExpression</code> is applied after the items have already been read; the process of filtering does not consume any additional read capacity units.</p> </note> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Scan.html#Scan.FilterExpression\\\">Filter Expressions</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>\"\
         },\
         \"ExpressionAttributeNames\":{\
           \"shape\":\"ExpressionAttributeNameMap\",\
@@ -5468,7 +5752,11 @@
       \"documentation\":\"<p>A target table with the specified name already exists. </p>\",\
       \"exception\":true\
     },\
-    \"TableArn\":{\"type\":\"string\"},\
+    \"TableArn\":{\
+      \"type\":\"string\",\
+      \"max\":1024,\
+      \"min\":1\
+    },\
     \"TableAutoScalingDescription\":{\
       \"type\":\"structure\",\
       \"members\":{\
@@ -5898,7 +6186,7 @@
           \"documentation\":\"<p>A list of cancellation reasons.</p>\"\
         }\
       },\
-      \"documentation\":\"<p>The entire transaction request was canceled.</p> <p>DynamoDB cancels a <code>TransactWriteItems</code> request under the following circumstances:</p> <ul> <li> <p>A condition in one of the condition expressions is not met.</p> </li> <li> <p>A table in the <code>TransactWriteItems</code> request is in a different account or region.</p> </li> <li> <p>More than one action in the <code>TransactWriteItems</code> operation targets the same item.</p> </li> <li> <p>There is insufficient provisioned capacity for the transaction to be completed.</p> </li> <li> <p>An item size becomes too large (larger than 400 KB), or a local secondary index (LSI) becomes too large, or a similar validation error occurs because of changes made by the transaction.</p> </li> <li> <p>There is a user error, such as an invalid data format.</p> </li> </ul> <p>DynamoDB cancels a <code>TransactGetItems</code> request under the following circumstances:</p> <ul> <li> <p>There is an ongoing <code>TransactGetItems</code> operation that conflicts with a concurrent <code>PutItem</code>, <code>UpdateItem</code>, <code>DeleteItem</code> or <code>TransactWriteItems</code> request. In this case the <code>TransactGetItems</code> operation fails with a <code>TransactionCanceledException</code>.</p> </li> <li> <p>A table in the <code>TransactGetItems</code> request is in a different account or region.</p> </li> <li> <p>There is insufficient provisioned capacity for the transaction to be completed.</p> </li> <li> <p>There is a user error, such as an invalid data format.</p> </li> </ul> <note> <p>If using Java, DynamoDB lists the cancellation reasons on the <code>CancellationReasons</code> property. This property is not set for other languages. Transaction cancellation reasons are ordered in the order of requested items, if an item has no error it will have <code>None</code> code and <code>Null</code> message.</p> </note> <p>Cancellation reason codes and possible error messages:</p> <ul> <li> <p>No Errors:</p> <ul> <li> <p>Code: <code>None</code> </p> </li> <li> <p>Message: <code>null</code> </p> </li> </ul> </li> <li> <p>Conditional Check Failed:</p> <ul> <li> <p>Code: <code>ConditionalCheckFailed</code> </p> </li> <li> <p>Message: The conditional request failed. </p> </li> </ul> </li> <li> <p>Item Collection Size Limit Exceeded:</p> <ul> <li> <p>Code: <code>ItemCollectionSizeLimitExceeded</code> </p> </li> <li> <p>Message: Collection size exceeded.</p> </li> </ul> </li> <li> <p>Transaction Conflict:</p> <ul> <li> <p>Code: <code>TransactionConflict</code> </p> </li> <li> <p>Message: Transaction is ongoing for the item.</p> </li> </ul> </li> <li> <p>Provisioned Throughput Exceeded:</p> <ul> <li> <p>Code: <code>ProvisionedThroughputExceeded</code> </p> </li> <li> <p>Messages:</p> <ul> <li> <p>The level of configured provisioned throughput for the table was exceeded. Consider increasing your provisioning level with the UpdateTable API.</p> <note> <p>This Message is received when provisioned throughput is exceeded is on a provisioned DynamoDB table.</p> </note> </li> <li> <p>The level of configured provisioned throughput for one or more global secondary indexes of the table was exceeded. Consider increasing your provisioning level for the under-provisioned global secondary indexes with the UpdateTable API.</p> <note> <p>This message is returned when provisioned throughput is exceeded is on a provisioned GSI.</p> </note> </li> </ul> </li> </ul> </li> <li> <p>Throttling Error:</p> <ul> <li> <p>Code: <code>ThrottlingError</code> </p> </li> <li> <p>Messages: </p> <ul> <li> <p>Throughput exceeds the current capacity of your table or index. DynamoDB is automatically scaling your table or index so please try again shortly. If exceptions persist, check if you have a hot key: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html.</p> <note> <p>This message is returned when writes get throttled on an On-Demand table as DynamoDB is automatically scaling the table.</p> </note> </li> <li> <p>Throughput exceeds the current capacity for one or more global secondary indexes. DynamoDB is automatically scaling your index so please try again shortly.</p> <note> <p>This message is returned when writes get throttled on an On-Demand GSI as DynamoDB is automatically scaling the GSI.</p> </note> </li> </ul> </li> </ul> </li> <li> <p>Validation Error:</p> <ul> <li> <p>Code: <code>ValidationError</code> </p> </li> <li> <p>Messages: </p> <ul> <li> <p>One or more parameter values were invalid.</p> </li> <li> <p>The update expression attempted to update the secondary index key beyond allowed size limits.</p> </li> <li> <p>The update expression attempted to update the secondary index key to unsupported type.</p> </li> <li> <p>An operand in the update expression has an incorrect data type.</p> </li> <li> <p>Item size to update has exceeded the maximum allowed size.</p> </li> <li> <p>Number overflow. Attempting to store a number with magnitude larger than supported range.</p> </li> <li> <p>Type mismatch for attribute to update.</p> </li> <li> <p>Nesting Levels have exceeded supported limits.</p> </li> <li> <p>The document path provided in the update expression is invalid for update.</p> </li> <li> <p>The provided expression refers to an attribute that does not exist in the item.</p> </li> </ul> </li> </ul> </li> </ul>\",\
+      \"documentation\":\"<p>The entire transaction request was canceled.</p> <p>DynamoDB cancels a <code>TransactWriteItems</code> request under the following circumstances:</p> <ul> <li> <p>A condition in one of the condition expressions is not met.</p> </li> <li> <p>A table in the <code>TransactWriteItems</code> request is in a different account or region.</p> </li> <li> <p>More than one action in the <code>TransactWriteItems</code> operation targets the same item.</p> </li> <li> <p>There is insufficient provisioned capacity for the transaction to be completed.</p> </li> <li> <p>An item size becomes too large (larger than 400 KB), or a local secondary index (LSI) becomes too large, or a similar validation error occurs because of changes made by the transaction.</p> </li> <li> <p>There is a user error, such as an invalid data format.</p> </li> <li> <p> There is an ongoing <code>TransactWriteItems</code> operation that conflicts with a concurrent <code>TransactWriteItems</code> request. In this case the <code>TransactWriteItems</code> operation fails with a <code>TransactionCanceledException</code>. </p> </li> </ul> <p>DynamoDB cancels a <code>TransactGetItems</code> request under the following circumstances:</p> <ul> <li> <p>There is an ongoing <code>TransactGetItems</code> operation that conflicts with a concurrent <code>PutItem</code>, <code>UpdateItem</code>, <code>DeleteItem</code> or <code>TransactWriteItems</code> request. In this case the <code>TransactGetItems</code> operation fails with a <code>TransactionCanceledException</code>.</p> </li> <li> <p>A table in the <code>TransactGetItems</code> request is in a different account or region.</p> </li> <li> <p>There is insufficient provisioned capacity for the transaction to be completed.</p> </li> <li> <p>There is a user error, such as an invalid data format.</p> </li> </ul> <note> <p>If using Java, DynamoDB lists the cancellation reasons on the <code>CancellationReasons</code> property. This property is not set for other languages. Transaction cancellation reasons are ordered in the order of requested items, if an item has no error it will have <code>None</code> code and <code>Null</code> message.</p> </note> <p>Cancellation reason codes and possible error messages:</p> <ul> <li> <p>No Errors:</p> <ul> <li> <p>Code: <code>None</code> </p> </li> <li> <p>Message: <code>null</code> </p> </li> </ul> </li> <li> <p>Conditional Check Failed:</p> <ul> <li> <p>Code: <code>ConditionalCheckFailed</code> </p> </li> <li> <p>Message: The conditional request failed. </p> </li> </ul> </li> <li> <p>Item Collection Size Limit Exceeded:</p> <ul> <li> <p>Code: <code>ItemCollectionSizeLimitExceeded</code> </p> </li> <li> <p>Message: Collection size exceeded.</p> </li> </ul> </li> <li> <p>Transaction Conflict:</p> <ul> <li> <p>Code: <code>TransactionConflict</code> </p> </li> <li> <p>Message: Transaction is ongoing for the item.</p> </li> </ul> </li> <li> <p>Provisioned Throughput Exceeded:</p> <ul> <li> <p>Code: <code>ProvisionedThroughputExceeded</code> </p> </li> <li> <p>Messages:</p> <ul> <li> <p>The level of configured provisioned throughput for the table was exceeded. Consider increasing your provisioning level with the UpdateTable API.</p> <note> <p>This Message is received when provisioned throughput is exceeded is on a provisioned DynamoDB table.</p> </note> </li> <li> <p>The level of configured provisioned throughput for one or more global secondary indexes of the table was exceeded. Consider increasing your provisioning level for the under-provisioned global secondary indexes with the UpdateTable API.</p> <note> <p>This message is returned when provisioned throughput is exceeded is on a provisioned GSI.</p> </note> </li> </ul> </li> </ul> </li> <li> <p>Throttling Error:</p> <ul> <li> <p>Code: <code>ThrottlingError</code> </p> </li> <li> <p>Messages: </p> <ul> <li> <p>Throughput exceeds the current capacity of your table or index. DynamoDB is automatically scaling your table or index so please try again shortly. If exceptions persist, check if you have a hot key: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/bp-partition-key-design.html.</p> <note> <p>This message is returned when writes get throttled on an On-Demand table as DynamoDB is automatically scaling the table.</p> </note> </li> <li> <p>Throughput exceeds the current capacity for one or more global secondary indexes. DynamoDB is automatically scaling your index so please try again shortly.</p> <note> <p>This message is returned when writes get throttled on an On-Demand GSI as DynamoDB is automatically scaling the GSI.</p> </note> </li> </ul> </li> </ul> </li> <li> <p>Validation Error:</p> <ul> <li> <p>Code: <code>ValidationError</code> </p> </li> <li> <p>Messages: </p> <ul> <li> <p>One or more parameter values were invalid.</p> </li> <li> <p>The update expression attempted to update the secondary index key beyond allowed size limits.</p> </li> <li> <p>The update expression attempted to update the secondary index key to unsupported type.</p> </li> <li> <p>An operand in the update expression has an incorrect data type.</p> </li> <li> <p>Item size to update has exceeded the maximum allowed size.</p> </li> <li> <p>Number overflow. Attempting to store a number with magnitude larger than supported range.</p> </li> <li> <p>Type mismatch for attribute to update.</p> </li> <li> <p>Nesting Levels have exceeded supported limits.</p> </li> <li> <p>The document path provided in the update expression is invalid for update.</p> </li> <li> <p>The provided expression refers to an attribute that does not exist in the item.</p> </li> </ul> </li> </ul> </li> </ul>\",\
       \"exception\":true\
     },\
     \"TransactionConflictException\":{\
@@ -5951,8 +6239,8 @@
           \"documentation\":\"<p>An expression that defines one or more attributes to be updated, the action to be performed on them, and new value(s) for them.</p>\"\
         },\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>Name of the table for the <code>UpdateItem</code> request.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>Name of the table for the <code>UpdateItem</code> request. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"ConditionExpression\":{\
           \"shape\":\"ConditionExpression\",\
@@ -5968,7 +6256,7 @@
         },\
         \"ReturnValuesOnConditionCheckFailure\":{\
           \"shape\":\"ReturnValuesOnConditionCheckFailure\",\
-          \"documentation\":\"<p>Use <code>ReturnValuesOnConditionCheckFailure</code> to get the item attributes if the <code>Update</code> condition fails. For <code>ReturnValuesOnConditionCheckFailure</code>, the valid values are: NONE, ALL_OLD, UPDATED_OLD, ALL_NEW, UPDATED_NEW.</p>\"\
+          \"documentation\":\"<p>Use <code>ReturnValuesOnConditionCheckFailure</code> to get the item attributes if the <code>Update</code> condition fails. For <code>ReturnValuesOnConditionCheckFailure</code>, the valid values are: NONE and ALL_OLD.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Represents a request to perform an <code>UpdateItem</code> operation.</p>\"\
@@ -5981,8 +6269,8 @@
       ],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"PointInTimeRecoverySpecification\":{\
           \"shape\":\"PointInTimeRecoverySpecification\",\
@@ -6007,8 +6295,8 @@
       ],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"IndexName\":{\
           \"shape\":\"IndexName\",\
@@ -6133,8 +6421,8 @@
       ],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table containing the item to update.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table containing the item to update. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"Key\":{\
           \"shape\":\"Key\",\
@@ -6176,6 +6464,10 @@
         \"ExpressionAttributeValues\":{\
           \"shape\":\"ExpressionAttributeValueMap\",\
           \"documentation\":\"<p>One or more values that can be substituted in an expression.</p> <p>Use the <b>:</b> (colon) character in an expression to dereference an attribute value. For example, suppose that you wanted to check whether the value of the <code>ProductStatus</code> attribute was one of the following: </p> <p> <code>Available | Backordered | Discontinued</code> </p> <p>You would first need to specify <code>ExpressionAttributeValues</code> as follows:</p> <p> <code>{ \\\":avail\\\":{\\\"S\\\":\\\"Available\\\"}, \\\":back\\\":{\\\"S\\\":\\\"Backordered\\\"}, \\\":disc\\\":{\\\"S\\\":\\\"Discontinued\\\"} }</code> </p> <p>You could then use these values in an expression, such as this:</p> <p> <code>ProductStatus IN (:avail, :back, :disc)</code> </p> <p>For more information on expression attribute values, see <a href=\\\"https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Expressions.SpecifyingConditions.html\\\">Condition Expressions</a> in the <i>Amazon DynamoDB Developer Guide</i>.</p>\"\
+        },\
+        \"ReturnValuesOnConditionCheckFailure\":{\
+          \"shape\":\"ReturnValuesOnConditionCheckFailure\",\
+          \"documentation\":\"<p>An optional parameter that returns the item attributes for an <code>UpdateItem</code> operation that failed a condition check.</p> <p>There is no additional cost associated with requesting a return value aside from the small network and processing overhead of receiving a larger response. No read capacity units are consumed.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Represents the input of an <code>UpdateItem</code> operation.</p>\"\
@@ -6197,6 +6489,58 @@
         }\
       },\
       \"documentation\":\"<p>Represents the output of an <code>UpdateItem</code> operation.</p>\"\
+    },\
+    \"UpdateKinesisStreamingConfiguration\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"ApproximateCreationDateTimePrecision\":{\
+          \"shape\":\"ApproximateCreationDateTimePrecision\",\
+          \"documentation\":\"<p>Enables updating the precision of Kinesis data stream timestamp. </p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Enables updating the configuration for Kinesis Streaming.</p>\"\
+    },\
+    \"UpdateKinesisStreamingDestinationInput\":{\
+      \"type\":\"structure\",\
+      \"required\":[\
+        \"TableName\",\
+        \"StreamArn\"\
+      ],\
+      \"members\":{\
+        \"TableName\":{\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The table name for the Kinesis streaming destination input. You can also provide the ARN of the table in this parameter.</p>\"\
+        },\
+        \"StreamArn\":{\
+          \"shape\":\"StreamArn\",\
+          \"documentation\":\"<p>The Amazon Resource Name (ARN) for the Kinesis stream input.</p>\"\
+        },\
+        \"UpdateKinesisStreamingConfiguration\":{\
+          \"shape\":\"UpdateKinesisStreamingConfiguration\",\
+          \"documentation\":\"<p>The command to update the Kinesis stream configuration.</p>\"\
+        }\
+      }\
+    },\
+    \"UpdateKinesisStreamingDestinationOutput\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"TableName\":{\
+          \"shape\":\"TableName\",\
+          \"documentation\":\"<p>The table name for the Kinesis streaming destination output.</p>\"\
+        },\
+        \"StreamArn\":{\
+          \"shape\":\"StreamArn\",\
+          \"documentation\":\"<p>The ARN for the Kinesis stream input.</p>\"\
+        },\
+        \"DestinationStatus\":{\
+          \"shape\":\"DestinationStatus\",\
+          \"documentation\":\"<p>The status of the attempt to update the Kinesis streaming destination output.</p>\"\
+        },\
+        \"UpdateKinesisStreamingConfiguration\":{\
+          \"shape\":\"UpdateKinesisStreamingConfiguration\",\
+          \"documentation\":\"<p>The command to update the Kinesis streaming destination configuration.</p>\"\
+        }\
+      }\
     },\
     \"UpdateReplicationGroupMemberAction\":{\
       \"type\":\"structure\",\
@@ -6234,8 +6578,8 @@
           \"documentation\":\"<p>An array of attributes that describe the key schema for the table and indexes. If you are adding a new global secondary index to the table, <code>AttributeDefinitions</code> must include the key element(s) of the new index.</p>\"\
         },\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table to be updated.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table to be updated. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"BillingMode\":{\
           \"shape\":\"BillingMode\",\
@@ -6251,7 +6595,7 @@
         },\
         \"StreamSpecification\":{\
           \"shape\":\"StreamSpecification\",\
-          \"documentation\":\"<p>Represents the DynamoDB Streams configuration for the table.</p> <note> <p>You receive a <code>ResourceInUseException</code> if you try to enable a stream on a table that already has a stream, or if you try to disable a stream on a table that doesn't have a stream.</p> </note>\"\
+          \"documentation\":\"<p>Represents the DynamoDB Streams configuration for the table.</p> <note> <p>You receive a <code>ValidationException</code> if you try to enable a stream on a table that already has a stream, or if you try to disable a stream on a table that doesn't have a stream.</p> </note>\"\
         },\
         \"SSESpecification\":{\
           \"shape\":\"SSESpecification\",\
@@ -6291,8 +6635,8 @@
           \"documentation\":\"<p>Represents the auto scaling settings of the global secondary indexes of the replica to be updated.</p>\"\
         },\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the global table to be updated.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the global table to be updated. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"ProvisionedWriteCapacityAutoScalingUpdate\":{\"shape\":\"AutoScalingSettingsUpdate\"},\
         \"ReplicaUpdates\":{\
@@ -6318,8 +6662,8 @@
       ],\
       \"members\":{\
         \"TableName\":{\
-          \"shape\":\"TableName\",\
-          \"documentation\":\"<p>The name of the table to be configured.</p>\"\
+          \"shape\":\"TableArn\",\
+          \"documentation\":\"<p>The name of the table to be configured. You can also provide the Amazon Resource Name (ARN) of the table in this parameter.</p>\"\
         },\
         \"TimeToLiveSpecification\":{\
           \"shape\":\"TimeToLiveSpecification\",\

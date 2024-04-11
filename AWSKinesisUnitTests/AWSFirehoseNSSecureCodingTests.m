@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2022 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -29,6 +29,7 @@
 - (void) test_AWSFirehoseAmazonopensearchserviceDestinationDescription API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseAmazonopensearchserviceDestinationUpdate API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseAmazonopensearchserviceRetryOptions API_AVAILABLE(ios(11));
+- (void) test_AWSFirehoseAuthenticationConfiguration API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseBufferingHints API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseCloudWatchLoggingOptions API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseReplicateCommand API_AVAILABLE(ios(11));
@@ -44,6 +45,7 @@
 - (void) test_AWSFirehoseDescribeDeliveryStreamOutput API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseDeserializer API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseDestinationDescription API_AVAILABLE(ios(11));
+- (void) test_AWSFirehoseDocumentIdOptions API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseDynamicPartitioningConfiguration API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseElasticsearchBufferingHints API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseElasticsearchDestinationConfiguration API_AVAILABLE(ios(11));
@@ -73,6 +75,8 @@
 - (void) test_AWSFirehoseListDeliveryStreamsOutput API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseListTagsForDeliveryStreamInput API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseListTagsForDeliveryStreamOutput API_AVAILABLE(ios(11));
+- (void) test_AWSFirehoseMSKSourceConfiguration API_AVAILABLE(ios(11));
+- (void) test_AWSFirehoseMSKSourceDescription API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseOpenXJsonSerDe API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseOrcSerDe API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseOutputFormatConfiguration API_AVAILABLE(ios(11));
@@ -96,7 +100,14 @@
 - (void) test_AWSFirehoseS3DestinationUpdate API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseSchemaConfiguration API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseSerializer API_AVAILABLE(ios(11));
+- (void) test_AWSFirehoseSnowflakeDestinationConfiguration API_AVAILABLE(ios(11));
+- (void) test_AWSFirehoseSnowflakeDestinationDescription API_AVAILABLE(ios(11));
+- (void) test_AWSFirehoseSnowflakeDestinationUpdate API_AVAILABLE(ios(11));
+- (void) test_AWSFirehoseSnowflakeRetryOptions API_AVAILABLE(ios(11));
+- (void) test_AWSFirehoseSnowflakeRoleConfiguration API_AVAILABLE(ios(11));
+- (void) test_AWSFirehoseSnowflakeVpcConfiguration API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseSourceDescription API_AVAILABLE(ios(11));
+- (void) test_AWSFirehoseSplunkBufferingHints API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseSplunkDestinationConfiguration API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseSplunkDestinationDescription API_AVAILABLE(ios(11));
 - (void) test_AWSFirehoseSplunkDestinationUpdate API_AVAILABLE(ios(11));
@@ -159,6 +170,10 @@
     [self validateSecureCodingForClass:[AWSFirehoseAmazonopensearchserviceRetryOptions class]];
 }
 
+- (void) test_AWSFirehoseAuthenticationConfiguration {
+    [self validateSecureCodingForClass:[AWSFirehoseAuthenticationConfiguration class]];
+}
+
 - (void) test_AWSFirehoseBufferingHints {
     [self validateSecureCodingForClass:[AWSFirehoseBufferingHints class]];
 }
@@ -217,6 +232,10 @@
 
 - (void) test_AWSFirehoseDestinationDescription {
     [self validateSecureCodingForClass:[AWSFirehoseDestinationDescription class]];
+}
+
+- (void) test_AWSFirehoseDocumentIdOptions {
+    [self validateSecureCodingForClass:[AWSFirehoseDocumentIdOptions class]];
 }
 
 - (void) test_AWSFirehoseDynamicPartitioningConfiguration {
@@ -335,6 +354,14 @@
     [self validateSecureCodingForClass:[AWSFirehoseListTagsForDeliveryStreamOutput class]];
 }
 
+- (void) test_AWSFirehoseMSKSourceConfiguration {
+    [self validateSecureCodingForClass:[AWSFirehoseMSKSourceConfiguration class]];
+}
+
+- (void) test_AWSFirehoseMSKSourceDescription {
+    [self validateSecureCodingForClass:[AWSFirehoseMSKSourceDescription class]];
+}
+
 - (void) test_AWSFirehoseOpenXJsonSerDe {
     [self validateSecureCodingForClass:[AWSFirehoseOpenXJsonSerDe class]];
 }
@@ -427,8 +454,36 @@
     [self validateSecureCodingForClass:[AWSFirehoseSerializer class]];
 }
 
+- (void) test_AWSFirehoseSnowflakeDestinationConfiguration {
+    [self validateSecureCodingForClass:[AWSFirehoseSnowflakeDestinationConfiguration class]];
+}
+
+- (void) test_AWSFirehoseSnowflakeDestinationDescription {
+    [self validateSecureCodingForClass:[AWSFirehoseSnowflakeDestinationDescription class]];
+}
+
+- (void) test_AWSFirehoseSnowflakeDestinationUpdate {
+    [self validateSecureCodingForClass:[AWSFirehoseSnowflakeDestinationUpdate class]];
+}
+
+- (void) test_AWSFirehoseSnowflakeRetryOptions {
+    [self validateSecureCodingForClass:[AWSFirehoseSnowflakeRetryOptions class]];
+}
+
+- (void) test_AWSFirehoseSnowflakeRoleConfiguration {
+    [self validateSecureCodingForClass:[AWSFirehoseSnowflakeRoleConfiguration class]];
+}
+
+- (void) test_AWSFirehoseSnowflakeVpcConfiguration {
+    [self validateSecureCodingForClass:[AWSFirehoseSnowflakeVpcConfiguration class]];
+}
+
 - (void) test_AWSFirehoseSourceDescription {
     [self validateSecureCodingForClass:[AWSFirehoseSourceDescription class]];
+}
+
+- (void) test_AWSFirehoseSplunkBufferingHints {
+    [self validateSecureCodingForClass:[AWSFirehoseSplunkBufferingHints class]];
 }
 
 - (void) test_AWSFirehoseSplunkDestinationConfiguration {

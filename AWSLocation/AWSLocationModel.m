@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -421,6 +421,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"geofenceId" : @"GeofenceId",
+             @"geofenceProperties" : @"GeofenceProperties",
              @"geometry" : @"Geometry",
              };
 }
@@ -581,6 +582,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
              @"departureTime" : @"DepartureTime",
              @"destinationPositions" : @"DestinationPositions",
              @"distanceUnit" : @"DistanceUnit",
+             @"key" : @"Key",
              @"travelMode" : @"TravelMode",
              @"truckModeOptions" : @"TruckModeOptions",
              };
@@ -728,6 +730,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"arrivalTime" : @"ArrivalTime",
              @"calculatorName" : @"CalculatorName",
              @"carModeOptions" : @"CarModeOptions",
              @"departNow" : @"DepartNow",
@@ -736,10 +739,20 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
              @"destinationPosition" : @"DestinationPosition",
              @"distanceUnit" : @"DistanceUnit",
              @"includeLegGeometry" : @"IncludeLegGeometry",
+             @"key" : @"Key",
+             @"optimizeFor" : @"OptimizeFor",
              @"travelMode" : @"TravelMode",
              @"truckModeOptions" : @"TruckModeOptions",
              @"waypointPositions" : @"WaypointPositions",
              };
+}
+
++ (NSValueTransformer *)arrivalTimeJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^id(NSNumber *number) {
+        return [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
+    } reverseBlock:^id(NSDate *date) {
+        return [NSString stringWithFormat:@"%f", [date timeIntervalSince1970]];
+    }];
 }
 
 + (NSValueTransformer *)carModeOptionsJSONTransformer {
@@ -769,6 +782,27 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
                 return @"Kilometers";
             case AWSLocationDistanceUnitMiles:
                 return @"Miles";
+            default:
+                return nil;
+        }
+    }];
+}
+
++ (NSValueTransformer *)optimizeForJSONTransformer {
+    return [AWSMTLValueTransformer reversibleTransformerWithForwardBlock:^NSNumber *(NSString *value) {
+        if ([value caseInsensitiveCompare:@"FastestRoute"] == NSOrderedSame) {
+            return @(AWSLocationOptimizationModeFastestRoute);
+        }
+        if ([value caseInsensitiveCompare:@"ShortestRoute"] == NSOrderedSame) {
+            return @(AWSLocationOptimizationModeShortestRoute);
+        }
+        return @(AWSLocationOptimizationModeUnknown);
+    } reverseBlock:^NSString *(NSNumber *value) {
+        switch ([value integerValue]) {
+            case AWSLocationOptimizationModeFastestRoute:
+                return @"FastestRoute";
+            case AWSLocationOptimizationModeShortestRoute:
+                return @"ShortestRoute";
             default:
                 return nil;
         }
@@ -1266,6 +1300,8 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"detail" : @"Description",
+             @"eventBridgeEnabled" : @"EventBridgeEnabled",
+             @"kmsKeyEnableGeospatialQueries" : @"KmsKeyEnableGeospatialQueries",
              @"kmsKeyId" : @"KmsKeyId",
              @"positionFiltering" : @"PositionFiltering",
              @"pricingPlan" : @"PricingPlan",
@@ -1418,6 +1454,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"forceDelete" : @"ForceDelete",
              @"keyName" : @"KeyName",
              };
 }
@@ -1546,6 +1583,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
              @"collectionName" : @"CollectionName",
              @"createTime" : @"CreateTime",
              @"detail" : @"Description",
+             @"geofenceCount" : @"GeofenceCount",
              @"kmsKeyId" : @"KmsKeyId",
              @"pricingPlan" : @"PricingPlan",
              @"pricingPlanDataSource" : @"PricingPlanDataSource",
@@ -1927,6 +1965,8 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 	return @{
              @"createTime" : @"CreateTime",
              @"detail" : @"Description",
+             @"eventBridgeEnabled" : @"EventBridgeEnabled",
+             @"kmsKeyEnableGeospatialQueries" : @"KmsKeyEnableGeospatialQueries",
              @"kmsKeyId" : @"KmsKeyId",
              @"positionFiltering" : @"PositionFiltering",
              @"pricingPlan" : @"PricingPlan",
@@ -2252,6 +2292,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 	return @{
              @"createTime" : @"CreateTime",
              @"geofenceId" : @"GeofenceId",
+             @"geofenceProperties" : @"GeofenceProperties",
              @"geometry" : @"Geometry",
              @"status" : @"Status",
              @"updateTime" : @"UpdateTime",
@@ -2419,6 +2460,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"indexName" : @"IndexName",
+             @"key" : @"Key",
              @"language" : @"Language",
              @"placeId" : @"PlaceId",
              };
@@ -2493,10 +2535,15 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"filterGeometry" : @"FilterGeometry",
              @"maxResults" : @"MaxResults",
              @"nextToken" : @"NextToken",
              @"trackerName" : @"TrackerName",
              };
+}
+
++ (NSValueTransformer *)filterGeometryJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSLocationTrackingFilterGeometry class]];
 }
 
 @end
@@ -2655,6 +2702,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 	return @{
              @"createTime" : @"CreateTime",
              @"geofenceId" : @"GeofenceId",
+             @"geofenceProperties" : @"GeofenceProperties",
              @"geometry" : @"Geometry",
              @"status" : @"Status",
              @"updateTime" : @"UpdateTime",
@@ -3251,7 +3299,24 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"customLayers" : @"CustomLayers",
+             @"politicalView" : @"PoliticalView",
              @"style" : @"Style",
+             };
+}
+
+@end
+
+@implementation AWSLocationMapConfigurationUpdate
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"customLayers" : @"CustomLayers",
+             @"politicalView" : @"PoliticalView",
              };
 }
 
@@ -3266,6 +3331,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"addressNumber" : @"AddressNumber",
+             @"categories" : @"Categories",
              @"country" : @"Country",
              @"geometry" : @"Geometry",
              @"interpolated" : @"Interpolated",
@@ -3275,7 +3341,9 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
              @"postalCode" : @"PostalCode",
              @"region" : @"Region",
              @"street" : @"Street",
+             @"subMunicipality" : @"SubMunicipality",
              @"subRegion" : @"SubRegion",
+             @"supplementalCategories" : @"SupplementalCategories",
              @"timeZone" : @"TimeZone",
              @"unitNumber" : @"UnitNumber",
              @"unitType" : @"UnitType",
@@ -3330,6 +3398,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 	return @{
              @"collectionName" : @"CollectionName",
              @"geofenceId" : @"GeofenceId",
+             @"geofenceProperties" : @"GeofenceProperties",
              @"geometry" : @"Geometry",
              };
 }
@@ -3476,7 +3545,9 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"categories" : @"Categories",
              @"placeId" : @"PlaceId",
+             @"supplementalCategories" : @"SupplementalCategories",
              @"text" : @"Text",
              };
 }
@@ -3513,6 +3584,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"indexName" : @"IndexName",
+             @"key" : @"Key",
              @"language" : @"Language",
              @"maxResults" : @"MaxResults",
              @"position" : @"Position",
@@ -3571,8 +3643,10 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 	return @{
              @"biasPosition" : @"BiasPosition",
              @"filterBBox" : @"FilterBBox",
+             @"filterCategories" : @"FilterCategories",
              @"filterCountries" : @"FilterCountries",
              @"indexName" : @"IndexName",
+             @"key" : @"Key",
              @"language" : @"Language",
              @"maxResults" : @"MaxResults",
              @"text" : @"Text",
@@ -3615,6 +3689,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
              @"biasPosition" : @"BiasPosition",
              @"dataSource" : @"DataSource",
              @"filterBBox" : @"FilterBBox",
+             @"filterCategories" : @"FilterCategories",
              @"filterCountries" : @"FilterCountries",
              @"language" : @"Language",
              @"maxResults" : @"MaxResults",
@@ -3634,8 +3709,10 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 	return @{
              @"biasPosition" : @"BiasPosition",
              @"filterBBox" : @"FilterBBox",
+             @"filterCategories" : @"FilterCategories",
              @"filterCountries" : @"FilterCountries",
              @"indexName" : @"IndexName",
+             @"key" : @"Key",
              @"language" : @"Language",
              @"maxResults" : @"MaxResults",
              @"text" : @"Text",
@@ -3678,6 +3755,7 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
              @"biasPosition" : @"BiasPosition",
              @"dataSource" : @"DataSource",
              @"filterBBox" : @"FilterBBox",
+             @"filterCategories" : @"FilterCategories",
              @"filterCountries" : @"FilterCountries",
              @"language" : @"Language",
              @"maxResults" : @"MaxResults",
@@ -3739,6 +3817,20 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 	return @{
              @"name" : @"Name",
              @"offset" : @"Offset",
+             };
+}
+
+@end
+
+@implementation AWSLocationTrackingFilterGeometry
+
++ (BOOL)supportsSecureCoding {
+    return YES;
+}
+
++ (NSDictionary *)JSONKeyPathsByPropertyKey {
+	return @{
+             @"polygon" : @"Polygon",
              };
 }
 
@@ -3971,10 +4063,15 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
+             @"configurationUpdate" : @"ConfigurationUpdate",
              @"detail" : @"Description",
              @"mapName" : @"MapName",
              @"pricingPlan" : @"PricingPlan",
              };
+}
+
++ (NSValueTransformer *)configurationUpdateJSONTransformer {
+    return [NSValueTransformer awsmtl_JSONDictionaryTransformerWithModelClass:[AWSLocationMapConfigurationUpdate class]];
 }
 
 + (NSValueTransformer *)pricingPlanJSONTransformer {
@@ -4175,6 +4272,8 @@ NSString *const AWSLocationErrorDomain = @"com.amazonaws.AWSLocationErrorDomain"
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
 	return @{
              @"detail" : @"Description",
+             @"eventBridgeEnabled" : @"EventBridgeEnabled",
+             @"kmsKeyEnableGeospatialQueries" : @"KmsKeyEnableGeospatialQueries",
              @"positionFiltering" : @"PositionFiltering",
              @"pricingPlan" : @"PricingPlan",
              @"pricingPlanDataSource" : @"PricingPlanDataSource",

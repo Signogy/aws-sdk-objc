@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -142,6 +142,7 @@
 - (void) test_AWSLocationListTrackersResponse API_AVAILABLE(ios(11));
 - (void) test_AWSLocationListTrackersResponseEntry API_AVAILABLE(ios(11));
 - (void) test_AWSLocationMapConfiguration API_AVAILABLE(ios(11));
+- (void) test_AWSLocationMapConfigurationUpdate API_AVAILABLE(ios(11));
 - (void) test_AWSLocationPlace API_AVAILABLE(ios(11));
 - (void) test_AWSLocationPlaceGeometry API_AVAILABLE(ios(11));
 - (void) test_AWSLocationPositionalAccuracy API_AVAILABLE(ios(11));
@@ -165,6 +166,7 @@
 - (void) test_AWSLocationTagResourceRequest API_AVAILABLE(ios(11));
 - (void) test_AWSLocationTagResourceResponse API_AVAILABLE(ios(11));
 - (void) test_AWSLocationTimeZone API_AVAILABLE(ios(11));
+- (void) test_AWSLocationTrackingFilterGeometry API_AVAILABLE(ios(11));
 - (void) test_AWSLocationTruckDimensions API_AVAILABLE(ios(11));
 - (void) test_AWSLocationTruckWeight API_AVAILABLE(ios(11));
 - (void) test_AWSLocationUntagResourceRequest API_AVAILABLE(ios(11));
@@ -679,6 +681,10 @@
     [self validateSecureCodingForClass:[AWSLocationMapConfiguration class]];
 }
 
+- (void) test_AWSLocationMapConfigurationUpdate {
+    [self validateSecureCodingForClass:[AWSLocationMapConfigurationUpdate class]];
+}
+
 - (void) test_AWSLocationPlace {
     [self validateSecureCodingForClass:[AWSLocationPlace class]];
 }
@@ -769,6 +775,10 @@
 
 - (void) test_AWSLocationTimeZone {
     [self validateSecureCodingForClass:[AWSLocationTimeZone class]];
+}
+
+- (void) test_AWSLocationTrackingFilterGeometry {
+    [self validateSecureCodingForClass:[AWSLocationTrackingFilterGeometry class]];
 }
 
 - (void) test_AWSLocationTruckDimensions {

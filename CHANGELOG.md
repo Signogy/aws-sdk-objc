@@ -1,30 +1,251 @@
----
-
-MOVE THIS SECTION TO THE CORRECT LOCATION
-
-### Misc. Updates
-
-- Model updates for the following services
----AWSConnect
----
-
-MOVE THIS SECTION TO THE CORRECT LOCATION
-
-### Misc. Updates
-
-- Model updates for the following services
-  - AWSTranslate
-  - AWSPinpoint
-  - AWSEC2
-  - AWSConnect
-  - AWSSTS
-  - AWSRekognition
-
 # AWS Mobile SDK for iOS CHANGELOG
 
 ## Unreleased
 
 -Features for next release
+
+## 2.35.0
+
+### Bug Fixes
+
+- **AWSIoT**
+  - Fixing an intermittent crash when deallocating AWSIoTStreamThread (See [PR #5269](https://github.com/aws-amplify/aws-sdk-ios/issues/5269))
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSLambda
+  - AWSEC2
+  - AWSFirehose
+  - AWSDynamoDB
+  - AWSConnect
+  - AWSCloudWatchLogs (**Breaking Change**)
+  - AWSKMS
+  - AWSElasticLoadBalancingv2
+  - AWSCognitoIdentityProvider
+  - AWSAutoScalling
+  - AWSIoT
+
+## 2.34.2
+
+### Misc. Updates
+- privacy manifest pod specs (#5259)
+
+## 2.34.1
+
+### Misc. Updates
+- Add privacy manifest (#5214)
+- privacy manifest targets for AWSAuthSDK targets (#5248)
+
+## 2.34.0
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSKinesisVideo
+  - AWSFirehose
+  - AWSLambda
+  - AWSDynamoDB
+  - AWSConnectParticipant
+  - AWSSNS
+  - AWSPolly
+  - AWSCognitoIdentityProvider
+  - AWSElasticLoadBalancingv2
+  - AWSEC2
+  - AWSComprehend
+  - AWSAutoScaling
+  - AWSConnect
+  - AWSIoT (**Breaking Change**)
+
+## 2.33.10
+
+### New features
+
+- **AWSS3TransferUtility**
+  - Adding support for path-style access requests
+
+### Bug Fixes
+
+- **AWSIoT**
+  - Fixing auto reconnection not working properly
+
+## 2.33.9
+
+### Bug Fixes
+
+- **AWSIoT**
+  - Fixing crash in AWSIoTMQTTClient (See [PR #5185](https://github.com/aws-amplify/aws-sdk-ios/pull/5185))
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSDynamoDB
+  - AWSLocation
+  - AWSConnectParticipant
+  - AWSConnect
+  - AWSEC2
+
+## 2.33.8
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSKinesisVideoArchivedMedia
+  - AWSLocation
+  - AWSComprehend
+  - AWSIoT
+  - AWSKMS
+  - AWSPinpoint
+  - AWSFirehose
+  - AWSCognitoIdentityProvider
+  - AWSEC2
+  - AWSConnect
+
+## 2.33.7
+
+### New features
+- **AWSCore**
+  - Support for `ca-west-1` - Canada West (Calgary) (see [AWS Regional Services List](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) for a list of services supported in the region)
+
+## 2.33.6
+
+### New features
+
+- **AWSCognito**
+  - add UIAdaptivePresentationControllerDelegate to handle user swipe down to dismiss the SafariViewController
+
+- **AWSS3TransferUtility**
+  - added MD5 content verification for multi-part uploads
+
+### Bug Fixes
+
+- **CognitoIdentity**
+  - Don't overwrite AWSServiceConfiguration provided headers.
+
+- **AWS Mobile Client**
+  - make AWSMobileClientError message getter public
+
+- **AWS Mobile Client**
+  - add missing userSub property to SignUpResult
+
+- **AWSS3**
+  - set taskIdentifier attribute to nonatomic in transferutilitytask_private
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSElasticLoadBalancingv2
+  - AWSCloudWatchLogs
+  - AWSTranscribe
+  - AWSLocation
+  - AWSSTS
+  - AWSKinesisVideo
+  - AWSConnect
+  - AWSEC2
+
+### 2.33.5
+
+### Bug Fixes
+
+- IoT
+  - fix(IoT): Fixing naming collision with SocketRocket
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSCognitoIdentityProvider
+  - AWSConnect
+  - AWSConnectParticipant
+  - AWSElasticLoadBalancingv2
+  - AWSEC2
+  - AWSFirehose
+  - AWSPolly
+  - AWSIoT
+  - AWSLambda
+
+## 2.33.4
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSDynamoDB
+  - AWSEC2
+  - AWSSTS
+  - AWSLambda
+  - AWSPolly
+  - AWSSES
+  - AWSEC2
+  - AWSConnect
+  - AWSElasticLoadBalancingv2
+  - AWSKinesisVideo
+  - AWSRekognition
+  - AWSKinesisVideoArchivedMedia
+  - AWSAutoScaling
+  - AWSCognitoIdentityProvider
+  - AWSPinpoint
+  - AWSSQS
+
+## 2.33.3
+
+### New features
+- **AWSCore**
+  - Support for `il-central-1` - Israel (Tel Aviv) (see [AWS Regional Services List](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) for a list of services supported in the region)
+
+## 2.33.2
+
+### Bug Fixes
+- **AWSAuthUI**
+  - Fixed spacing and color issues in `AWSSignInViewController` when displaying social providers.
+
+- **AWSFacebookSignIn** & **AWSAuthGoogleSignIn**
+  - Added support for Dark Mode colors
+
+- **AWSTranscribeStreaming**
+  - Fixed assigning of host for CN regions in AWSTranscribeStreaming
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSCloudWatchLogs
+  - AWSCognitoIdentityProvider
+  - AWSEC2
+  - AWSLocation
+  - AWSConnect
+  - AWSTranslate
+  - AWSTranscribe
+  - AWSCognitoIdentityProvider
+
+## 2.33.1
+
+### Misc. Updates
+- **AWSComprehend**
+  - Updating text used in the `testDetectSentimentNeutral` integration test.
+
+- Model updates for the following services
+  - AWSChimeSDKIdentity
+  - AWSChimeSDKMessaging
+  - AWSCloudWatchLogs
+  - AWSConnect
+  - AWSDynamoDB
+  - AWSEC2
+  - AWSIoT
+  - AWSIoTDataPlane
+  - AWSKinesisVideo
+  - AWSKMS
+  - AWSLambda
+  - AWSLocation
+  - AWSPinpoint
+  - AWSPolly
+  - AWSRekognition
+  - AWSSQS
+  - AWSSTS
+  - AWSTranslate
+
+### Bug Fixes
+- **AWSAuthUI**
+  - Fix ability to hide keyboard in `AWSSignInViewController`, using `keyboardDismissMode`
+  - Fix black navigation bar in `AWSSignInViewController`, using view controllers option to 'Extend edges Under Opaque Bars'.
+   [Issue #2321](https://github.com/aws-amplify/aws-sdk-ios/issues/2321)
 
 ## 2.33.0
 
@@ -57,7 +278,7 @@ MOVE THIS SECTION TO THE CORRECT LOCATION
 
 ### Bug Fixes
 - **AWSS3**
-  - Increase speed of foreground uploads by specifying `NetworkServiceType`   
+  - Increase speed of foreground uploads by specifying `NetworkServiceType`
 
 ## 2.31.0
 
@@ -65,7 +286,7 @@ MOVE THIS SECTION TO THE CORRECT LOCATION
 
 - **AWSMobileClient**
   - Handling AWSMobileClient state issues gracefully handled gracefully
-  
+
 - **AWSIot**
   - Include the certificate tag in Keychain query to look up identity
 
@@ -76,7 +297,7 @@ MOVE THIS SECTION TO THE CORRECT LOCATION
   - AWSComprehend
   - AWSConnect
   - AWSDynamoDB
-  - AWSEC2  
+  - AWSEC2
   - AWSIoT
   - AWSLambda
   - AWSLocation
@@ -114,7 +335,7 @@ MOVE THIS SECTION TO THE CORRECT LOCATION
 
 - **AWSS3**
     - Fixing the integration tests by using correct value for AWSS3ServerSideEncryption (See [PR #4592](https://github.com/aws-amplify/aws-sdk-ios/pull/4592))
-    
+
 - Model updates for the following services
   - AWSEC2
   - AWSKMS
@@ -822,6 +1043,9 @@ MOVE THIS SECTION TO THE CORRECT LOCATION
   - AWSSQS
   - AWSSNS
   - AWSPolly
+
+- **AWSS3**
+	- Added option to use Content-MD5 for multipart uploads with AWSS3TransferUtility (`useContentMD5` in `AWSS3TransferUtilityMultiPartUploadExpression`)
 
 ## 2.24.1
 

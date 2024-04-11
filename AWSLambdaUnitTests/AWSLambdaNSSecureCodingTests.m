@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -135,6 +135,7 @@
 - (void) test_AWSLambdaListTagsResponse API_AVAILABLE(ios(11));
 - (void) test_AWSLambdaListVersionsByFunctionRequest API_AVAILABLE(ios(11));
 - (void) test_AWSLambdaListVersionsByFunctionResponse API_AVAILABLE(ios(11));
+- (void) test_AWSLambdaLoggingConfig API_AVAILABLE(ios(11));
 - (void) test_AWSLambdaOnFailure API_AVAILABLE(ios(11));
 - (void) test_AWSLambdaOnSuccess API_AVAILABLE(ios(11));
 - (void) test_AWSLambdaProvisionedConcurrencyConfigListItem API_AVAILABLE(ios(11));
@@ -641,6 +642,10 @@
 
 - (void) test_AWSLambdaListVersionsByFunctionResponse {
     [self validateSecureCodingForClass:[AWSLambdaListVersionsByFunctionResponse class]];
+}
+
+- (void) test_AWSLambdaLoggingConfig {
+    [self validateSecureCodingForClass:[AWSLambdaLoggingConfig class]];
 }
 
 - (void) test_AWSLambdaOnFailure {

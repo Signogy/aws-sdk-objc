@@ -24,6 +24,7 @@ FOUNDATION_EXPORT NSString *const AWSRekognitionErrorDomain;
 typedef NS_ENUM(NSInteger, AWSRekognitionErrorType) {
     AWSRekognitionErrorUnknown,
     AWSRekognitionErrorAccessDenied,
+    AWSRekognitionErrorConflict,
     AWSRekognitionErrorHumanLoopQuotaExceeded,
     AWSRekognitionErrorIdempotentParameterMismatch,
     AWSRekognitionErrorImageTooLarge,
@@ -94,6 +95,12 @@ typedef NS_ENUM(NSInteger, AWSRekognitionContentModerationSortBy) {
     AWSRekognitionContentModerationSortByUnknown,
     AWSRekognitionContentModerationSortByName,
     AWSRekognitionContentModerationSortByTimestamp,
+};
+
+typedef NS_ENUM(NSInteger, AWSRekognitionCustomizationFeature) {
+    AWSRekognitionCustomizationFeatureUnknown,
+    AWSRekognitionCustomizationFeatureContentModeration,
+    AWSRekognitionCustomizationFeatureCustomLabels,
 };
 
 typedef NS_ENUM(NSInteger, AWSRekognitionDatasetStatus) {
@@ -238,6 +245,12 @@ typedef NS_ENUM(NSInteger, AWSRekognitionPersonTrackingSortBy) {
     AWSRekognitionPersonTrackingSortByTimestamp,
 };
 
+typedef NS_ENUM(NSInteger, AWSRekognitionProjectAutoUpdate) {
+    AWSRekognitionProjectAutoUpdateUnknown,
+    AWSRekognitionProjectAutoUpdateEnabled,
+    AWSRekognitionProjectAutoUpdateDisabled,
+};
+
 typedef NS_ENUM(NSInteger, AWSRekognitionProjectStatus) {
     AWSRekognitionProjectStatusUnknown,
     AWSRekognitionProjectStatusCreating,
@@ -259,6 +272,8 @@ typedef NS_ENUM(NSInteger, AWSRekognitionProjectVersionStatus) {
     AWSRekognitionProjectVersionStatusCopyingInProgress,
     AWSRekognitionProjectVersionStatusCopyingCompleted,
     AWSRekognitionProjectVersionStatusCopyingFailed,
+    AWSRekognitionProjectVersionStatusDeprecated,
+    AWSRekognitionProjectVersionStatusExpired,
 };
 
 typedef NS_ENUM(NSInteger, AWSRekognitionProtectiveEquipmentType) {
@@ -327,6 +342,45 @@ typedef NS_ENUM(NSInteger, AWSRekognitionTextTypes) {
     AWSRekognitionTextTypesWord,
 };
 
+typedef NS_ENUM(NSInteger, AWSRekognitionUnsearchedFaceReason) {
+    AWSRekognitionUnsearchedFaceReasonUnknown,
+    AWSRekognitionUnsearchedFaceReasonFaceNotLargest,
+    AWSRekognitionUnsearchedFaceReasonExceedsMaxFaces,
+    AWSRekognitionUnsearchedFaceReasonExtremePose,
+    AWSRekognitionUnsearchedFaceReasonLowBrightness,
+    AWSRekognitionUnsearchedFaceReasonLowSharpness,
+    AWSRekognitionUnsearchedFaceReasonLowConfidence,
+    AWSRekognitionUnsearchedFaceReasonSmallBoundingBox,
+    AWSRekognitionUnsearchedFaceReasonLowFaceQuality,
+};
+
+typedef NS_ENUM(NSInteger, AWSRekognitionUnsuccessfulFaceAssociationReason) {
+    AWSRekognitionUnsuccessfulFaceAssociationReasonUnknown,
+    AWSRekognitionUnsuccessfulFaceAssociationReasonFaceNotFound,
+    AWSRekognitionUnsuccessfulFaceAssociationReasonAssociatedToADifferentUser,
+    AWSRekognitionUnsuccessfulFaceAssociationReasonLowMatchConfidence,
+};
+
+typedef NS_ENUM(NSInteger, AWSRekognitionUnsuccessfulFaceDeletionReason) {
+    AWSRekognitionUnsuccessfulFaceDeletionReasonUnknown,
+    AWSRekognitionUnsuccessfulFaceDeletionReasonAssociatedToAnExistingUser,
+    AWSRekognitionUnsuccessfulFaceDeletionReasonFaceNotFound,
+};
+
+typedef NS_ENUM(NSInteger, AWSRekognitionUnsuccessfulFaceDisassociationReason) {
+    AWSRekognitionUnsuccessfulFaceDisassociationReasonUnknown,
+    AWSRekognitionUnsuccessfulFaceDisassociationReasonFaceNotFound,
+    AWSRekognitionUnsuccessfulFaceDisassociationReasonAssociatedToADifferentUser,
+};
+
+typedef NS_ENUM(NSInteger, AWSRekognitionUserStatus) {
+    AWSRekognitionUserStatusUnknown,
+    AWSRekognitionUserStatusActive,
+    AWSRekognitionUserStatusUpdating,
+    AWSRekognitionUserStatusCreating,
+    AWSRekognitionUserStatusCreated,
+};
+
 typedef NS_ENUM(NSInteger, AWSRekognitionVideoColorRange) {
     AWSRekognitionVideoColorRangeUnknown,
     AWSRekognitionVideoColorRangeFull,
@@ -342,6 +396,9 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 @class AWSRekognitionAgeRange;
 @class AWSRekognitionAsset;
+@class AWSRekognitionAssociateFacesRequest;
+@class AWSRekognitionAssociateFacesResponse;
+@class AWSRekognitionAssociatedFace;
 @class AWSRekognitionAudioMetadata;
 @class AWSRekognitionAuditImage;
 @class AWSRekognitionBeard;
@@ -374,7 +431,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @class AWSRekognitionCreateProjectVersionResponse;
 @class AWSRekognitionCreateStreamProcessorRequest;
 @class AWSRekognitionCreateStreamProcessorResponse;
+@class AWSRekognitionCreateUserRequest;
+@class AWSRekognitionCreateUserResponse;
 @class AWSRekognitionCustomLabel;
+@class AWSRekognitionCustomizationFeatureConfig;
+@class AWSRekognitionCustomizationFeatureContentModerationConfig;
 @class AWSRekognitionDatasetChanges;
 @class AWSRekognitionDatasetDescription;
 @class AWSRekognitionDatasetLabelDescription;
@@ -396,6 +457,8 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @class AWSRekognitionDeleteProjectVersionResponse;
 @class AWSRekognitionDeleteStreamProcessorRequest;
 @class AWSRekognitionDeleteStreamProcessorResponse;
+@class AWSRekognitionDeleteUserRequest;
+@class AWSRekognitionDeleteUserResponse;
 @class AWSRekognitionDescribeCollectionRequest;
 @class AWSRekognitionDescribeCollectionResponse;
 @class AWSRekognitionDescribeDatasetRequest;
@@ -426,6 +489,9 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @class AWSRekognitionDetectTextRequest;
 @class AWSRekognitionDetectTextResponse;
 @class AWSRekognitionDetectionFilter;
+@class AWSRekognitionDisassociateFacesRequest;
+@class AWSRekognitionDisassociateFacesResponse;
+@class AWSRekognitionDisassociatedFace;
 @class AWSRekognitionDistributeDataset;
 @class AWSRekognitionDistributeDatasetEntriesRequest;
 @class AWSRekognitionDistributeDatasetEntriesResponse;
@@ -501,7 +567,10 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @class AWSRekognitionListStreamProcessorsResponse;
 @class AWSRekognitionListTagsForResourceRequest;
 @class AWSRekognitionListTagsForResourceResponse;
+@class AWSRekognitionListUsersRequest;
+@class AWSRekognitionListUsersResponse;
 @class AWSRekognitionLivenessOutputConfig;
+@class AWSRekognitionMatchedUser;
 @class AWSRekognitionModerationLabel;
 @class AWSRekognitionMouthOpen;
 @class AWSRekognitionMustache;
@@ -531,6 +600,13 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @class AWSRekognitionSearchFacesByImageResponse;
 @class AWSRekognitionSearchFacesRequest;
 @class AWSRekognitionSearchFacesResponse;
+@class AWSRekognitionSearchUsersByImageRequest;
+@class AWSRekognitionSearchUsersByImageResponse;
+@class AWSRekognitionSearchUsersRequest;
+@class AWSRekognitionSearchUsersResponse;
+@class AWSRekognitionSearchedFace;
+@class AWSRekognitionSearchedFaceDetails;
+@class AWSRekognitionSearchedUser;
 @class AWSRekognitionSegmentDetection;
 @class AWSRekognitionSegmentTypeInfo;
 @class AWSRekognitionShotSegment;
@@ -584,12 +660,18 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @class AWSRekognitionTrainingData;
 @class AWSRekognitionTrainingDataResult;
 @class AWSRekognitionUnindexedFace;
+@class AWSRekognitionUnsearchedFace;
+@class AWSRekognitionUnsuccessfulFaceAssociation;
+@class AWSRekognitionUnsuccessfulFaceDeletion;
+@class AWSRekognitionUnsuccessfulFaceDisassociation;
 @class AWSRekognitionUntagResourceRequest;
 @class AWSRekognitionUntagResourceResponse;
 @class AWSRekognitionUpdateDatasetEntriesRequest;
 @class AWSRekognitionUpdateDatasetEntriesResponse;
 @class AWSRekognitionUpdateStreamProcessorRequest;
 @class AWSRekognitionUpdateStreamProcessorResponse;
+@class AWSRekognitionUser;
+@class AWSRekognitionUserMatch;
 @class AWSRekognitionValidationData;
 @class AWSRekognitionVideo;
 @class AWSRekognitionVideoMetadata;
@@ -622,6 +704,75 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p>The S3 bucket that contains an Amazon Sagemaker Ground Truth format manifest file. </p>
  */
 @property (nonatomic, strong) AWSRekognitionGroundTruthManifest * _Nullable groundTruthManifest;
+
+@end
+
+/**
+ 
+ */
+@interface AWSRekognitionAssociateFacesRequest : AWSRequest
+
+
+/**
+ <p>Idempotent token used to identify the request to <code>AssociateFaces</code>. If you use the same token with multiple <code>AssociateFaces</code> requests, the same response is returned. Use ClientRequestToken to prevent the same request from being processed more than once.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable clientRequestToken;
+
+/**
+ <p>The ID of an existing collection containing the UserID.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable collectionId;
+
+/**
+ <p>An array of FaceIDs to associate with the UserID.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable faceIds;
+
+/**
+ <p>The ID for the existing UserID.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
+
+/**
+ <p>An optional value specifying the minimum confidence in the UserID match to return. The default value is 75.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable userMatchThreshold;
+
+@end
+
+/**
+ 
+ */
+@interface AWSRekognitionAssociateFacesResponse : AWSModel
+
+
+/**
+ <p>An array of AssociatedFace objects containing FaceIDs that are successfully associated with the UserID is returned. Returned if the AssociateFaces action is successful.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionAssociatedFace *> * _Nullable associatedFaces;
+
+/**
+ <p>An array of UnsuccessfulAssociation objects containing FaceIDs that are not successfully associated along with the reasons. Returned if the AssociateFaces action is successful.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionUnsuccessfulFaceAssociation *> * _Nullable unsuccessfulFaceAssociations;
+
+/**
+ <p>The status of an update made to a UserID. Reflects if the UserID has been updated for every requested change.</p>
+ */
+@property (nonatomic, assign) AWSRekognitionUserStatus userStatus;
+
+@end
+
+/**
+ <p>Provides face metadata for the faces that are associated to a specific UserID.</p>
+ */
+@interface AWSRekognitionAssociatedFace : AWSModel
+
+
+/**
+ <p>Unique identifier assigned to the face.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable faceId;
 
 @end
 
@@ -1176,7 +1327,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) AWSRekognitionDatasetSource * _Nullable datasetSource;
 
 /**
- <p> The type of the dataset. Specify <code>train</code> to create a training dataset. Specify <code>test</code> to create a test dataset. </p>
+ <p> The type of the dataset. Specify <code>TRAIN</code> to create a training dataset. Specify <code>TEST</code> to create a test dataset. </p>
  */
 @property (nonatomic, assign) AWSRekognitionDatasetType datasetType;
 
@@ -1261,6 +1412,16 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
+ <p>Specifies whether automatic retraining should be attempted for the versions of the project. Automatic retraining is done as a best effort. Required argument for Content Moderation. Applicable only to adapters.</p>
+ */
+@property (nonatomic, assign) AWSRekognitionProjectAutoUpdate autoUpdate;
+
+/**
+ <p>Specifies feature that is being customized. If no value is provided CUSTOM_LABELS is used as a default.</p>
+ */
+@property (nonatomic, assign) AWSRekognitionCustomizationFeature feature;
+
+/**
  <p>The name of the project to create.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable projectName;
@@ -1287,37 +1448,47 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
- <p>The identifier for your AWS Key Management Service key (AWS KMS key). You can supply the Amazon Resource Name (ARN) of your KMS key, the ID of your KMS key, an alias for your KMS key, or an alias ARN. The key is used to encrypt training and test images copied into the service for model training. Your source images are unaffected. The key is also used to encrypt training results and manifest files written to the output Amazon S3 bucket (<code>OutputConfig</code>).</p><p>If you choose to use your own KMS key, you need the following permissions on the KMS key.</p><ul><li><p>kms:CreateGrant</p></li><li><p>kms:DescribeKey</p></li><li><p>kms:GenerateDataKey</p></li><li><p>kms:Decrypt</p></li></ul><p>If you don't specify a value for <code>KmsKeyId</code>, images copied into the service are encrypted using a key that AWS owns and manages.</p>
+ <p>Feature-specific configuration of the training job. If the job configuration does not match the feature type associated with the project, an InvalidParameterException is returned.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionCustomizationFeatureConfig * _Nullable featureConfig;
+
+/**
+ <p>The identifier for your AWS Key Management Service key (AWS KMS key). You can supply the Amazon Resource Name (ARN) of your KMS key, the ID of your KMS key, an alias for your KMS key, or an alias ARN. The key is used to encrypt training images, test images, and manifest files copied into the service for the project version. Your source images are unaffected. The key is also used to encrypt training results and manifest files written to the output Amazon S3 bucket (<code>OutputConfig</code>).</p><p>If you choose to use your own KMS key, you need the following permissions on the KMS key.</p><ul><li><p>kms:CreateGrant</p></li><li><p>kms:DescribeKey</p></li><li><p>kms:GenerateDataKey</p></li><li><p>kms:Decrypt</p></li></ul><p>If you don't specify a value for <code>KmsKeyId</code>, images copied into the service are encrypted using a key that AWS owns and manages.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable kmsKeyId;
 
 /**
- <p>The Amazon S3 bucket location to store the results of training. The S3 bucket can be in any AWS account as long as the caller has <code>s3:PutObject</code> permissions on the S3 bucket.</p>
+ <p>The Amazon S3 bucket location to store the results of training. The bucket can be any S3 bucket in your AWS account. You need <code>s3:PutObject</code> permission on the bucket. </p>
  */
 @property (nonatomic, strong) AWSRekognitionOutputConfig * _Nullable outputConfig;
 
 /**
- <p>The ARN of the Amazon Rekognition Custom Labels project that manages the model that you want to train.</p>
+ <p>The ARN of the Amazon Rekognition project that will manage the project version you want to train.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable projectArn;
 
 /**
- <p> A set of tags (key-value pairs) that you want to attach to the model. </p>
+ <p> A set of tags (key-value pairs) that you want to attach to the project version. </p>
  */
 @property (nonatomic, strong) NSDictionary<NSString *, NSString *> * _Nullable tags;
 
 /**
- <p>Specifies an external manifest that the service uses to test the model. If you specify <code>TestingData</code> you must also specify <code>TrainingData</code>. The project must not have any associated datasets.</p>
+ <p>Specifies an external manifest that the service uses to test the project version. If you specify <code>TestingData</code> you must also specify <code>TrainingData</code>. The project must not have any associated datasets.</p>
  */
 @property (nonatomic, strong) AWSRekognitionTestingData * _Nullable testingData;
 
 /**
- <p>Specifies an external manifest that the services uses to train the model. If you specify <code>TrainingData</code> you must also specify <code>TestingData</code>. The project must not have any associated datasets. </p>
+ <p>Specifies an external manifest that the services uses to train the project version. If you specify <code>TrainingData</code> you must also specify <code>TestingData</code>. The project must not have any associated datasets. </p>
  */
 @property (nonatomic, strong) AWSRekognitionTrainingData * _Nullable trainingData;
 
 /**
- <p>A name for the version of the model. This value must be unique.</p>
+ <p>A description applied to the project version being created.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable versionDescription;
+
+/**
+ <p>A name for the version of the project version. This value must be unique.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable versionName;
 
@@ -1330,7 +1501,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
- <p>The ARN of the model version that was created. Use <code>DescribeProjectVersion</code> to get the current status of the training operation.</p>
+ <p>The ARN of the model or the project version that was created. Use <code>DescribeProjectVersion</code> to get the current status of the training operation.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable projectVersionArn;
 
@@ -1408,6 +1579,37 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @end
 
 /**
+ 
+ */
+@interface AWSRekognitionCreateUserRequest : AWSRequest
+
+
+/**
+ <p>Idempotent token used to identify the request to <code>CreateUser</code>. If you use the same token with multiple <code>CreateUser</code> requests, the same response is returned. Use ClientRequestToken to prevent the same request from being processed more than once.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable clientRequestToken;
+
+/**
+ <p>The ID of an existing collection to which the new UserID needs to be created.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable collectionId;
+
+/**
+ <p>ID for the UserID to be created. This ID needs to be unique within the collection.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
+
+@end
+
+/**
+ 
+ */
+@interface AWSRekognitionCreateUserResponse : AWSModel
+
+
+@end
+
+/**
  <p>A custom label detected in an image by a call to <a>DetectCustomLabels</a>.</p>
  */
 @interface AWSRekognitionCustomLabel : AWSModel
@@ -1427,6 +1629,32 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p>The name of the custom label.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable name;
+
+@end
+
+/**
+ <p>Feature specific configuration for the training job. Configuration provided for the job must match the feature type parameter associated with project. If configuration and feature type do not match an InvalidParameterException is returned.</p>
+ */
+@interface AWSRekognitionCustomizationFeatureConfig : AWSModel
+
+
+/**
+ <p>Configuration options for Custom Moderation training.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionCustomizationFeatureContentModerationConfig * _Nullable contentModeration;
+
+@end
+
+/**
+ <p>Configuration options for Content Moderation training.</p>
+ */
+@interface AWSRekognitionCustomizationFeatureContentModerationConfig : AWSModel
+
+
+/**
+ <p>The confidence level you plan to use to identify if unsafe content is present during inference.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable confidenceThreshold;
 
 @end
 
@@ -1678,6 +1906,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable deletedFaces;
 
+/**
+ <p>An array of any faces that weren't deleted.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionUnsuccessfulFaceDeletion *> * _Nullable unsuccessfulFaceDeletions;
+
 @end
 
 /**
@@ -1744,7 +1977,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
- <p>The Amazon Resource Name (ARN) of the model version that you want to delete.</p>
+ <p>The Amazon Resource Name (ARN) of the project version that you want to delete.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable projectVersionArn;
 
@@ -1780,6 +2013,37 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  
  */
 @interface AWSRekognitionDeleteStreamProcessorResponse : AWSModel
+
+
+@end
+
+/**
+ 
+ */
+@interface AWSRekognitionDeleteUserRequest : AWSRequest
+
+
+/**
+ <p>Idempotent token used to identify the request to <code>DeleteUser</code>. If you use the same token with multiple <code>DeleteUser </code>requests, the same response is returned. Use ClientRequestToken to prevent the same request from being processed more than once.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable clientRequestToken;
+
+/**
+ <p>The ID of an existing collection from which the UserID needs to be deleted. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable collectionId;
+
+/**
+ <p>ID for the UserID to be deleted. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
+
+@end
+
+/**
+ 
+ */
+@interface AWSRekognitionDeleteUserResponse : AWSModel
 
 
 @end
@@ -1823,6 +2087,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  */
 @property (nonatomic, strong) NSString * _Nullable faceModelVersion;
 
+/**
+ <p>The number of UserIDs assigned to the specified colleciton.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable userCount;
+
 @end
 
 /**
@@ -1863,17 +2132,17 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
 /**
- <p>If the previous response was incomplete (because there is more results to retrieve), Amazon Rekognition Custom Labels returns a pagination token in the response. You can use this pagination token to retrieve the next set of results. </p>
+ <p>If the previous response was incomplete (because there is more results to retrieve), Amazon Rekognition returns a pagination token in the response. You can use this pagination token to retrieve the next set of results. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>The Amazon Resource Name (ARN) of the project that contains the models you want to describe.</p>
+ <p>The Amazon Resource Name (ARN) of the project that contains the model/adapter you want to describe.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable projectArn;
 
 /**
- <p>A list of model version names that you want to describe. You can add up to 10 model version names to the list. If you don't specify a value, all model descriptions are returned. A version name is part of a model (ProjectVersion) ARN. For example, <code>my-model.2020-01-21T09.10.15</code> is the version name in the following ARN. <code>arn:aws:rekognition:us-east-1:123456789012:project/getting-started/version/<i>my-model.2020-01-21T09.10.15</i>/1234567890123</code>.</p>
+ <p>A list of model or project version names that you want to describe. You can add up to 10 model or project version names to the list. If you don't specify a value, all project version descriptions are returned. A version name is part of a project version ARN. For example, <code>my-model.2020-01-21T09.10.15</code> is the version name in the following ARN. <code>arn:aws:rekognition:us-east-1:123456789012:project/getting-started/version/<i>my-model.2020-01-21T09.10.15</i>/1234567890123</code>.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable versionNames;
 
@@ -1886,12 +2155,12 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
- <p>If the previous response was incomplete (because there is more results to retrieve), Amazon Rekognition Custom Labels returns a pagination token in the response. You can use this pagination token to retrieve the next set of results. </p>
+ <p>If the previous response was incomplete (because there is more results to retrieve), Amazon Rekognition returns a pagination token in the response. You can use this pagination token to retrieve the next set of results. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>A list of model descriptions. The list is sorted by the creation date and time of the model versions, latest to earliest.</p>
+ <p>A list of project version descriptions. The list is sorted by the creation date and time of the project versions, latest to earliest.</p>
  */
 @property (nonatomic, strong) NSArray<AWSRekognitionProjectVersionDescription *> * _Nullable projectVersionDescriptions;
 
@@ -1904,17 +2173,22 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
+ <p>Specifies the type of customization to filter projects by. If no value is specified, CUSTOM_LABELS is used as a default.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable features;
+
+/**
  <p>The maximum number of results to return per paginated call. The largest value you can specify is 100. If you specify a value greater than 100, a ValidationException error occurs. The default value is 100. </p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
 
 /**
- <p>If the previous response was incomplete (because there is more results to retrieve), Amazon Rekognition Custom Labels returns a pagination token in the response. You can use this pagination token to retrieve the next set of results. </p>
+ <p>If the previous response was incomplete (because there is more results to retrieve), Rekognition returns a pagination token in the response. You can use this pagination token to retrieve the next set of results. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
 /**
- <p>A list of the projects that you want Amazon Rekognition Custom Labels to describe. If you don't specify a value, the response includes descriptions for all the projects in your AWS account.</p>
+ <p>A list of the projects that you want Rekognition to describe. If you don't specify a value, the response includes descriptions for all the projects in your AWS account.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable projectNames;
 
@@ -1927,7 +2201,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
- <p>If the previous response was incomplete (because there is more results to retrieve), Amazon Rekognition Custom Labels returns a pagination token in the response. You can use this pagination token to retrieve the next set of results. </p>
+ <p>If the previous response was incomplete (because there is more results to retrieve), Amazon Rekognition returns a pagination token in the response. You can use this pagination token to retrieve the next set of results. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable nextToken;
 
@@ -2051,7 +2325,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) NSNumber * _Nullable minConfidence;
 
 /**
- <p>The ARN of the model version that you want to use.</p>
+ <p>The ARN of the model version that you want to use. Only models associated with Custom Labels projects accepted by the operation. If a provided ARN refers to a model version associated with a project for a different feature type, then an InvalidParameterException is returned.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable projectVersionArn;
 
@@ -2077,7 +2351,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
- <p>An array of facial attributes you want to be returned. A <code>DEFAULT</code> subset of facial attributes - <code>BoundingBox</code>, <code>Confidence</code>, <code>Pose</code>, <code>Quality</code>, and <code>Landmarks</code> - will always be returned. You can request for specific facial attributes (in addition to the default list) - by using [<code>"DEFAULT", "FACE_OCCLUDED"</code>] or just [<code>"FACE_OCCLUDED"</code>]. You can request for all facial attributes by using [<code>"ALL"]</code>. Requesting more attributes may increase response time.</p><p>If you provide both, <code>["ALL", "DEFAULT"]</code>, the service uses a logical "AND" operator to determine which attributes to return (in this case, all attributes). </p>
+ <p>An array of facial attributes you want to be returned. A <code>DEFAULT</code> subset of facial attributes - <code>BoundingBox</code>, <code>Confidence</code>, <code>Pose</code>, <code>Quality</code>, and <code>Landmarks</code> - will always be returned. You can request for specific facial attributes (in addition to the default list) - by using [<code>"DEFAULT", "FACE_OCCLUDED"</code>] or just [<code>"FACE_OCCLUDED"</code>]. You can request for all facial attributes by using [<code>"ALL"]</code>. Requesting more attributes may increase response time.</p><p>If you provide both, <code>["ALL", "DEFAULT"]</code>, the service uses a logical "AND" operator to determine which attributes to return (in this case, all attributes). </p><p>Note that while the FaceOccluded and EyeDirection attributes are supported when using <code>DetectFaces</code>, they aren't supported when analyzing videos with <code>StartFaceDetection</code> and <code>GetFaceDetection</code>.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable attributes;
 
@@ -2223,12 +2497,12 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) AWSRekognitionImage * _Nullable image;
 
 /**
- <p>Maximum number of labels you want the service to return in the response. The service returns the specified number of highest confidence labels. </p>
+ <p>Maximum number of labels you want the service to return in the response. The service returns the specified number of highest confidence labels. Only valid when GENERAL_LABELS is specified as a feature type in the Feature input parameter.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxLabels;
 
 /**
- <p>Specifies the minimum confidence level for the labels to return. Amazon Rekognition doesn't return any labels with confidence lower than this specified value.</p><p>If <code>MinConfidence</code> is not specified, the operation returns labels with a confidence values greater than or equal to 55 percent.</p>
+ <p>Specifies the minimum confidence level for the labels to return. Amazon Rekognition doesn't return any labels with confidence lower than this specified value.</p><p>If <code>MinConfidence</code> is not specified, the operation returns labels with a confidence values greater than or equal to 55 percent. Only valid when GENERAL_LABELS is specified as a feature type in the Feature input parameter.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable minConfidence;
 
@@ -2306,6 +2580,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  */
 @property (nonatomic, strong) NSNumber * _Nullable minConfidence;
 
+/**
+ <p>Identifier for the custom adapter. Expects the ProjectVersionArn as a value. Use the CreateProject or CreateProjectVersion APIs to create a custom adapter.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable projectVersion;
+
 @end
 
 /**
@@ -2325,9 +2604,14 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) NSArray<AWSRekognitionModerationLabel *> * _Nullable moderationLabels;
 
 /**
- <p>Version number of the moderation detection model that was used to detect unsafe content.</p>
+ <p>Version number of the base moderation detection model that was used to detect unsafe content.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable moderationModelVersion;
+
+/**
+ <p>Identifier of the custom adapter that was used during inference. If during inference the adapter was EXPIRED, then the parameter will not be returned, indicating that a base moderation detection project version was used.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable projectVersion;
 
 @end
 
@@ -2446,6 +2730,70 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p>Sets the confidence of word detection. Words with detection confidence below this will be excluded from the result. Values should be between 0 and 100. The default MinConfidence is 80.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable minConfidence;
+
+@end
+
+/**
+ 
+ */
+@interface AWSRekognitionDisassociateFacesRequest : AWSRequest
+
+
+/**
+ <p>Idempotent token used to identify the request to <code>DisassociateFaces</code>. If you use the same token with multiple <code>DisassociateFaces</code> requests, the same response is returned. Use ClientRequestToken to prevent the same request from being processed more than once.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable clientRequestToken;
+
+/**
+ <p>The ID of an existing collection containing the UserID.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable collectionId;
+
+/**
+ <p>An array of face IDs to disassociate from the UserID. </p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable faceIds;
+
+/**
+ <p>ID for the existing UserID.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
+
+@end
+
+/**
+ 
+ */
+@interface AWSRekognitionDisassociateFacesResponse : AWSModel
+
+
+/**
+ <p>An array of DissociatedFace objects containing FaceIds that are successfully disassociated with the UserID is returned. Returned if the DisassociatedFaces action is successful.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionDisassociatedFace *> * _Nullable disassociatedFaces;
+
+/**
+ <p>An array of UnsuccessfulDisassociation objects containing FaceIds that are not successfully associated, along with the reasons for the failure to associate. Returned if the DisassociateFaces action is successful.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionUnsuccessfulFaceDisassociation *> * _Nullable unsuccessfulFaceDisassociations;
+
+/**
+ <p>The status of an update made to a User. Reflects if the User has been updated for every requested change.</p>
+ */
+@property (nonatomic, assign) AWSRekognitionUserStatus userStatus;
+
+@end
+
+/**
+ <p>Provides face metadata for the faces that are disassociated from a specific UserID.</p>
+ */
+@interface AWSRekognitionDisassociatedFace : AWSModel
+
+
+/**
+ <p>Unique identifier assigned to the face.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable faceId;
 
 @end
 
@@ -2685,6 +3033,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p> The version of the face detect and storage model that was used when indexing the face vector. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable indexFacesModelVersion;
+
+/**
+ <p>Unique identifier assigned to the user.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
 
 @end
 
@@ -3247,7 +3600,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
- <p>A set of images from the Face Liveness video that can be used for audit purposes. It includes a bounding box of the face and the Base64-encoded bytes that return an image. If the CreateFaceLivenessSession request included an OutputConfig argument, the image will be uploaded to an S3Object specified in the output configuration.</p>
+ <p>A set of images from the Face Liveness video that can be used for audit purposes. It includes a bounding box of the face and the Base64-encoded bytes that return an image. If the CreateFaceLivenessSession request included an OutputConfig argument, the image will be uploaded to an S3Object specified in the output configuration. If no Amazon S3 bucket is defined, raw bytes are sent instead.</p>
  */
 @property (nonatomic, strong) NSArray<AWSRekognitionAuditImage *> * _Nullable auditImages;
 
@@ -4234,6 +4587,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) NSString * _Nullable collectionId;
 
 /**
+ <p>An array of face IDs to filter results with when listing faces in a collection.</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable faceIds;
+
+/**
  <p>Maximum number of faces to return.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxResults;
@@ -4242,6 +4600,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p>If the previous response was incomplete (because there is more data to retrieve), Amazon Rekognition returns a pagination token in the response. You can use this pagination token to retrieve the next set of faces.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable nextToken;
+
+/**
+ <p>An array of user IDs to filter results with when listing faces in a collection.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
 
 @end
 
@@ -4372,6 +4735,47 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @end
 
 /**
+ 
+ */
+@interface AWSRekognitionListUsersRequest : AWSRequest
+
+
+/**
+ <p>The ID of an existing collection.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable collectionId;
+
+/**
+ <p>Maximum number of UsersID to return. </p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable maxResults;
+
+/**
+ <p>Pagingation token to receive the next set of UsersID.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+@end
+
+/**
+ 
+ */
+@interface AWSRekognitionListUsersResponse : AWSModel
+
+
+/**
+ <p>A pagination token to be used with the subsequent request if the response is truncated.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable nextToken;
+
+/**
+ <p>List of UsersID associated with the specified collection.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionUser *> * _Nullable users;
+
+@end
+
+/**
  <p>Contains settings that specify the location of an Amazon S3 bucket used to store the output of a Face Liveness session. Note that the S3 bucket must be located in the caller's AWS account and in the same region as the Face Liveness end-point. Additionally, the Amazon S3 object keys are auto-generated by the Face Liveness system. </p>
  Required parameters: [S3Bucket]
  */
@@ -4387,6 +4791,24 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p>The prefix prepended to the output files for the Face Liveness session results.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable s3KeyPrefix;
+
+@end
+
+/**
+ <p>Contains metadata for a UserID matched with a given face.</p>
+ */
+@interface AWSRekognitionMatchedUser : AWSModel
+
+
+/**
+ <p>A provided ID for the UserID. Unique within the collection.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
+
+/**
+ <p>The status of the user matched to a provided FaceID.</p>
+ */
+@property (nonatomic, assign) AWSRekognitionUserStatus userStatus;
 
 @end
 
@@ -4611,6 +5033,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
+ <p>Indicates whether automatic retraining will be attempted for the versions of the project. Applies only to adapters. </p>
+ */
+@property (nonatomic, assign) AWSRekognitionProjectAutoUpdate autoUpdate;
+
+/**
  <p>The Unix timestamp for the date and time that the project was created.</p>
  */
 @property (nonatomic, strong) NSDate * _Nullable creationTimestamp;
@@ -4619,6 +5046,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p> Information about the training and test datasets in the project. </p>
  */
 @property (nonatomic, strong) NSArray<AWSRekognitionDatasetMetadata *> * _Nullable datasets;
+
+/**
+ <p>Specifies the project that is being customized.</p>
+ */
+@property (nonatomic, assign) AWSRekognitionCustomizationFeature feature;
 
 /**
  <p>The Amazon Resource Name (ARN) of the project.</p>
@@ -4671,10 +5103,15 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @end
 
 /**
- <p>A description of a version of an Amazon Rekognition Custom Labels model.</p>
+ <p>A description of a version of a Amazon Rekognition project version.</p>
  */
 @interface AWSRekognitionProjectVersionDescription : AWSModel
 
+
+/**
+ <p>The base detection model version used to create the project version.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable baseModelVersion;
 
 /**
  <p>The duration, in seconds, that you were billed for a successful training of the model version. This value is only returned if the model version has been successfully trained.</p>
@@ -4692,6 +5129,16 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) AWSRekognitionEvaluationResult * _Nullable evaluationResult;
 
 /**
+ <p>The feature that was customized.</p>
+ */
+@property (nonatomic, assign) AWSRekognitionCustomizationFeature feature;
+
+/**
+ <p>Feature specific configuration that was applied during training.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionCustomizationFeatureConfig * _Nullable featureConfig;
+
+/**
  <p>The identifer for the AWS Key Management Service key (AWS KMS key) that was used to encrypt the model during training. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable kmsKeyId;
@@ -4702,12 +5149,12 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) AWSRekognitionGroundTruthManifest * _Nullable manifestSummary;
 
 /**
- <p>The maximum number of inference units Amazon Rekognition Custom Labels uses to auto-scale the model. For more information, see <a>StartProjectVersion</a>.</p>
+ <p>The maximum number of inference units Amazon Rekognition uses to auto-scale the model. Applies only to Custom Labels projects. For more information, see <a>StartProjectVersion</a>.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable maxInferenceUnits;
 
 /**
- <p>The minimum number of inference units used by the model. For more information, see <a>StartProjectVersion</a>.</p>
+ <p>The minimum number of inference units used by the model. Applies only to Custom Labels projects. For more information, see <a>StartProjectVersion</a>.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable minInferenceUnits;
 
@@ -4717,7 +5164,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) AWSRekognitionOutputConfig * _Nullable outputConfig;
 
 /**
- <p>The Amazon Resource Name (ARN) of the model version. </p>
+ <p>The Amazon Resource Name (ARN) of the project version. </p>
  */
 @property (nonatomic, strong) NSString * _Nullable projectVersionArn;
 
@@ -4750,6 +5197,11 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p>The Unix date and time that training of the model ended.</p>
  */
 @property (nonatomic, strong) NSDate * _Nullable trainingEndTimestamp;
+
+/**
+ <p>A user-provided description of the project version.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable versionDescription;
 
 @end
 
@@ -5091,6 +5543,167 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p>ID of the face that was searched for matches in a collection.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable searchedFaceId;
+
+@end
+
+/**
+ 
+ */
+@interface AWSRekognitionSearchUsersByImageRequest : AWSRequest
+
+
+/**
+ <p>The ID of an existing collection containing the UserID.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable collectionId;
+
+/**
+ <p>Provides the input image either as bytes or an S3 object.</p><p>You pass image bytes to an Amazon Rekognition API operation by using the <code>Bytes</code> property. For example, you would use the <code>Bytes</code> property to pass an image loaded from a local file system. Image bytes passed by using the <code>Bytes</code> property must be base64-encoded. Your code may not need to encode image bytes if you are using an AWS SDK to call Amazon Rekognition API operations. </p><p>For more information, see Analyzing an Image Loaded from a Local File System in the Amazon Rekognition Developer Guide.</p><p> You pass images stored in an S3 bucket to an Amazon Rekognition API operation by using the <code>S3Object</code> property. Images stored in an S3 bucket do not need to be base64-encoded.</p><p>The region for the S3 bucket containing the S3 object must match the region you use for Amazon Rekognition operations.</p><p>If you use the AWS CLI to call Amazon Rekognition operations, passing image bytes using the Bytes property is not supported. You must first upload the image to an Amazon S3 bucket and then call the operation using the S3Object property.</p><p>For Amazon Rekognition to process an S3 object, the user must have permission to access the S3 object. For more information, see How Amazon Rekognition works with IAM in the Amazon Rekognition Developer Guide. </p>
+ */
+@property (nonatomic, strong) AWSRekognitionImage * _Nullable image;
+
+/**
+ <p>Maximum number of UserIDs to return.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable maxUsers;
+
+/**
+ <p>A filter that specifies a quality bar for how much filtering is done to identify faces. Filtered faces aren't searched for in the collection. The default value is NONE.</p>
+ */
+@property (nonatomic, assign) AWSRekognitionQualityFilter qualityFilter;
+
+/**
+ <p>Specifies the minimum confidence in the UserID match to return. Default value is 80.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable userMatchThreshold;
+
+@end
+
+/**
+ 
+ */
+@interface AWSRekognitionSearchUsersByImageResponse : AWSModel
+
+
+/**
+ <p>Version number of the face detection model associated with the input collection CollectionId.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable faceModelVersion;
+
+/**
+ <p>A list of FaceDetail objects containing the BoundingBox for the largest face in image, as well as the confidence in the bounding box, that was searched for matches. If no valid face is detected in the image the response will contain no SearchedFace object.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionSearchedFaceDetails * _Nullable searchedFace;
+
+/**
+ <p>List of UnsearchedFace objects. Contains the face details infered from the specified image but not used for search. Contains reasons that describe why a face wasn't used for Search. </p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionUnsearchedFace *> * _Nullable unsearchedFaces;
+
+/**
+ <p>An array of UserID objects that matched the input face, along with the confidence in the match. The returned structure will be empty if there are no matches. Returned if the SearchUsersByImageResponse action is successful.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionUserMatch *> * _Nullable userMatches;
+
+@end
+
+/**
+ 
+ */
+@interface AWSRekognitionSearchUsersRequest : AWSRequest
+
+
+/**
+ <p>The ID of an existing collection containing the UserID, used with a UserId or FaceId. If a FaceId is provided, UserId isn’t required to be present in the Collection.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable collectionId;
+
+/**
+ <p>ID for the existing face.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable faceId;
+
+/**
+ <p>Maximum number of identities to return.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable maxUsers;
+
+/**
+ <p>ID for the existing User.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
+
+/**
+ <p>Optional value that specifies the minimum confidence in the matched UserID to return. Default value of 80.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable userMatchThreshold;
+
+@end
+
+/**
+ 
+ */
+@interface AWSRekognitionSearchUsersResponse : AWSModel
+
+
+/**
+ <p>Version number of the face detection model associated with the input CollectionId.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable faceModelVersion;
+
+/**
+ <p>Contains the ID of a face that was used to search for matches in a collection.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionSearchedFace * _Nullable searchedFace;
+
+/**
+ <p>Contains the ID of the UserID that was used to search for matches in a collection.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionSearchedUser * _Nullable searchedUser;
+
+/**
+ <p>An array of UserMatch objects that matched the input face along with the confidence in the match. Array will be empty if there are no matches.</p>
+ */
+@property (nonatomic, strong) NSArray<AWSRekognitionUserMatch *> * _Nullable userMatches;
+
+@end
+
+/**
+ <p>Provides face metadata such as FaceId, BoundingBox, Confidence of the input face used for search.</p>
+ */
+@interface AWSRekognitionSearchedFace : AWSModel
+
+
+/**
+ <p> Unique identifier assigned to the face.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable faceId;
+
+@end
+
+/**
+ <p>Contains data regarding the input face used for a search.</p>
+ */
+@interface AWSRekognitionSearchedFaceDetails : AWSModel
+
+
+/**
+ <p>Structure containing attributes of the face that the algorithm detected.</p><p>A <code>FaceDetail</code> object contains either the default facial attributes or all facial attributes. The default attributes are <code>BoundingBox</code>, <code>Confidence</code>, <code>Landmarks</code>, <code>Pose</code>, and <code>Quality</code>.</p><p><a>GetFaceDetection</a> is the only Amazon Rekognition Video stored video operation that can return a <code>FaceDetail</code> object with all attributes. To specify which attributes to return, use the <code>FaceAttributes</code> input parameter for <a>StartFaceDetection</a>. The following Amazon Rekognition Video operations return only the default attributes. The corresponding Start operations don't have a <code>FaceAttributes</code> input parameter:</p><ul><li><p>GetCelebrityRecognition</p></li><li><p>GetPersonTracking</p></li><li><p>GetFaceSearch</p></li></ul><p>The Amazon Rekognition Image <a>DetectFaces</a> and <a>IndexFaces</a> operations can return all facial attributes. To specify which attributes to return, use the <code>Attributes</code> input parameter for <code>DetectFaces</code>. For <code>IndexFaces</code>, use the <code>DetectAttributes</code> input parameter.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionFaceDetail * _Nullable faceDetail;
+
+@end
+
+/**
+ <p>Contains metadata about a User searched for within a collection.</p>
+ */
+@interface AWSRekognitionSearchedUser : AWSModel
+
+
+/**
+ <p> A provided ID for the UserID. Unique within the collection. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
 
 @end
 
@@ -5509,7 +6122,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) NSNumber * _Nullable maxInferenceUnits;
 
 /**
- <p>The minimum number of inference units to use. A single inference unit represents 1 hour of processing. </p><p>For information about the number of transactions per second (TPS) that an inference unit can support, see <i>Running a trained Amazon Rekognition Custom Labels model</i> in the Amazon Rekognition Custom Labels Guide. </p><p>Use a higher number to increase the TPS throughput of your model. You are charged for the number of inference units that you use. </p>
+ <p>The minimum number of inference units to use. A single inference unit represents 1 hour of processing. </p><p>Use a higher number to increase the TPS throughput of your model. You are charged for the number of inference units that you use. </p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable minInferenceUnits;
 
@@ -5740,7 +6353,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
- <p>The Amazon Resource Name (ARN) of the model version that you want to delete.</p><p>This operation requires permissions to perform the <code>rekognition:StopProjectVersion</code> action.</p>
+ <p>The Amazon Resource Name (ARN) of the model version that you want to stop.</p><p>This operation requires permissions to perform the <code>rekognition:StopProjectVersion</code> action.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable projectVersionArn;
 
@@ -5990,7 +6603,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @end
 
 /**
- <p>The dataset used for testing. Optionally, if <code>AutoCreate</code> is set, Amazon Rekognition Custom Labels uses the training dataset to create a test dataset with a temporary split of the training dataset. </p>
+ <p>The dataset used for testing. Optionally, if <code>AutoCreate</code> is set, Amazon Rekognition uses the training dataset to create a test dataset with a temporary split of the training dataset. </p>
  */
 @interface AWSRekognitionTestingData : AWSModel
 
@@ -6001,7 +6614,7 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 @property (nonatomic, strong) NSArray<AWSRekognitionAsset *> * _Nullable assets;
 
 /**
- <p>If specified, Amazon Rekognition Custom Labels temporarily splits the training dataset (80%) to create a test dataset (20%) for the training job. After training completes, the test dataset is not stored and the training dataset reverts to its previous size.</p>
+ <p>If specified, Rekognition splits training dataset to create a test dataset for the training job.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable autoCreate;
 
@@ -6093,30 +6706,30 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
 
 
 /**
- <p>A Sagemaker GroundTruth manifest file that contains the training images (assets).</p>
+ <p>A manifest file that contains references to the training images and ground-truth annotations.</p>
  */
 @property (nonatomic, strong) NSArray<AWSRekognitionAsset *> * _Nullable assets;
 
 @end
 
 /**
- <p>Sagemaker Groundtruth format manifest files for the input, output and validation datasets that are used and created during testing.</p>
+ <p>The data validation manifest created for the training dataset during model training.</p>
  */
 @interface AWSRekognitionTrainingDataResult : AWSModel
 
 
 /**
- <p>The training assets that you supplied for training.</p>
+ <p>The training data that you supplied.</p>
  */
 @property (nonatomic, strong) AWSRekognitionTrainingData * _Nullable input;
 
 /**
- <p>The images (assets) that were actually trained by Amazon Rekognition Custom Labels. </p>
+ <p>Reference to images (assets) that were actually used during training with trained model predictions.</p>
  */
 @property (nonatomic, strong) AWSRekognitionTrainingData * _Nullable output;
 
 /**
- <p>The location of the data validation manifest. The data validation manifest is created for the training dataset during model training.</p>
+ <p>A manifest that you supplied for training, with validation results for each line.</p>
  */
 @property (nonatomic, strong) AWSRekognitionValidationData * _Nullable validation;
 
@@ -6137,6 +6750,98 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  <p>An array of reasons that specify why a face wasn't indexed. </p><ul><li><p>EXTREME_POSE - The face is at a pose that can't be detected. For example, the head is turned too far away from the camera.</p></li><li><p>EXCEEDS_MAX_FACES - The number of faces detected is already higher than that specified by the <code>MaxFaces</code> input parameter for <code>IndexFaces</code>.</p></li><li><p>LOW_BRIGHTNESS - The image is too dark.</p></li><li><p>LOW_SHARPNESS - The image is too blurry.</p></li><li><p>LOW_CONFIDENCE - The face was detected with a low confidence.</p></li><li><p>SMALL_BOUNDING_BOX - The bounding box around the face is too small.</p></li></ul>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable reasons;
+
+@end
+
+/**
+ <p>Face details inferred from the image but not used for search. The response attribute contains reasons for why a face wasn't used for Search. </p>
+ */
+@interface AWSRekognitionUnsearchedFace : AWSModel
+
+
+/**
+ <p>Structure containing attributes of the face that the algorithm detected.</p><p>A <code>FaceDetail</code> object contains either the default facial attributes or all facial attributes. The default attributes are <code>BoundingBox</code>, <code>Confidence</code>, <code>Landmarks</code>, <code>Pose</code>, and <code>Quality</code>.</p><p><a>GetFaceDetection</a> is the only Amazon Rekognition Video stored video operation that can return a <code>FaceDetail</code> object with all attributes. To specify which attributes to return, use the <code>FaceAttributes</code> input parameter for <a>StartFaceDetection</a>. The following Amazon Rekognition Video operations return only the default attributes. The corresponding Start operations don't have a <code>FaceAttributes</code> input parameter:</p><ul><li><p>GetCelebrityRecognition</p></li><li><p>GetPersonTracking</p></li><li><p>GetFaceSearch</p></li></ul><p>The Amazon Rekognition Image <a>DetectFaces</a> and <a>IndexFaces</a> operations can return all facial attributes. To specify which attributes to return, use the <code>Attributes</code> input parameter for <code>DetectFaces</code>. For <code>IndexFaces</code>, use the <code>DetectAttributes</code> input parameter.</p>
+ */
+@property (nonatomic, strong) AWSRekognitionFaceDetail * _Nullable faceDetails;
+
+/**
+ <p> Reasons why a face wasn't used for Search. </p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable reasons;
+
+@end
+
+/**
+ <p>Contains metadata like FaceId, UserID, and Reasons, for a face that was unsuccessfully associated.</p>
+ */
+@interface AWSRekognitionUnsuccessfulFaceAssociation : AWSModel
+
+
+/**
+ <p>Match confidence with the UserID, provides information regarding if a face association was unsuccessful because it didn't meet UserMatchThreshold.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable confidence;
+
+/**
+ <p>A unique identifier assigned to the face. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable faceId;
+
+/**
+ <p> The reason why the association was unsuccessful. </p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable reasons;
+
+/**
+ <p>A provided ID for the UserID. Unique within the collection. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
+
+@end
+
+/**
+ <p>Contains metadata like FaceId, UserID, and Reasons, for a face that was unsuccessfully deleted.</p>
+ */
+@interface AWSRekognitionUnsuccessfulFaceDeletion : AWSModel
+
+
+/**
+ <p> A unique identifier assigned to the face.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable faceId;
+
+/**
+ <p>The reason why the deletion was unsuccessful. </p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable reasons;
+
+/**
+ <p> A provided ID for the UserID. Unique within the collection. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
+
+@end
+
+/**
+ <p>Contains metadata like FaceId, UserID, and Reasons, for a face that was unsuccessfully disassociated.</p>
+ */
+@interface AWSRekognitionUnsuccessfulFaceDisassociation : AWSModel
+
+
+/**
+ <p>A unique identifier assigned to the face. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable faceId;
+
+/**
+ <p>The reason why the deletion was unsuccessful. </p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable reasons;
+
+/**
+ <p>A provided ID for the UserID. Unique within the collection. </p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
 
 @end
 
@@ -6230,6 +6935,42 @@ typedef NS_ENUM(NSInteger, AWSRekognitionVideoJobStatus) {
  */
 @interface AWSRekognitionUpdateStreamProcessorResponse : AWSModel
 
+
+@end
+
+/**
+ <p>Metadata of the user stored in a collection.</p>
+ */
+@interface AWSRekognitionUser : AWSModel
+
+
+/**
+ <p> A provided ID for the User. Unique within the collection.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable userId;
+
+/**
+ <p> Communicates if the UserID has been updated with latest set of faces to be associated with the UserID. </p>
+ */
+@property (nonatomic, assign) AWSRekognitionUserStatus userStatus;
+
+@end
+
+/**
+ <p>Provides UserID metadata along with the confidence in the match of this UserID with the input face.</p>
+ */
+@interface AWSRekognitionUserMatch : AWSModel
+
+
+/**
+ <p> Describes the UserID metadata.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable similarity;
+
+/**
+ <p> Confidence in the match of this UserID with the input face. </p>
+ */
+@property (nonatomic, strong) AWSRekognitionMatchedUser * _Nullable user;
 
 @end
 

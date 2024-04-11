@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -26,6 +26,7 @@ typedef NS_ENUM(NSInteger, AWSConnectParticipantErrorType) {
     AWSConnectParticipantErrorAccessDenied,
     AWSConnectParticipantErrorConflict,
     AWSConnectParticipantErrorInternalServer,
+    AWSConnectParticipantErrorResourceNotFound,
     AWSConnectParticipantErrorServiceQuotaExceeded,
     AWSConnectParticipantErrorThrottling,
     AWSConnectParticipantErrorValidation,
@@ -65,6 +66,20 @@ typedef NS_ENUM(NSInteger, AWSConnectParticipantParticipantRole) {
     AWSConnectParticipantParticipantRoleAgent,
     AWSConnectParticipantParticipantRoleCustomer,
     AWSConnectParticipantParticipantRoleSystem,
+    AWSConnectParticipantParticipantRoleCustomBot,
+    AWSConnectParticipantParticipantRoleSupervisor,
+};
+
+typedef NS_ENUM(NSInteger, AWSConnectParticipantResourceType) {
+    AWSConnectParticipantResourceTypeUnknown,
+    AWSConnectParticipantResourceTypeContact,
+    AWSConnectParticipantResourceTypeContactFlow,
+    AWSConnectParticipantResourceTypeInstance,
+    AWSConnectParticipantResourceTypeParticipant,
+    AWSConnectParticipantResourceTypeHierarchyLevel,
+    AWSConnectParticipantResourceTypeHierarchyGroup,
+    AWSConnectParticipantResourceTypeUser,
+    AWSConnectParticipantResourceTypePhoneNumber,
 };
 
 typedef NS_ENUM(NSInteger, AWSConnectParticipantScanDirection) {
@@ -85,6 +100,8 @@ typedef NS_ENUM(NSInteger, AWSConnectParticipantSortKey) {
 @class AWSConnectParticipantConnectionCredentials;
 @class AWSConnectParticipantCreateParticipantConnectionRequest;
 @class AWSConnectParticipantCreateParticipantConnectionResponse;
+@class AWSConnectParticipantDescribeViewRequest;
+@class AWSConnectParticipantDescribeViewResponse;
 @class AWSConnectParticipantDisconnectParticipantRequest;
 @class AWSConnectParticipantDisconnectParticipantResponse;
 @class AWSConnectParticipantGetAttachmentRequest;
@@ -102,6 +119,8 @@ typedef NS_ENUM(NSInteger, AWSConnectParticipantSortKey) {
 @class AWSConnectParticipantStartAttachmentUploadResponse;
 @class AWSConnectParticipantStartPosition;
 @class AWSConnectParticipantUploadMetadata;
+@class AWSConnectParticipantView;
+@class AWSConnectParticipantViewContent;
 @class AWSConnectParticipantWebsocket;
 
 /**
@@ -198,7 +217,7 @@ typedef NS_ENUM(NSInteger, AWSConnectParticipantSortKey) {
 @property (nonatomic, strong) NSString * _Nullable participantToken;
 
 /**
- <p>Type of connection information required. This can be omitted if <code>ConnectParticipant</code> is <code>true</code>.</p>
+ <p>Type of connection information required. If you need <code>CONNECTION_CREDENTIALS</code> along with marking participant as connected, pass <code>CONNECTION_CREDENTIALS</code> in <code>Type</code>.</p>
  */
 @property (nonatomic, strong) NSArray<NSString *> * _Nullable types;
 
@@ -219,6 +238,37 @@ typedef NS_ENUM(NSInteger, AWSConnectParticipantSortKey) {
  <p>Creates the participant's websocket connection.</p>
  */
 @property (nonatomic, strong) AWSConnectParticipantWebsocket * _Nullable websocket;
+
+@end
+
+/**
+ 
+ */
+@interface AWSConnectParticipantDescribeViewRequest : AWSRequest
+
+
+/**
+ <p>The connection token.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable connectionToken;
+
+/**
+ <p>An encrypted token originating from the interactive message of a ShowView block operation. Represents the desired view.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable viewToken;
+
+@end
+
+/**
+ 
+ */
+@interface AWSConnectParticipantDescribeViewResponse : AWSModel
+
+
+/**
+ <p>A view resource object. Contains metadata and content necessary to render the view.</p>
+ */
+@property (nonatomic, strong) AWSConnectParticipantView * _Nullable view;
 
 @end
 
@@ -481,7 +531,7 @@ typedef NS_ENUM(NSInteger, AWSConnectParticipantSortKey) {
 @property (nonatomic, strong) NSString * _Nullable content;
 
 /**
- <p>The content type of the request. Supported types are:</p><ul><li><p>application/vnd.amazonaws.connect.event.typing</p></li><li><p>application/vnd.amazonaws.connect.event.connection.acknowledged</p></li><li><p>application/vnd.amazonaws.connect.event.message.delivered</p></li><li><p>application/vnd.amazonaws.connect.event.message.read</p></li></ul>
+ <p>The content type of the request. Supported types are:</p><ul><li><p>application/vnd.amazonaws.connect.event.typing</p></li><li><p>application/vnd.amazonaws.connect.event.connection.acknowledged (will be deprecated on December 31, 2024) </p></li><li><p>application/vnd.amazonaws.connect.event.message.delivered</p></li><li><p>application/vnd.amazonaws.connect.event.message.read</p></li></ul>
  */
 @property (nonatomic, strong) NSString * _Nullable contentType;
 
@@ -645,6 +695,62 @@ typedef NS_ENUM(NSInteger, AWSConnectParticipantSortKey) {
  <p>The expiration time of the URL in ISO timestamp. It's specified in ISO 8601 format: yyyy-MM-ddThh:mm:ss.SSSZ. For example, 2019-11-08T02:41:28.172Z.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable urlExpiry;
+
+@end
+
+/**
+ <p>A view resource object. Contains metadata and content necessary to render the view.</p>
+ */
+@interface AWSConnectParticipantView : AWSModel
+
+
+/**
+ <p>The Amazon Resource Name (ARN) of the view.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable arn;
+
+/**
+ <p>View content containing all content necessary to render a view except for runtime input data.</p>
+ */
+@property (nonatomic, strong) AWSConnectParticipantViewContent * _Nullable content;
+
+/**
+ <p>The identifier of the view.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable identifier;
+
+/**
+ <p>The name of the view.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable name;
+
+/**
+ <p>The current version of the view.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable version;
+
+@end
+
+/**
+ <p>View content containing all content necessary to render a view except for runtime input data.</p>
+ */
+@interface AWSConnectParticipantViewContent : AWSModel
+
+
+/**
+ <p>A list of actions possible from the view</p>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable actions;
+
+/**
+ <p>The schema representing the input data that the view template must be supplied to render.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable inputSchema;
+
+/**
+ <p>The view template representing the structure of the view.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable template;
 
 @end
 

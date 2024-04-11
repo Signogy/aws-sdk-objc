@@ -21,7 +21,7 @@
 #import "AWSCocoaLumberjack.h"
 #import "AWSCategory.h"
 
-NSString *const AWSiOSSDKVersion = @"2.33.0";
+NSString *const AWSiOSSDKVersion = @"2.35.0";
 NSString *const AWSServiceErrorDomain = @"com.amazonaws.AWSServiceErrorDomain";
 
 static NSString *const AWSServiceConfigurationUnknown = @"Unknown";
@@ -266,6 +266,7 @@ static NSString *const AWSRegionNameSAEast1 = @"sa-east-1";
 static NSString *const AWSRegionNameCNNorth1 = @"cn-north-1";
 static NSString *const AWSRegionNameCNNorthWest1 = @"cn-northwest-1";
 static NSString *const AWSRegionNameCACentral1 = @"ca-central-1";
+static NSString *const AWSRegionNameCAWest1 = @"ca-west-1";
 static NSString *const AWSRegionNameUSGovWest1 = @"us-gov-west-1";
 static NSString *const AWSRegionNameUSGovEast1 = @"us-gov-east-1";
 static NSString *const AWSRegionNameMECentral1 = @"me-central-1";
@@ -273,6 +274,7 @@ static NSString *const AWSRegionNameMESouth1 = @"me-south-1";
 static NSString *const AWSRegionNameAFSouth1 = @"af-south-1";
 static NSString *const AWSRegionNameEUSouth1 = @"eu-south-1";
 static NSString *const AWSRegionNameEUSouth2 = @"eu-south-2";
+static NSString *const AWSRegionNameILCentral1 = @"il-central-1";
 
 static NSString *const AWSServiceNameAPIGateway = @"execute-api";
 static NSString *const AWSServiceNameAutoScaling = @"autoscaling";
@@ -466,6 +468,8 @@ static NSString *const AWSServiceNameChimeSDKIdentity = @"chime";
             return AWSRegionNameEUCentral1;
         case AWSRegionEUCentral2:
             return AWSRegionNameEUCentral2;
+        case AWSRegionILCentral1:
+            return AWSRegionNameILCentral1;
         case AWSRegionAPSoutheast1:
             return AWSRegionNameAPSoutheast1;
         case AWSRegionAPSoutheast2:
@@ -488,6 +492,8 @@ static NSString *const AWSServiceNameChimeSDKIdentity = @"chime";
             return AWSRegionNameCNNorth1;
         case AWSRegionCACentral1:
             return AWSRegionNameCACentral1;
+        case AWSRegionCAWest1:
+            return AWSRegionNameCAWest1;
         case AWSRegionUSGovWest1:
             return AWSRegionNameUSGovWest1;
         case AWSRegionCNNorthWest1:

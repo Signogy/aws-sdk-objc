@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2023 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2024 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -199,7 +199,7 @@
       \"errors\":[\
         {\"shape\":\"ResourceContentionFault\"}\
       ],\
-      \"documentation\":\"<p>Completes the lifecycle action for the specified token or instance with the specified result.</p> <p>This step is a part of the procedure for adding a lifecycle hook to an Auto Scaling group:</p> <ol> <li> <p>(Optional) Create a launch template or launch configuration with a user data script that runs while an instance is in a wait state due to a lifecycle hook.</p> </li> <li> <p>(Optional) Create a Lambda function and a rule that allows Amazon EventBridge to invoke your Lambda function when an instance is put into a wait state due to a lifecycle hook.</p> </li> <li> <p>(Optional) Create a notification target and an IAM role. The target can be either an Amazon SQS queue or an Amazon SNS topic. The role allows Amazon EC2 Auto Scaling to publish lifecycle notifications to the target.</p> </li> <li> <p>Create the lifecycle hook. Specify whether the hook is used when the instances launch or terminate.</p> </li> <li> <p>If you need more time, record the lifecycle action heartbeat to keep the instance in a wait state.</p> </li> <li> <p> <b>If you finish before the timeout period ends, send a callback by using the <a>CompleteLifecycleAction</a> API call.</b> </p> </li> </ol> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/lifecycle-hooks.html\\\">Amazon EC2 Auto Scaling lifecycle hooks</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>\"\
+      \"documentation\":\"<p>Completes the lifecycle action for the specified token or instance with the specified result.</p> <p>This step is a part of the procedure for adding a lifecycle hook to an Auto Scaling group:</p> <ol> <li> <p>(Optional) Create a launch template or launch configuration with a user data script that runs while an instance is in a wait state due to a lifecycle hook.</p> </li> <li> <p>(Optional) Create a Lambda function and a rule that allows Amazon EventBridge to invoke your Lambda function when an instance is put into a wait state due to a lifecycle hook.</p> </li> <li> <p>(Optional) Create a notification target and an IAM role. The target can be either an Amazon SQS queue or an Amazon SNS topic. The role allows Amazon EC2 Auto Scaling to publish lifecycle notifications to the target.</p> </li> <li> <p>Create the lifecycle hook. Specify whether the hook is used when the instances launch or terminate.</p> </li> <li> <p>If you need more time, record the lifecycle action heartbeat to keep the instance in a wait state.</p> </li> <li> <p> <b>If you finish before the timeout period ends, send a callback by using the <a>CompleteLifecycleAction</a> API call.</b> </p> </li> </ol> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/completing-lifecycle-hooks.html\\\">Complete a lifecycle action</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>\"\
     },\
     \"CreateAutoScalingGroup\":{\
       \"name\":\"CreateAutoScalingGroup\",\
@@ -214,7 +214,7 @@
         {\"shape\":\"ResourceContentionFault\"},\
         {\"shape\":\"ServiceLinkedRoleFailure\"}\
       ],\
-      \"documentation\":\"<p> <b>We strongly recommend using a launch template when calling this operation to ensure full functionality for Amazon EC2 Auto Scaling and Amazon EC2.</b> </p> <p>Creates an Auto Scaling group with the specified name and attributes. </p> <p>If you exceed your maximum limit of Auto Scaling groups, the call fails. To query this limit, call the <a>DescribeAccountLimits</a> API. For information about updating this limit, see <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-quotas.html\\\">Quotas for Amazon EC2 Auto Scaling</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p> <p>For introductory exercises for creating an Auto Scaling group, see <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/GettingStartedTutorial.html\\\">Getting started with Amazon EC2 Auto Scaling</a> and <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-register-lbs-with-asg.html\\\">Tutorial: Set up a scaled and load-balanced application</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>. For more information, see <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/AutoScalingGroup.html\\\">Auto Scaling groups</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p> <p>Every Auto Scaling group has three size properties (<code>DesiredCapacity</code>, <code>MaxSize</code>, and <code>MinSize</code>). Usually, you set these sizes based on a specific number of instances. However, if you configure a mixed instances policy that defines weights for the instance types, you must specify these sizes with the same units that you use for weighting instances.</p>\"\
+      \"documentation\":\"<p> <b>We strongly recommend using a launch template when calling this operation to ensure full functionality for Amazon EC2 Auto Scaling and Amazon EC2.</b> </p> <p>Creates an Auto Scaling group with the specified name and attributes. </p> <p>If you exceed your maximum limit of Auto Scaling groups, the call fails. To query this limit, call the <a>DescribeAccountLimits</a> API. For information about updating this limit, see <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-quotas.html\\\">Quotas for Amazon EC2 Auto Scaling</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p> <p>If you're new to Amazon EC2 Auto Scaling, see the introductory tutorials in <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/get-started-with-ec2-auto-scaling.html\\\">Get started with Amazon EC2 Auto Scaling</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p> <p>Every Auto Scaling group has three size properties (<code>DesiredCapacity</code>, <code>MaxSize</code>, and <code>MinSize</code>). Usually, you set these sizes based on a specific number of instances. However, if you configure a mixed instances policy that defines weights for the instance types, you must specify these sizes with the same units that you use for weighting instances.</p>\"\
     },\
     \"CreateLaunchConfiguration\":{\
       \"name\":\"CreateLaunchConfiguration\",\
@@ -451,7 +451,7 @@
         {\"shape\":\"InvalidNextToken\"},\
         {\"shape\":\"ResourceContentionFault\"}\
       ],\
-      \"documentation\":\"<p>Gets information about the instance refreshes for the specified Auto Scaling group.</p> <p>This operation is part of the <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html\\\">instance refresh feature</a> in Amazon EC2 Auto Scaling, which helps you update instances in your Auto Scaling group after you make configuration changes.</p> <p>To help you determine the status of an instance refresh, Amazon EC2 Auto Scaling returns information about the instance refreshes you previously initiated, including their status, start time, end time, the percentage of the instance refresh that is complete, and the number of instances remaining to update before the instance refresh is complete. If a rollback is initiated while an instance refresh is in progress, Amazon EC2 Auto Scaling also returns information about the rollback of the instance refresh.</p>\"\
+      \"documentation\":\"<p>Gets information about the instance refreshes for the specified Auto Scaling group from the previous six weeks.</p> <p>This operation is part of the <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html\\\">instance refresh feature</a> in Amazon EC2 Auto Scaling, which helps you update instances in your Auto Scaling group after you make configuration changes.</p> <p>To help you determine the status of an instance refresh, Amazon EC2 Auto Scaling returns information about the instance refreshes you previously initiated, including their status, start time, end time, the percentage of the instance refresh that is complete, and the number of instances remaining to update before the instance refresh is complete. If a rollback is initiated while an instance refresh is in progress, Amazon EC2 Auto Scaling also returns information about the rollback of the instance refresh.</p>\"\
     },\
     \"DescribeLaunchConfigurations\":{\
       \"name\":\"DescribeLaunchConfigurations\",\
@@ -763,7 +763,7 @@
       \"errors\":[\
         {\"shape\":\"ResourceContentionFault\"}\
       ],\
-      \"documentation\":\"<p>Detaches one or more traffic sources from the specified Auto Scaling group.</p> <p>When you detach a taffic, it enters the <code>Removing</code> state while deregistering the instances in the group. When all instances are deregistered, then you can no longer describe the traffic source using the <a>DescribeTrafficSources</a> API call. The instances continue to run.</p>\"\
+      \"documentation\":\"<p>Detaches one or more traffic sources from the specified Auto Scaling group.</p> <p>When you detach a traffic source, it enters the <code>Removing</code> state while deregistering the instances in the group. When all instances are deregistered, then you can no longer describe the traffic source using the <a>DescribeTrafficSources</a> API call. The instances continue to run.</p>\"\
     },\
     \"DisableMetricsCollection\":{\
       \"name\":\"DisableMetricsCollection\",\
@@ -1036,7 +1036,7 @@
         {\"shape\":\"ResourceContentionFault\"},\
         {\"shape\":\"InstanceRefreshInProgressFault\"}\
       ],\
-      \"documentation\":\"<p>Starts an instance refresh. During an instance refresh, Amazon EC2 Auto Scaling performs a rolling update of instances in an Auto Scaling group. Instances are terminated first and then replaced, which temporarily reduces the capacity available within your Auto Scaling group.</p> <p>This operation is part of the <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html\\\">instance refresh feature</a> in Amazon EC2 Auto Scaling, which helps you update instances in your Auto Scaling group. This feature is helpful, for example, when you have a new AMI or a new user data script. You just need to create a new launch template that specifies the new AMI or user data script. Then start an instance refresh to immediately begin the process of updating instances in the group. </p> <p>If successful, the request's response contains a unique ID that you can use to track the progress of the instance refresh. To query its status, call the <a>DescribeInstanceRefreshes</a> API. To describe the instance refreshes that have already run, call the <a>DescribeInstanceRefreshes</a> API. To cancel an instance refresh that is in progress, use the <a>CancelInstanceRefresh</a> API. </p> <p>An instance refresh might fail for several reasons, such as EC2 launch failures, misconfigured health checks, or not ignoring or allowing the termination of instances that are in <code>Standby</code> state or protected from scale in. You can monitor for failed EC2 launches using the scaling activities. To find the scaling activities, call the <a>DescribeScalingActivities</a> API.</p> <p>If you enable auto rollback, your Auto Scaling group will be rolled back automatically when the instance refresh fails. You can enable this feature before starting an instance refresh by specifying the <code>AutoRollback</code> property in the instance refresh preferences. Otherwise, to roll back an instance refresh before it finishes, use the <a>RollbackInstanceRefresh</a> API. </p>\"\
+      \"documentation\":\"<p>Starts an instance refresh.</p> <p>This operation is part of the <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/asg-instance-refresh.html\\\">instance refresh feature</a> in Amazon EC2 Auto Scaling, which helps you update instances in your Auto Scaling group. This feature is helpful, for example, when you have a new AMI or a new user data script. You just need to create a new launch template that specifies the new AMI or user data script. Then start an instance refresh to immediately begin the process of updating instances in the group. </p> <p>If successful, the request's response contains a unique ID that you can use to track the progress of the instance refresh. To query its status, call the <a>DescribeInstanceRefreshes</a> API. To describe the instance refreshes that have already run, call the <a>DescribeInstanceRefreshes</a> API. To cancel an instance refresh that is in progress, use the <a>CancelInstanceRefresh</a> API. </p> <p>An instance refresh might fail for several reasons, such as EC2 launch failures, misconfigured health checks, or not ignoring or allowing the termination of instances that are in <code>Standby</code> state or protected from scale in. You can monitor for failed EC2 launches using the scaling activities. To find the scaling activities, call the <a>DescribeScalingActivities</a> API.</p> <p>If you enable auto rollback, your Auto Scaling group will be rolled back automatically when the instance refresh fails. You can enable this feature before starting an instance refresh by specifying the <code>AutoRollback</code> property in the instance refresh preferences. Otherwise, to roll back an instance refresh before it finishes, use the <a>RollbackInstanceRefresh</a> API. </p>\"\
     },\
     \"SuspendProcesses\":{\
       \"name\":\"SuspendProcesses\",\
@@ -1286,6 +1286,20 @@
       },\
       \"documentation\":\"<p>Describes an alarm.</p>\"\
     },\
+    \"AlarmList\":{\
+      \"type\":\"list\",\
+      \"member\":{\"shape\":\"XmlStringMaxLen255\"}\
+    },\
+    \"AlarmSpecification\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"Alarms\":{\
+          \"shape\":\"AlarmList\",\
+          \"documentation\":\"<p>The names of one or more CloudWatch alarms to monitor for the instance refresh. You can specify up to 10 alarms.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Specifies the CloudWatch alarm specification to use in an instance refresh.</p>\"\
+    },\
     \"Alarms\":{\
       \"type\":\"list\",\
       \"member\":{\"shape\":\"Alarm\"}\
@@ -1294,7 +1308,7 @@
       \"type\":\"string\",\
       \"max\":30,\
       \"min\":1,\
-      \"pattern\":\"[a-zA-Z0-9\\\\.\\\\*]+\"\
+      \"pattern\":\"[a-zA-Z0-9\\\\.\\\\*\\\\-]+\"\
     },\
     \"AllowedInstanceTypes\":{\
       \"type\":\"list\",\
@@ -1316,6 +1330,12 @@
         \"senderFault\":true\
       },\
       \"exception\":true\
+    },\
+    \"AnyPrintableAsciiStringMaxLen4000\":{\
+      \"type\":\"string\",\
+      \"max\":4000,\
+      \"min\":1,\
+      \"pattern\":\"[\\\\u0009\\\\u000A\\\\u000D\\\\u0020-\\\\u007e]+\"\
     },\
     \"AsciiStringMaxLen255\":{\
       \"type\":\"string\",\
@@ -1553,6 +1573,10 @@
         \"TrafficSources\":{\
           \"shape\":\"TrafficSources\",\
           \"documentation\":\"<p>The traffic sources associated with this Auto Scaling group.</p>\"\
+        },\
+        \"InstanceMaintenancePolicy\":{\
+          \"shape\":\"InstanceMaintenancePolicy\",\
+          \"documentation\":\"<p>An instance maintenance policy.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Describes an Auto Scaling group.</p>\"\
@@ -2034,6 +2058,10 @@
         \"TrafficSources\":{\
           \"shape\":\"TrafficSources\",\
           \"documentation\":\"<p>The list of traffic sources to attach to this Auto Scaling group. You can use any of the following as traffic sources for an Auto Scaling group: Classic Load Balancer, Application Load Balancer, Gateway Load Balancer, Network Load Balancer, and VPC Lattice.</p>\"\
+        },\
+        \"InstanceMaintenancePolicy\":{\
+          \"shape\":\"InstanceMaintenancePolicy\",\
+          \"documentation\":\"<p>An instance maintenance policy. For more information, see <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-instance-maintenance-policy.html\\\">Set instance maintenance policy</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>\"\
         }\
       }\
     },\
@@ -2911,7 +2939,7 @@
       \"type\":\"string\",\
       \"max\":30,\
       \"min\":1,\
-      \"pattern\":\"[a-zA-Z0-9\\\\.\\\\*]+\"\
+      \"pattern\":\"[a-zA-Z0-9\\\\.\\\\*\\\\-]+\"\
     },\
     \"ExcludedInstanceTypes\":{\
       \"type\":\"list\",\
@@ -3127,6 +3155,20 @@
       \"type\":\"list\",\
       \"member\":{\"shape\":\"XmlStringMaxLen19\"}\
     },\
+    \"InstanceMaintenancePolicy\":{\
+      \"type\":\"structure\",\
+      \"members\":{\
+        \"MinHealthyPercentage\":{\
+          \"shape\":\"IntPercentResettable\",\
+          \"documentation\":\"<p>Specifies the lower threshold as a percentage of the desired capacity of the Auto Scaling group. It represents the minimum percentage of the group to keep in service, healthy, and ready to use to support your workload when replacing instances. Value range is 0 to 100. To clear a previously set value, specify a value of <code>-1</code>.</p>\"\
+        },\
+        \"MaxHealthyPercentage\":{\
+          \"shape\":\"IntPercent100To200Resettable\",\
+          \"documentation\":\"<p>Specifies the upper threshold as a percentage of the desired capacity of the Auto Scaling group. It represents the maximum percentage of the group that can be in service and healthy, or pending, to support your workload when replacing instances. Value range is 100 to 200. To clear a previously set value, specify a value of <code>-1</code>.</p> <p>Both <code>MinHealthyPercentage</code> and <code>MaxHealthyPercentage</code> must be specified, and the difference between them cannot be greater than 100. A large range increases the number of instances that can be replaced at the same time.</p>\"\
+        }\
+      },\
+      \"documentation\":\"<p>Describes an instance maintenance policy.</p> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-instance-maintenance-policy.html\\\">Set instance maintenance policy</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>\"\
+    },\
     \"InstanceMetadataEndpointState\":{\
       \"type\":\"string\",\
       \"enum\":[\
@@ -3339,11 +3381,15 @@
         },\
         \"SpotMaxPricePercentageOverLowestPrice\":{\
           \"shape\":\"NullablePositiveInteger\",\
-          \"documentation\":\"<p>The price protection threshold for Spot Instances. This is the maximum youâll pay for a Spot Instance, expressed as a percentage higher than the least expensive current generation M, C, or R instance type with your specified attributes. When Amazon EC2 Auto Scaling selects instance types with your attributes, we will exclude instance types whose price is higher than your threshold. The parameter accepts an integer, which Amazon EC2 Auto Scaling interprets as a percentage. To turn off price protection, specify a high value, such as <code>999999</code>. </p> <p>If you set <code>DesiredCapacityType</code> to <code>vcpu</code> or <code>memory-mib</code>, the price protection threshold is applied based on the per vCPU or per memory price instead of the per instance price. </p> <p>Default: <code>100</code> </p>\"\
+          \"documentation\":\"<p>[Price protection] The price protection threshold for Spot Instances, as a percentage higher than an identified Spot price. The identified Spot price is the price of the lowest priced current generation C, M, or R instance type with your specified attributes. If no current generation C, M, or R instance type matches your attributes, then the identified price is from either the lowest priced current generation instance types or, failing that, the lowest priced previous generation instance types that match your attributes. When Amazon EC2 Auto Scaling selects instance types with your attributes, we will exclude instance types whose price exceeds your specified threshold.</p> <p>The parameter accepts an integer, which Amazon EC2 Auto Scaling interprets as a percentage. </p> <p>If you set <code>DesiredCapacityType</code> to <code>vcpu</code> or <code>memory-mib</code>, the price protection threshold is based on the per-vCPU or per-memory price instead of the per instance price. </p> <note> <p>Only one of <code>SpotMaxPricePercentageOverLowestPrice</code> or <code>MaxSpotPriceAsPercentageOfOptimalOnDemandPrice</code> can be specified. If you don't specify either, Amazon EC2 Auto Scaling will automatically apply optimal price protection to consistently select from a wide range of instance types. To indicate no price protection threshold for Spot Instances, meaning you want to consider all instance types that match your attributes, include one of these parameters and specify a high value, such as <code>999999</code>. </p> </note>\"\
+        },\
+        \"MaxSpotPriceAsPercentageOfOptimalOnDemandPrice\":{\
+          \"shape\":\"NullablePositiveInteger\",\
+          \"documentation\":\"<p>[Price protection] The price protection threshold for Spot Instances, as a percentage of an identified On-Demand price. The identified On-Demand price is the price of the lowest priced current generation C, M, or R instance type with your specified attributes. If no current generation C, M, or R instance type matches your attributes, then the identified price is from either the lowest priced current generation instance types or, failing that, the lowest priced previous generation instance types that match your attributes. When Amazon EC2 Auto Scaling selects instance types with your attributes, we will exclude instance types whose price exceeds your specified threshold.</p> <p>The parameter accepts an integer, which Amazon EC2 Auto Scaling interprets as a percentage.</p> <p>If you set <code>DesiredCapacityType</code> to <code>vcpu</code> or <code>memory-mib</code>, the price protection threshold is based on the per-vCPU or per-memory price instead of the per instance price. </p> <note> <p>Only one of <code>SpotMaxPricePercentageOverLowestPrice</code> or <code>MaxSpotPriceAsPercentageOfOptimalOnDemandPrice</code> can be specified. If you don't specify either, Amazon EC2 Auto Scaling will automatically apply optimal price protection to consistently select from a wide range of instance types. To indicate no price protection threshold for Spot Instances, meaning you want to consider all instance types that match your attributes, include one of these parameters and specify a high value, such as <code>999999</code>. </p> </note>\"\
         },\
         \"OnDemandMaxPricePercentageOverLowestPrice\":{\
           \"shape\":\"NullablePositiveInteger\",\
-          \"documentation\":\"<p>The price protection threshold for On-Demand Instances. This is the maximum youâll pay for an On-Demand Instance, expressed as a percentage higher than the least expensive current generation M, C, or R instance type with your specified attributes. When Amazon EC2 Auto Scaling selects instance types with your attributes, we will exclude instance types whose price is higher than your threshold. The parameter accepts an integer, which Amazon EC2 Auto Scaling interprets as a percentage. To turn off price protection, specify a high value, such as <code>999999</code>. </p> <p>If you set <code>DesiredCapacityType</code> to <code>vcpu</code> or <code>memory-mib</code>, the price protection threshold is applied based on the per vCPU or per memory price instead of the per instance price. </p> <p>Default: <code>20</code> </p>\"\
+          \"documentation\":\"<p>[Price protection] The price protection threshold for On-Demand Instances, as a percentage higher than an identified On-Demand price. The identified On-Demand price is the price of the lowest priced current generation C, M, or R instance type with your specified attributes. If no current generation C, M, or R instance type matches your attributes, then the identified price is from either the lowest priced current generation instance types or, failing that, the lowest priced previous generation instance types that match your attributes. When Amazon EC2 Auto Scaling selects instance types with your attributes, we will exclude instance types whose price exceeds your specified threshold. </p> <p>The parameter accepts an integer, which Amazon EC2 Auto Scaling interprets as a percentage.</p> <p>To turn off price protection, specify a high value, such as <code>999999</code>. </p> <p>If you set <code>DesiredCapacityType</code> to <code>vcpu</code> or <code>memory-mib</code>, the price protection threshold is applied based on the per-vCPU or per-memory price instead of the per instance price. </p> <p>Default: <code>20</code> </p>\"\
         },\
         \"BareMetal\":{\
           \"shape\":\"BareMetal\",\
@@ -3460,6 +3506,21 @@
       \"type\":\"integer\",\
       \"max\":100,\
       \"min\":0\
+    },\
+    \"IntPercent100To200\":{\
+      \"type\":\"integer\",\
+      \"max\":200,\
+      \"min\":100\
+    },\
+    \"IntPercent100To200Resettable\":{\
+      \"type\":\"integer\",\
+      \"max\":200,\
+      \"min\":-1\
+    },\
+    \"IntPercentResettable\":{\
+      \"type\":\"integer\",\
+      \"max\":100,\
+      \"min\":-1\
     },\
     \"InvalidNextToken\":{\
       \"type\":\"structure\",\
@@ -3721,7 +3782,7 @@
           \"documentation\":\"<p>The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target (an Amazon SNS topic or an Amazon SQS queue).</p>\"\
         },\
         \"NotificationMetadata\":{\
-          \"shape\":\"XmlStringMaxLen1023\",\
+          \"shape\":\"AnyPrintableAsciiStringMaxLen4000\",\
           \"documentation\":\"<p>Additional information that is included any time Amazon EC2 Auto Scaling sends a message to the notification target.</p>\"\
         },\
         \"HeartbeatTimeout\":{\
@@ -3760,7 +3821,7 @@
           \"documentation\":\"<p>The lifecycle transition. For Auto Scaling groups, there are two major lifecycle transitions.</p> <ul> <li> <p>To create a lifecycle hook for scale-out events, specify <code>autoscaling:EC2_INSTANCE_LAUNCHING</code>.</p> </li> <li> <p>To create a lifecycle hook for scale-in events, specify <code>autoscaling:EC2_INSTANCE_TERMINATING</code>.</p> </li> </ul>\"\
         },\
         \"NotificationMetadata\":{\
-          \"shape\":\"XmlStringMaxLen1023\",\
+          \"shape\":\"AnyPrintableAsciiStringMaxLen4000\",\
           \"documentation\":\"<p>Additional information that you want to include any time Amazon EC2 Auto Scaling sends a message to the notification target.</p>\"\
         },\
         \"HeartbeatTimeout\":{\
@@ -4086,7 +4147,7 @@
           \"documentation\":\"<p>The unit to use for the returned data points. For a complete list of the units that CloudWatch supports, see the <a href=\\\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/APIReference/API_MetricDatum.html\\\">MetricDatum</a> data type in the <i>Amazon CloudWatch API Reference</i>.</p>\"\
         }\
       },\
-      \"documentation\":\"<p>This structure defines the CloudWatch metric to return, along with the statistic, period, and unit.</p> <p>For more information about the CloudWatch terminology below, see <a href=\\\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html\\\">Amazon CloudWatch concepts</a> in the <i>Amazon CloudWatch User Guide</i>.</p>\"\
+      \"documentation\":\"<p>This structure defines the CloudWatch metric to return, along with the statistic and unit.</p> <p>For more information about the CloudWatch terminology below, see <a href=\\\"https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/cloudwatch_concepts.html\\\">Amazon CloudWatch concepts</a> in the <i>Amazon CloudWatch User Guide</i>.</p>\"\
     },\
     \"MetricStatistic\":{\
       \"type\":\"string\",\
@@ -4533,7 +4594,7 @@
           \"documentation\":\"<p>The Amazon Resource Name (ARN) of the notification target that Amazon EC2 Auto Scaling uses to notify you when an instance is in a wait state for the lifecycle hook. You can specify either an Amazon SNS topic or an Amazon SQS queue.</p> <p>If you specify an empty string, this overrides the current ARN.</p> <p>This operation uses the JSON format when sending notifications to an Amazon SQS queue, and an email key-value pair format when sending notifications to an Amazon SNS topic.</p> <p>When you specify a notification target, Amazon EC2 Auto Scaling sends it a test message. Test messages contain the following additional key-value pair: <code>\\\"Event\\\": \\\"autoscaling:TEST_NOTIFICATION\\\"</code>.</p>\"\
         },\
         \"NotificationMetadata\":{\
-          \"shape\":\"XmlStringMaxLen1023\",\
+          \"shape\":\"AnyPrintableAsciiStringMaxLen4000\",\
           \"documentation\":\"<p>Additional information that you want to include any time Amazon EC2 Auto Scaling sends a message to the notification target.</p>\"\
         },\
         \"HeartbeatTimeout\":{\
@@ -4601,7 +4662,7 @@
         },\
         \"ScalingAdjustment\":{\
           \"shape\":\"PolicyIncrement\",\
-          \"documentation\":\"<p>The amount by which to scale, based on the specified adjustment type. A positive value adds to the current capacity while a negative number removes from the current capacity. For exact capacity, you must specify a positive value.</p> <p>Required if the policy type is <code>SimpleScaling</code>. (Not used with any other policy type.) </p>\"\
+          \"documentation\":\"<p>The amount by which to scale, based on the specified adjustment type. A positive value adds to the current capacity while a negative number removes from the current capacity. For exact capacity, you must specify a non-negative value.</p> <p>Required if the policy type is <code>SimpleScaling</code>. (Not used with any other policy type.) </p>\"\
         },\
         \"Cooldown\":{\
           \"shape\":\"Cooldown\",\
@@ -4752,7 +4813,7 @@
       \"members\":{\
         \"MinHealthyPercentage\":{\
           \"shape\":\"IntPercent\",\
-          \"documentation\":\"<p>The amount of capacity in the Auto Scaling group that must pass your group's health checks to allow the operation to continue. The value is expressed as a percentage of the desired capacity of the Auto Scaling group (rounded up to the nearest integer). The default is <code>90</code>.</p> <p>Setting the minimum healthy percentage to 100 percent limits the rate of replacement to one instance at a time. In contrast, setting it to 0 percent has the effect of replacing all instances at the same time. </p>\"\
+          \"documentation\":\"<p>Specifies the minimum percentage of the group to keep in service, healthy, and ready to use to support your workload to allow the operation to continue. The value is expressed as a percentage of the desired capacity of the Auto Scaling group. Value range is 0 to 100.</p> <p>If you do not specify this property, the default is 90 percent, or the percentage set in the instance maintenance policy for the Auto Scaling group, if defined.</p>\"\
         },\
         \"InstanceWarmup\":{\
           \"shape\":\"RefreshInstanceWarmup\",\
@@ -4772,7 +4833,7 @@
         },\
         \"AutoRollback\":{\
           \"shape\":\"AutoRollback\",\
-          \"documentation\":\"<p>(Optional) Indicates whether to roll back the Auto Scaling group to its previous configuration if the instance refresh fails. The default is <code>false</code>.</p> <p>A rollback is not supported in the following situations: </p> <ul> <li> <p>There is no desired configuration specified for the instance refresh.</p> </li> <li> <p>The Auto Scaling group has a launch template that uses an Amazon Web Services Systems Manager parameter instead of an AMI ID for the <code>ImageId</code> property.</p> </li> <li> <p>The Auto Scaling group uses the launch template's <code>$Latest</code> or <code>$Default</code> version.</p> </li> </ul>\"\
+          \"documentation\":\"<p>(Optional) Indicates whether to roll back the Auto Scaling group to its previous configuration if the instance refresh fails or a CloudWatch alarm threshold is met. The default is <code>false</code>.</p> <p>A rollback is not supported in the following situations: </p> <ul> <li> <p>There is no desired configuration specified for the instance refresh.</p> </li> <li> <p>The Auto Scaling group has a launch template that uses an Amazon Web Services Systems Manager parameter instead of an AMI ID for the <code>ImageId</code> property.</p> </li> <li> <p>The Auto Scaling group uses the launch template's <code>$Latest</code> or <code>$Default</code> version.</p> </li> </ul> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/instance-refresh-rollback.html\\\">Undo changes with a rollback</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>\"\
         },\
         \"ScaleInProtectedInstances\":{\
           \"shape\":\"ScaleInProtectedInstances\",\
@@ -4781,6 +4842,14 @@
         \"StandbyInstances\":{\
           \"shape\":\"StandbyInstances\",\
           \"documentation\":\"<p>Choose the behavior that you want Amazon EC2 Auto Scaling to use if instances in <code>Standby</code> state are found.</p> <p>The following lists the valid values:</p> <dl> <dt>Terminate</dt> <dd> <p>Amazon EC2 Auto Scaling terminates instances that are in <code>Standby</code>.</p> </dd> <dt>Ignore</dt> <dd> <p>Amazon EC2 Auto Scaling ignores instances that are in <code>Standby</code> and continues to replace instances that are in the <code>InService</code> state.</p> </dd> <dt>Wait (default)</dt> <dd> <p>Amazon EC2 Auto Scaling waits one hour for you to return the instances to service. Otherwise, the instance refresh will fail.</p> </dd> </dl>\"\
+        },\
+        \"AlarmSpecification\":{\
+          \"shape\":\"AlarmSpecification\",\
+          \"documentation\":\"<p>(Optional) The CloudWatch alarm specification. CloudWatch alarms can be used to identify any issues and fail the operation if an alarm threshold is met.</p>\"\
+        },\
+        \"MaxHealthyPercentage\":{\
+          \"shape\":\"IntPercent100To200\",\
+          \"documentation\":\"<p>Specifies the maximum percentage of the group that can be in service and healthy, or pending, to support your workload when replacing instances. The value is expressed as a percentage of the desired capacity of the Auto Scaling group. Value range is 100 to 200.</p> <p>If you specify <code>MaxHealthyPercentage</code>, you must also specify <code>MinHealthyPercentage</code>, and the difference between them cannot be greater than 100. A larger range increases the number of instances that can be replaced at the same time.</p> <p>If you do not specify this property, the default is 100 percent, or the percentage set in the instance maintenance policy for the Auto Scaling group, if defined.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Describes the preferences for an instance refresh.</p>\"\
@@ -4866,6 +4935,7 @@
     },\
     \"RollbackInstanceRefreshType\":{\
       \"type\":\"structure\",\
+      \"required\":[\"AutoScalingGroupName\"],\
       \"members\":{\
         \"AutoScalingGroupName\":{\
           \"shape\":\"XmlStringMaxLen255\",\
@@ -5248,7 +5318,7 @@
         },\
         \"Preferences\":{\
           \"shape\":\"RefreshPreferences\",\
-          \"documentation\":\"<p>Sets your preferences for the instance refresh so that it performs as expected when you start it. Includes the instance warmup time, the minimum healthy percentage, and the behaviors that you want Amazon EC2 Auto Scaling to use if instances that are in <code>Standby</code> state or protected from scale in are found. You can also choose to enable additional features, such as the following:</p> <ul> <li> <p>Auto rollback</p> </li> <li> <p>Checkpoints</p> </li> <li> <p>Skip matching</p> </li> </ul>\"\
+          \"documentation\":\"<p>Sets your preferences for the instance refresh so that it performs as expected when you start it. Includes the instance warmup time, the minimum and maximum healthy percentages, and the behaviors that you want Amazon EC2 Auto Scaling to use if instances that are in <code>Standby</code> state or protected from scale in are found. You can also choose to enable additional features, such as the following:</p> <ul> <li> <p>Auto rollback</p> </li> <li> <p>Checkpoints</p> </li> <li> <p>CloudWatch alarms</p> </li> <li> <p>Skip matching</p> </li> </ul>\"\
         }\
       }\
     },\
@@ -5266,7 +5336,7 @@
         },\
         \"ScalingAdjustment\":{\
           \"shape\":\"PolicyIncrement\",\
-          \"documentation\":\"<p>The amount by which to scale, based on the specified adjustment type. A positive value adds to the current capacity while a negative number removes from the current capacity.</p> <p>The amount by which to scale. The adjustment is based on the value that you specified in the <code>AdjustmentType</code> property (either an absolute number or a percentage). A positive value adds to the current capacity and a negative number subtracts from the current capacity. </p>\"\
+          \"documentation\":\"<p>The amount by which to scale, based on the specified adjustment type. A positive value adds to the current capacity while a negative number removes from the current capacity. For exact capacity, you must specify a non-negative value.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Describes information used to create a step adjustment for a step scaling policy.</p> <p>For the following examples, suppose that you have an alarm with a breach threshold of 50:</p> <ul> <li> <p>To trigger the adjustment when the metric is greater than or equal to 50 and less than 60, specify a lower bound of 0 and an upper bound of 10.</p> </li> <li> <p>To trigger the adjustment when the metric is greater than 40 and less than or equal to 50, specify a lower bound of -10 and an upper bound of 0.</p> </li> </ul> <p>There are a few rules for the step adjustments for your step policy:</p> <ul> <li> <p>The ranges of your step adjustments can't overlap or have a gap.</p> </li> <li> <p>At most, one step adjustment can have a null lower bound. If one step adjustment has a negative lower bound, then there must be a step adjustment with a null lower bound.</p> </li> <li> <p>At most, one step adjustment can have a null upper bound. If one step adjustment has a positive upper bound, then there must be a step adjustment with a null upper bound.</p> </li> <li> <p>The upper and lower bound can't be null in the same step adjustment.</p> </li> </ul> <p>For more information, see <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/as-scaling-simple-step.html#as-scaling-steps\\\">Step adjustments</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>\"\
@@ -5629,6 +5699,10 @@
         \"DefaultInstanceWarmup\":{\
           \"shape\":\"DefaultInstanceWarmup\",\
           \"documentation\":\"<p>The amount of time, in seconds, until a new instance is considered to have finished initializing and resource consumption to become stable after it enters the <code>InService</code> state. </p> <p>During an instance refresh, Amazon EC2 Auto Scaling waits for the warm-up period after it replaces an instance before it moves on to replacing the next instance. Amazon EC2 Auto Scaling also waits for the warm-up period before aggregating the metrics for new instances with existing instances in the Amazon CloudWatch metrics that are used for scaling, resulting in more reliable usage data. For more information, see <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-default-instance-warmup.html\\\">Set the default instance warmup for an Auto Scaling group</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p> <important> <p>To manage various warm-up settings at the group level, we recommend that you set the default instance warmup, <i>even if it is set to 0 seconds</i>. To remove a value that you previously set, include the property but specify <code>-1</code> for the value. However, we strongly recommend keeping the default instance warmup enabled by specifying a value of <code>0</code> or other nominal value.</p> </important>\"\
+        },\
+        \"InstanceMaintenancePolicy\":{\
+          \"shape\":\"InstanceMaintenancePolicy\",\
+          \"documentation\":\"<p>An instance maintenance policy. For more information, see <a href=\\\"https://docs.aws.amazon.com/autoscaling/ec2/userguide/ec2-auto-scaling-instance-maintenance-policy.html\\\">Set instance maintenance policy</a> in the <i>Amazon EC2 Auto Scaling User Guide</i>.</p>\"\
         }\
       }\
     },\

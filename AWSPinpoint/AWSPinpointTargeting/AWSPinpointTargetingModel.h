@@ -259,6 +259,12 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargeting__EndpointTypesElement) {
     AWSPinpointTargeting__EndpointTypesElementInApp,
 };
 
+typedef NS_ENUM(NSInteger, AWSPinpointTargeting__TimezoneEstimationMethodsElement) {
+    AWSPinpointTargeting__TimezoneEstimationMethodsElementUnknown,
+    AWSPinpointTargeting__TimezoneEstimationMethodsElementPhoneNumber,
+    AWSPinpointTargeting__TimezoneEstimationMethodsElementPostalCode,
+};
+
 typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
     AWSPinpointTargetingDayOfWeekUnknown,
     AWSPinpointTargetingDayOfWeekMonday,
@@ -290,6 +296,7 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @class AWSPinpointTargetingAndroidPushNotificationTemplate;
 @class AWSPinpointTargetingApplicationDateRangeKpiResponse;
 @class AWSPinpointTargetingApplicationResponse;
+@class AWSPinpointTargetingApplicationSettingsJourneyLimits;
 @class AWSPinpointTargetingApplicationSettingsResource;
 @class AWSPinpointTargetingApplicationsResponse;
 @class AWSPinpointTargetingAttributeDimension;
@@ -560,6 +567,7 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @class AWSPinpointTargetingJourneySMSMessage;
 @class AWSPinpointTargetingJourneySchedule;
 @class AWSPinpointTargetingJourneyStateRequest;
+@class AWSPinpointTargetingJourneyTimeframeCap;
 @class AWSPinpointTargetingJourneysResponse;
 @class AWSPinpointTargetingListJourneysRequest;
 @class AWSPinpointTargetingListJourneysResponse;
@@ -1825,6 +1833,29 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @end
 
 /**
+ <p>The default sending limits for journeys in the application. To override these limits and define custom limits for a specific journey, use the Journey resource.</p>
+ */
+@interface AWSPinpointTargetingApplicationSettingsJourneyLimits : AWSModel
+
+
+/**
+ <p>The daily number of messages that an endpoint can receive from all journeys. The maximum value is 100. If set to 0, this limit will not apply.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable dailyCap;
+
+/**
+ <p>The default maximum number of messages that can be sent to an endpoint during the specified timeframe for all journeys.</p>
+ */
+@property (nonatomic, strong) AWSPinpointTargetingJourneyTimeframeCap * _Nullable timeframeCap;
+
+/**
+ <p>The default maximum number of messages that a single journey can sent to a single endpoint. The maximum value is 100. If set to 0, this limit will not apply.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable totalCap;
+
+@end
+
+/**
  <p>Provides information about an application, including the default settings for an application.</p>
  Required parameters: [ApplicationId]
  */
@@ -1840,6 +1871,11 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
  <p>The settings for the AWS Lambda function to invoke by default as a code hook for campaigns in the application. You can use this hook to customize segments that are used by campaigns in the application.</p>
  */
 @property (nonatomic, strong) AWSPinpointTargetingCampaignHook * _Nullable campaignHook;
+
+/**
+ <p>The default sending limits for journeys in the application. These limits apply to each journey for the application but can be overridden, on a per journey basis, with the JourneyLimits resource.</p>
+ */
+@property (nonatomic, strong) AWSPinpointTargetingApplicationSettingsJourneyLimits * _Nullable journeyLimits;
 
 /**
  <p>The date and time, in ISO 8601 format, when the application's settings were last modified.</p>
@@ -2271,7 +2307,7 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @property (nonatomic, strong) NSNumber * _Nullable maximumDuration;
 
 /**
- <p>The maximum number of messages that a campaign can send each second. For an application, this value specifies the default limit for the number of messages that campaigns can send each second. The minimum value is 50. The maximum value is 20,000.</p>
+ <p>The maximum number of messages that a campaign can send each second. For an application, this value specifies the default limit for the number of messages that campaigns can send each second. The minimum value is 1. The maximum value is 20,000.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable messagesPerSecond;
 
@@ -3547,7 +3583,7 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @property (nonatomic, strong) NSString * _Nullable applicationId;
 
 /**
- <p>The unique identifier for the endpoint.</p>
+ <p>The case insensitive unique identifier for the endpoint. The identifier can't contain <code>$</code>, <code>{</code> or <code>}</code>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable endpointId;
 
@@ -5101,7 +5137,6 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 
 /**
  <p>Specifies the status and settings of the GCM channel for an application. This channel enables Amazon Pinpoint to send push notifications through the Firebase Cloud Messaging (FCM), formerly Google Cloud Messaging (GCM), service.</p>
- Required parameters: [ApiKey]
  */
 @interface AWSPinpointTargetingGCMChannelRequest : AWSModel
 
@@ -5112,15 +5147,25 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @property (nonatomic, strong) NSString * _Nullable apiKey;
 
 /**
+ <p>The default authentication method used for GCM. Values are either "TOKEN" or "KEY". Defaults to "KEY".</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable defaultAuthenticationMethod;
+
+/**
  <p>Specifies whether to enable the GCM channel for the application.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable enabled;
+
+/**
+ <p>The contents of the JSON file provided by Google during registration in order to generate an access token for authentication. For more information see <a href="https://firebase.google.com/docs/cloud-messaging/migrate-v1">Migrate from legacy FCM APIs to HTTP v1</a>.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable serviceJson;
 
 @end
 
 /**
  <p>Provides information about the status and settings of the GCM channel for an application. The GCM channel enables Amazon Pinpoint to send push notifications through the Firebase Cloud Messaging (FCM), formerly Google Cloud Messaging (GCM), service.</p>
- Required parameters: [Credential, Platform]
+ Required parameters: [Platform]
  */
 @interface AWSPinpointTargetingGCMChannelResponse : AWSModel
 
@@ -5141,6 +5186,11 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @property (nonatomic, strong) NSString * _Nullable credential;
 
 /**
+ <p>The default authentication method used for GCM. Values are either "TOKEN" or "KEY". Defaults to "KEY".</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable defaultAuthenticationMethod;
+
+/**
  <p>Specifies whether the GCM channel is enabled for the application.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable enabled;
@@ -5149,6 +5199,11 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
  <p>(Not used) This property is retained only for backward compatibility.</p>
  */
 @property (nonatomic, strong) NSNumber * _Nullable hasCredential;
+
+/**
+ <p>Returns true if the JSON file provided by Google during registration process was used in the <b>ServiceJson</b> field of the request.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable hasFcmServiceCredentials;
 
 /**
  <p>(Deprecated) An identifier for the GCM channel. This property is retained only for backward compatibility.</p>
@@ -5224,7 +5279,12 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @property (nonatomic, strong) NSString * _Nullable imageUrl;
 
 /**
- <p>para>normal - The notification might be delayed. Delivery is optimized for battery usage on the recipient's device. Use this value unless immediate delivery is required.</p>/listitem><li><p>high - The notification is sent immediately and might wake a sleeping device.</p></li>/para><p>Amazon Pinpoint specifies this value in the FCM priority parameter when it sends the notification message to FCM.</p><p>The equivalent values for Apple Push Notification service (APNs) are 5, for normal, and 10, for high. If you specify an APNs value for this property, Amazon Pinpoint accepts and converts the value to the corresponding FCM value.</p>
+ <p>The preferred authentication method, with valid values "KEY" or "TOKEN". If a value isn't provided then the <b>DefaultAuthenticationMethod</b> is used.</p>
+ */
+@property (nonatomic, strong) NSString * _Nullable preferredAuthenticationMethod;
+
+/**
+ <p>para>normal – The notification might be delayed. Delivery is optimized for battery usage on the recipient's device. Use this value unless immediate delivery is required.</p>/listitem><li><p>high – The notification is sent immediately and might wake a sleeping device.</p></li>/para><p>Amazon Pinpoint specifies this value in the FCM priority parameter when it sends the notification message to FCM.</p><p>The equivalent values for Apple Push Notification service (APNs) are 5, for normal, and 10, for high. If you specify an APNs value for this property, Amazon Pinpoint accepts and converts the value to the corresponding FCM value.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable priority;
 
@@ -5939,7 +5999,7 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @property (nonatomic, strong) NSString * _Nullable applicationId;
 
 /**
- <p>The unique identifier for the endpoint.</p>
+ <p>The case insensitive unique identifier for the endpoint. The identifier can't contain <code>$</code>, <code>{</code> or <code>}</code>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable endpointId;
 
@@ -7687,6 +7747,16 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
  */
 @property (nonatomic, strong) NSNumber * _Nullable messagesPerSecond;
 
+/**
+ <p>The number of messages that an endpoint can receive during the specified timeframe.</p>
+ */
+@property (nonatomic, strong) AWSPinpointTargetingJourneyTimeframeCap * _Nullable timeframeCap;
+
+/**
+ <p>The maximum number of messages a journey can sent to a single endpoint. The maximum value is 100. If set to 0, this limit will not apply.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable totalCap;
+
 @end
 
 /**
@@ -7821,6 +7891,11 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
  <p>The current status of the journey. Possible values are:</p><ul><li><p>DRAFT - The journey is being developed and hasn't been published yet.</p></li><li><p>ACTIVE - The journey has been developed and published. Depending on the journey's schedule, the journey may currently be running or scheduled to start running at a later time. If a journey's status is ACTIVE, you can't add, change, or remove activities from it.</p></li><li><p>COMPLETED - The journey has been published and has finished running. All participants have entered the journey and no participants are waiting to complete the journey or any activities in the journey.</p></li><li><p>CANCELLED - The journey has been stopped. If a journey's status is CANCELLED, you can't add, change, or remove activities or segment settings from the journey.</p></li><li><p>CLOSED - The journey has been published and has started running. It may have also passed its scheduled end time, or passed its scheduled start time and a refresh frequency hasn't been specified for it. If a journey's status is CLOSED, you can't add participants to it, and no existing participants can enter the journey for the first time. However, any existing participants who are currently waiting to start an activity may continue the journey.</p></li></ul>
  */
 @property (nonatomic, assign) AWSPinpointTargetingState state;
+
+/**
+ <p>An array of time zone estimation methods, if any, to use for determining an <a href="https://docs.aws.amazon.com/pinpoint/latest/apireference/apps-application-id-endpoints-endpoint-id.html">Endpoints</a> time zone if the Endpoint does not have a value for the Demographic.Timezone attribute.</p><ul><li><p>PHONE_NUMBER - A time zone is determined based on the Endpoint.Address and Endpoint.Location.Country.</p></li><li><p>POSTAL_CODE - A time zone is determined based on the Endpoint.Location.PostalCode and Endpoint.Location.Country.</p><note><p>POSTAL_CODE detection is only supported in the United States, United Kingdom, Australia, New Zealand, Canada, France, Italy, Spain, Germany and in regions where Amazon Pinpoint is available.</p></note></li></ul>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable timezoneEstimationMethods;
 
 /**
  <p>Indicates whether endpoints in quiet hours should enter a wait activity until quiet hours have elapsed.</p>
@@ -8026,6 +8101,24 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
  <p>The status of the journey. Currently, Supported values are ACTIVE, PAUSED, and CANCELLED</p><p>If you cancel a journey, Amazon Pinpoint continues to perform activities that are currently in progress, until those activities are complete. Amazon Pinpoint also continues to collect and aggregate analytics data for those activities, until they are complete, and any activities that were complete when you cancelled the journey.</p><p>After you cancel a journey, you can't add, change, or remove any activities from the journey. In addition, Amazon Pinpoint stops evaluating the journey and doesn't perform any activities that haven't started.</p><p>When the journey is paused, Amazon Pinpoint continues to perform activities that are currently in progress, until those activities are complete. Endpoints will stop entering journeys when the journey is paused and will resume entering the journey after the journey is resumed. For wait activities, wait time is paused when the journey is paused. Currently, PAUSED only supports journeys with a segment refresh interval.</p>
  */
 @property (nonatomic, assign) AWSPinpointTargetingState state;
+
+@end
+
+/**
+ <p>The number of messages that can be sent to an endpoint during the specified timeframe for all journeys.</p>
+ */
+@interface AWSPinpointTargetingJourneyTimeframeCap : AWSModel
+
+
+/**
+ <p>The maximum number of messages that all journeys can send to an endpoint during the specified timeframe. The maximum value is 100. If set to 0, this limit will not apply.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable cap;
+
+/**
+ <p>The length of the timeframe in days. The maximum value is 30. If set to 0, this limit will not apply.</p>
+ */
+@property (nonatomic, strong) NSNumber * _Nullable days;
 
 @end
 
@@ -10234,6 +10327,11 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @property (nonatomic, strong) AWSPinpointTargetingTemplate * _Nullable emailTemplate;
 
 /**
+ <p>The InApp template to use for the message. The InApp template object is not supported for SendMessages.</p>
+ */
+@property (nonatomic, strong) AWSPinpointTargetingTemplate * _Nullable inAppTemplate;
+
+/**
  <p>The push notification template to use for the message.</p>
  */
 @property (nonatomic, strong) AWSPinpointTargetingTemplate * _Nullable pushTemplate;
@@ -10311,7 +10409,7 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @property (nonatomic, strong) NSString * _Nullable templateName;
 
 /**
- <p>The type of channel that the message template is designed for. Possible values are: EMAIL, PUSH, SMS, and VOICE.</p>
+ <p>The type of channel that the message template is designed for. Possible values are: EMAIL, PUSH, SMS, INAPP, and VOICE.</p>
  */
 @property (nonatomic, assign) AWSPinpointTargetingTemplateType templateType;
 
@@ -10360,7 +10458,7 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @property (nonatomic, strong) NSString * _Nullable templateName;
 
 /**
- <p>The type of channel that the message template is designed for. Possible values are: EMAIL, PUSH, SMS, and VOICE.</p>
+ <p>The type of channel that the message template is designed for. Possible values are: EMAIL, PUSH, SMS, INAPP, and VOICE.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable templateType;
 
@@ -10841,7 +10939,7 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @property (nonatomic, strong) NSString * _Nullable applicationId;
 
 /**
- <p>The unique identifier for the endpoint.</p>
+ <p>The case insensitive unique identifier for the endpoint. The identifier can't contain <code>$</code>, <code>{</code> or <code>}</code>.</p>
  */
 @property (nonatomic, strong) NSString * _Nullable endpointId;
 
@@ -11720,6 +11818,11 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
 @property (nonatomic, strong) NSNumber * _Nullable eventTaggingEnabled;
 
 /**
+ <p>The default sending limits for journeys in the application. These limits apply to each journey for the application but can be overridden, on a per journey basis, with the JourneyLimits resource.</p>
+ */
+@property (nonatomic, strong) AWSPinpointTargetingApplicationSettingsJourneyLimits * _Nullable journeyLimits;
+
+/**
  <p>The default sending limits for campaigns in the application. To override these limits and define custom limits for a specific campaign or journey, use the <linklinkend="apps-application-id-campaigns-campaign-id">Campaign</link> resource or the <linklinkend="apps-application-id-journeys-journey-id">Journey</link> resource, respectively.</p>
  */
 @property (nonatomic, strong) AWSPinpointTargetingCampaignLimits * _Nullable limits;
@@ -11934,6 +12037,11 @@ typedef NS_ENUM(NSInteger, AWSPinpointTargetingDayOfWeek) {
  <p>The status of the journey. Valid values are:</p><ul><li><p>DRAFT - Saves the journey and doesn't publish it.</p></li><li><p>ACTIVE - Saves and publishes the journey. Depending on the journey's schedule, the journey starts running immediately or at the scheduled start time. If a journey's status is ACTIVE, you can't add, change, or remove activities from it.</p></li></ul><p>PAUSED, CANCELLED, COMPLETED, and CLOSED states are not supported in requests to create or update a journey. To cancel, pause, or resume a journey, use the <linklinkend="apps-application-id-journeys-journey-id-state">Journey State</link> resource.</p>
  */
 @property (nonatomic, assign) AWSPinpointTargetingState state;
+
+/**
+ <p>An array of time zone estimation methods, if any, to use for determining an <a href="https://docs.aws.amazon.com/pinpoint/latest/apireference/apps-application-id-endpoints-endpoint-id.html">Endpoints</a> time zone if the Endpoint does not have a value for the Demographic.Timezone attribute.</p><ul><li><p>PHONE_NUMBER - A time zone is determined based on the Endpoint.Address and Endpoint.Location.Country.</p></li><li><p>POSTAL_CODE - A time zone is determined based on the Endpoint.Location.PostalCode and Endpoint.Location.Country.</p><note><p>POSTAL_CODE detection is only supported in the United States, United Kingdom, Australia, New Zealand, Canada, France, Italy, Spain, Germany and in regions where Amazon Pinpoint is available.</p></note></li></ul>
+ */
+@property (nonatomic, strong) NSArray<NSString *> * _Nullable timezoneEstimationMethods;
 
 /**
  <p>Specifies whether endpoints in quiet hours should enter a wait till the end of their quiet hours.</p>
