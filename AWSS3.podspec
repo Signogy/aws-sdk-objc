@@ -8,9 +8,9 @@ Pod::Spec.new do |s|
   s.homepage     = 'http://aws.amazon.com/mobile/sdk'
   s.license      = 'Apache License, Version 2.0'
   s.author       = { 'Amazon Web Services' => 'amazonwebservices' }
-  s.ios.deployment_target  = '12.0'
+  s.ios.deployment_target  = '14.0'
   s.osx.deployment_target  = '10.15'
-  s.tvos.deployment_target  = '12.0'
+  s.tvos.deployment_target  = '14.0'
   s.watchos.deployment_target  = '7.0'
   s.source       = { :git => 'https://github.com/signogy/aws-sdk-objc.git',
                      :tag => s.version}
