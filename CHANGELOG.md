@@ -4,6 +4,18 @@
 
 -Features for next release
 
+## 2.36.2
+
+- **AWSMobileClient**
+  - Fixing HostedUI page not being shown when providing a navigationController (#5324)
+
+## 2.36.1
+
+### Bug Fixes
+
+- **AWSMobileClient**
+  - Fixing a crash when attempting to use HostedUI (#5316)
+
 ## 2.36.0
 
 ### New features
