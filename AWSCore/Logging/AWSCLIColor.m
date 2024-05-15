@@ -29,7 +29,7 @@
 @implementation AWSCLIColor
 
 + (instancetype)colorWithCalibratedRed:(CGFloat)red green:(CGFloat)green blue:(CGFloat)blue alpha:(CGFloat)alpha {
-    __auto_type color = [CLIColor new];
+    __auto_type color = [AWSCLIColor new];
     color->_red     = red;
     color->_green   = green;
     color->_blue    = blue;
