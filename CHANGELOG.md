@@ -4,6 +4,64 @@
 
 -Features for next release
 
+## 2.36.7
+
+- **AWSIoT** 
+  - Using custom atomic dictionary for topic listeners (#5415)
+  - Fixing random crash when a connection is attempted just after disconnecting
+
+## 2.36.6
+
+### Bug Fixes
+
+- **AWSIoT** 
+  - Fixing a potential race condition on topic listeners (#5402)
+
+## 2.36.5
+
+### New features 
+
+- **AWSIoT** 
+  - Adding completion callbacks for registerWithShadow and unregisterFromShadow methods (#5192)
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSRekognition
+  - AWSConnect
+  - AWSAutoScaling
+  - AWSEC2
+  - AWSDynamoDB
+  - AWSPolly
+  - AWSCognitoIdentityProvider
+  - AWSKMS
+  - AWSSNS
+  - AWSLocation
+  - AWSFirehose
+  - AWSTranscribe
+
+## 2.36.4
+
+### Deprecated release
+
+This release is deprecated due to errors. Please use 2.36.5 or greater.
+
+## 2.36.3
+
+### Misc. Updates
+
+- Model updates for the following services
+  - AWSEC2
+  - AWSCognitoIdentityProvider
+  - AWSPolly
+  - AWSElasticLoadBalancingv2
+  - AWSDynamoDB
+  - AWSKMS
+  - AWSConnect
+
+- **AWSCore**
+  - Fixing a name collision with CocoaLumberjack (#5361)
+
 ## 2.36.2
 
 - **AWSMobileClient**

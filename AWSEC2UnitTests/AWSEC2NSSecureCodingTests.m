@@ -786,6 +786,8 @@
 - (void) test_AWSEC2DescribeSubnetsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeTagsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeTagsResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DescribeTrafficMirrorFilterRulesRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DescribeTrafficMirrorFilterRulesResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeTrafficMirrorFiltersRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeTrafficMirrorFiltersResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DescribeTrafficMirrorSessionsRequest API_AVAILABLE(ios(11));
@@ -891,6 +893,8 @@
 - (void) test_AWSEC2DisableImageBlockPublicAccessResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableImageDeprecationRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableImageDeprecationResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DisableImageDeregistrationProtectionRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2DisableImageDeregistrationProtectionResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableImageRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableImageResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2DisableIpamOrganizationAdminAccountRequest API_AVAILABLE(ios(11));
@@ -980,6 +984,8 @@
 - (void) test_AWSEC2EnableImageBlockPublicAccessResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableImageDeprecationRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableImageDeprecationResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2EnableImageDeregistrationProtectionRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2EnableImageDeregistrationProtectionResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableImageRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableImageResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2EnableIpamOrganizationAdminAccountRequest API_AVAILABLE(ios(11));
@@ -1077,6 +1083,8 @@
 - (void) test_AWSEC2GetImageBlockPublicAccessStateResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetInstanceMetadataDefaultsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetInstanceMetadataDefaultsResult API_AVAILABLE(ios(11));
+- (void) test_AWSEC2GetInstanceTpmEkPubRequest API_AVAILABLE(ios(11));
+- (void) test_AWSEC2GetInstanceTpmEkPubResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetInstanceTypesFromInstanceRequirementsRequest API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetInstanceTypesFromInstanceRequirementsResult API_AVAILABLE(ios(11));
 - (void) test_AWSEC2GetInstanceUefiDataRequest API_AVAILABLE(ios(11));
@@ -5010,6 +5018,14 @@
     [self validateSecureCodingForClass:[AWSEC2DescribeTagsResult class]];
 }
 
+- (void) test_AWSEC2DescribeTrafficMirrorFilterRulesRequest {
+    [self validateSecureCodingForClass:[AWSEC2DescribeTrafficMirrorFilterRulesRequest class]];
+}
+
+- (void) test_AWSEC2DescribeTrafficMirrorFilterRulesResult {
+    [self validateSecureCodingForClass:[AWSEC2DescribeTrafficMirrorFilterRulesResult class]];
+}
+
 - (void) test_AWSEC2DescribeTrafficMirrorFiltersRequest {
     [self validateSecureCodingForClass:[AWSEC2DescribeTrafficMirrorFiltersRequest class]];
 }
@@ -5430,6 +5446,14 @@
     [self validateSecureCodingForClass:[AWSEC2DisableImageDeprecationResult class]];
 }
 
+- (void) test_AWSEC2DisableImageDeregistrationProtectionRequest {
+    [self validateSecureCodingForClass:[AWSEC2DisableImageDeregistrationProtectionRequest class]];
+}
+
+- (void) test_AWSEC2DisableImageDeregistrationProtectionResult {
+    [self validateSecureCodingForClass:[AWSEC2DisableImageDeregistrationProtectionResult class]];
+}
+
 - (void) test_AWSEC2DisableImageRequest {
     [self validateSecureCodingForClass:[AWSEC2DisableImageRequest class]];
 }
@@ -5784,6 +5808,14 @@
 
 - (void) test_AWSEC2EnableImageDeprecationResult {
     [self validateSecureCodingForClass:[AWSEC2EnableImageDeprecationResult class]];
+}
+
+- (void) test_AWSEC2EnableImageDeregistrationProtectionRequest {
+    [self validateSecureCodingForClass:[AWSEC2EnableImageDeregistrationProtectionRequest class]];
+}
+
+- (void) test_AWSEC2EnableImageDeregistrationProtectionResult {
+    [self validateSecureCodingForClass:[AWSEC2EnableImageDeregistrationProtectionResult class]];
 }
 
 - (void) test_AWSEC2EnableImageRequest {
@@ -6172,6 +6204,14 @@
 
 - (void) test_AWSEC2GetInstanceMetadataDefaultsResult {
     [self validateSecureCodingForClass:[AWSEC2GetInstanceMetadataDefaultsResult class]];
+}
+
+- (void) test_AWSEC2GetInstanceTpmEkPubRequest {
+    [self validateSecureCodingForClass:[AWSEC2GetInstanceTpmEkPubRequest class]];
+}
+
+- (void) test_AWSEC2GetInstanceTpmEkPubResult {
+    [self validateSecureCodingForClass:[AWSEC2GetInstanceTpmEkPubResult class]];
 }
 
 - (void) test_AWSEC2GetInstanceTypesFromInstanceRequirementsRequest {

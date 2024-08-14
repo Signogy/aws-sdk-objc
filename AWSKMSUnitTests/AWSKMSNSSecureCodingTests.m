@@ -38,6 +38,8 @@
 - (void) test_AWSKMSDeleteCustomKeyStoreRequest API_AVAILABLE(ios(11));
 - (void) test_AWSKMSDeleteCustomKeyStoreResponse API_AVAILABLE(ios(11));
 - (void) test_AWSKMSDeleteImportedKeyMaterialRequest API_AVAILABLE(ios(11));
+- (void) test_AWSKMSDeriveSharedSecretRequest API_AVAILABLE(ios(11));
+- (void) test_AWSKMSDeriveSharedSecretResponse API_AVAILABLE(ios(11));
 - (void) test_AWSKMSDescribeCustomKeyStoresRequest API_AVAILABLE(ios(11));
 - (void) test_AWSKMSDescribeCustomKeyStoresResponse API_AVAILABLE(ios(11));
 - (void) test_AWSKMSDescribeKeyRequest API_AVAILABLE(ios(11));
@@ -82,6 +84,8 @@
 - (void) test_AWSKMSListGrantsResponse API_AVAILABLE(ios(11));
 - (void) test_AWSKMSListKeyPoliciesRequest API_AVAILABLE(ios(11));
 - (void) test_AWSKMSListKeyPoliciesResponse API_AVAILABLE(ios(11));
+- (void) test_AWSKMSListKeyRotationsRequest API_AVAILABLE(ios(11));
+- (void) test_AWSKMSListKeyRotationsResponse API_AVAILABLE(ios(11));
 - (void) test_AWSKMSListKeysRequest API_AVAILABLE(ios(11));
 - (void) test_AWSKMSListKeysResponse API_AVAILABLE(ios(11));
 - (void) test_AWSKMSListResourceTagsRequest API_AVAILABLE(ios(11));
@@ -97,6 +101,9 @@
 - (void) test_AWSKMSReplicateKeyResponse API_AVAILABLE(ios(11));
 - (void) test_AWSKMSRetireGrantRequest API_AVAILABLE(ios(11));
 - (void) test_AWSKMSRevokeGrantRequest API_AVAILABLE(ios(11));
+- (void) test_AWSKMSRotateKeyOnDemandRequest API_AVAILABLE(ios(11));
+- (void) test_AWSKMSRotateKeyOnDemandResponse API_AVAILABLE(ios(11));
+- (void) test_AWSKMSRotationsListEntry API_AVAILABLE(ios(11));
 - (void) test_AWSKMSScheduleKeyDeletionRequest API_AVAILABLE(ios(11));
 - (void) test_AWSKMSScheduleKeyDeletionResponse API_AVAILABLE(ios(11));
 - (void) test_AWSKMSSignRequest API_AVAILABLE(ios(11));
@@ -195,6 +202,14 @@
 
 - (void) test_AWSKMSDeleteImportedKeyMaterialRequest {
     [self validateSecureCodingForClass:[AWSKMSDeleteImportedKeyMaterialRequest class]];
+}
+
+- (void) test_AWSKMSDeriveSharedSecretRequest {
+    [self validateSecureCodingForClass:[AWSKMSDeriveSharedSecretRequest class]];
+}
+
+- (void) test_AWSKMSDeriveSharedSecretResponse {
+    [self validateSecureCodingForClass:[AWSKMSDeriveSharedSecretResponse class]];
 }
 
 - (void) test_AWSKMSDescribeCustomKeyStoresRequest {
@@ -373,6 +388,14 @@
     [self validateSecureCodingForClass:[AWSKMSListKeyPoliciesResponse class]];
 }
 
+- (void) test_AWSKMSListKeyRotationsRequest {
+    [self validateSecureCodingForClass:[AWSKMSListKeyRotationsRequest class]];
+}
+
+- (void) test_AWSKMSListKeyRotationsResponse {
+    [self validateSecureCodingForClass:[AWSKMSListKeyRotationsResponse class]];
+}
+
 - (void) test_AWSKMSListKeysRequest {
     [self validateSecureCodingForClass:[AWSKMSListKeysRequest class]];
 }
@@ -431,6 +454,18 @@
 
 - (void) test_AWSKMSRevokeGrantRequest {
     [self validateSecureCodingForClass:[AWSKMSRevokeGrantRequest class]];
+}
+
+- (void) test_AWSKMSRotateKeyOnDemandRequest {
+    [self validateSecureCodingForClass:[AWSKMSRotateKeyOnDemandRequest class]];
+}
+
+- (void) test_AWSKMSRotateKeyOnDemandResponse {
+    [self validateSecureCodingForClass:[AWSKMSRotateKeyOnDemandResponse class]];
+}
+
+- (void) test_AWSKMSRotationsListEntry {
+    [self validateSecureCodingForClass:[AWSKMSRotationsListEntry class]];
 }
 
 - (void) test_AWSKMSScheduleKeyDeletionRequest {
