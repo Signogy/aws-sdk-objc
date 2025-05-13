@@ -1375,6 +1375,8 @@
         \"ap-southeast-2\",\
         \"ap-southeast-3\",\
         \"ap-southeast-4\",\
+        \"ap-southeast-5\",\
+        \"ap-southeast-7\",\
         \"ca-central-1\",\
         \"ca-west-1\",\
         \"cn-north-1\",\
@@ -1388,6 +1390,7 @@
         \"eu-west-1\",\
         \"eu-west-2\",\
         \"eu-west-3\",\
+        \"mx-central-1\",\
         \"il-central-1\",\
         \"me-central-1\",\
         \"me-south-1\",\

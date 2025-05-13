@@ -4,6 +4,88 @@
 
 -Features for next release
 
+## 2.40.2
+
+### Bug Fixes
+
+- **AWSIoT** 
+  - fix race conditions and crashes (#5511)
+
+- **Auth** 
+  - error handling around accessing credentials (#5509)
+
+## 2.40.1
+
+### Bug Fixes
+- **AWSCore** 
+  - call response interceptors in HTTP response handlers (#5495)
+
+## 2.40.0
+
+### New features
+- **AWSCore**
+  - Support for `mx-central-1` - Mexico (see [AWS Regional Services List](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) for a list of services supported in the region)
+
+### Bug Fixes
+- **AWSLocation** 
+  - Fixing clock skew retries (#5491)
+
+## 2.39.0
+
+### New features
+- **AWSCore**
+  - Support for `ap-southeast-7` - Asia Pacific (Bangkok) (see [AWS Regional Services List](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) for a list of services supported in the region)
+
+## 2.38.2
+
+### New features
+
+- **AWSTranscribeStreaming**
+  - Adding support for missing languages (#5483)
+
+## 2.38.1
+
+### Bug Fixes
+
+- **AWSIoT** 
+  - Fixing race conditions during cleanup in `AWSIoTStreamThread` (#5477)
+  - Fixing a race condition when invalidating/creating the reconnect timer in `AWSIoTMQTTClient` (#5454)
+  - Fixing a potential race condition in the timer ring queue in `AWSMQTTSession` (#5461)
+
+## 2.38.0
+
+### Misc. Updates
+- **AWSMobileClient**
+  - **Breaking API change** Removing the following deprecated methods:
+    - `interceptApplication(_:didFinishLaunchingWithOptions:)`
+    - `interceptApplication(_:didFinishLaunchingWithOptions:resumeSessionWithCompletionHandler:)`
+    - `setSignInProviders(_:)`
+    - `getCredentialsProvider()`
+
+### Bug Fixes
+- **AWSS3**
+  - Fix reading content_length from DB in AWSS3TransferUtilityDatabaseHelper.m `getTransferTaskDataFromDB`
+
+## 2.37.2
+
+### Bug Fixes
+
+- **AWSIoT** 
+  - Replacing deprecated `SecKeyRawSign` with `SecKeyCreateSignature` (#5442)
+
+## 2.37.1
+
+### Bug Fixes
+
+- **AWSPinpoint**
+  - Fixing error decoding `AWSPinpointEndpointProfile` when user attributes are set. (#5431)
+
+## 2.37.0
+
+### New features
+- **AWSCore**
+  - Support for `ap-southeast-5` - Asia Pacific (Malaysia) (see [AWS Regional Services List](https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/) for a list of services supported in the region)
+
 ## 2.36.7
 
 - **AWSIoT** 
